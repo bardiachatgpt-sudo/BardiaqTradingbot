@@ -42,7 +42,8 @@ def save_state():
                     "macd": float(data["macd"]),
                     "p1_macd": float(data.get("p1_macd", 0)),
                     "p1_price": float(data.get("p1_price", 0)),
-                    "time": str(data["time"]) 
+                    "time": str(data["time"]),
+                    "bars_ago": int(data.get("bars_ago", 0))
                 }
             json.dump({"users": list(subscribed_users), "last_divs": serializable_divs}, f)
     except Exception as e:
@@ -55,7 +56,6 @@ def load_state():
             with open(STATE_FILE, "r") as f:
                 data = json.load(f)
                 subscribed_users = set(data.get("users", []))
-                # تبدیل رشته زمان به دیت‌تایم هنگام لود شدن
                 loaded_divs = data.get("last_divs", {})
                 for k, v in loaded_divs.items():
                     v["time"] = pd.to_datetime(v["time"], utc=True)
@@ -89,9 +89,9 @@ def send_welcome(message):
     bot.reply_to(
         message, 
         "✅ ربات اسکنر MACD روشن شد.\n\n"
-        "استراتژی: دایورجنس صعودی و نزولی (M1, M5, M15)\n"
+        "استراتژی: دایورجنس صعودی و نزولی (M1, M5, M15, H1, H4)\n"
         "نمادها: طلا و جفت‌ارزهای ماژور\n"
-        "برای دیدن وضعیت، دکمه زیر را بزنید:", 
+        "برای دیدن وضعیت طبقه‌بندی شده، دکمه زیر را بزنید:", 
         reply_markup=get_main_keyboard()
     )
 
@@ -101,27 +101,38 @@ def send_last_signals(message):
         bot.reply_to(message, "⏳ هنوز دیتایی ثبت نشده. لطفاً صبر کنید تا ربات بازار را اسکن کند.")
         return
 
-    msg = "📋 <b>آخرین دایورجنس‌ها (تفکیک تایم‌فریم):</b>\n\n"
-    try:
-        sorted_divs = sorted(last_divergences.items(), key=lambda x: x[1]['time'], reverse=True)
-    except:
-        sorted_divs = list(last_divergences.items())
+    grouped_data = {}
+    for key, data in last_divergences.items():
+        if "_" in key:
+            symbol, tf = key.rsplit("_", 1)
+            if symbol not in grouped_data:
+                grouped_data[symbol] = {}
+            grouped_data[symbol][tf] = data
+
+    msg = "📋 <b>گزارش آخرین دایورجنس‌ها:</b>\n\n"
     
-    for key, data in sorted_divs:
-        try:
-            dt_tehran = data['time'].astimezone(tehran_tz).strftime('%Y-%m-%d %H:%M')
-        except:
-            dt_tehran = "نامشخص"
-        
-        signal_type = "صعودی 🟢" if data['type'] == 'Bullish' else "نزولی 🔴"
-        
-        msg += (
-            f"💎 <b>{key}</b> | {signal_type}\n"
-            f"⏰ زمان: {dt_tehran} (تهران)\n"
-            f"📉 مکدی: اول {data.get('p1_macd', 0):.4f} | دوم {data['macd']:.4f}\n"
-            f"💰 قیمت: اول {data.get('p1_price', 0):.5f} | دوم {data['price']:.5f}\n\n"
-        )
+    tf_order = {"M1": 1, "M5": 2, "M15": 3, "H1": 4, "H4": 5}
     
+    for symbol, tfs in grouped_data.items():
+        persian_name = SYMBOLS.get(symbol, symbol)
+        msg += f"💎 <b>{persian_name}</b>\n"
+        
+        sorted_tfs = sorted(tfs.keys(), key=lambda x: tf_order.get(x, 99))
+        
+        for tf in sorted_tfs:
+            data = tfs[tf]
+            try:
+                dt_tehran = data['time'].astimezone(tehran_tz).strftime('%Y-%m-%d %H:%M')
+            except:
+                dt_tehran = "نامشخص"
+                
+            sig_type = "صعودی 🟢" if data['type'] == 'Bullish' else "نزولی 🔴"
+            bars_ago = data.get('bars_ago', 0)
+            
+            msg += f"  ⏱ <b>{tf}</b>: {sig_type} | {dt_tehran} | ({bars_ago} کندل قبل)\n"
+            
+        msg += "\n"
+        
     for i in range(0, len(msg), 4000):
         bot.reply_to(message, msg[i:i+4000], parse_mode="HTML")
 
@@ -216,7 +227,7 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
         return None, str(e)[:50]
 
 # ==========================================
-# ۴. منطق استراتژی
+# ۴. منطق استراتژی (محاسبه کندل‌های قبل)
 # ==========================================
 def detect_macd_divergence(df):
     if df is None or len(df) < 10:
@@ -228,89 +239,89 @@ def detect_macd_divergence(df):
     df['Slope'] = df['MACD'].diff() 
 
     signals = []
+    total_bars = len(df)
+    
     b_state = 0
-    b_p1_macd, b_p1_price, b_p1_idx = None, None, None
+    b_p1_macd, b_p1_low, b_p1_idx = None, None, None
+    
     s_state = 0
-    s_p1_macd, s_p1_price, s_p1_idx = None, None, None
-
-    # فیلتر حداقل مقدار برای جلوگیری از سیگنال‌های -0.0000
-    MIN_MACD_VAL = 0.00005
+    s_p1_macd, s_p1_high, s_p1_idx = None, None, None
 
     for i in range(2, len(df)):
         current_slope = df['Slope'].iloc[i]
         prev_slope = df['Slope'].iloc[i-1]
         
-        # --- دایورجنس صعودی ---
+        # --- صعودی ---
         if b_state == 0:
-            if prev_slope < 0 and current_slope >= 0:
+            if prev_slope < 0 and current_slope > 0:
                 macd_val = df['MACD'].iloc[i-1]
-                if macd_val < -MIN_MACD_VAL: # حتما باید منفی و از صفر فاصله داشته باشه
+                if macd_val < 0: 
                     b_p1_macd = macd_val
-                    b_p1_price = df['Close'].iloc[i-1]
+                    b_p1_low = df['Low'].iloc[i-1]
                     b_p1_idx = i-1
                     b_state = 1
-
         elif b_state == 1:
-            if prev_slope > 0 and current_slope <= 0:
+            if prev_slope > 0 and current_slope < 0:
                 macd_val = df['MACD'].iloc[i-1]
                 if macd_val < 0:
                     b_state = 2
                 else:
                     b_state = 0 
-
         elif b_state == 2:
-            if prev_slope < 0 and current_slope >= 0:
+            if prev_slope < 0 and current_slope > 0:
                 macd_val = df['MACD'].iloc[i-1]
-                if macd_val < -MIN_MACD_VAL:
-                    all_below_zero = (df['MACD'].iloc[b_p1_idx:i] < 0).all()
-                    if all_below_zero:
+                if macd_val < 0:
+                    all_below = (df['MACD'].iloc[b_p1_idx:i] < 0).all()
+                    if all_below:
                         cond_macd = abs(b_p1_macd) > abs(macd_val)
-                        cond_price = b_p1_price > df['Close'].iloc[i-1]
+                        cond_price = b_p1_low > df['Low'].iloc[i-1]
                         if cond_macd and cond_price:
+                            bars_ago = total_bars - 1 - (i-1)
                             signals.append({
                                 "type": "Bullish", 
-                                "price": df['Close'].iloc[i-1], 
+                                "price": df['Low'].iloc[i-1], 
                                 "macd": macd_val,
-                                "p1_price": b_p1_price,
+                                "p1_price": b_p1_low,
                                 "p1_macd": b_p1_macd, 
-                                "time": df.index[i-1]
+                                "time": df.index[i-1],
+                                "bars_ago": bars_ago
                             })
                     b_state = 0
 
-        # --- دایورجنس نزولی ---
+        # --- نزولی ---
         if s_state == 0:
-            if prev_slope > 0 and current_slope <= 0:
+            if prev_slope > 0 and current_slope < 0:
                 macd_val = df['MACD'].iloc[i-1]
-                if macd_val > MIN_MACD_VAL:
+                if macd_val > 0:
                     s_p1_macd = macd_val
-                    s_p1_price = df['Close'].iloc[i-1]
+                    s_p1_high = df['High'].iloc[i-1]
                     s_p1_idx = i-1
                     s_state = 1
-
         elif s_state == 1:
-            if prev_slope < 0 and current_slope >= 0:
+            if prev_slope < 0 and current_slope > 0:
                 macd_val = df['MACD'].iloc[i-1]
                 if macd_val > 0:
                     s_state = 2
                 else:
                     s_state = 0 
-
         elif s_state == 2:
-            if prev_slope > 0 and current_slope <= 0:
+            if prev_slope > 0 and current_slope < 0:
                 macd_val = df['MACD'].iloc[i-1]
-                if macd_val > MIN_MACD_VAL:
-                    all_above_zero = (df['MACD'].iloc[s_p1_idx:i] > 0).all()
-                    if all_above_zero:
+                if macd_val > 0:
+                    all_above = (df['MACD'].iloc[s_p1_idx:i] > 0).all()
+                    if all_above:
                         cond_macd = s_p1_macd > macd_val
-                        cond_price = s_p1_price < df['Close'].iloc[i-1]
+                        cond_price = s_p1_high < df['High'].iloc[i-1]
                         if cond_macd and cond_price:
+                            bars_ago = total_bars - 1 - (i-1)
                             signals.append({
                                 "type": "Bearish", 
-                                "price": df['Close'].iloc[i-1], 
+                                "price": df['High'].iloc[i-1],
                                 "macd": macd_val,
-                                "p1_price": s_p1_price,
+                                "p1_price": s_p1_high,
                                 "p1_macd": s_p1_macd, 
-                                "time": df.index[i-1]
+                                "time": df.index[i-1],
+                                "bars_ago": bars_ago
                             })
                     s_state = 0
 
@@ -330,7 +341,7 @@ SYMBOLS = {
     "FX:NZDUSD": "دلار نیوزیلند/دلار (NZDUSD)"
 }
 
-TIMEFRAMES = {"1": "M1", "5": "M5", "15": "M15"}
+TIMEFRAMES = {"1": "M1", "5": "M5", "15": "M15", "60": "H1", "240": "H4"}
 last_signal_times = {}
 
 def macd_scanner():
@@ -355,59 +366,51 @@ def macd_scanner():
                         sig_time = latest_sig["time"]
                         key = f"{symbol}_{tf_name}"
                         
-                        # ۱. ذخیره برای دکمه "آخرین سیگنال‌ها" (همیشه ذخیره میشه)
-                        last_divergences[key] = latest_sig
-                        save_state()
+                        stored_sig = last_divergences.get(key)
+                        is_newer = False
+                        if not stored_sig:
+                            is_newer = True
+                        else:
+                            try:
+                                if sig_time > pd.to_datetime(stored_sig['time'], utc=True):
+                                    is_newer = True
+                            except:
+                                is_newer = True
+                                
+                        if is_newer:
+                            last_divergences[key] = latest_sig
+                            save_state()
 
-                        # ۲. ارسال پیام پوش (فقط اگر در بازه زمانی اخیر باشه)
                         now_utc = pd.Timestamp.now(tz='UTC')
-                        
-                        # محاسبه اختلاف زمان با استفاده از قدر مطلق برای جلوگیری از باگ
-                        time_diff = abs((now_utc - sig_time).total_seconds())
-                        
-                        # استانه زمانی: M1=90s, M5=300s, M15=900s
-                        live_threshold = 90 if tf_name == "M1" else (300 if tf_name == "M5" else 900)
+                        time_diff = (now_utc - sig_time).total_seconds()
+                        live_threshold = 90 if tf_name == "M1" else (300 if tf_name == "M5" else (900 if tf_name == "M15" else 3600))
                         
                         if 0 <= time_diff <= live_threshold: 
                             if last_signal_times.get(key) != sig_time:
                                 current_macd = df['MACD'].iloc[-1]
                                 
-                                # فیلتر نهایی
                                 if latest_sig['type'] == "Bullish" and current_macd >= 0:
                                     continue
                                 if latest_sig['type'] == "Bearish" and current_macd <= 0:
                                     continue
                                     
                                 last_signal_times[key] = sig_time
-                                dt_tehran = sig_time.astimezone(tehran_tz).strftime('%H:%M:%S')
+                                dt_tehran = sig_time.astimezone(tehran_tz).strftime('%H:%M')
                                 
+                                # پیام خلاصه شده (دقیقاً طبق خواسته شما)
                                 if latest_sig['type'] == "Bullish":
                                     msg = (
-                                        f"🚀 <b>دایورجنس صعودی MACD</b> 🚀\n"
-                                        f"💎 نماد: <b>{persian_name}</b> | ⏳ تایم: <b>{tf_name}</b>\n\n"
-                                        f"⏰ زمان (تهران): {dt_tehran}\n\n"
-                                        f"📊 <b>بررسی شرط ۱ (قدر مطلق MACD):</b>\n"
-                                        f"🔹 کف اول (Abs): <code>{abs(latest_sig['p1_macd']):.4f}</code>\n"
-                                        f"🔹 کف دوم (Abs): <code>{abs(latest_sig['macd']):.4f}</code>\n"
-                                        f"✅ <i>کف اول بزرگتر است</i>\n\n"
-                                        f"💰 <b>بررسی شرط ۲ (قیمت):</b>\n"
-                                        f"🔹 قیمت کف اول: <code>{latest_sig['p1_price']:.5f}</code>\n"
-                                        f"🔹 قیمت کف دوم: <code>{latest_sig['price']:.5f}</code>\n"
-                                        f"✅ <i>قیمت کف دوم پایین‌تر است</i>"
+                                        f"🚀 <b>دایورجنس صعودی MACD</b>\n\n"
+                                        f"💎 نماد: <b>{persian_name}</b>\n"
+                                        f"⏳ تایم‌فریم: <b>{tf_name}</b>\n"
+                                        f"⏰ زمان (تهران): <b>{dt_tehran}</b>"
                                     )
                                 else:
                                     msg = (
-                                        f"📉 <b>دایورجنس نزولی MACD</b> 📉\n"
-                                        f"💎 نماد: <b>{persian_name}</b> | ⏳ تایم: <b>{tf_name}</b>\n\n"
-                                        f"⏰ زمان (تهران): {dt_tehran}\n\n"
-                                        f"📊 <b>بررسی شرط ۱ (مقدار MACD):</b>\n"
-                                        f"🔹 سقف اول: <code>{latest_sig['p1_macd']:.4f}</code>\n"
-                                        f"🔹 سقف دوم: <code>{latest_sig['macd']:.4f}</code>\n"
-                                        f"✅ <i>سقف اول بزرگتر است</i>\n\n"
-                                        f"💰 <b>بررسی شرط ۲ (قیمت):</b>\n"
-                                        f"🔹 قیمت سقف اول: <code>{latest_sig['p1_price']:.5f}</code>\n"
-                                        f"🔹 قیمت سقف دوم: <code>{latest_sig['price']:.5f}</code>\n"
-                                        f"✅ <i>قیمت سقف دوم بالاتر است</i>"
+                                        f"📉 <b>دایورجنس نزولی MACD</b>\n\n"
+                                        f"💎 نماد: <b>{persian_name}</b>\n"
+                                        f"⏳ تایم‌فریم: <b>{tf_name}</b>\n"
+                                        f"⏰ زمان (تهران): <b>{dt_tehran}</b>"
                                     )
                                 broadcast(msg)
 
