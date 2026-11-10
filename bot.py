@@ -66,7 +66,7 @@ def broadcast(text):
             print(f"Telegram send error: {e}")
 
 SYMBOLS = {
-    "OANDA:XAUUSD": "XAUUSD (Gold)",
+    "OANDA:XAUUSD": "Gold (XAUUSD)",
     "FX:EURUSD": "EURUSD",
     "FX:GBPUSD": "GBPUSD",
     "FX:USDJPY": "USDJPY",
@@ -81,7 +81,7 @@ TIMEFRAMES = {"1": "M1", "5": "M5", "15": "M15", "60": "H1", "240": "H4"}
 def get_main_menu():
     markup = types.InlineKeyboardMarkup(row_width=2)
     btn_live = types.InlineKeyboardButton("Live Radar", callback_data="menu_live")
-    btn_history = types.InlineKeyboardButton("History (220 Candles)", callback_data="menu_history")
+    btn_history = types.InlineKeyboardButton("History", callback_data="menu_history")
     markup.row(btn_live, btn_history)
     btns = []
     for sym, name in SYMBOLS.items():
@@ -96,9 +96,7 @@ if bot:
         save_state()
         bot.reply_to(
             message, 
-            "Bot is active.\n\n"
-            "Strategy: MACD Line (48, 104, 36) Divergence.\n"
-            "Choose an option below:", 
+            "Bot is active.\nStrategy: 5-step Histogram Divergence.", 
             reply_markup=get_main_menu()
         )
 
@@ -107,7 +105,7 @@ if bot:
         bot.answer_callback_query(call.id, "Processing...")
         
         if call.data == "menu_live":
-            msg = "<b>Live Divergences (Last 15 mins):</b>\n\n"
+            msg = "<b>Live Divergences:</b>\n\n"
             found = False
             for sym, name in SYMBOLS.items():
                 for tf_code in ["1", "5", "15"]:
@@ -119,11 +117,11 @@ if bot:
                             latest = signals[-1]
                             if latest['bars_ago'] <= 3: 
                                 dt_tehran = latest["time"].astimezone(tehran_tz).strftime('%H:%M')
-                                sig_type = "Bullish 🟢" if latest['type'] == 'Bullish' else "Bearish 🔴"
-                                msg += f"<b>{name}</b> | {tf_name}: {sig_type} | {dt_tehran}\n"
+                                sig_type = "Bullish" if latest['type'] == 'Bullish' else "Bearish"
+                                msg += f"{name} | {tf_name}: {sig_type} | {dt_tehran}\n"
                                 found = True
             if not found:
-                msg += "No live signals found in the last 15 mins. ❌"
+                msg += "No live signals found. ❌"
             bot.send_message(call.message.chat.id, msg, parse_mode="HTML", reply_markup=get_main_menu())
             
         elif call.data == "menu_history":
@@ -132,7 +130,7 @@ if bot:
         elif call.data.startswith("sym_"):
             sym = call.data.replace("sym_", "")
             name = SYMBOLS[sym]
-            msg = f"<b>Last Divergences for {name} (220 Candles):</b>\n\n"
+            msg = f"<b>Last Divergences for {name}:</b>\n\n"
             found_any = False
             for tf_code, tf_name in TIMEFRAMES.items():
                 df, err = fetch_tradingview_candles(sym, tf_code, 220)
@@ -141,14 +139,14 @@ if bot:
                     if signals:
                         latest = signals[-1]
                         dt_tehran = latest["time"].astimezone(tehran_tz).strftime('%Y-%m-%d %H:%M')
-                        sig_type = "Bullish 🟢" if latest['type'] == 'Bullish' else "Bearish 🔴"
+                        sig_type = "Bullish" if latest['type'] == 'Bullish' else "Bearish"
                         bars_ago = latest.get('bars_ago', 0)
-                        msg += f"<b>{tf_name}</b>: {sig_type} | {dt_tehran} | ({bars_ago} bars ago)\n"
+                        msg += f"{tf_name}: {sig_type} | {dt_tehran} | ({bars_ago} bars ago)\n"
                         found_any = True
                     else:
-                        msg += f"<b>{tf_name}</b>: No Signal ❌\n"
+                        msg += f"{tf_name}: No Signal ❌\n"
                 else:
-                    msg += f"<b>{tf_name}</b>: Data Error ⚠️\n"
+                    msg += f"{tf_name}: Data Error ⚠️\n"
             if not found_any:
                 msg += "\nNo valid divergences found."
             bot.send_message(call.message.chat.id, msg, parse_mode="HTML", reply_markup=get_main_menu())
@@ -245,66 +243,102 @@ def detect_macd_divergence(df):
     if df is None or len(df) < 150:
         return []
 
-    df = df.iloc[:-1]
+    df = df.iloc[:-1] 
     if len(df) < 150:
         return []
 
     exp1 = df['Close'].ewm(span=48, adjust=False).mean()
     exp2 = df['Close'].ewm(span=104, adjust=False).mean()
     macd_line = exp1 - exp2
+    signal_line = macd_line.ewm(span=36, adjust=False).mean()
     
+    df['Histogram'] = macd_line - signal_line
+    df['Slope'] = df['Histogram'].diff()
+
     signals = []
     total_bars = len(df)
     
-    bottoms = []
-    tops = []
-    for i in range(2, len(macd_line) - 1):
-        if macd_line.iloc[i] < macd_line.iloc[i-1] and macd_line.iloc[i] < macd_line.iloc[i+1]:
-            if macd_line.iloc[i] < 0:
-                bottoms.append(i)
-        if macd_line.iloc[i] > macd_line.iloc[i-1] and macd_line.iloc[i] > macd_line.iloc[i+1]:
-            if macd_line.iloc[i] > 0:
-                tops.append(i)
+    b_state = 0
+    b_p1_hist, b_p1_low, b_p1_idx = None, None, None
+    
+    s_state = 0
+    s_p1_hist, s_p1_high, s_p1_idx = None, None, None
 
-    for i in range(len(bottoms) - 1):
-        b1 = bottoms[i]
-        b2 = bottoms[i+1]
-        if (macd_line.iloc[b1:b2+1] < 0).all():
-            m1 = macd_line.iloc[b1]
-            m2 = macd_line.iloc[b2]
-            low1 = df['Low'].iloc[b1]
-            low2 = df['Low'].iloc[b2]
-            if abs(m1) > abs(m2) and low1 > low2:
-                bars_ago = total_bars - 1 - b2
-                signals.append({
-                    "type": "Bullish",
-                    "price": low2,
-                    "p1_price": low1,
-                    "macd": m2,
-                    "p1_macd": m1,
-                    "time": df.index[b2],
-                    "bars_ago": bars_ago
-                })
+    for i in range(2, len(df)):
+        curr_slope = df['Slope'].iloc[i]
+        prev_slope = df['Slope'].iloc[i-1]
+        
+        if b_state == 0:
+            if prev_slope < 0 and curr_slope >= 0:
+                hist_val = df['Histogram'].iloc[i-1]
+                if hist_val < 0: 
+                    b_p1_hist = hist_val
+                    b_p1_low = df['Low'].iloc[i-1] 
+                    b_p1_idx = i-1
+                    b_state = 1
+        elif b_state == 1:
+            if prev_slope > 0 and curr_slope <= 0:
+                hist_val = df['Histogram'].iloc[i-1]
+                if hist_val < 0:
+                    b_state = 2
+                else:
+                    b_state = 0 
+        elif b_state == 2:
+            if prev_slope < 0 and curr_slope >= 0:
+                hist_val = df['Histogram'].iloc[i-1]
+                if hist_val < 0:
+                    all_below = (df['Histogram'].iloc[b_p1_idx:i] < 0).all()
+                    if all_below:
+                        cond_hist = abs(b_p1_hist) > abs(hist_val)
+                        cond_price = b_p1_low > df['Low'].iloc[i-1]
+                        if cond_hist and cond_price:
+                            bars_ago = total_bars - 1 - (i-1)
+                            signals.append({
+                                "type": "Bullish",
+                                "price": df['Low'].iloc[i-1],
+                                "p1_price": b_p1_low,
+                                "macd": hist_val,
+                                "p1_macd": b_p1_hist,
+                                "time": df.index[i-1],
+                                "bars_ago": bars_ago
+                            })
+                    b_state = 0
 
-    for i in range(len(tops) - 1):
-        t1 = tops[i]
-        t2 = tops[i+1]
-        if (macd_line.iloc[t1:t2+1] > 0).all():
-            m1 = macd_line.iloc[t1]
-            m2 = macd_line.iloc[t2]
-            high1 = df['High'].iloc[t1]
-            high2 = df['High'].iloc[t2]
-            if m1 > m2 and high1 < high2:
-                bars_ago = total_bars - 1 - t2
-                signals.append({
-                    "type": "Bearish",
-                    "price": high2,
-                    "p1_price": high1,
-                    "macd": m2,
-                    "p1_macd": m1,
-                    "time": df.index[t2],
-                    "bars_ago": bars_ago
-                })
+        if s_state == 0:
+            if prev_slope > 0 and curr_slope <= 0:
+                hist_val = df['Histogram'].iloc[i-1]
+                if hist_val > 0:
+                    s_p1_hist = hist_val
+                    s_p1_high = df['High'].iloc[i-1]
+                    s_p1_idx = i-1
+                    s_state = 1
+        elif s_state == 1:
+            if prev_slope < 0 and curr_slope >= 0:
+                hist_val = df['Histogram'].iloc[i-1]
+                if hist_val > 0:
+                    s_state = 2
+                else:
+                    s_state = 0
+        elif s_state == 2:
+            if prev_slope > 0 and curr_slope <= 0:
+                hist_val = df['Histogram'].iloc[i-1]
+                if hist_val > 0:
+                    all_above = (df['Histogram'].iloc[s_p1_idx:i] > 0).all()
+                    if all_above:
+                        cond_hist = s_p1_hist > hist_val
+                        cond_price = s_p1_high < df['High'].iloc[i-1]
+                        if cond_hist and cond_price:
+                            bars_ago = total_bars - 1 - (i-1)
+                            signals.append({
+                                "type": "Bearish",
+                                "price": df['High'].iloc[i-1],
+                                "p1_price": s_p1_high,
+                                "macd": hist_val,
+                                "p1_macd": s_p1_hist,
+                                "time": df.index[i-1],
+                                "bars_ago": bars_ago
+                            })
+                    s_state = 0
 
     if signals:
         return [signals[-1]]
@@ -345,8 +379,10 @@ def live_scanner():
                                     f"Symbol: <b>{persian_name}</b>\n"
                                     f"Timeframe: <b>{tf_name}</b>\n"
                                     f"Time (Tehran): <b>{dt_tehran}</b>\n\n"
-                                    f"MACD 1: {latest_sig['p1_macd']:.5f}\n"
-                                    f"MACD 2: {latest_sig['macd']:.5f}"
+                                    f"Hist 1: {latest_sig['p1_macd']:.5f}\n"
+                                    f"Hist 2: {latest_sig['macd']:.5f}\n"
+                                    f"Price 1: {latest_sig['p1_price']:.5f}\n"
+                                    f"Price 2: {latest_sig['price']:.5f}"
                                 )
                                 broadcast(msg)
                     time.sleep(0.5) 
