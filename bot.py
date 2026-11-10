@@ -66,8 +66,8 @@ if bot:
         bot.reply_to(
             message, 
             f"Bot is active.\nCurrent Session: {session}\n\n"
-            "I will alert you when a Divergence is confirmed (3rd bar closed).\n"
-            "Use /status to see current Histogram/Price status.", 
+            "Scanning Gold and Majors in M1 and M5.\n"
+            "Waiting for the pattern to form. You will be alerted as soon as the 3rd histogram closes.", 
             parse_mode="HTML"
         )
 
@@ -201,32 +201,47 @@ def check_divergence(df, symbol, tf_name):
     exp2 = df['Close'].ewm(span=106, adjust=False).mean()
     macd_line = exp1 - exp2
     signal_line = macd_line.ewm(span=36, adjust=False).mean()
-    hist = macd_line - signal_line
+    df['Histogram'] = macd_line - signal_line
+    hist = df['Histogram']
 
     neg_hist = hist[hist < 0]
     pos_hist = hist[hist > 0]
     
-    # 1. Find the absolute global min/max
     if len(neg_hist) == 0 or len(pos_hist) == 0:
         return
 
     global_min_idx = neg_hist.idxmin()
     global_max_idx = pos_hist.idxmax()
 
-    # Bullish Divergence Logic
-    b1_idx = df.index.get_loc(global_min_idx)
-    
-    for i in range(b1_idx + 30, len(df) - 1):
-        if hist.iloc[i] < 0 and abs(hist.iloc[i]) > abs(hist.iloc[i-1]) and abs(hist.iloc[i]) > abs(hist.iloc[i+1]):
-            b2_idx = i
+    bottoms = []
+    tops = []
+    middle_peaks = []
+    middle_troughs = []
+
+    for i in range(1, len(df) - 1):
+        h_prev = hist.iloc[i-1]
+        h_curr = hist.iloc[i]
+        h_next = hist.iloc[i+1]
+        
+        if h_curr < 0 and abs(h_curr) > abs(h_prev) and abs(h_curr) > abs(h_next):
+            bottoms.append(i)
             
-            # Check for middle peak between b1 and b2
-            has_peak = False
-            for j in range(b1_idx + 1, b2_idx):
-                if hist.iloc[j] < 0 and abs(hist.iloc[j]) < abs(hist.iloc[j-1]) and abs(hist.iloc[j]) < abs(hist.iloc[j+1]):
-                    has_peak = True
-                    break
+        if h_curr < 0 and abs(h_curr) < abs(h_prev) and abs(h_curr) < abs(h_next):
+            middle_peaks.append(i)
             
+        if h_curr > 0 and h_curr > h_prev and h_curr > h_next:
+            tops.append(i)
+            
+        if h_curr > 0 and h_curr < h_prev and h_curr < h_next:
+            middle_troughs.append(i)
+
+    for i in range(len(bottoms) - 1):
+        b1_idx = bottoms[i]
+        b2_idx = bottoms[i+1]
+        
+        if (b2_idx - b1_idx) >= 30 and df.index[b1_idx] == global_min_idx:
+            
+            has_peak = any(b1_idx < mp < b2_idx for mp in middle_peaks)
             all_neg = (hist.iloc[b1_idx:b2_idx+1] < 0).all()
             
             if has_peak and all_neg:
@@ -236,12 +251,11 @@ def check_divergence(df, symbol, tf_name):
                 b2_low = df['Low'].iloc[b2_idx]
                 
                 if abs(b1_hist) > abs(b2_hist) and b1_low > b2_low:
-                    # Check if the 3rd bar of b2 just closed
                     if b2_idx + 1 == len(df) - 1:
                         dt_tehran = df.index[b2_idx].astimezone(tehran_tz).strftime('%H:%M')
                         session = get_current_session()
                         msg = (
-                            f"🚀 <b>Bullish Divergence CONFIRMED</b> 🚀\n\n"
+                            f"🚀 <b>Bullish Divergence</b> 🚀\n\n"
                             f"💎 Symbol: <b>{SYMBOLS[symbol]}</b>\n"
                             f"⏳ Timeframe: <b>{tf_name}</b>\n"
                             f"⏰ Time (Tehran): <b>{dt_tehran}</b>\n"
@@ -256,20 +270,13 @@ def check_divergence(df, symbol, tf_name):
                         broadcast(msg)
                         print(f"Signal Sent: {symbol} {tf_name} Bullish")
 
-    # Bearish Divergence Logic
-    t1_idx = df.index.get_loc(global_max_idx)
-    
-    for i in range(t1_idx + 30, len(df) - 1):
-        if hist.iloc[i] > 0 and hist.iloc[i] > hist.iloc[i-1] and hist.iloc[i] > hist.iloc[i+1]:
-            t2_idx = i
+    for i in range(len(tops) - 1):
+        t1_idx = tops[i]
+        t2_idx = tops[i+1]
+        
+        if (t2_idx - t1_idx) >= 30 and df.index[t1_idx] == global_max_idx:
             
-            # Check for middle trough between t1 and t2
-            has_trough = False
-            for j in range(t1_idx + 1, t2_idx):
-                if hist.iloc[j] > 0 and hist.iloc[j] < hist.iloc[j-1] and hist.iloc[j] < hist.iloc[j+1]:
-                    has_trough = True
-                    break
-            
+            has_trough = any(t1_idx < mt < t2_idx for mt in middle_troughs)
             all_pos = (hist.iloc[t1_idx:t2_idx+1] > 0).all()
             
             if has_trough and all_pos:
@@ -283,7 +290,7 @@ def check_divergence(df, symbol, tf_name):
                         dt_tehran = df.index[t2_idx].astimezone(tehran_tz).strftime('%H:%M')
                         session = get_current_session()
                         msg = (
-                            f"📉 <b>Bearish Divergence CONFIRMED</b> 📉\n\n"
+                            f"📉 <b>Bearish Divergence</b> 📉\n\n"
                             f"💎 Symbol: <b>{SYMBOLS[symbol]}</b>\n"
                             f"⏳ Timeframe: <b>{tf_name}</b>\n"
                             f"⏰ Time (Tehran): <b>{dt_tehran}</b>\n"
