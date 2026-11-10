@@ -1,6 +1,6 @@
-flask
-telebot
+pyTelegramBotAPI
+websocket-client
 pandas
 numpy
+Flask
 pytz
-websocket-client
