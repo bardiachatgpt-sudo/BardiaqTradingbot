@@ -179,22 +179,43 @@ def check_step1_daily(df_daily):
     hist = df_closed['small_hist'].iloc[-1]
     return current_macd < 0 or hist < 0
 
-def check_step2_h4_divergence(df_h4):
-    if len(df_h4) < 50: return None
-    df = add_macd(df_h4, 12, 26, 9, 'def')
-    df = find_pivots(df, 'def_macd', order=5)
+def check_divergence_generic(df, order=5):
+    """دایورجنس دیفالت (12,26,9) برای H4 و M5"""
+    if len(df) < 50: return None
+    df = add_macd(df, 12, 26, 9, 'def')
+    df = find_pivots(df, 'def_macd', order=order)
     df_closed = df.iloc[:-1]
 
     lows = df_closed[df_closed['def_macd_pivot_low'].notna()].tail(2)
     if len(lows) == 2:
         p1, p2 = lows.iloc[0], lows.iloc[1]
-        if p2['Low'] < p1['Low'] and p2['def_macd'] > p1['def_macd']:
+        if p2['def_macd_pivot_low'] > p1['def_macd_pivot_low']:
             return "BUY"
             
     highs = df_closed[df_closed['def_macd_pivot_high'].notna()].tail(2)
     if len(highs) == 2:
         h1, h2 = highs.iloc[0], highs.iloc[1]
-        if h2['High'] > h1['High'] and h2['def_macd'] < h1['def_macd']:
+        if h2['def_macd_pivot_high'] < h1['def_macd_pivot_high']:
+            return "SELL"
+    return None
+
+def check_divergence_4x_m1(df):
+    """دایورجنس ۴ برابری (48,106,36) مخصوص تایم ۱ دقیقه"""
+    if len(df) < 100: return None
+    df = add_macd(df, 48, 106, 36, 'macd4x')
+    df = find_pivots(df, 'macd4x_macd', order=3) # order=3 برای M1 بهتره چون نویز کمتره
+    df_closed = df.iloc[:-1]
+
+    lows = df_closed[df_closed['macd4x_macd_pivot_low'].notna()].tail(2)
+    if len(lows) == 2:
+        p1, p2 = lows.iloc[0], lows.iloc[1]
+        if p2['macd4x_macd_pivot_low'] > p1['macd4x_macd_pivot_low']:
+            return "BUY"
+            
+    highs = df_closed[df_closed['macd4x_macd_pivot_high'].notna()].tail(2)
+    if len(highs) == 2:
+        h1, h2 = highs.iloc[0], highs.iloc[1]
+        if h2['macd4x_macd_pivot_high'] < h1['macd4x_macd_pivot_high']:
             return "SELL"
     return None
 
@@ -234,7 +255,7 @@ def scanner_loop():
                 if df_h4.empty:
                     time.sleep(2); continue
                 
-                trend = check_step2_h4_divergence(df_h4)
+                trend = check_divergence_generic(df_h4)
                 if not trend:
                     time.sleep(2); continue
                 
@@ -253,7 +274,7 @@ def scanner_loop():
                         f"📉 جهت: <b>{setup['type']}</b>\n"
                         f"⏱ تریگر: تغییر فاز مکدی دیفالت M1\n"
                         f"💰 قیمت ورود: <code>{setup['price']:.5f}</code>\n\n"
-                        f"✅ <i>تایید شده توسط: مکدی کوچیک دیلی + دایورجنس ۴ ساعته</i>"
+                        f"✅ <i>تایید شده توسط: مکدی کوچیک دیلی + دایورجنس مکدی ۴ ساعته</i>"
                     )
                     
                     for chat_id in list(subscribed_users):
@@ -271,7 +292,7 @@ def get_keyboard():
     markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
     markup.row("📊 وضعیت ربات", "📰 وضعیت بازار")
     markup.row("📜 تاریخچه سیگنال‌ها", "🎯 استراتژی فعلی")
-    markup.row("🔍 رادار دایورجنس") # دکمه جدید
+    markup.row("🔍 رادار دایورجنس")
     return markup
 
 @bot.message_handler(commands=['start'])
@@ -340,76 +361,73 @@ def cmd_strategy(message):
     text = (
         "🎯 <b>استراتژی ۳ مکدی (Top-Down):</b>\n\n"
         "1️⃣ <b>گام اول (دیلی):</b> مکدی کوچیک (3,6,2) در تایم دیلی چک می‌شود.\n"
-        "2️⃣ <b>گام دوم (H4):</b> دایورجنس در مکدی دیفالت (12,26,9) تایید می‌شود.\n"
-        "3️⃣ <b>گام سوم (M1):</b> تغییر فاز مکدی دیفالت در ۱ دقیقه، تریگر ورود است.\n\n"
+        "2️⃣ <b>گام دوم (H4 و M5):</b> دایورجنس دیفالت (12,26,9) تایید می‌شود.\n"
+        "3️⃣ <b>گام سوم (M1):</b> دایورجنس ۴ برابری (48,106,36) + تغییر فاز مکدی دیفالت.\n\n"
         "💰 قیمت‌ها همیشه با ۵ رقم اعشار ارسال می‌شوند."
     )
     bot.send_message(message.chat.id, text, parse_mode="HTML", reply_markup=get_keyboard())
 
-# ==================== 🔍 دکمه رادار دایورجنس ====================
+# ==================== 🔍 دکمه رادار دایورجنس (سه لایه) ====================
 @bot.message_handler(func=lambda m: m.text == "🔍 رادار دایورجنس")
 def cmd_radar(message):
-    msg = bot.send_message(message.chat.id, "⏳ در حال اسکن رادار برای شکار دایورجنس...")
-    radar_text = "🔍 <b>رادار شناسایی احتمال دایورجنس (H4)</b>\n━━━━━━━━━━━━━━━━━\n\n"
+    msg = bot.send_message(message.chat.id, "⏳ در حال اسکن ۳ لایه (H4, M5, M1)...")
+    radar_text = "🔍 <b>رادار دایورجنس (سه لایه)</b>\n━━━━━━━━━━━━━━━━━\n\n"
     
     found_any = False
     for sym in SYMBOLS:
-        # ۱. بررسی شرایط اولیه در دیلی
-        df_daily = fetch_tv_candles(sym["symbol"], "1D", 50)
-        if df_daily.empty or not check_step1_daily(df_daily):
-            time.sleep(1)
-            continue
-            
-        # ۲. بررسی احتمال شکل‌گیری در H4
-        df_h4 = fetch_tv_candles(sym["symbol"], "240", 100)
-        if df_h4.empty:
-            time.sleep(1)
-            continue
-            
-        df = add_macd(df_h4, 12, 26, 9, 'def')
-        df = find_pivots(df, 'def_macd', order=5)
-        df_closed = df.iloc[:-1]
+        sym_name = sym["name"]
+        sym_code = sym["symbol"]
         
-        # پیدا کردن ۲ کف آخر برای بررسی دایورجنس
-        recent_lows = df_closed[df_closed['def_macd_pivot_low'].notna()].tail(2)
-        
-        # پیدا کردن ۲ سقف آخر
-        recent_highs = df_closed[df_closed['def_macd_pivot_high'].notna()].tail(2)
-        
-        current_price = df_closed['Close'].iloc[-1]
+        # لایه ۱: H4
+        df_h4 = fetch_tv_candles(sym_code, "240", 100)
+        h4_div = check_divergence_generic(df_h4) if not df_h4.empty else None
+        h4_price = df_h4['Close'].iloc[-1] if not df_h4.empty else 0.0
 
-        # بررسی دایورجنس صعودی (احتمال خرید)
-        if len(recent_lows) == 2:
-            p1, p2 = recent_lows.iloc[0], recent_lows.iloc[1]
-            if p2['Low'] < p1['Low'] and p2['def_macd'] > p1['def_macd']:
-                found_any = True
-                radar_text += (
-                    f"🟢 <b>{sym['name']}</b>\n"
-                    f"وضعیت: دایورجنس صعودی H4 شکل گرفته!\n"
-                    f"💰 قیمت فعلی: <code>{current_price:.5f}</code>\n"
-                    f"⏱ منتظر تریگر M1 باشید.\n───────────────\n"
-                )
-                time.sleep(1)
-                continue
+        # لایه ۲: M5
+        df_m5 = fetch_tv_candles(sym_code, "5", 100)
+        m5_div = check_divergence_generic(df_m5) if not df_m5.empty else None
+        m5_price = df_m5['Close'].iloc[-1] if not df_m5.empty else 0.0
 
-        # بررسی دایورجنس نزولی (احتمال فروش)
-        if len(recent_highs) == 2:
-            h1, h2 = recent_highs.iloc[0], recent_highs.iloc[1]
-            if h2['High'] > h1['High'] and h2['def_macd'] < h1['def_macd']:
-                found_any = True
-                radar_text += (
-                    f"🔴 <b>{sym['name']}</b>\n"
-                    f"وضعیت: دایورجنس نزولی H4 شکل گرفته!\n"
-                    f"💰 قیمت فعلی: <code>{current_price:.5f}</code>\n"
-                    f"⏱ منتظر تریگر M1 باشید.\n───────────────\n"
-                )
-                time.sleep(1)
-                continue
-                
+        # لایه ۳: M1 (۴ برابری)
+        df_m1 = fetch_tv_candles(sym_code, "1", 150) # ۱۵۰ کندل برای محاسبه ۴ برابری لازمه
+        m1_div = check_divergence_4x_m1(df_m1) if not df_m1.empty else None
+        m1_price = df_m1['Close'].iloc[-1] if not df_m1.empty else 0.0
+
+        if h4_div or m5_div or m1_div:
+            found_any = True
+            radar_text += f"🔹 <b>{sym_name}</b>\n"
+            
+            # H4
+            if h4_div:
+                d = "صعودی 🟢" if h4_div == "BUY" else "نزولی 🔴"
+                radar_text += f"⏱ H4 (دیفالت): دایورجنس {d}\n"
+            else:
+                radar_text += f"⏱ H4 (دیفالت): بدون دایورجنس\n"
+            
+            # M5
+            if m5_div:
+                d = "صعودی 🟢" if m5_div == "BUY" else "نزولی 🔴"
+                radar_text += f"⏱ M5 (دیفالت): دایورجنس {d}\n"
+            else:
+                radar_text += f"⏱ M5 (دیفالت): بدون دایورجنس\n"
+
+            # M1 (۴ برابری)
+            if m1_div:
+                d = "صعودی 🟢" if m1_div == "BUY" else "نزولی 🔴"
+                radar_text += f"⚡ M1 (۴ برابری): دایورجنس {d}\n"
+            else:
+                radar_text += f"⚡ M1 (۴ برابری): بدون دایورجنس\n"
+
+            # قیمت‌ها
+            radar_text += f"💰 قیمت H4: <code>{h4_price:.5f}</code>\n"
+            radar_text += f"💰 قیمت M5: <code>{m5_price:.5f}</code>\n"
+            radar_text += f"💰 قیمت M1: <code>{m1_price:.5f}</code>\n"
+            radar_text += "───────────────\n"
+            
         time.sleep(1)
         
     if not found_any:
-        radar_text += "هیچ نمادی در حال حاضر شرایط اولیه برای دایورجنس H4 را ندارد."
+        radar_text += "هیچ نمادی در حال حاضر دایورجنس معتبر در لایه‌های H4، M5 یا M1 ندارد."
         
     bot.edit_message_text(radar_text, chat_id=message.chat.id, message_id=msg.message_id, parse_mode="HTML")
 
