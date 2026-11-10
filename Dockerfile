@@ -5,7 +5,6 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-# نصب پیش‌نیازهای ضروری سیستم‌عامل برای کامپایل کردن پکیج‌ها
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     gcc \
