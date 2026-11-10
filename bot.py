@@ -36,7 +36,6 @@ SIGNALS_FILE = "signals_log.json"
 subscribed_users = set()
 state_lock = threading.Lock()
 app = Flask(__name__)
-
 active_trades = {}
 
 # ==================== 💾 ذخیره و بارگذاری ====================
@@ -173,66 +172,49 @@ def find_pivots(df, col_name, order=5):
 
 # ==================== 🎯 منطق استراتژی ====================
 def check_step1_daily(df_daily):
-    """گام ۱: بررسی مکدی کوچیک دیلی"""
     if len(df_daily) < 20: return False
-    
     df = add_macd(df_daily, 3, 6, 2, 'small')
     df_closed = df.iloc[:-1]
-    
     current_macd = df_closed['small_macd'].iloc[-1]
     hist = df_closed['small_hist'].iloc[-1]
-    
     return current_macd < 0 or hist < 0
 
 def check_step2_h4_divergence(df_h4):
-    """گام ۲: بررسی دایورجنس در تایم ۴ ساعته با مکدی دیفالت"""
     if len(df_h4) < 50: return None
-    
     df = add_macd(df_h4, 12, 26, 9, 'def')
     df = find_pivots(df, 'def_macd', order=5)
     df_closed = df.iloc[:-1]
 
-    # دایورجنس صعودی
     lows = df_closed[df_closed['def_macd_pivot_low'].notna()].tail(2)
     if len(lows) == 2:
         p1, p2 = lows.iloc[0], lows.iloc[1]
         if p2['Low'] < p1['Low'] and p2['def_macd'] > p1['def_macd']:
             return "BUY"
             
-    # دایورجنس نزولی
     highs = df_closed[df_closed['def_macd_pivot_high'].notna()].tail(2)
     if len(highs) == 2:
         h1, h2 = highs.iloc[0], highs.iloc[1]
         if h2['High'] > h1['High'] and h2['def_macd'] < h1['def_macd']:
             return "SELL"
-            
     return None
 
 def check_step3_m1_entry(df_m1, direction):
-    """گام ۳: تغییر فاز مکدی دیفالت در M1"""
     if len(df_m1) < 20: return None
-    
     df = add_macd(df_m1, 12, 26, 9, 'def')
     df_closed = df.iloc[:-1]
-    
     last = df_closed.iloc[-1]
     prev = df_closed.iloc[-2]
     current_price = last['Close']
 
-    if direction == "BUY":
-        if prev['def_macd'] < 0 and last['def_macd'] > 0:
-            return {"type": "BUY", "price": current_price}
-
-    elif direction == "SELL":
-        if prev['def_macd'] > 0 and last['def_macd'] < 0:
-            return {"type": "SELL", "price": current_price}
-
+    if direction == "BUY" and prev['def_macd'] < 0 and last['def_macd'] > 0:
+        return {"type": "BUY", "price": current_price}
+    elif direction == "SELL" and prev['def_macd'] > 0 and last['def_macd'] < 0:
+        return {"type": "SELL", "price": current_price}
     return None
 
 # ==================== 🔄 اسکنر پس‌زمینه ====================
 def scanner_loop():
     time.sleep(10)
-    
     while True:
         try:
             if not subscribed_users:
@@ -242,35 +224,25 @@ def scanner_loop():
             for sym in SYMBOLS:
                 sym_name = sym["name"]
                 sym_code = sym["symbol"]
-                
-                if sym_name in active_trades:
-                    continue
+                if sym_name in active_trades: continue
 
-                # گام ۱: دیلی
                 df_daily = fetch_tv_candles(sym_code, "1D", 50)
                 if df_daily.empty or not check_step1_daily(df_daily):
-                    time.sleep(2)
-                    continue
+                    time.sleep(2); continue
                 
-                # گام ۲: ۴ ساعته
                 df_h4 = fetch_tv_candles(sym_code, "240", 100)
                 if df_h4.empty:
-                    time.sleep(2)
-                    continue
+                    time.sleep(2); continue
                 
                 trend = check_step2_h4_divergence(df_h4)
                 if not trend:
-                    time.sleep(2)
-                    continue
+                    time.sleep(2); continue
                 
-                # گام ۳: ۱ دقیقه
                 df_m1 = fetch_tv_candles(sym_code, "1", 50)
                 if df_m1.empty:
-                    time.sleep(2)
-                    continue
+                    time.sleep(2); continue
                 
                 setup = check_step3_m1_entry(df_m1, trend)
-                
                 if setup:
                     active_trades[sym_name] = setup
                     save_signal({"symbol": sym_name, "type": setup['type'], "price": setup['price']})
@@ -285,27 +257,21 @@ def scanner_loop():
                     )
                     
                     for chat_id in list(subscribed_users):
-                        try:
-                            bot.send_message(chat_id, msg, parse_mode="HTML")
-                        except Exception as e:
-                            print(f"Send error: {e}")
+                        try: bot.send_message(chat_id, msg, parse_mode="HTML")
+                        except Exception as e: print(f"Send error: {e}")
                             
                     threading.Timer(300, lambda s=sym_name: active_trades.pop(s, None)).start()
-
                 time.sleep(2)
-
         except Exception as e:
             print(f"Scanner error: {e}")
-            
         time.sleep(60)
 
-# ==================== 🤖 تلگرام ====================
+# ==================== 🤖 تلگرام و کیبورد ====================
 def get_keyboard():
     markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
-    markup.add(
-        telebot.types.KeyboardButton("📊 وضعیت ربات"),
-        telebot.types.KeyboardButton("📜 تاریخچه سیگنال‌ها")
-    )
+    markup.row("📊 وضعیت ربات", "📰 وضعیت بازار")
+    markup.row("📜 تاریخچه سیگنال‌ها", "🎯 استراتژی فعلی")
+    markup.row("🔍 رادار دایورجنس") # دکمه جدید
     return markup
 
 @bot.message_handler(commands=['start'])
@@ -314,18 +280,12 @@ def cmd_start(message):
         subscribed_users.add(message.chat.id)
     save_state()
     
-    # پاک کردن دکمه‌های قدیمی
-    bot.send_message(
-        message.chat.id,
-        "♻️ در حال بروزرسانی منو...",
-        reply_markup=telebot.types.ReplyKeyboardRemove()
-    )
+    bot.send_message(message.chat.id, "♻️ در حال بروزرسانی منو...", reply_markup=telebot.types.ReplyKeyboardRemove())
     
-    # ارسال دکمه‌های جدید
     bot.send_message(
         message.chat.id, 
-        "🤖 <b>ربات استراتژی کامل ۳ مکدی فعال شد!</b>\n"
-        "روند: دیلی (کوچیک) ➔ ۴ ساعته (دایورجنس) ➔ ۱ دقیقه (تغییر فاز)",
+        "🤖 <b>ربات استراتژی کامل ۳ مکدی فعال شد!</b>\n\n"
+        "از دکمه‌های زیر برای تعامل با ربات استفاده کن.",
         parse_mode="HTML", 
         reply_markup=get_keyboard()
     )
@@ -335,26 +295,123 @@ def cmd_status(message):
     txt = (
         f"📊 <b>وضعیت ربات:</b>\n\n"
         f"👥 کاربران: <b>{len(subscribed_users)}</b>\n"
-        f"🎯 در حال انتظار: <b>{len(active_trades)}</b>\n"
-        f"🟢 آنلاین."
+        f"🎯 معاملات در انتظار: <b>{len(active_trades)}</b>\n"
+        f"🟢 سیستم آنلاین است."
     )
     bot.send_message(message.chat.id, txt, parse_mode="HTML", reply_markup=get_keyboard())
 
 @bot.message_handler(func=lambda m: m.text == "📜 تاریخچه سیگنال‌ها")
 def cmd_history(message):
     if not os.path.exists(SIGNALS_FILE):
-        bot.send_message(message.chat.id, "📂 خالی است.")
+        bot.send_message(message.chat.id, "📂 هنوز سیگنالی ثبت نشده.", reply_markup=get_keyboard())
         return
     with open(SIGNALS_FILE, "r") as f:
         data = json.load(f)
     if not data:
-        bot.send_message(message.chat.id, "📂 خالی است.")
+        bot.send_message(message.chat.id, "📂 هنوز سیگنالی ثبت نشده.", reply_markup=get_keyboard())
         return
-    text = "📜 <b>آخرین سیگنال‌ها:</b>\n\n"
+    text = "📜 <b>آخرین ۱۰ سیگنال:</b>\n\n"
     for s in data[:10]:
         t = datetime.fromtimestamp(s["time"]).strftime("%H:%M")
         text += f"🕐 {t} | {s['symbol']} | {s['type']} | {s['price']:.5f}\n"
-    bot.send_message(message.chat.id, text, parse_mode="HTML")
+    bot.send_message(message.chat.id, text, parse_mode="HTML", reply_markup=get_keyboard())
+
+@bot.message_handler(func=lambda m: m.text == "📰 وضعیت بازار")
+def cmd_market(message):
+    msg = bot.send_message(message.chat.id, "⏳ در حال دریافت قیمت‌های لحظه‌ای...")
+    text = "📰 <b>قیمت لحظه‌ای بازار (M1)</b>\n━━━━━━━━━━━━━━━━━\n"
+    
+    for sym in SYMBOLS:
+        df = fetch_tv_candles(sym["symbol"], "1", 50)
+        if not df.empty:
+            df = add_macd(df, 12, 26, 9, 'def')
+            price = df['Close'].iloc[-1]
+            macd = df['def_macd'].iloc[-1]
+            status = "🟢 مثبت" if macd > 0 else "🔴 منفی"
+            text += f"🔹 <b>{sym['name']}</b>\n💰 قیمت: <code>{price:.5f}</code>\n📊 MACD: {status}\n───────────────\n"
+        else:
+            text += f"🔹 <b>{sym['name']}</b>\n❌ خطا در دریافت داده\n───────────────\n"
+        time.sleep(1)
+    
+    bot.edit_message_text(text, chat_id=message.chat.id, message_id=msg.message_id, parse_mode="HTML")
+
+@bot.message_handler(func=lambda m: m.text == "🎯 استراتژی فعلی")
+def cmd_strategy(message):
+    text = (
+        "🎯 <b>استراتژی ۳ مکدی (Top-Down):</b>\n\n"
+        "1️⃣ <b>گام اول (دیلی):</b> مکدی کوچیک (3,6,2) در تایم دیلی چک می‌شود.\n"
+        "2️⃣ <b>گام دوم (H4):</b> دایورجنس در مکدی دیفالت (12,26,9) تایید می‌شود.\n"
+        "3️⃣ <b>گام سوم (M1):</b> تغییر فاز مکدی دیفالت در ۱ دقیقه، تریگر ورود است.\n\n"
+        "💰 قیمت‌ها همیشه با ۵ رقم اعشار ارسال می‌شوند."
+    )
+    bot.send_message(message.chat.id, text, parse_mode="HTML", reply_markup=get_keyboard())
+
+# ==================== 🔍 دکمه رادار دایورجنس ====================
+@bot.message_handler(func=lambda m: m.text == "🔍 رادار دایورجنس")
+def cmd_radar(message):
+    msg = bot.send_message(message.chat.id, "⏳ در حال اسکن رادار برای شکار دایورجنس...")
+    radar_text = "🔍 <b>رادار شناسایی احتمال دایورجنس (H4)</b>\n━━━━━━━━━━━━━━━━━\n\n"
+    
+    found_any = False
+    for sym in SYMBOLS:
+        # ۱. بررسی شرایط اولیه در دیلی
+        df_daily = fetch_tv_candles(sym["symbol"], "1D", 50)
+        if df_daily.empty or not check_step1_daily(df_daily):
+            time.sleep(1)
+            continue
+            
+        # ۲. بررسی احتمال شکل‌گیری در H4
+        df_h4 = fetch_tv_candles(sym["symbol"], "240", 100)
+        if df_h4.empty:
+            time.sleep(1)
+            continue
+            
+        df = add_macd(df_h4, 12, 26, 9, 'def')
+        df = find_pivots(df, 'def_macd', order=5)
+        df_closed = df.iloc[:-1]
+        
+        # پیدا کردن ۲ کف آخر برای بررسی دایورجنس
+        recent_lows = df_closed[df_closed['def_macd_pivot_low'].notna()].tail(2)
+        
+        # پیدا کردن ۲ سقف آخر
+        recent_highs = df_closed[df_closed['def_macd_pivot_high'].notna()].tail(2)
+        
+        current_price = df_closed['Close'].iloc[-1]
+
+        # بررسی دایورجنس صعودی (احتمال خرید)
+        if len(recent_lows) == 2:
+            p1, p2 = recent_lows.iloc[0], recent_lows.iloc[1]
+            if p2['Low'] < p1['Low'] and p2['def_macd'] > p1['def_macd']:
+                found_any = True
+                radar_text += (
+                    f"🟢 <b>{sym['name']}</b>\n"
+                    f"وضعیت: دایورجنس صعودی H4 شکل گرفته!\n"
+                    f"💰 قیمت فعلی: <code>{current_price:.5f}</code>\n"
+                    f"⏱ منتظر تریگر M1 باشید.\n───────────────\n"
+                )
+                time.sleep(1)
+                continue
+
+        # بررسی دایورجنس نزولی (احتمال فروش)
+        if len(recent_highs) == 2:
+            h1, h2 = recent_highs.iloc[0], recent_highs.iloc[1]
+            if h2['High'] > h1['High'] and h2['def_macd'] < h1['def_macd']:
+                found_any = True
+                radar_text += (
+                    f"🔴 <b>{sym['name']}</b>\n"
+                    f"وضعیت: دایورجنس نزولی H4 شکل گرفته!\n"
+                    f"💰 قیمت فعلی: <code>{current_price:.5f}</code>\n"
+                    f"⏱ منتظر تریگر M1 باشید.\n───────────────\n"
+                )
+                time.sleep(1)
+                continue
+                
+        time.sleep(1)
+        
+    if not found_any:
+        radar_text += "هیچ نمادی در حال حاضر شرایط اولیه برای دایورجنس H4 را ندارد."
+        
+    bot.edit_message_text(radar_text, chat_id=message.chat.id, message_id=msg.message_id, parse_mode="HTML")
 
 # ==================== 🚀 اجرا ====================
 if __name__ == "__main__":
