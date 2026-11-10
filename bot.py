@@ -32,17 +32,11 @@ def broadcast(text):
 def get_current_session():
     now = datetime.now(tehran_tz)
     t = now.hour + now.minute / 60.0
-    
     sessions = []
-    if 3.5 <= t < 12.5:
-        sessions.append("Tokyo")
-    if 11.5 <= t < 20.5:
-        sessions.append("London")
-    if t >= 16.5 or t < 1.5:
-        sessions.append("New York")
-        
-    if not sessions:
-        return "Off-Session"
+    if 3.5 <= t < 12.5: sessions.append("Tokyo")
+    if 11.5 <= t < 20.5: sessions.append("London")
+    if t >= 16.5 or t < 1.5: sessions.append("New York")
+    if not sessions: return "Off-Session"
     return " + ".join(sessions)
 
 SYMBOLS = {
@@ -62,45 +56,27 @@ if bot:
     @bot.message_handler(commands=['start'])
     def send_welcome(message):
         subscribed_users.add(message.chat.id)
-        session = get_current_session()
         bot.reply_to(
             message, 
-            f"Bot is active.\nCurrent Session: {session}\n\n"
-            "Scanning Gold and Majors in M1 and M5.\n"
-            "Waiting for the pattern to form. You will be alerted as soon as the 3rd histogram closes.", 
+            "Bot is active.\n"
+            "Use /status to see the current phase and what I am waiting for on every pair.", 
             parse_mode="HTML"
         )
 
     @bot.message_handler(commands=['status'])
     def send_status(message):
-        bot.reply_to(message, "Fetching live data for all pairs...")
-        status_msg = "📊 <b>Current Market Status:</b>\n\n"
+        msg = bot.reply_to(message, "Fetching live data...")
+        status_msg = "📊 <b>Live Market Status:</b>\n\n"
         
         for symbol in SYMBOLS.keys():
             for tf_code, tf_name in TIMEFRAMES.items():
-                df = fetch_tradingview_candles(symbol, tf_code, 100)
+                df = fetch_tradingview_candles(symbol, tf_code, 220)
                 if df is not None:
-                    df_closed = df.iloc[:-1]
-                    if len(df_closed) < 150: continue
-                    
-                    exp1 = df_closed['Close'].ewm(span=48, adjust=False).mean()
-                    exp2 = df_closed['Close'].ewm(span=106, adjust=False).mean()
-                    macd_line = exp1 - exp2
-                    signal_line = macd_line.ewm(span=36, adjust=False).mean()
-                    hist = macd_line - signal_line
-                    
-                    last_hist = hist.iloc[-1]
-                    last_low = df_closed['Low'].iloc[-1]
-                    last_high = df_closed['High'].iloc[-1]
-                    
-                    status_msg += f"💎 <b>{SYMBOLS[symbol]}</b> ({tf_name}):\n"
-                    status_msg += f"Hist: <code>{last_hist:.6f}</code> | Low: <code>{last_low:.5f}</code> | High: <code>{last_high:.5f}</code>\n\n"
+                    state_text = analyze_current_state(df)
+                    status_msg += f"💎 <b>{SYMBOLS[symbol]}</b> ({tf_name}):\n{state_text}\n\n"
         
-        if len(status_msg) > 4000:
-            for i in range(0, len(status_msg), 4000):
-                bot.send_message(message.chat.id, status_msg[i:i+4000], parse_mode="HTML")
-        else:
-            bot.send_message(message.chat.id, status_msg, parse_mode="HTML")
+        for i in range(0, len(status_msg), 4000):
+            bot.send_message(message.chat.id, status_msg[i:i+4000], parse_mode="HTML")
 
 @app.route('/')
 def home():
@@ -136,11 +112,8 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
         bars = []
         start_t = time.time()
         while time.time() - start_t < 10:
-            try:
-                raw = ws.recv()
-            except Exception:
-                break
-                
+            try: raw = ws.recv()
+            except Exception: break
             if not raw: break
             if raw.startswith("~m~") and "~h~" in raw:
                 ws.send(raw)
@@ -169,141 +142,217 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
                                 })
                 elif m_type == "series_completed":
                     break
-            if len(bars) >= n_bars: 
-                break
+            if len(bars) >= n_bars: break
             
         if ws:
             try: ws.close()
             except: pass
         
-        if len(bars) < 150: 
-            return None
+        if len(bars) < 150: return None
         df = pd.DataFrame(bars)
         df["Time"] = pd.to_datetime(df["Time"], unit="s", utc=True)
         df.set_index("Time", inplace=True)
         df = df[~df.index.duplicated(keep="last")].sort_index()
         return df
-    except Exception as e:
+    except Exception:
         if ws:
             try: ws.close()
             except Exception: pass
         return None
 
-def check_divergence(df, symbol, tf_name):
-    if df is None or len(df) < 150:
-        return
-
-    df = df.iloc[:-1] 
-    if len(df) < 150:
-        return
-
-    exp1 = df['Close'].ewm(span=48, adjust=False).mean()
-    exp2 = df['Close'].ewm(span=106, adjust=False).mean()
+def get_histogram(df):
+    df_closed = df.iloc[:-1].copy()
+    if len(df_closed) < 150: return None, None
+    exp1 = df_closed['Close'].ewm(span=48, adjust=False).mean()
+    exp2 = df_closed['Close'].ewm(span=106, adjust=False).mean()
     macd_line = exp1 - exp2
     signal_line = macd_line.ewm(span=36, adjust=False).mean()
-    df['Histogram'] = macd_line - signal_line
-    hist = df['Histogram']
+    df_closed['Histogram'] = macd_line - signal_line
+    return df_closed, df_closed['Histogram'].tolist()
 
-    neg_hist = hist[hist < 0]
-    pos_hist = hist[hist > 0]
+def analyze_current_state(df):
+    df_closed, hist = get_histogram(df)
+    if df_closed is None: return "Not enough data."
     
-    if len(neg_hist) == 0 or len(pos_hist) == 0:
-        return
-
-    global_min_idx = neg_hist.idxmin()
-    global_max_idx = pos_hist.idxmax()
-
-    bottoms = []
-    tops = []
-    middle_peaks = []
-    middle_troughs = []
-
-    for i in range(1, len(df) - 1):
-        h_prev = hist.iloc[i-1]
-        h_curr = hist.iloc[i]
-        h_next = hist.iloc[i+1]
-        
-        if h_curr < 0 and abs(h_curr) > abs(h_prev) and abs(h_curr) > abs(h_next):
-            bottoms.append(i)
-            
-        if h_curr < 0 and abs(h_curr) < abs(h_prev) and abs(h_curr) < abs(h_next):
-            middle_peaks.append(i)
-            
-        if h_curr > 0 and h_curr > h_prev and h_curr > h_next:
-            tops.append(i)
-            
-        if h_curr > 0 and h_curr < h_prev and h_curr < h_next:
-            middle_troughs.append(i)
-
-    for i in range(len(bottoms) - 1):
-        b1_idx = bottoms[i]
-        b2_idx = bottoms[i+1]
-        
-        if (b2_idx - b1_idx) >= 30 and df.index[b1_idx] == global_min_idx:
-            
-            has_peak = any(b1_idx < mp < b2_idx for mp in middle_peaks)
-            all_neg = (hist.iloc[b1_idx:b2_idx+1] < 0).all()
-            
-            if has_peak and all_neg:
-                b1_hist = hist.iloc[b1_idx]
-                b2_hist = hist.iloc[b2_idx]
-                b1_low = df['Low'].iloc[b1_idx]
-                b2_low = df['Low'].iloc[b2_idx]
+    last_hist = hist[-1]
+    
+    if last_hist < 0:
+        # NEGATIVE PHASE
+        phase_start = 0
+        for i in range(len(hist)-1, -1, -1):
+            if hist[i] > 0:
+                phase_start = i
+                break
                 
-                if abs(b1_hist) > abs(b2_hist) and b1_low > b2_low:
-                    if b2_idx + 1 == len(df) - 1:
-                        dt_tehran = df.index[b2_idx].astimezone(tehran_tz).strftime('%H:%M')
-                        session = get_current_session()
-                        msg = (
-                            f"🚀 <b>Bullish Divergence</b> 🚀\n\n"
-                            f"💎 Symbol: <b>{SYMBOLS[symbol]}</b>\n"
-                            f"⏳ Timeframe: <b>{tf_name}</b>\n"
-                            f"⏰ Time (Tehran): <b>{dt_tehran}</b>\n"
-                            f"🌐 Session: <b>{session}</b>\n\n"
-                            f"📊 <b>Abs Histogram:</b>\n"
-                            f"🔹 Bottom 1 (Deepest): <code>{abs(b1_hist):.6f}</code>\n"
-                            f"🔹 Bottom 2: <code>{abs(b2_hist):.6f}</code>\n\n"
-                            f"💰 <b>Price (Shadow):</b>\n"
-                            f"🔹 Bottom 1: <code>{b1_low:.6f}</code>\n"
-                            f"🔹 Bottom 2: <code>{b2_low:.6f}</code>"
-                        )
-                        broadcast(msg)
-                        print(f"Signal Sent: {symbol} {tf_name} Bullish")
-
-    for i in range(len(tops) - 1):
-        t1_idx = tops[i]
-        t2_idx = tops[i+1]
+        phase_slice = hist[phase_start:]
+        min_val = min(phase_slice)
+        b1_loc = phase_start + phase_slice.index(min_val)
         
-        if (t2_idx - t1_idx) >= 30 and df.index[t1_idx] == global_max_idx:
-            
-            has_trough = any(t1_idx < mt < t2_idx for mt in middle_troughs)
-            all_pos = (hist.iloc[t1_idx:t2_idx+1] > 0).all()
-            
-            if has_trough and all_pos:
-                t1_hist = hist.iloc[t1_idx]
-                t2_hist = hist.iloc[t2_idx]
-                t1_high = df['High'].iloc[t1_idx]
-                t2_high = df['High'].iloc[t2_idx]
+        b1_low = df_closed['Low'].iloc[b1_loc]
+        
+        # Look for peak
+        peak_loc = -1
+        for i in range(b1_loc + 1, len(hist) - 1):
+            if hist[i] < 0 and abs(hist[i]) < abs(hist[i-1]) and abs(hist[i]) < abs(hist[i+1]):
+                peak_loc = i
+                break
                 
-                if t1_hist > t2_hist and t1_high < t2_high:
-                    if t2_idx + 1 == len(df) - 1:
-                        dt_tehran = df.index[t2_idx].astimezone(tehran_tz).strftime('%H:%M')
-                        session = get_current_session()
-                        msg = (
-                            f"📉 <b>Bearish Divergence</b> 📉\n\n"
-                            f"💎 Symbol: <b>{SYMBOLS[symbol]}</b>\n"
-                            f"⏳ Timeframe: <b>{tf_name}</b>\n"
-                            f"⏰ Time (Tehran): <b>{dt_tehran}</b>\n"
-                            f"🌐 Session: <b>{session}</b>\n\n"
-                            f"📊 <b>Histogram:</b>\n"
-                            f"🔹 Top 1 (Highest): <code>{t1_hist:.6f}</code>\n"
-                            f"🔹 Top 2: <code>{t2_hist:.6f}</code>\n\n"
-                            f"💰 <b>Price (Shadow):</b>\n"
-                            f"🔹 Top 1: <code>{t1_high:.6f}</code>\n"
-                            f"🔹 Top 2: <code>{t2_high:.6f}</code>"
-                        )
-                        broadcast(msg)
-                        print(f"Signal Sent: {symbol} {tf_name} Bearish")
+        if peak_loc == -1:
+            return f"🔴 <b>Phase: Negative</b>\nBottom 1 found at {b1_low:.5f} (Abs: {abs(min_val):.6f}).\n⏳ Waiting for Middle Peak..."
+        else:
+            # Look for B2
+            b2_loc = -1
+            for i in range(peak_loc + 1, len(hist) - 1):
+                if hist[i] < 0 and abs(hist[i]) > abs(hist[i-1]) and abs(hist[i]) > abs(hist[i+1]):
+                    b2_loc = i
+                    break
+                    
+            if b2_loc == -1:
+                return f"🔴 <b>Phase: Negative</b>\nBottom 1 found at {b1_low:.5f} (Abs: {abs(min_val):.6f}).\nMiddle Peak found.\n⏳ Waiting for Bottom 2..."
+            else:
+                return f"🔴 <b>Phase: Negative</b>\nBottom 1 found. Middle Peak found.\nBottom 2 forming at {df_closed['Low'].iloc[b2_loc]:.5f}. Waiting for confirmation..."
+                
+    elif last_hist > 0:
+        # POSITIVE PHASE
+        phase_start = 0
+        for i in range(len(hist)-1, -1, -1):
+            if hist[i] < 0:
+                phase_start = i
+                break
+                
+        phase_slice = hist[phase_start:]
+        max_val = max(phase_slice)
+        t1_loc = phase_start + phase_slice.index(max_val)
+        
+        t1_high = df_closed['High'].iloc[t1_loc]
+        
+        # Look for trough
+        trough_loc = -1
+        for i in range(t1_loc + 1, len(hist) - 1):
+            if hist[i] > 0 and hist[i] < hist[i-1] and hist[i] < hist[i+1]:
+                trough_loc = i
+                break
+                
+        if trough_loc == -1:
+            return f"🟢 <b>Phase: Positive</b>\nTop 1 found at {t1_high:.5f} (Val: {max_val:.6f}).\n⏳ Waiting for Middle Trough..."
+        else:
+            t2_loc = -1
+            for i in range(trough_loc + 1, len(hist) - 1):
+                if hist[i] > 0 and hist[i] > hist[i-1] and hist[i] > hist[i+1]:
+                    t2_loc = i
+                    break
+                    
+            if t2_loc == -1:
+                return f"🟢 <b>Phase: Positive</b>\nTop 1 found at {t1_high:.5f} (Val: {max_val:.6f}).\nMiddle Trough found.\n⏳ Waiting for Top 2..."
+            else:
+                return f"🟢 <b>Phase: Positive</b>\nTop 1 found. Middle Trough found.\nTop 2 forming at {df_closed['High'].iloc[t2_loc]:.5f}. Waiting for confirmation..."
+                
+    return "Phase unclear."
+
+def check_divergence(df, symbol, tf_name):
+    df_closed, hist = get_histogram(df)
+    if df_closed is None or len(hist) < 150: return
+
+    last_hist = hist[-1]
+    
+    if last_hist < 0:
+        phase_start = 0
+        for i in range(len(hist)-1, -1, -1):
+            if hist[i] > 0:
+                phase_start = i
+                break
+                
+        phase_slice = hist[phase_start:]
+        min_val = min(phase_slice)
+        b1_loc = phase_start + phase_slice.index(min_val)
+        
+        peak_loc = -1
+        for i in range(b1_loc + 1, len(hist) - 1):
+            if hist[i] < 0 and abs(hist[i]) < abs(hist[i-1]) and abs(hist[i]) < abs(hist[i+1]):
+                peak_loc = i
+                break
+                
+        if peak_loc != -1:
+            for i in range(peak_loc + 1, len(hist) - 1):
+                if hist[i] < 0 and abs(hist[i]) > abs(hist[i-1]) and abs(hist[i]) > abs(hist[i+1]):
+                    b2_loc = i
+                    
+                    if (b2_loc - b1_loc) >= 30:
+                        b1_hist = hist[b1_loc]
+                        b2_hist = hist[b2_loc]
+                        b1_low = df_closed['Low'].iloc[b1_loc]
+                        b2_low = df_closed['Low'].iloc[b2_loc]
+                        
+                        if abs(b1_hist) > abs(b2_hist) and b1_low > b2_low:
+                            # Check if the 3rd bar of B2 just closed (b2_loc+1 is the last closed candle)
+                            if b2_loc + 1 == len(df_closed) - 1:
+                                dt_tehran = df_closed.index[b2_loc].astimezone(tehran_tz).strftime('%H:%M')
+                                session = get_current_session()
+                                msg = (
+                                    f"🚀 <b>Bullish Divergence CONFIRMED</b> 🚀\n\n"
+                                    f"💎 Symbol: <b>{SYMBOLS[symbol]}</b>\n"
+                                    f"⏳ Timeframe: <b>{tf_name}</b>\n"
+                                    f"⏰ Time (Tehran): <b>{dt_tehran}</b>\n"
+                                    f"🌐 Session: <b>{session}</b>\n\n"
+                                    f"📊 <b>Abs Histogram:</b>\n"
+                                    f"🔹 Bottom 1: <code>{abs(b1_hist):.6f}</code>\n"
+                                    f"🔹 Bottom 2: <code>{abs(b2_hist):.6f}</code>\n\n"
+                                    f"💰 <b>Price (Shadow):</b>\n"
+                                    f"🔹 Bottom 1: <code>{b1_low:.6f}</code>\n"
+                                    f"🔹 Bottom 2: <code>{b2_low:.6f}</code>"
+                                )
+                                broadcast(msg)
+                                print(f"Signal Sent: {symbol} {tf_name} Bullish")
+                                return
+
+    elif last_hist > 0:
+        phase_start = 0
+        for i in range(len(hist)-1, -1, -1):
+            if hist[i] < 0:
+                phase_start = i
+                break
+                
+        phase_slice = hist[phase_start:]
+        max_val = max(phase_slice)
+        t1_loc = phase_start + phase_slice.index(max_val)
+        
+        trough_loc = -1
+        for i in range(t1_loc + 1, len(hist) - 1):
+            if hist[i] > 0 and hist[i] < hist[i-1] and hist[i] < hist[i+1]:
+                trough_loc = i
+                break
+                
+        if trough_loc != -1:
+            for i in range(trough_loc + 1, len(hist) - 1):
+                if hist[i] > 0 and hist[i] > hist[i-1] and hist[i] > hist[i+1]:
+                    t2_loc = i
+                    
+                    if (t2_loc - t1_loc) >= 30:
+                        t1_hist = hist[t1_loc]
+                        t2_hist = hist[t2_loc]
+                        t1_high = df_closed['High'].iloc[t1_loc]
+                        t2_high = df_closed['High'].iloc[t2_loc]
+                        
+                        if t1_hist > t2_hist and t1_high < t2_high:
+                            if t2_loc + 1 == len(df_closed) - 1:
+                                dt_tehran = df_closed.index[t2_loc].astimezone(tehran_tz).strftime('%H:%M')
+                                session = get_current_session()
+                                msg = (
+                                    f"📉 <b>Bearish Divergence CONFIRMED</b> 📉\n\n"
+                                    f"💎 Symbol: <b>{SYMBOLS[symbol]}</b>\n"
+                                    f"⏳ Timeframe: <b>{tf_name}</b>\n"
+                                    f"⏰ Time (Tehran): <b>{dt_tehran}</b>\n"
+                                    f"🌐 Session: <b>{session}</b>\n\n"
+                                    f"📊 <b>Histogram:</b>\n"
+                                    f"🔹 Top 1: <code>{t1_hist:.6f}</code>\n"
+                                    f"🔹 Top 2: <code>{t2_hist:.6f}</code>\n\n"
+                                    f"💰 <b>Price (Shadow):</b>\n"
+                                    f"🔹 Top 1: <code>{t1_high:.6f}</code>\n"
+                                    f"🔹 Top 2: <code>{t2_high:.6f}</code>"
+                                )
+                                broadcast(msg)
+                                print(f"Signal Sent: {symbol} {tf_name} Bearish")
+                                return
 
 def live_scanner():
     while True:
@@ -319,8 +368,7 @@ def live_scanner():
                         check_divergence(df, symbol, tf_name)
                     time.sleep(1) 
             time.sleep(5) 
-        except Exception as e:
-            traceback.print_exc()
+        except Exception:
             time.sleep(10)
 
 if __name__ == "__main__":
@@ -334,7 +382,7 @@ if __name__ == "__main__":
             while True:
                 try:
                     bot.infinity_polling(timeout=20, long_polling_timeout=15)
-                except Exception as e:
+                except Exception:
                     time.sleep(10)
         
         bot_thread = threading.Thread(target=run_bot_polling)
