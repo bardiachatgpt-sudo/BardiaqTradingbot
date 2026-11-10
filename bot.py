@@ -5,7 +5,6 @@ import time
 import random
 import string
 import threading
-import traceback
 import pytz
 import websocket
 from flask import Flask
@@ -27,8 +26,8 @@ def broadcast(text):
     for chat_id in list(subscribed_users):
         try:
             bot.send_message(chat_id, text, parse_mode="HTML")
-        except Exception as e:
-            print(f"Telegram send error: {e}")
+        except Exception:
+            pass
 
 def get_current_session():
     now = datetime.now(tehran_tz)
@@ -106,7 +105,6 @@ def run_web():
     port = int(os.environ.get("PORT", 7860))
     app.run(host="0.0.0.0", port=port)
 
-# --- EXACT WEBSOCKET LOGIC FROM USER'S FIRST MESSAGE ---
 def tv_send(ws, func, params):
     payload = json.dumps({"m": func, "p": params}, separators=(",", ":"))
     frame = f"~m~{len(payload)}~m~{payload}"
@@ -121,7 +119,7 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
                 "Origin": "https://www.tradingview.com",
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
             },
-            timeout=12
+            timeout=15
         )
         chart_session = "cs" + "".join(random.choices(string.ascii_lowercase + string.digits, k=12))
         tv_send(ws, "set_auth_token", ["unauthorized_user_token"])
@@ -133,8 +131,12 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
         
         bars = []
         start_t = time.time()
-        while time.time() - start_t < 10:
-            raw = ws.recv()
+        while time.time() - start_t < 12:
+            try:
+                raw = ws.recv()
+            except Exception:
+                break
+                
             if not raw: break
             if raw.startswith("~m~") and "~h~" in raw:
                 ws.send(raw)
@@ -164,7 +166,8 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
                                 })
                 elif m_type == "series_completed":
                     break
-            if len(bars) >= 50: break
+            if len(bars) >= n_bars: 
+                break
             
         ws.close()
         
@@ -176,12 +179,11 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
         df.set_index("Time", inplace=True)
         df = df[~df.index.duplicated(keep="last")].sort_index()
         return df
-    except Exception as e:
+    except Exception:
         if ws:
             try: ws.close()
             except Exception: pass
         return None
-# -----------------------------------------------------
 
 def get_histogram(df):
     df_closed = df.iloc[:-1].copy()
@@ -329,73 +331,18 @@ def analyze_current_state(df):
     
     if phase == "NEG":
         if state == 0:
-            return f"🔴 <b>Phase: Negative</b>\nStill dropping. Bottom 1 forming at {df_closed['Low'].iloc[ext1_idx]:.5f} (Abs: {abs(ext1_val):.6f}).\nWaiting for retracement..."
+            return f"🔴 <b>Phase: Negative</b>\nStill dropping. Bottom 1 forming at {df_closed['Low'].iloc[ext1_idx]:.5f} (Abs: {abs(ext1_val):.6f}).\nWaiting for retracement (min 7 bars)..."
         elif state == 1:
             return f"🔴 <b>Phase: Negative</b>\nBottom 1: {df_closed['Low'].iloc[ext1_idx]:.5f} (Abs: {abs(ext1_val):.6f})\nMiddle Peak forming at {df_closed['Low'].iloc[mid_idx]:.5f} (Abs: {abs(mid_val):.6f}).\nWaiting for pullback..."
         else:
             return f"🔴 <b>Phase: Negative</b>\nBottom 1: {df_closed['Low'].iloc[ext1_idx]:.5f} (Abs: {abs(ext1_val):.6f})\nMiddle Peak: {df_closed['Low'].iloc[mid_idx]:.5f} (Abs: {abs(mid_val):.6f})\nBottom 2 forming at {df_closed['Low'].iloc[ext2_idx]:.5f} (Abs: {abs(ext2_val):.6f}).\nWatching for confirmation..."
     else:
         if state == 0:
-            return f"🟢 <b>Phase: Positive</b>\nStill rising. Top 1 forming at {df_closed['High'].iloc[ext1_idx]:.5f} (Val: {ext1_val:.6f}).\nWaiting for pullback..."
+            return f"🟢 <b>Phase: Positive</b>\nStill rising. Top 1 forming at {df_closed['High'].iloc[ext1_idx]:.5f} (Val: {ext1_val:.6f}).\nWaiting for pullback (min 7 bars)..."
         elif state == 1:
             return f"🟢 <b>Phase: Positive</b>\nTop 1: {df_closed['High'].iloc[ext1_idx]:.5f} (Val: {ext1_val:.6f})\nMiddle Trough forming at {df_closed['High'].iloc[mid_idx]:.5f} (Val: {mid_val:.6f}).\nWaiting for retracement..."
         else:
             return f"🟢 <b>Phase: Positive</b>\nTop 1: {df_closed['High'].iloc[ext1_idx]:.5f} (Val: {ext1_val:.6f})\nMiddle Trough: {df_closed['High'].iloc[mid_idx]:.5f} (Val: {mid_val:.6f})\nTop 2 forming at {df_closed['High'].iloc[ext2_idx]:.5f} (Val: {ext2_val:.6f}).\nWatching for confirmation..."
-
-def check_divergence(df, symbol, tf_name):
-    df_closed, hist = get_histogram(df)
-    if df_closed is None or len(hist) < 150: return
-
-    res = get_state(hist)
-    if not res: return
-    
-    phase, state, ext1_val, ext1_idx, mid_val, mid_idx, ext2_val, ext2_idx = res
-    
-    if phase == "NEG":
-        if state == 2 and ext2_idx == len(hist) - 2:
-            if (ext2_idx - ext1_idx) >= 30 and abs(ext1_val) > abs(ext2_val) and df_closed['Low'].iloc[ext1_idx] > df_closed['Low'].iloc[ext2_idx]:
-                dt_tehran = df_closed.index[ext2_idx].astimezone(tehran_tz).strftime('%H:%M')
-                session = get_current_session()
-                msg = (
-                    f"🚀 <b>Bullish Divergence CONFIRMED</b> 🚀\n\n"
-                    f"💎 Symbol: <b>{SYMBOLS[symbol]}</b>\n"
-                    f"⏳ Timeframe: <b>{tf_name}</b>\n"
-                    f"⏰ Time (Tehran): <b>{dt_tehran}</b>\n"
-                    f"🌐 Session: <b>{session}</b>\n\n"
-                    f"📊 <b>Abs Histogram:</b>\n"
-                    f"🔹 Bottom 1: <code>{abs(ext1_val):.6f}</code>\n"
-                    f"🔹 Middle Peak: <code>{abs(mid_val):.6f}</code>\n"
-                    f"🔹 Bottom 2: <code>{abs(ext2_val):.6f}</code>\n\n"
-                    f"💰 <b>Price (Shadow):</b>\n"
-                    f"🔹 Bottom 1: <code>{df_closed['Low'].iloc[ext1_idx]:.6f}</code>\n"
-                    f"🔹 Bottom 2: <code>{df_closed['Low'].iloc[ext2_idx]:.6f}</code>"
-                )
-                broadcast(msg)
-                print(f"Signal Sent: {symbol} {tf_name} Bullish")
-                return
-
-    elif phase == "POS":
-        if state == 2 and ext2_idx == len(hist) - 2:
-            if (ext2_idx - ext1_idx) >= 30 and ext1_val > ext2_val and df_closed['High'].iloc[ext1_idx] < df_closed['High'].iloc[ext2_idx]:
-                dt_tehran = df_closed.index[ext2_idx].astimezone(tehran_tz).strftime('%H:%M')
-                session = get_current_session()
-                msg = (
-                    f"📉 <b>Bearish Divergence CONFIRMED</b> 📉\n\n"
-                    f"💎 Symbol: <b>{SYMBOLS[symbol]}</b>\n"
-                    f"⏳ Timeframe: <b>{tf_name}</b>\n"
-                    f"⏰ Time (Tehran): <b>{dt_tehran}</b>\n"
-                    f"🌐 Session: <b>{session}</b>\n\n"
-                    f"📊 <b>Histogram:</b>\n"
-                    f"🔹 Top 1: <code>{ext1_val:.6f}</code>\n"
-                    f"🔹 Middle Trough: <code>{mid_val:.6f}</code>\n"
-                    f"🔹 Top 2: <code>{ext2_val:.6f}</code>\n\n"
-                    f"💰 <b>Price (Shadow):</b>\n"
-                    f"🔹 Top 1: <code>{df_closed['High'].iloc[ext1_idx]:.6f}</code>\n"
-                    f"🔹 Top 2: <code>{df_closed['High'].iloc[ext2_idx]:.6f}</code>"
-                )
-                broadcast(msg)
-                print(f"Signal Sent: {symbol} {tf_name} Bearish")
-                return
 
 def live_scanner():
     while True:
@@ -408,7 +355,49 @@ def live_scanner():
                 for tf_code, tf_name in TIMEFRAMES.items():
                     df = fetch_tradingview_candles(symbol, tf_code, 220)
                     if df is not None:
-                        check_divergence(df, symbol, tf_name)
+                        df_closed, hist = get_histogram(df)
+                        if df_closed is not None:
+                            res = get_state(hist)
+                            if res:
+                                phase, state, ext1_val, ext1_idx, mid_val, mid_idx, ext2_val, ext2_idx = res
+                                if phase == "NEG" and state == 2 and ext2_idx == len(hist) - 2:
+                                    if (ext2_idx - ext1_idx) >= 30 and abs(ext1_val) > abs(ext2_val) and df_closed['Low'].iloc[ext1_idx] > df_closed['Low'].iloc[ext2_idx]:
+                                        dt_tehran = df_closed.index[ext2_idx].astimezone(tehran_tz).strftime('%H:%M')
+                                        session = get_current_session()
+                                        msg = (
+                                            f"🚀 <b>Bullish Divergence CONFIRMED</b> 🚀\n\n"
+                                            f"💎 Symbol: <b>{SYMBOLS[symbol]}</b>\n"
+                                            f"⏳ Timeframe: <b>{tf_name}</b>\n"
+                                            f"⏰ Time (Tehran): <b>{dt_tehran}</b>\n"
+                                            f"🌐 Session: <b>{session}</b>\n\n"
+                                            f"📊 <b>Abs Histogram:</b>\n"
+                                            f"🔹 Bottom 1: <code>{abs(ext1_val):.6f}</code>\n"
+                                            f"🔹 Middle Peak: <code>{abs(mid_val):.6f}</code>\n"
+                                            f"🔹 Bottom 2: <code>{abs(ext2_val):.6f}</code>\n\n"
+                                            f"💰 <b>Price (Shadow):</b>\n"
+                                            f"🔹 Bottom 1: <code>{df_closed['Low'].iloc[ext1_idx]:.6f}</code>\n"
+                                            f"🔹 Bottom 2: <code>{df_closed['Low'].iloc[ext2_idx]:.6f}</code>"
+                                        )
+                                        broadcast(msg)
+                                elif phase == "POS" and state == 2 and ext2_idx == len(hist) - 2:
+                                    if (ext2_idx - ext1_idx) >= 30 and ext1_val > ext2_val and df_closed['High'].iloc[ext1_idx] < df_closed['High'].iloc[ext2_idx]:
+                                        dt_tehran = df_closed.index[ext2_idx].astimezone(tehran_tz).strftime('%H:%M')
+                                        session = get_current_session()
+                                        msg = (
+                                            f"📉 <b>Bearish Divergence CONFIRMED</b> 📉\n\n"
+                                            f"💎 Symbol: <b>{SYMBOLS[symbol]}</b>\n"
+                                            f"⏳ Timeframe: <b>{tf_name}</b>\n"
+                                            f"⏰ Time (Tehran): <b>{dt_tehran}</b>\n"
+                                            f"🌐 Session: <b>{session}</b>\n\n"
+                                            f"📊 <b>Histogram:</b>\n"
+                                            f"🔹 Top 1: <code>{ext1_val:.6f}</code>\n"
+                                            f"🔹 Middle Trough: <code>{mid_val:.6f}</code>\n"
+                                            f"🔹 Top 2: <code>{ext2_val:.6f}</code>\n\n"
+                                            f"💰 <b>Price (Shadow):</b>\n"
+                                            f"🔹 Top 1: <code>{df_closed['High'].iloc[ext1_idx]:.6f}</code>\n"
+                                            f"🔹 Top 2: <code>{df_closed['High'].iloc[ext2_idx]:.6f}</code>"
+                                        )
+                                        broadcast(msg)
                     time.sleep(2) 
             time.sleep(10) 
         except Exception:
