@@ -177,7 +177,6 @@ def analyze_current_state(df):
     last_hist = hist[-1]
     
     if last_hist < 0:
-        # NEGATIVE PHASE (Looking for Bullish)
         phase_start = 0
         for i in range(len(hist)-1, -1, -1):
             if hist[i] > 0:
@@ -186,33 +185,29 @@ def analyze_current_state(df):
                 
         phase_hist = hist[phase_start:]
         
-        # 1. Bottom 1 (Absolute Min)
         b1_val = min(phase_hist)
         b1_idx = phase_start + phase_hist.index(b1_val)
         
         if b1_idx == len(hist) - 1:
-            return f"🔴 <b>Phase: Negative</b>\nStill dropping. New Bottom 1 forming at {df_closed['Low'].iloc[b1_idx]:.5f} (Abs: {abs(b1_val):.6f}).\n⏳ Waiting for retracement..."
+            return f"🔴 <b>Phase: Negative</b>\nStill dropping. Bottom 1 forming at {df_closed['Low'].iloc[b1_idx]:.5f} (Abs: {abs(b1_val):.6f}).\nWaiting for retracement..."
             
-        # 2. Middle Peak (Max after B1)
         post_b1 = hist[b1_idx:]
         peak_val = max(post_b1)
         peak_idx = b1_idx + post_b1.index(peak_val)
         
         if peak_idx == len(hist) - 1:
-            return f"🔴 <b>Phase: Negative</b>\nBottom 1: {df_closed['Low'].iloc[b1_idx]:.5f} (Abs: {abs(b1_val):.6f})\nMiddle Peak forming at {df_closed['Low'].iloc[peak_idx]:.5f} (Abs: {abs(peak_val):.6f}).\n⏳ Waiting for it to finish..."
+            return f"🔴 <b>Phase: Negative</b>\nBottom 1: {df_closed['Low'].iloc[b1_idx]:.5f} (Abs: {abs(b1_val):.6f})\nMiddle Peak forming at {df_closed['Low'].iloc[peak_idx]:.5f} (Abs: {abs(peak_val):.6f}).\nWaiting for it to finish..."
             
-        # 3. Bottom 2 (Min after Peak)
         post_peak = hist[peak_idx:]
         b2_val = min(post_peak)
         b2_idx = peak_idx + post_peak.index(b2_val)
         
         if b2_idx == len(hist) - 1:
-            return f"🔴 <b>Phase: Negative</b>\nBottom 1: {df_closed['Low'].iloc[b1_idx]:.5f} (Abs: {abs(b1_val):.6f})\nMiddle Peak: {df_closed['Low'].iloc[peak_idx]:.5f} (Abs: {abs(peak_val):.6f})\nNew Bottom forming at {df_closed['Low'].iloc[b2_idx]:.5f} (Abs: {abs(b2_val):.6f}).\n⏳ Watching for confirmation..."
+            return f"🔴 <b>Phase: Negative</b>\nBottom 1: {df_closed['Low'].iloc[b1_idx]:.5f} (Abs: {abs(b1_val):.6f})\nMiddle Peak: {df_closed['Low'].iloc[peak_idx]:.5f} (Abs: {abs(peak_val):.6f})\nNew Bottom forming at {df_closed['Low'].iloc[b2_idx]:.5f} (Abs: {abs(b2_val):.6f}).\nWatching for confirmation..."
             
         return f"🔴 <b>Phase: Negative</b>\nBottom 1: {df_closed['Low'].iloc[b1_idx]:.5f} (Abs: {abs(b1_val):.6f})\nMiddle Peak: {df_closed['Low'].iloc[peak_idx]:.5f} (Abs: {abs(peak_val):.6f})\nBottom 2 formed at {df_closed['Low'].iloc[b2_idx]:.5f} (Abs: {abs(b2_val):.6f})."
         
     elif last_hist > 0:
-        # POSITIVE PHASE (Looking for Bearish)
         phase_start = 0
         for i in range(len(hist)-1, -1, -1):
             if hist[i] < 0:
@@ -221,28 +216,25 @@ def analyze_current_state(df):
                 
         phase_hist = hist[phase_start:]
         
-        # 1. Top 1 (Absolute Max)
         t1_val = max(phase_hist)
         t1_idx = phase_start + phase_hist.index(t1_val)
         
         if t1_idx == len(hist) - 1:
-            return f"🟢 <b>Phase: Positive</b>\nStill rising. New Top 1 forming at {df_closed['High'].iloc[t1_idx]:.5f} (Val: {t1_val:.6f}).\n⏳ Waiting for pullback..."
+            return f"🟢 <b>Phase: Positive</b>\nStill rising. Top 1 forming at {df_closed['High'].iloc[t1_idx]:.5f} (Val: {t1_val:.6f}).\nWaiting for pullback..."
             
-        # 2. Middle Trough (Min after T1)
         post_t1 = hist[t1_idx:]
         trough_val = min(post_t1)
         trough_idx = t1_idx + post_t1.index(trough_val)
         
         if trough_idx == len(hist) - 1:
-            return f"🟢 <b>Phase: Positive</b>\nTop 1: {df_closed['High'].iloc[t1_idx]:.5f} (Val: {t1_val:.6f})\nMiddle Trough forming at {df_closed['High'].iloc[trough_idx]:.5f} (Val: {trough_val:.6f}).\n⏳ Waiting for it to finish..."
+            return f"🟢 <b>Phase: Positive</b>\nTop 1: {df_closed['High'].iloc[t1_idx]:.5f} (Val: {t1_val:.6f})\nMiddle Trough forming at {df_closed['High'].iloc[trough_idx]:.5f} (Val: {trough_val:.6f}).\nWaiting for it to finish..."
             
-        # 3. Top 2 (Max after Trough)
         post_trough = hist[trough_idx:]
         t2_val = max(post_trough)
         t2_idx = trough_idx + post_trough.index(t2_val)
         
         if t2_idx == len(hist) - 1:
-            return f"🟢 <b>Phase: Positive</b>\nTop 1: {df_closed['High'].iloc[t1_idx]:.5f} (Val: {t1_val:.6f})\nMiddle Trough: {df_closed['High'].iloc[trough_idx]:.5f} (Val: {trough_val:.6f})\nNew Top forming at {df_closed['High'].iloc[t2_idx]:.5f} (Val: {t2_val:.6f}).\n⏳ Watching for confirmation..."
+            return f"🟢 <b>Phase: Positive</b>\nTop 1: {df_closed['High'].iloc[t1_idx]:.5f} (Val: {t1_val:.6f})\nMiddle Trough: {df_closed['High'].iloc[trough_idx]:.5f} (Val: {trough_val:.6f})\nNew Top forming at {df_closed['High'].iloc[t2_idx]:.5f} (Val: {t2_val:.6f}).\nWatching for confirmation..."
             
         return f"🟢 <b>Phase: Positive</b>\nTop 1: {df_closed['High'].iloc[t1_idx]:.5f} (Val: {t1_val:.6f})\nMiddle Trough: {df_closed['High'].iloc[trough_idx]:.5f} (Val: {trough_val:.6f})\nTop 2 formed at {df_closed['High'].iloc[t2_idx]:.5f} (Val: {t2_val:.6f})."
         
@@ -255,7 +247,6 @@ def check_divergence(df, symbol, tf_name):
     last_hist = hist[-1]
     
     if last_hist < 0:
-        # NEGATIVE PHASE (Bullish Divergence)
         phase_start = 0
         for i in range(len(hist)-1, -1, -1):
             if hist[i] > 0:
@@ -278,7 +269,6 @@ def check_divergence(df, symbol, tf_name):
         b2_val = min(post_peak)
         b2_idx = peak_idx + post_peak.index(b2_val)
         
-        # Confirmation: The lowest point (b2_idx) is the second-to-last candle. The last candle is rising.
         if b2_idx == len(hist) - 2:
             if (b2_idx - b1_idx) >= 30 and abs(b1_val) > abs(b2_val) and df_closed['Low'].iloc[b1_idx] > df_closed['Low'].iloc[b2_idx]:
                 dt_tehran = df_closed.index[b2_idx].astimezone(tehran_tz).strftime('%H:%M')
@@ -302,7 +292,6 @@ def check_divergence(df, symbol, tf_name):
                 return
 
     elif last_hist > 0:
-        # POSITIVE PHASE (Bearish Divergence)
         phase_start = 0
         for i in range(len(hist)-1, -1, -1):
             if hist[i] < 0:
@@ -325,7 +314,6 @@ def check_divergence(df, symbol, tf_name):
         t2_val = max(post_trough)
         t2_idx = trough_idx + post_trough.index(t2_val)
         
-        # Confirmation: The highest point (t2_idx) is the second-to-last candle. The last candle is falling.
         if t2_idx == len(hist) - 2:
             if (t2_idx - t1_idx) >= 30 and t1_val > t2_val and df_closed['High'].iloc[t1_idx] < df_closed['High'].iloc[t2_idx]:
                 dt_tehran = df_closed.index[t2_idx].astimezone(tehran_tz).strftime('%H:%M')
