@@ -34,14 +34,13 @@ tehran_tz = pytz.timezone('Asia/Tehran')
 def save_state():
     try:
         with open(STATE_FILE, "w") as f:
-            # زمان‌ها رو به رشته تبدیل میکنیم تا JSON بتونه ذخیره کنه
             serializable_divs = {}
             for sym, data in last_divergences.items():
                 serializable_divs[sym] = {
                     "type": data["type"],
                     "price": data["price"],
                     "macd": data["macd"],
-                    "time": str(data["time"]) # تبدیل به رشته
+                    "time": str(data["time"]) 
                 }
             json.dump({"users": list(subscribed_users), "last_divs": serializable_divs}, f)
     except Exception as e:
@@ -98,14 +97,12 @@ def send_last_signals(message):
 
     msg = "📋 <b>آخرین دایورجنس‌های شناسایی شده:</b>\n\n"
     
-    # مرتب کردن بر اساس زمان (جدیدترین اول)
     try:
         sorted_divs = sorted(last_divergences.items(), key=lambda x: pd.to_datetime(x[1]['time']), reverse=True)
     except:
         sorted_divs = list(last_divergences.items())
     
     for symbol, data in sorted_divs:
-        # تبدیل زمان ذخیره شده به وقت تهران
         try:
             dt_utc = pd.to_datetime(data['time'], utc=True)
             dt_tehran = dt_utc.astimezone(tehran_tz).strftime('%Y-%m-%d %H:%M')
@@ -340,11 +337,26 @@ def macd_scanner():
             print(f"Error in scan: {e}")
             time.sleep(15)
 
+# ==========================================
+# ۶. اجرای اصلی (اسکنر + پولینگ تلگرام + وب‌سرور)
+# ==========================================
 if __name__ == "__main__":
-    # اجرای اسکنر در پس‌زمینه
+    # ۱. اجرای اسکنر در پس‌زمینه
     t = threading.Thread(target=macd_scanner)
     t.daemon = True
     t.start()
     
-    # اجرای وب‌سرور برای رندر
+    # ۲. اجرای Polling تلگرام در پس‌زمینه (بخش مهمی که باعث میشه /start کار کنه)
+    def run_bot_polling():
+        try:
+            print("Starting Telegram polling...")
+            bot.infinity_polling(timeout=20, long_polling_timeout=15)
+        except Exception as e:
+            print(f"Polling error: {e}")
+    
+    bot_thread = threading.Thread(target=run_bot_polling)
+    bot_thread.daemon = True
+    bot_thread.start()
+    
+    # ۳. اجرای وب‌سرور برای Render (در ترد اصلی)
     run_web()
