@@ -1,26 +1,20 @@
 import os
 import re
 import json
-import html
 import time
 import random
 import string
 import threading
 import traceback
-from datetime import datetime
 import pytz
 import websocket
-from flask import Flask, request
+from flask import Flask
 import telebot
 from telebot import types
 import pandas as pd
-import numpy as np
 
-# ==========================================
-# ۱. تنظیمات اولیه و وب‌سرور
-# ==========================================
+# 1. Initial Setup
 app = Flask(__name__)
-last_source_name = "در حال اتصال..."
 
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
 bot = telebot.TeleBot(BOT_TOKEN) if BOT_TOKEN else None
@@ -73,9 +67,7 @@ def broadcast(text):
         except Exception as e:
             print(f"Telegram send error: {e}")
 
-# ==========================================
-# ۲. هندلرهای ربات تلگرام
-# ==========================================
+# 2. Telegram Handlers
 def get_main_keyboard():
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     btn_last = types.KeyboardButton("📊 آخرین سیگنال‌ها")
@@ -91,7 +83,7 @@ def send_welcome(message):
         "✅ ربات اسکنر MACD روشن شد.\n\n"
         "استراتژی: دایورجنس صعودی و نزولی (M1, M5, M15, H1, H4)\n"
         "نمادها: طلا و جفت‌ارزهای ماژور\n"
-        "برای دیدن وضعیت طبقه‌بندی شده، دکمه زیر را بزنید:", 
+        "برای دیدن وضعیت، دکمه زیر را بزنید:", 
         reply_markup=get_main_keyboard()
     )
 
@@ -109,7 +101,7 @@ def send_last_signals(message):
                 grouped_data[symbol] = {}
             grouped_data[symbol][tf] = data
 
-    msg = "📋 <b>گزارش آخرین دایورجنس‌ها:</b>\n\n"
+    msg = "📋 <b>گزارش آخرین دایورجنس‌ها (در ۲۲۰ کندل اخیر):</b>\n\n"
     
     tf_order = {"M1": 1, "M5": 2, "M15": 3, "H1": 4, "H4": 5}
     
@@ -138,15 +130,13 @@ def send_last_signals(message):
 
 @app.route('/')
 def home():
-    return "MACD Multi-Timeframe Bot is LIVE!"
+    return "MACD Bot is LIVE!"
 
 def run_web():
     port = int(os.environ.get("PORT", 7860))
     app.run(host="0.0.0.0", port=port)
 
-# ==========================================
-# ۳. موتور اتصال به تریدینگ‌ویو
-# ==========================================
+# 3. TradingView WebSocket Connection
 def tv_send(ws, func, params):
     payload = json.dumps({"m": func, "p": params}, separators=(",", ":"))
     frame = f"~m~{len(payload)}~m~{payload}"
@@ -226,9 +216,7 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
             except Exception: pass
         return None, str(e)[:50]
 
-# ==========================================
-# ۴. منطق استراتژی (محاسبه کندل‌های قبل)
-# ==========================================
+# 4. Strategy Logic
 def detect_macd_divergence(df):
     if df is None or len(df) < 10:
         return []
@@ -251,7 +239,7 @@ def detect_macd_divergence(df):
         current_slope = df['Slope'].iloc[i]
         prev_slope = df['Slope'].iloc[i-1]
         
-        # --- صعودی ---
+        # Bullish Divergence
         if b_state == 0:
             if prev_slope < 0 and current_slope > 0:
                 macd_val = df['MACD'].iloc[i-1]
@@ -288,7 +276,7 @@ def detect_macd_divergence(df):
                             })
                     b_state = 0
 
-        # --- نزولی ---
+        # Bearish Divergence
         if s_state == 0:
             if prev_slope > 0 and current_slope < 0:
                 macd_val = df['MACD'].iloc[i-1]
@@ -327,9 +315,7 @@ def detect_macd_divergence(df):
 
     return signals
 
-# ==========================================
-# ۵. حلقه اسکنر
-# ==========================================
+# 5. Scanner Loop
 SYMBOLS = {
     "OANDA:XAUUSD": "طلا (XAUUSD)",
     "FX:EURUSD": "یورو/دلار (EURUSD)",
@@ -397,7 +383,6 @@ def macd_scanner():
                                 last_signal_times[key] = sig_time
                                 dt_tehran = sig_time.astimezone(tehran_tz).strftime('%H:%M')
                                 
-                                # پیام خلاصه شده (دقیقاً طبق خواسته شما)
                                 if latest_sig['type'] == "Bullish":
                                     msg = (
                                         f"🚀 <b>دایورجنس صعودی MACD</b>\n\n"
@@ -421,9 +406,7 @@ def macd_scanner():
             traceback.print_exc()
             time.sleep(10)
 
-# ==========================================
-# ۶. اجرای اصلی
-# ==========================================
+# 6. Main Execution
 if __name__ == "__main__":
     t = threading.Thread(target=macd_scanner)
     t.daemon = True
