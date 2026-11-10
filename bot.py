@@ -21,26 +21,37 @@ bot = telebot.TeleBot(BOT_TOKEN) if BOT_TOKEN else None
 
 STATE_FILE = "bot_state.json"
 subscribed_users = set()
+last_divergences = {} 
 
 tehran_tz = pytz.timezone('Asia/Tehran')
-
-# Dictionary to store live signals temporarily (for notifications)
-live_notifications_cache = {}
 
 def save_state():
     try:
         with open(STATE_FILE, "w") as f:
-            json.dump({"users": list(subscribed_users)}, f)
+            serializable_divs = {}
+            for key, data in last_divergences.items():
+                serializable_divs[key] = {
+                    "type": data["type"],
+                    "price": float(data["price"]),
+                    "p1_price": float(data.get("p1_price", 0)),
+                    "time": str(data["time"]),
+                    "bars_ago": int(data.get("bars_ago", 0))
+                }
+            json.dump({"users": list(subscribed_users), "last_divs": serializable_divs}, f)
     except Exception as e:
         print(f"Save state error: {e}")
 
 def load_state():
-    global subscribed_users
+    global subscribed_users, last_divergences
     try:
         if os.path.exists(STATE_FILE):
             with open(STATE_FILE, "r") as f:
                 data = json.load(f)
                 subscribed_users = set(data.get("users", []))
+                loaded_divs = data.get("last_divs", {})
+                for k, v in loaded_divs.items():
+                    v["time"] = pd.to_datetime(v["time"], utc=True)
+                    last_divergences[k] = v
     except Exception as e:
         print(f"Load state error: {e}")
 
@@ -72,12 +83,10 @@ tf_order = {"M1": 1, "M5": 2, "M15": 3, "H1": 4, "H4": 5}
 def get_main_menu():
     markup = types.InlineKeyboardMarkup(row_width=2)
     
-    # Live and History Buttons
     btn_live = types.InlineKeyboardButton("🔴 رادار زنده (Live)", callback_data="menu_live")
     btn_history = types.InlineKeyboardButton("📜 تاریخچه ۲۲۰ کندل", callback_data="menu_history")
     markup.row(btn_live, btn_history)
     
-    # Symbol Buttons
     btns = []
     for sym, name in SYMBOLS.items():
         btns.append(types.InlineKeyboardButton(name, callback_data=f"sym_{sym}"))
@@ -91,23 +100,22 @@ def send_welcome(message):
     save_state()
     bot.reply_to(
         message, 
-        "✅ <b>ربات اسکنر MACD روشن شد.</b>\n\n"
-        "از منوی زیر انتخاب کنید که می‌خواهید چه چیزی را بررسی کنید.\n"
-        "می‌توانید یک جفت‌ارز خاص را انتخاب کنید یا رادار زنده را بزنید:", 
+        "✅ <b>ربات اسکنر MACD هیستوگرام روشن شد.</b>\n\n"
+        "منطق: پیدا کردن کف/سقف بر اساس صفر شدن شیب هیستوگرام (فقط کندل‌های بسته شده).\n\n"
+        "یک گزینه را انتخاب کنید:", 
         reply_markup=get_main_menu(),
         parse_mode="HTML"
     )
 
 @bot.callback_query_handler(func=lambda call: True)
 def handle_query(call):
-    bot.answer_callback_query(call.id, "در حال اسکن بازار... لطفاً چند لحظه صبر کنید ⏳")
+    bot.answer_callback_query(call.id, "در حال پردازش... ⏳")
     
     if call.data == "menu_live":
-        # Scan for live signals (happened in the last 15 mins)
-        msg = "🔴 <b>رادار زنده (دایورجنس‌های ۱۵ دقیقه اخیر):</b>\n\n"
+        msg = "🔴 <b>دایورجنس‌های ۱۵ دقیقه اخیر (رادار زنده):</b>\n\n"
         found = False
         
-        # Check only M1 and M5 for live signals to be fast
+        # Only check M1, M5, M15 for live
         for sym, name in SYMBOLS.items():
             for tf_code in ["1", "5", "15"]:
                 tf_name = TIMEFRAMES[tf_code]
@@ -118,7 +126,7 @@ def handle_query(call):
                         latest = signals[-1]
                         now_utc = pd.Timestamp.now(tz='UTC')
                         diff = (now_utc - latest["time"]).total_seconds()
-                        if diff <= 900: # Last 15 mins
+                        if diff <= 900: # 15 mins
                             dt_tehran = latest["time"].astimezone(tehran_tz).strftime('%H:%M')
                             sig_type = "صعودی 🟢" if latest['type'] == 'Bullish' else "نزولی 🔴"
                             msg += f"💎 <b>{name}</b> | {tf_name}: {sig_type} | {dt_tehran}\n"
@@ -153,22 +161,22 @@ def handle_query(call):
                 else:
                     msg += f"⏱ <b>{tf_name}</b>: بدون سیگنال ❌\n"
             else:
-                msg += f"⏱ <b>{tf_name}</b>: خطا در دریافت دیتا ⚠️\n"
+                msg += f"⏱ <b>{tf_name}</b>: خطا در دیتا ⚠️\n"
                 
         if not found_any:
-            msg += "\nهیچ دایورجنس معتبری در این ۲۲۰ کندل پیدا نشد."
+            msg += "\nهیچ دایورجنس معتبری پیدا نشد."
             
         bot.send_message(call.message.chat.id, msg, parse_mode="HTML", reply_markup=get_main_menu())
 
 @app.route('/')
 def home():
-    return "MACD Bot is LIVE!"
+    return "MACD Histogram Bot is LIVE!"
 
 def run_web():
     port = int(os.environ.get("PORT", 7860))
     app.run(host="0.0.0.0", port=port)
 
-# 3. TradingView WebSocket Connection (Optimized)
+# 3. TradingView Data Fetching
 def tv_send(ws, func, params):
     payload = json.dumps({"m": func, "p": params}, separators=(",", ":"))
     frame = f"~m~{len(payload)}~m~{payload}"
@@ -183,7 +191,7 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
                 "Origin": "https://www.tradingview.com",
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
             },
-            timeout=4 # Reduced timeout for faster scanning
+            timeout=5
         )
         chart_session = "cs" + "".join(random.choices(string.ascii_lowercase + string.digits, k=12))
         tv_send(ws, "set_auth_token", ["unauthorized_user_token"])
@@ -194,7 +202,7 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
         
         bars = []
         start_t = time.time()
-        while time.time() - start_t < 4:
+        while time.time() - start_t < 5:
             try:
                 raw = ws.recv()
             except Exception:
@@ -234,7 +242,7 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
             try: ws.close()
             except: pass
         
-        if len(bars) < 50: 
+        if len(bars) < 150: 
             return None, f"bars={len(bars)}"
             
         df = pd.DataFrame(bars)
@@ -248,98 +256,113 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
             except Exception: pass
         return None, str(e)[:50]
 
-# 4. Strategy Logic
+# 4. Strategy Logic (Histogram Based & Closed Candles)
 def detect_macd_divergence(df):
     if df is None or len(df) < 10:
         return []
 
+    # Drop the live candle (the last one)
+    df = df.iloc[:-1]
+    
+    if len(df) < 10:
+        return []
+
+    # MACD (48, 106, 36)
     exp1 = df['Close'].ewm(span=48, adjust=False).mean()
     exp2 = df['Close'].ewm(span=106, adjust=False).mean()
-    df['MACD'] = exp1 - exp2
-    df['Slope'] = df['MACD'].diff() 
+    macd_line = exp1 - exp2
+    signal_line = macd_line.ewm(span=36, adjust=False).mean()
+    
+    # Histogram
+    df['Histogram'] = macd_line - signal_line
+    df['Slope'] = df['Histogram'].diff() 
 
     signals = []
     total_bars = len(df)
     
     b_state = 0
-    b_p1_macd, b_p1_low, b_p1_idx = None, None, None
+    b_p1_hist, b_p1_low, b_p1_idx = None, None, None
     
     s_state = 0
-    s_p1_macd, s_p1_high, s_p1_idx = None, None, None
+    s_p1_hist, s_p1_high, s_p1_idx = None, None, None
 
     for i in range(2, len(df)):
         current_slope = df['Slope'].iloc[i]
         prev_slope = df['Slope'].iloc[i-1]
         
-        # Bullish
+        # --- Bullish Divergence ---
         if b_state == 0:
-            if prev_slope < 0 and current_slope > 0:
-                macd_val = df['MACD'].iloc[i-1]
-                if macd_val < 0: 
-                    b_p1_macd = macd_val
+            # Slope from negative to positive -> Bottom 1
+            if prev_slope < 0 and current_slope >= 0:
+                hist_val = df['Histogram'].iloc[i-1]
+                if hist_val < 0: 
+                    b_p1_hist = hist_val
                     b_p1_low = df['Low'].iloc[i-1]
                     b_p1_idx = i-1
                     b_state = 1
         elif b_state == 1:
-            if prev_slope > 0 and current_slope < 0:
-                macd_val = df['MACD'].iloc[i-1]
-                if macd_val < 0:
+            # Slope from positive to negative -> Top 1
+            if prev_slope > 0 and current_slope <= 0:
+                hist_val = df['Histogram'].iloc[i-1]
+                if hist_val < 0:
                     b_state = 2
                 else:
                     b_state = 0 
         elif b_state == 2:
-            if prev_slope < 0 and current_slope > 0:
-                macd_val = df['MACD'].iloc[i-1]
-                if macd_val < 0:
-                    all_below = (df['MACD'].iloc[b_p1_idx:i] < 0).all()
+            # Slope from negative to positive -> Bottom 2
+            if prev_slope < 0 and current_slope >= 0:
+                hist_val = df['Histogram'].iloc[i-1]
+                if hist_val < 0:
+                    all_below = (df['Histogram'].iloc[b_p1_idx:i] < 0).all()
                     if all_below:
-                        cond_macd = abs(b_p1_macd) > abs(macd_val)
+                        # Check Absolute Value & Price
+                        cond_hist = abs(b_p1_hist) > abs(hist_val)
                         cond_price = b_p1_low > df['Low'].iloc[i-1]
-                        if cond_macd and cond_price:
+                        if cond_hist and cond_price:
                             bars_ago = total_bars - 1 - (i-1)
                             signals.append({
                                 "type": "Bullish", 
                                 "price": df['Low'].iloc[i-1], 
-                                "macd": macd_val,
                                 "p1_price": b_p1_low,
-                                "p1_macd": b_p1_macd, 
                                 "time": df.index[i-1],
                                 "bars_ago": bars_ago
                             })
                     b_state = 0
 
-        # Bearish
+        # --- Bearish Divergence ---
         if s_state == 0:
-            if prev_slope > 0 and current_slope < 0:
-                macd_val = df['MACD'].iloc[i-1]
-                if macd_val > 0:
-                    s_p1_macd = macd_val
+            # Slope from positive to negative -> Top 1
+            if prev_slope > 0 and current_slope <= 0:
+                hist_val = df['Histogram'].iloc[i-1]
+                if hist_val > 0:
+                    s_p1_hist = hist_val
                     s_p1_high = df['High'].iloc[i-1]
                     s_p1_idx = i-1
                     s_state = 1
         elif s_state == 1:
-            if prev_slope < 0 and current_slope > 0:
-                macd_val = df['MACD'].iloc[i-1]
-                if macd_val > 0:
+            # Slope from negative to positive -> Bottom 1
+            if prev_slope < 0 and current_slope >= 0:
+                hist_val = df['Histogram'].iloc[i-1]
+                if hist_val > 0:
                     s_state = 2
                 else:
                     s_state = 0 
         elif s_state == 2:
-            if prev_slope > 0 and current_slope < 0:
-                macd_val = df['MACD'].iloc[i-1]
-                if macd_val > 0:
-                    all_above = (df['MACD'].iloc[s_p1_idx:i] > 0).all()
+            # Slope from positive to negative -> Top 2
+            if prev_slope > 0 and current_slope <= 0:
+                hist_val = df['Histogram'].iloc[i-1]
+                if hist_val > 0:
+                    all_above = (df['Histogram'].iloc[s_p1_idx:i] > 0).all()
                     if all_above:
-                        cond_macd = s_p1_macd > macd_val
+                        # Check Value & Price
+                        cond_hist = s_p1_hist > hist_val
                         cond_price = s_p1_high < df['High'].iloc[i-1]
-                        if cond_macd and cond_price:
+                        if cond_hist and cond_price:
                             bars_ago = total_bars - 1 - (i-1)
                             signals.append({
                                 "type": "Bearish", 
                                 "price": df['High'].iloc[i-1],
-                                "macd": macd_val,
                                 "p1_price": s_p1_high,
-                                "p1_macd": s_p1_macd, 
                                 "time": df.index[i-1],
                                 "bars_ago": bars_ago
                             })
@@ -347,7 +370,9 @@ def detect_macd_divergence(df):
 
     return signals
 
-# 5. Background Live Scanner (For Push Notifications)
+# 5. Background Live Scanner
+live_notifications_cache = {}
+
 def live_scanner():
     while True:
         try:
@@ -372,18 +397,16 @@ def live_scanner():
                         
                         if 0 <= time_diff <= live_threshold: 
                             if live_notifications_cache.get(key) != sig_time:
-                                current_macd = df['MACD'].iloc[-1]
-                                if latest_sig['type'] == "Bullish" and current_macd >= 0: continue
-                                if latest_sig['type'] == "Bearish" and current_macd <= 0: continue
-                                    
                                 live_notifications_cache[key] = sig_time
-                                dt_tehran = sig_time.astimezone(tehran_tz).strftime('%H:%M')
+                                last_divergences[key] = latest_sig
+                                save_state()
                                 
+                                dt_tehran = sig_time.astimezone(tehran_tz).strftime('%H:%M')
                                 icon = "🚀" if latest_sig['type'] == "Bullish" else "📉"
                                 title = "دایورجنس صعودی" if latest_sig['type'] == "Bullish" else "دایورجنس نزولی"
                                 
                                 msg = (
-                                    f"{icon} <b>{title} MACD</b>\n\n"
+                                    f"{icon} <b>{title} MACD (هیستوگرام)</b>\n\n"
                                     f"💎 نماد: <b>{persian_name}</b>\n"
                                     f"⏳ تایم‌فریم: <b>{tf_name}</b>\n"
                                     f"⏰ زمان (تهران): <b>{dt_tehran}</b>"
@@ -392,6 +415,7 @@ def live_scanner():
                     time.sleep(0.5) 
             time.sleep(10) 
         except Exception as e:
+            traceback.print_exc()
             time.sleep(10)
 
 # 6. Main Execution
