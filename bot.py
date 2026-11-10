@@ -106,6 +106,7 @@ def run_web():
     port = int(os.environ.get("PORT", 7860))
     app.run(host="0.0.0.0", port=port)
 
+# --- EXACT WEBSOCKET LOGIC FROM USER'S FIRST MESSAGE ---
 def tv_send(ws, func, params):
     payload = json.dumps({"m": func, "p": params}, separators=(",", ":"))
     frame = f"~m~{len(payload)}~m~{payload}"
@@ -120,24 +121,25 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
                 "Origin": "https://www.tradingview.com",
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
             },
-            timeout=5
+            timeout=12
         )
         chart_session = "cs" + "".join(random.choices(string.ascii_lowercase + string.digits, k=12))
         tv_send(ws, "set_auth_token", ["unauthorized_user_token"])
         tv_send(ws, "chart_create_session", [chart_session, ""])
+        
         sym_json = json.dumps({"symbol": symbol, "adjustment": "splits"}, separators=(",", ":"))
         tv_send(ws, "resolve_symbol", [chart_session, "sds_sym_1", f"={sym_json}"])
         tv_send(ws, "create_series", [chart_session, "sds_1", "s1", "sds_sym_1", str(interval), n_bars, ""])
         
         bars = []
         start_t = time.time()
-        while time.time() - start_t < 5:
-            try: raw = ws.recv()
-            except Exception: break
+        while time.time() - start_t < 10:
+            raw = ws.recv()
             if not raw: break
             if raw.startswith("~m~") and "~h~" in raw:
                 ws.send(raw)
                 continue
+                
             parts = re.split(r"~m~\d+~m~", raw)
             for part in parts:
                 if not part.strip(): continue
@@ -162,23 +164,24 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
                                 })
                 elif m_type == "series_completed":
                     break
-            if len(bars) >= n_bars: break
+            if len(bars) >= 50: break
             
-        if ws:
-            try: ws.close()
-            except: pass
+        ws.close()
         
-        if len(bars) < 150: return None
+        if len(bars) < 150: 
+            return None
+            
         df = pd.DataFrame(bars)
         df["Time"] = pd.to_datetime(df["Time"], unit="s", utc=True)
         df.set_index("Time", inplace=True)
         df = df[~df.index.duplicated(keep="last")].sort_index()
         return df
-    except Exception:
+    except Exception as e:
         if ws:
             try: ws.close()
             except Exception: pass
         return None
+# -----------------------------------------------------
 
 def get_histogram(df):
     df_closed = df.iloc[:-1].copy()
@@ -194,7 +197,7 @@ def get_state(hist):
     last_hist = hist[-1]
     
     if last_hist < 0:
-        # NEGATIVE PHASE (Bullish Divergence)
+        # NEGATIVE PHASE
         phase_start = 0
         for i in range(len(hist)-1, -1, -1):
             if hist[i] > 0:
@@ -224,7 +227,6 @@ def get_state(hist):
             elif state == 1:
                 if h_curr > peak_val:
                     peak_val, peak_idx = h_curr, i
-                # Invalidation: If it drops below B1, reset
                 if h_curr < b1_val:
                     b1_val, b1_idx = h_curr, i
                     state = 0
@@ -240,12 +242,10 @@ def get_state(hist):
             elif state == 2:
                 if h_curr < b2_val:
                     b2_val, b2_idx = h_curr, i
-                # Invalidation: If it goes above middle peak, it's a new peak, reset to state 1
                 if h_curr > peak_val:
                     peak_val, peak_idx = h_curr, i
                     state = 1
                     down_count = 0
-                # Invalidation: If it drops below B1, the whole pattern is invalid, new B1
                 elif h_curr < b1_val:
                     b1_val, b1_idx = h_curr, i
                     state = 0
@@ -257,7 +257,7 @@ def get_state(hist):
         return "NEG", state, b1_val, b1_idx, peak_val, peak_idx, b2_val, b2_idx
         
     elif last_hist > 0:
-        # POSITIVE PHASE (Bearish Divergence)
+        # POSITIVE PHASE
         phase_start = 0
         for i in range(len(hist)-1, -1, -1):
             if hist[i] < 0:
@@ -287,7 +287,6 @@ def get_state(hist):
             elif state == 1:
                 if h_curr < trough_val:
                     trough_val, trough_idx = h_curr, i
-                # Invalidation: If it rises above T1, reset
                 if h_curr > t1_val:
                     t1_val, t1_idx = h_curr, i
                     state = 0
@@ -303,12 +302,10 @@ def get_state(hist):
             elif state == 2:
                 if h_curr > t2_val:
                     t2_val, t2_idx = h_curr, i
-                # Invalidation: If it drops below middle trough, it's a new trough, reset to state 1
                 if h_curr < trough_val:
                     trough_val, trough_idx = h_curr, i
                     state = 1
                     up_count = 0
-                # Invalidation: If it rises above T1, the whole pattern is invalid, new T1
                 elif h_curr > t1_val:
                     t1_val, t1_idx = h_curr, i
                     state = 0
@@ -412,8 +409,8 @@ def live_scanner():
                     df = fetch_tradingview_candles(symbol, tf_code, 220)
                     if df is not None:
                         check_divergence(df, symbol, tf_name)
-                    time.sleep(1) 
-            time.sleep(5) 
+                    time.sleep(2) 
+            time.sleep(10) 
         except Exception:
             time.sleep(10)
 
