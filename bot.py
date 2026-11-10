@@ -92,10 +92,10 @@ def send_welcome(message):
 @bot.message_handler(func=lambda message: message.text == '📊 آخرین سیگنال‌ها' or message.text == '/last')
 def send_last_signals(message):
     if not last_divergences:
-        bot.reply_to(message, "⏳ هنوز هیچ سیگنالی در این نشست ثبت نشده است.")
+        bot.reply_to(message, "⏳ هنوز دیتایی ثبت نشده. لطفاً چند دقیقه صبر کنید تا ربات بازار را اسکن کند.")
         return
 
-    msg = "📋 <b>آخرین دایورجنس‌های شناسایی شده:</b>\n\n"
+    msg = "📋 <b>آخرین دایورجنس‌های شناسایی شده در بازار:</b>\n\n"
     
     try:
         sorted_divs = sorted(last_divergences.items(), key=lambda x: pd.to_datetime(x[1]['time']), reverse=True)
@@ -206,9 +206,8 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
 # ==========================================
 def detect_macd_divergence(df):
     if df is None or len(df) < 10:
-        return None
+        return []
 
-    # تنظیمات مکدی 48, 106, 36
     exp1 = df['Close'].ewm(span=48, adjust=False).mean()
     exp2 = df['Close'].ewm(span=106, adjust=False).mean()
     df['MACD'] = exp1 - exp2
@@ -222,38 +221,31 @@ def detect_macd_divergence(df):
         current_slope = df['Slope'].iloc[i]
         prev_slope = df['Slope'].iloc[i-1]
         
-        # دایورجنس صعودی (Bullish)
         if state == 0:
-            # کف اول: شیب از منفی به مثبت تغییر کرده (صفر شده)
             if prev_slope < 0 and current_slope >= 0:
-                if df['MACD'].iloc[i] < 0: # شرط فاز منفی
+                if df['MACD'].iloc[i] < 0:
                     p1_price = df['Close'].iloc[i]
                     p1_macd = df['MACD'].iloc[i]
                     p1_idx = i
                     state = 1
 
         elif state == 1:
-            # سقف میانی: شیب از مثبت به منفی تغییر کرده
             if prev_slope > 0 and current_slope <= 0:
-                if df['MACD'].iloc[i] < 0: # کل مکدی باید زیر صفر بمونه
+                if df['MACD'].iloc[i] < 0:
                     state = 2
                 else:
-                    state = 0 # اگر از صفر عبور کرد باطل میشه
+                    state = 0
 
         elif state == 2:
-            # کف دوم: شیب دوباره منفی به مثبت شده
             if prev_slope < 0 and current_slope >= 0:
                 if df['MACD'].iloc[i] < 0:
                     p2_price = df['Close'].iloc[i]
                     p2_macd = df['MACD'].iloc[i]
                     
-                    # چک کردن اینکه کل مکدی بین کف اول و دوم زیر صفر بوده
                     all_below_zero = (df['MACD'].iloc[p1_idx:i] < 0).all()
                     
                     if all_below_zero:
-                        # شرط قدر مطلق: کف اول بزرگتر از کف دوم (عمیق‌تر)
                         cond_macd = abs(p1_macd) > abs(p2_macd)
-                        # شرط قیمت: قیمت کف اول بالاتر از کف دوم
                         cond_price = p1_price > p2_price
                         
                         if cond_macd and cond_price:
@@ -300,38 +292,57 @@ def macd_scanner():
                 last_source_name = symbol
                 signals = detect_macd_divergence(df)
                 
+                # اگر سیگنالی در ۲۲۰ کندل اخیر پیدا شد
                 if signals:
-                    latest_sig = signals[-1]
+                    latest_sig = signals[-1] # آخرین سیگنال (جدیدترین)
                     sig_time = latest_sig["time"]
                     
-                    # جلوگیری از ارسال سیگنال تکراری برای یک کندل
-                    if last_signal_times.get(symbol) != sig_time:
-                        last_signal_times[symbol] = sig_time
-                        
-                        # ذخیره اطلاعات برای دکمه آخرین سیگنال‌ها
+                    # --- بخش اول: ذخیره در حافظه (حتی اگه قدیمی باشه) برای دکمه ---
+                    stored_sig = last_divergences.get(symbol)
+                    is_newer = False
+                    if not stored_sig:
+                        is_newer = True
+                    else:
+                        # مقایسه زمان سیگنال جدید با سیگنال ذخیره شده قبلی
+                        try:
+                            stored_time = pd.to_datetime(stored_sig['time'], utc=True)
+                            if sig_time > stored_time:
+                                is_newer = True
+                        except:
+                            is_newer = True
+                            
+                    if is_newer:
                         last_divergences[symbol] = latest_sig
                         save_state()
-                        
-                        # تبدیل زمان به وقت تهران
-                        dt_tehran = sig_time.astimezone(tehran_tz).strftime('%H:%M:%S')
-                        
-                        msg = (
-                            f"🚀 <b>دایورجنس صعودی MACD (تایم ۱ دقیقه)</b> 🚀\n"
-                            f"💎 نماد: <b>{persian_name}</b>\n\n"
-                            f"📡 چارت: <code>{symbol}</code>\n"
-                            f"💰 قیمت سیگنال: <code>{latest_sig['price']:.5f}</code>\n"
-                            f"📉 مقدار MACD: <code>{latest_sig['macd']:.4f}</code>\n"
-                            f"⏰ زمان (تهران): {dt_tehran}\n\n"
-                            f"📌 <i>طبق استراتژی: کف دوم مکدی ضعیف‌تر، اما قیمت پایین‌تر.</i>"
-                        )
-                        broadcast(msg)
-                        print(f"Signal sent for {symbol} at {sig_time}")
+                        print(f"Database updated: {symbol} last signal at {sig_time}")
 
-                # استراحت کوتاه بین درخواست‌ها برای جلوگیری از بلاک شدن
+                    # --- بخش دوم: ارسال پیام تلگرام (فقط اگه سیگنال تازه باشه) ---
+                    # چک میکنیم آیا این سیگنال در ۲ دقیقه اخیر اتفاق افتاده یا نه
+                    now_utc = pd.Timestamp.now(tz='UTC')
+                    time_diff = (now_utc - sig_time).total_seconds()
+                    
+                    # اگر سیگنال کمتر از ۹۰ ثانیه پیش رخ داده باشد (یعنی کندلِ در حال بسته شدن یا کندل قبلی)
+                    if time_diff <= 90:
+                        if last_signal_times.get(symbol) != sig_time:
+                            last_signal_times[symbol] = sig_time
+                            
+                            dt_tehran = sig_time.astimezone(tehran_tz).strftime('%H:%M:%S')
+                            
+                            msg = (
+                                f"🚀 <b>دایورجنس صعودی MACD (تایم ۱ دقیقه)</b> 🚀\n"
+                                f"💎 نماد: <b>{persian_name}</b>\n\n"
+                                f"📡 چارت: <code>{symbol}</code>\n"
+                                f"💰 قیمت سیگنال: <code>{latest_sig['price']:.5f}</code>\n"
+                                f"📉 مقدار MACD: <code>{latest_sig['macd']:.4f}</code>\n"
+                                f"⏰ زمان (تهران): {dt_tehran}\n\n"
+                                f"📌 <i>طبق استراتژی: کف دوم مکدی ضعیف‌تر، اما قیمت پایین‌تر.</i>"
+                            )
+                            broadcast(msg)
+                            print(f"Live signal broadcasted for {symbol} at {sig_time}")
+
                 time.sleep(2) 
 
-            # بعد از اسکن همه نمادها، ۱۵ ثانیه صبر میکنیم
-            time.sleep(15) 
+            time.sleep(10) # هر ۱۰ ثانیه کل بازار رو اسکن میکنه
             
         except Exception as e:
             print(f"Error in scan: {e}")
@@ -346,7 +357,7 @@ if __name__ == "__main__":
     t.daemon = True
     t.start()
     
-    # ۲. اجرای Polling تلگرام در پس‌زمینه (بخش مهمی که باعث میشه /start کار کنه)
+    # ۲. اجرای Polling تلگرام در پس‌زمینه
     def run_bot_polling():
         try:
             print("Starting Telegram polling...")
@@ -358,5 +369,5 @@ if __name__ == "__main__":
     bot_thread.daemon = True
     bot_thread.start()
     
-    # ۳. اجرای وب‌سرور برای Render (در ترد اصلی)
+    # ۳. اجرای وب‌سرور برای Render
     run_web()
