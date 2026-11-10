@@ -10,6 +10,7 @@ import pytz
 import websocket
 from flask import Flask
 import telebot
+from telebot import types
 import pandas as pd
 from datetime import datetime
 
@@ -52,46 +53,50 @@ SYMBOLS = {
 
 TIMEFRAMES = {"1": "M1", "5": "M5"}
 
+def get_symbol_menu():
+    markup = types.InlineKeyboardMarkup(row_width=2)
+    btns = []
+    for sym, name in SYMBOLS.items():
+        btns.append(types.InlineKeyboardButton(name, callback_data=f"check_{sym}"))
+    markup.add(*btns)
+    return markup
+
 if bot:
     @bot.message_handler(commands=['start'])
     def send_welcome(message):
         subscribed_users.add(message.chat.id)
         bot.reply_to(
             message, 
-            "Bot is active.\n"
-            "Use /status to see the current phase and what I am waiting for on every pair.", 
+            "✅ <b>Bot is Active.</b>\n\n"
+            "Select a pair to see its current status:", 
+            reply_markup=get_symbol_menu(),
             parse_mode="HTML"
         )
 
-    @bot.message_handler(commands=['status'])
-    def send_status(message):
-        try:
-            bot.reply_to(message, "Fetching live data. Please wait...")
-            status_msg = "📊 <b>Current Market Status:</b>\n\n"
+    @bot.callback_query_handler(func=lambda call: True)
+    def handle_query(call):
+        if call.data.startswith("check_"):
+            sym = call.data.replace("check_", "")
+            name = SYMBOLS[sym]
             
-            for symbol in SYMBOLS.keys():
-                for tf_code, tf_name in TIMEFRAMES.items():
-                    df = fetch_tradingview_candles(symbol, tf_code, 220)
-                    if df is not None:
-                        state_text = analyze_current_state(df)
-                        status_msg += f"💎 <b>{SYMBOLS[symbol]}</b> ({tf_name}):\n{state_text}\n\n"
-                    time.sleep(1)
+            bot.answer_callback_query(call.id, f"Fetching data for {name}...")
             
-            lines = status_msg.split('\n')
-            current_msg = ""
-            for line in lines:
-                if len(current_msg) + len(line) > 3500:
-                    bot.send_message(message.chat.id, current_msg, parse_mode="HTML")
-                    current_msg = line + "\n"
+            msg = f"💎 <b>{name} Status:</b>\n\n"
+            found_data = False
+            
+            for tf_code, tf_name in TIMEFRAMES.items():
+                df = fetch_tradingview_candles(sym, tf_code, 220)
+                if df is not None:
+                    state_text = analyze_current_state(df)
+                    msg += f"⏱ <b>{tf_name}</b>:\n{state_text}\n\n"
+                    found_data = True
                 else:
-                    current_msg += line + "\n"
-            if current_msg:
-                bot.send_message(message.chat.id, current_msg, parse_mode="HTML")
+                    msg += f"⏱ <b>{tf_name}</b>: Failed to fetch data ⚠️\n\n"
+            
+            if not found_data:
+                msg = f"❌ Could not fetch data for {name}. Please try again."
                 
-        except Exception as e:
-            print(f"Status Error: {e}")
-            traceback.print_exc()
-            bot.reply_to(message, f"An error occurred: {e}")
+            bot.send_message(call.message.chat.id, msg, parse_mode="HTML", reply_markup=get_symbol_menu())
 
 @app.route('/')
 def home():
@@ -185,180 +190,174 @@ def get_histogram(df):
     df_closed['Histogram'] = macd_line - signal_line
     return df_closed, df_closed['Histogram'].tolist()
 
-def analyze_current_state(df):
-    df_closed, hist = get_histogram(df)
-    if df_closed is None: return "Not enough data."
-    
+def get_state(hist):
     last_hist = hist[-1]
     
     if last_hist < 0:
-        # NEGATIVE PHASE
+        # NEGATIVE PHASE (Bullish Divergence)
         phase_start = 0
         for i in range(len(hist)-1, -1, -1):
             if hist[i] > 0:
                 phase_start = i
                 break
                 
-        phase_hist = hist[phase_start:]
-        if not phase_hist: return "Not enough data."
+        state = 0
+        b1_val, b1_idx = 999999.0, -1
+        peak_val, peak_idx = -999999.0, -1
+        b2_val, b2_idx = 999999.0, -1
+        up_count, down_count = 0, 0
         
-        b1_val = min(phase_hist)
-        b1_idx = phase_start + phase_hist.index(b1_val)
-        
-        if b1_idx == len(hist) - 1:
-            return f"🔴 <b>Phase: Negative</b>\nStill dropping. Bottom 1 forming at {df_closed['Low'].iloc[b1_idx]:.5f} (Abs: {abs(b1_val):.6f}).\nWaiting for retracement..."
+        for i in range(phase_start, len(hist)):
+            h_curr = hist[i]
+            h_prev = hist[i-1] if i > phase_start else h_curr
             
-        up_bars_count = 0
-        peak_idx = -1
-        peak_val = -999999
-        
-        for i in range(b1_idx + 1, len(hist) - 1):
-            if hist[i] > hist[i-1]:
-                up_bars_count += 1
-            else:
-                if up_bars_count >= 7:
-                    peak_idx = i - 1
-                    peak_val = hist[peak_idx]
-                    break
-                else:
-                    up_bars_count = 0
+            if state == 0:
+                if h_curr < b1_val:
+                    b1_val, b1_idx = h_curr, i
+                if h_curr > h_prev: up_count += 1
+                else: up_count = 0
+                if up_count >= 7:
+                    state = 1
+                    peak_val, peak_idx = h_curr, i
+                    down_count = 0
                     
-        if peak_idx == -1:
-            return f"🔴 <b>Phase: Negative</b>\nBottom 1: {df_closed['Low'].iloc[b1_idx]:.5f} (Abs: {abs(b1_val):.6f})\n⏳ Waiting for valid Middle Peak (min 7-8 rising bars)..."
-            
-        down_bars_count = 0
-        b2_idx = -1
-        b2_val = 999999
-        
-        for i in range(peak_idx + 1, len(hist) - 1):
-            if hist[i] < hist[i-1]:
-                down_bars_count += 1
-            else:
-                if down_bars_count >= 3:
-                    b2_idx = i - 1
-                    b2_val = hist[b2_idx]
-                    break
+            elif state == 1:
+                if h_curr > peak_val:
+                    peak_val, peak_idx = h_curr, i
+                # Invalidation: If it drops below B1, reset
+                if h_curr < b1_val:
+                    b1_val, b1_idx = h_curr, i
+                    state = 0
+                    up_count, down_count = 0, 0
                 else:
-                    down_bars_count = 0
+                    if h_curr < h_prev: down_count += 1
+                    else: down_count = 0
+                    if down_count >= 3:
+                        state = 2
+                        b2_val, b2_idx = h_curr, i
+                        up_count = 0
+                        
+            elif state == 2:
+                if h_curr < b2_val:
+                    b2_val, b2_idx = h_curr, i
+                # Invalidation: If it goes above middle peak, it's a new peak, reset to state 1
+                if h_curr > peak_val:
+                    peak_val, peak_idx = h_curr, i
+                    state = 1
+                    down_count = 0
+                # Invalidation: If it drops below B1, the whole pattern is invalid, new B1
+                elif h_curr < b1_val:
+                    b1_val, b1_idx = h_curr, i
+                    state = 0
+                    up_count, down_count = 0, 0
+                else:
+                    if h_curr > h_prev: up_count += 1
+                    else: up_count = 0
                     
-        if b2_idx == -1:
-            return f"🔴 <b>Phase: Negative</b>\nBottom 1: {df_closed['Low'].iloc[b1_idx]:.5f} (Abs: {abs(b1_val):.6f})\nMiddle Peak: {df_closed['Low'].iloc[peak_idx]:.5f} (Abs: {abs(peak_val):.6f})\n⏳ Waiting for Bottom 2 to form..."
-            
-        return f"🔴 <b>Phase: Negative</b>\nBottom 1: {df_closed['Low'].iloc[b1_idx]:.5f} (Abs: {abs(b1_val):.6f})\nMiddle Peak: {df_closed['Low'].iloc[peak_idx]:.5f} (Abs: {abs(peak_val):.6f})\nBottom 2 formed at {df_closed['Low'].iloc[b2_idx]:.5f} (Abs: {abs(b2_val):.6f})."
+        return "NEG", state, b1_val, b1_idx, peak_val, peak_idx, b2_val, b2_idx
         
     elif last_hist > 0:
-        # POSITIVE PHASE
+        # POSITIVE PHASE (Bearish Divergence)
         phase_start = 0
         for i in range(len(hist)-1, -1, -1):
             if hist[i] < 0:
                 phase_start = i
                 break
                 
-        phase_hist = hist[phase_start:]
-        if not phase_hist: return "Not enough data."
+        state = 0
+        t1_val, t1_idx = -999999.0, -1
+        trough_val, trough_idx = 999999.0, -1
+        t2_val, t2_idx = -999999.0, -1
+        down_count, up_count = 0, 0
         
-        t1_val = max(phase_hist)
-        t1_idx = phase_start + phase_hist.index(t1_val)
-        
-        if t1_idx == len(hist) - 1:
-            return f"🟢 <b>Phase: Positive</b>\nStill rising. Top 1 forming at {df_closed['High'].iloc[t1_idx]:.5f} (Val: {t1_val:.6f}).\nWaiting for pullback..."
+        for i in range(phase_start, len(hist)):
+            h_curr = hist[i]
+            h_prev = hist[i-1] if i > phase_start else h_curr
             
-        down_bars_count = 0
-        trough_idx = -1
-        trough_val = 999999
-        
-        for i in range(t1_idx + 1, len(hist) - 1):
-            if hist[i] < hist[i-1]:
-                down_bars_count += 1
-            else:
-                if down_bars_count >= 7:
-                    trough_idx = i - 1
-                    trough_val = hist[trough_idx]
-                    break
-                else:
-                    down_bars_count = 0
+            if state == 0:
+                if h_curr > t1_val:
+                    t1_val, t1_idx = h_curr, i
+                if h_curr < h_prev: down_count += 1
+                else: down_count = 0
+                if down_count >= 7:
+                    state = 1
+                    trough_val, trough_idx = h_curr, i
+                    up_count = 0
                     
-        if trough_idx == -1:
-            return f"🟢 <b>Phase: Positive</b>\nTop 1: {df_closed['High'].iloc[t1_idx]:.5f} (Val: {t1_val:.6f})\n⏳ Waiting for valid Middle Trough (min 7-8 falling bars)..."
-            
-        up_bars_count = 0
-        t2_idx = -1
-        t2_val = -999999
-        
-        for i in range(trough_idx + 1, len(hist) - 1):
-            if hist[i] > hist[i-1]:
-                up_bars_count += 1
-            else:
-                if up_bars_count >= 3:
-                    t2_idx = i - 1
-                    t2_val = hist[t2_idx]
-                    break
+            elif state == 1:
+                if h_curr < trough_val:
+                    trough_val, trough_idx = h_curr, i
+                # Invalidation: If it rises above T1, reset
+                if h_curr > t1_val:
+                    t1_val, t1_idx = h_curr, i
+                    state = 0
+                    down_count, up_count = 0, 0
                 else:
-                    up_bars_count = 0
+                    if h_curr > h_prev: up_count += 1
+                    else: up_count = 0
+                    if up_count >= 3:
+                        state = 2
+                        t2_val, t2_idx = h_curr, i
+                        down_count = 0
+                        
+            elif state == 2:
+                if h_curr > t2_val:
+                    t2_val, t2_idx = h_curr, i
+                # Invalidation: If it drops below middle trough, it's a new trough, reset to state 1
+                if h_curr < trough_val:
+                    trough_val, trough_idx = h_curr, i
+                    state = 1
+                    up_count = 0
+                # Invalidation: If it rises above T1, the whole pattern is invalid, new T1
+                elif h_curr > t1_val:
+                    t1_val, t1_idx = h_curr, i
+                    state = 0
+                    down_count, up_count = 0, 0
+                else:
+                    if h_curr < h_prev: down_count += 1
+                    else: down_count = 0
                     
-        if t2_idx == -1:
-            return f"🟢 <b>Phase: Positive</b>\nTop 1: {df_closed['High'].iloc[t1_idx]:.5f} (Val: {t1_val:.6f})\nMiddle Trough: {df_closed['High'].iloc[trough_idx]:.5f} (Val: {trough_val:.6f})\n⏳ Waiting for Top 2 to form..."
-            
-        return f"🟢 <b>Phase: Positive</b>\nTop 1: {df_closed['High'].iloc[t1_idx]:.5f} (Val: {t1_val:.6f})\nMiddle Trough: {df_closed['High'].iloc[trough_idx]:.5f} (Val: {trough_val:.6f})\nTop 2 formed at {df_closed['High'].iloc[t2_idx]:.5f} (Val: {t2_val:.6f})."
+        return "POS", state, t1_val, t1_idx, trough_val, trough_idx, t2_val, t2_idx
         
-    return "Phase unclear."
+    return None
+
+def analyze_current_state(df):
+    df_closed, hist = get_histogram(df)
+    if df_closed is None: return "Not enough data."
+    
+    res = get_state(hist)
+    if not res: return "Phase unclear."
+    
+    phase, state, ext1_val, ext1_idx, mid_val, mid_idx, ext2_val, ext2_idx = res
+    
+    if phase == "NEG":
+        if state == 0:
+            return f"🔴 <b>Phase: Negative</b>\nStill dropping. Bottom 1 forming at {df_closed['Low'].iloc[ext1_idx]:.5f} (Abs: {abs(ext1_val):.6f}).\nWaiting for retracement..."
+        elif state == 1:
+            return f"🔴 <b>Phase: Negative</b>\nBottom 1: {df_closed['Low'].iloc[ext1_idx]:.5f} (Abs: {abs(ext1_val):.6f})\nMiddle Peak forming at {df_closed['Low'].iloc[mid_idx]:.5f} (Abs: {abs(mid_val):.6f}).\nWaiting for pullback..."
+        else:
+            return f"🔴 <b>Phase: Negative</b>\nBottom 1: {df_closed['Low'].iloc[ext1_idx]:.5f} (Abs: {abs(ext1_val):.6f})\nMiddle Peak: {df_closed['Low'].iloc[mid_idx]:.5f} (Abs: {abs(mid_val):.6f})\nBottom 2 forming at {df_closed['Low'].iloc[ext2_idx]:.5f} (Abs: {abs(ext2_val):.6f}).\nWatching for confirmation..."
+    else:
+        if state == 0:
+            return f"🟢 <b>Phase: Positive</b>\nStill rising. Top 1 forming at {df_closed['High'].iloc[ext1_idx]:.5f} (Val: {ext1_val:.6f}).\nWaiting for pullback..."
+        elif state == 1:
+            return f"🟢 <b>Phase: Positive</b>\nTop 1: {df_closed['High'].iloc[ext1_idx]:.5f} (Val: {ext1_val:.6f})\nMiddle Trough forming at {df_closed['High'].iloc[mid_idx]:.5f} (Val: {mid_val:.6f}).\nWaiting for retracement..."
+        else:
+            return f"🟢 <b>Phase: Positive</b>\nTop 1: {df_closed['High'].iloc[ext1_idx]:.5f} (Val: {ext1_val:.6f})\nMiddle Trough: {df_closed['High'].iloc[mid_idx]:.5f} (Val: {mid_val:.6f})\nTop 2 forming at {df_closed['High'].iloc[ext2_idx]:.5f} (Val: {ext2_val:.6f}).\nWatching for confirmation..."
 
 def check_divergence(df, symbol, tf_name):
     df_closed, hist = get_histogram(df)
     if df_closed is None or len(hist) < 150: return
 
-    last_hist = hist[-1]
+    res = get_state(hist)
+    if not res: return
     
-    if last_hist < 0:
-        phase_start = 0
-        for i in range(len(hist)-1, -1, -1):
-            if hist[i] > 0:
-                phase_start = i
-                break
-                
-        phase_hist = hist[phase_start:]
-        if not phase_hist: return
-        
-        b1_val = min(phase_hist)
-        b1_idx = phase_start + phase_hist.index(b1_val)
-        
-        if b1_idx == len(hist) - 1: return 
-            
-        up_bars_count = 0
-        peak_idx = -1
-        for i in range(b1_idx + 1, len(hist) - 1):
-            if hist[i] > hist[i-1]:
-                up_bars_count += 1
-            else:
-                if up_bars_count >= 7:
-                    peak_idx = i - 1
-                    break
-                else:
-                    up_bars_count = 0
-                    
-        if peak_idx == -1: return
-        
-        down_bars_count = 0
-        b2_idx = -1
-        for i in range(peak_idx + 1, len(hist) - 1):
-            if hist[i] < hist[i-1]:
-                down_bars_count += 1
-            else:
-                if down_bars_count >= 3:
-                    b2_idx = i - 1
-                    break
-                else:
-                    down_bars_count = 0
-                    
-        if b2_idx == -1: return
-        
-        if b2_idx + 1 == len(hist) - 1:
-            b1_val = hist[b1_idx]
-            b2_val = hist[b2_idx]
-            peak_val = hist[peak_idx]
-            
-            if (b2_idx - b1_idx) >= 30 and abs(b1_val) > abs(b2_val) and df_closed['Low'].iloc[b1_idx] > df_closed['Low'].iloc[b2_idx]:
-                dt_tehran = df_closed.index[b2_idx].astimezone(tehran_tz).strftime('%H:%M')
+    phase, state, ext1_val, ext1_idx, mid_val, mid_idx, ext2_val, ext2_idx = res
+    
+    if phase == "NEG":
+        if state == 2 and ext2_idx == len(hist) - 2:
+            if (ext2_idx - ext1_idx) >= 30 and abs(ext1_val) > abs(ext2_val) and df_closed['Low'].iloc[ext1_idx] > df_closed['Low'].iloc[ext2_idx]:
+                dt_tehran = df_closed.index[ext2_idx].astimezone(tehran_tz).strftime('%H:%M')
                 session = get_current_session()
                 msg = (
                     f"🚀 <b>Bullish Divergence CONFIRMED</b> 🚀\n\n"
@@ -367,67 +366,21 @@ def check_divergence(df, symbol, tf_name):
                     f"⏰ Time (Tehran): <b>{dt_tehran}</b>\n"
                     f"🌐 Session: <b>{session}</b>\n\n"
                     f"📊 <b>Abs Histogram:</b>\n"
-                    f"🔹 Bottom 1: <code>{abs(b1_val):.6f}</code>\n"
-                    f"🔹 Middle Peak: <code>{abs(peak_val):.6f}</code>\n"
-                    f"🔹 Bottom 2: <code>{abs(b2_val):.6f}</code>\n\n"
+                    f"🔹 Bottom 1: <code>{abs(ext1_val):.6f}</code>\n"
+                    f"🔹 Middle Peak: <code>{abs(mid_val):.6f}</code>\n"
+                    f"🔹 Bottom 2: <code>{abs(ext2_val):.6f}</code>\n\n"
                     f"💰 <b>Price (Shadow):</b>\n"
-                    f"🔹 Bottom 1: <code>{df_closed['Low'].iloc[b1_idx]:.6f}</code>\n"
-                    f"🔹 Bottom 2: <code>{df_closed['Low'].iloc[b2_idx]:.6f}</code>"
+                    f"🔹 Bottom 1: <code>{df_closed['Low'].iloc[ext1_idx]:.6f}</code>\n"
+                    f"🔹 Bottom 2: <code>{df_closed['Low'].iloc[ext2_idx]:.6f}</code>"
                 )
                 broadcast(msg)
                 print(f"Signal Sent: {symbol} {tf_name} Bullish")
                 return
 
-    elif last_hist > 0:
-        phase_start = 0
-        for i in range(len(hist)-1, -1, -1):
-            if hist[i] < 0:
-                phase_start = i
-                break
-                
-        phase_hist = hist[phase_start:]
-        if not phase_hist: return
-        
-        t1_val = max(phase_hist)
-        t1_idx = phase_start + phase_hist.index(t1_val)
-        
-        if t1_idx == len(hist) - 1: return
-            
-        down_bars_count = 0
-        trough_idx = -1
-        for i in range(t1_idx + 1, len(hist) - 1):
-            if hist[i] < hist[i-1]:
-                down_bars_count += 1
-            else:
-                if down_bars_count >= 7:
-                    trough_idx = i - 1
-                    break
-                else:
-                    down_bars_count = 0
-                    
-        if trough_idx == -1: return
-        
-        up_bars_count = 0
-        t2_idx = -1
-        for i in range(trough_idx + 1, len(hist) - 1):
-            if hist[i] > hist[i-1]:
-                up_bars_count += 1
-            else:
-                if up_bars_count >= 3:
-                    t2_idx = i - 1
-                    break
-                else:
-                    up_bars_count = 0
-                    
-        if t2_idx == -1: return
-        
-        if t2_idx + 1 == len(hist) - 1:
-            t1_val = hist[t1_idx]
-            t2_val = hist[t2_idx]
-            trough_val = hist[trough_idx]
-            
-            if (t2_idx - t1_idx) >= 30 and t1_val > t2_val and df_closed['High'].iloc[t1_idx] < df_closed['High'].iloc[t2_idx]:
-                dt_tehran = df_closed.index[t2_idx].astimezone(tehran_tz).strftime('%H:%M')
+    elif phase == "POS":
+        if state == 2 and ext2_idx == len(hist) - 2:
+            if (ext2_idx - ext1_idx) >= 30 and ext1_val > ext2_val and df_closed['High'].iloc[ext1_idx] < df_closed['High'].iloc[ext2_idx]:
+                dt_tehran = df_closed.index[ext2_idx].astimezone(tehran_tz).strftime('%H:%M')
                 session = get_current_session()
                 msg = (
                     f"📉 <b>Bearish Divergence CONFIRMED</b> 📉\n\n"
@@ -436,12 +389,12 @@ def check_divergence(df, symbol, tf_name):
                     f"⏰ Time (Tehran): <b>{dt_tehran}</b>\n"
                     f"🌐 Session: <b>{session}</b>\n\n"
                     f"📊 <b>Histogram:</b>\n"
-                    f"🔹 Top 1: <code>{t1_val:.6f}</code>\n"
-                    f"🔹 Middle Trough: <code>{trough_val:.6f}</code>\n"
-                    f"🔹 Top 2: <code>{t2_val:.6f}</code>\n\n"
+                    f"🔹 Top 1: <code>{ext1_val:.6f}</code>\n"
+                    f"🔹 Middle Trough: <code>{mid_val:.6f}</code>\n"
+                    f"🔹 Top 2: <code>{ext2_val:.6f}</code>\n\n"
                     f"💰 <b>Price (Shadow):</b>\n"
-                    f"🔹 Top 1: <code>{df_closed['High'].iloc[t1_idx]:.6f}</code>\n"
-                    f"🔹 Top 2: <code>{df_closed['High'].iloc[t2_idx]:.6f}</code>"
+                    f"🔹 Top 1: <code>{df_closed['High'].iloc[ext1_idx]:.6f}</code>\n"
+                    f"🔹 Top 2: <code>{df_closed['High'].iloc[ext2_idx]:.6f}</code>"
                 )
                 broadcast(msg)
                 print(f"Signal Sent: {symbol} {tf_name} Bearish")
