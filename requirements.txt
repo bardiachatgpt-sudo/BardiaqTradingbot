@@ -3,4 +3,3 @@ websocket-client
 pandas
 numpy
 Flask
-pytz
