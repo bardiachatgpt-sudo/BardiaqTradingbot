@@ -1,4 +1,6 @@
+flask
+telebot
 pandas
 numpy
-requests
-flask
+pytz
+websocket-client
