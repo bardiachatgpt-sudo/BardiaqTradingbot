@@ -38,10 +38,10 @@ def save_state():
             for key, data in last_divergences.items():
                 serializable_divs[key] = {
                     "type": data["type"],
-                    "price": data["price"],
-                    "macd": data["macd"],
-                    "p1_macd": data.get("p1_macd", 0),
-                    "p1_price": data.get("p1_price", 0),
+                    "price": float(data["price"]),
+                    "macd": float(data["macd"]),
+                    "p1_macd": float(data.get("p1_macd", 0)),
+                    "p1_price": float(data.get("p1_price", 0)),
                     "time": str(data["time"]) 
                 }
             json.dump({"users": list(subscribed_users), "last_divs": serializable_divs}, f)
@@ -55,7 +55,11 @@ def load_state():
             with open(STATE_FILE, "r") as f:
                 data = json.load(f)
                 subscribed_users = set(data.get("users", []))
-                last_divergences = data.get("last_divs", {})
+                # تبدیل رشته زمان به دیت‌تایم هنگام لود شدن
+                loaded_divs = data.get("last_divs", {})
+                for k, v in loaded_divs.items():
+                    v["time"] = pd.to_datetime(v["time"], utc=True)
+                    last_divergences[k] = v
     except Exception as e:
         print(f"Load state error: {e}")
 
@@ -99,14 +103,13 @@ def send_last_signals(message):
 
     msg = "📋 <b>آخرین دایورجنس‌ها (تفکیک تایم‌فریم):</b>\n\n"
     try:
-        sorted_divs = sorted(last_divergences.items(), key=lambda x: pd.to_datetime(x[1]['time']), reverse=True)
+        sorted_divs = sorted(last_divergences.items(), key=lambda x: x[1]['time'], reverse=True)
     except:
         sorted_divs = list(last_divergences.items())
     
     for key, data in sorted_divs:
         try:
-            dt_utc = pd.to_datetime(data['time'], utc=True)
-            dt_tehran = dt_utc.astimezone(tehran_tz).strftime('%Y-%m-%d %H:%M')
+            dt_tehran = data['time'].astimezone(tehran_tz).strftime('%Y-%m-%d %H:%M')
         except:
             dt_tehran = "نامشخص"
         
@@ -128,7 +131,6 @@ def home():
 
 def run_web():
     port = int(os.environ.get("PORT", 7860))
-    print(f"Web server starting on port {port}...")
     app.run(host="0.0.0.0", port=port)
 
 # ==========================================
@@ -148,7 +150,7 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
                 "Origin": "https://www.tradingview.com",
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
             },
-            timeout=8 # کاهش تایم‌اوت برای جلوگیری از هنگ کردن
+            timeout=8
         )
         chart_session = "cs" + "".join(random.choices(string.ascii_lowercase + string.digits, k=12))
         tv_send(ws, "set_auth_token", ["unauthorized_user_token"])
@@ -163,7 +165,7 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
             try:
                 raw = ws.recv()
             except Exception:
-                break # در صورت قطعی اتصال، حلقه را بشکن
+                break
                 
             if not raw: break
             if raw.startswith("~m~") and "~h~" in raw:
@@ -214,7 +216,7 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
         return None, str(e)[:50]
 
 # ==========================================
-# ۴. منطق استراتژی (صعودی و نزولی)
+# ۴. منطق استراتژی
 # ==========================================
 def detect_macd_divergence(df):
     if df is None or len(df) < 10:
@@ -226,12 +228,13 @@ def detect_macd_divergence(df):
     df['Slope'] = df['MACD'].diff() 
 
     signals = []
-    
     b_state = 0
     b_p1_macd, b_p1_price, b_p1_idx = None, None, None
-    
     s_state = 0
     s_p1_macd, s_p1_price, s_p1_idx = None, None, None
+
+    # فیلتر حداقل مقدار برای جلوگیری از سیگنال‌های -0.0000
+    MIN_MACD_VAL = 0.00005
 
     for i in range(2, len(df)):
         current_slope = df['Slope'].iloc[i]
@@ -241,7 +244,7 @@ def detect_macd_divergence(df):
         if b_state == 0:
             if prev_slope < 0 and current_slope >= 0:
                 macd_val = df['MACD'].iloc[i-1]
-                if macd_val < 0:
+                if macd_val < -MIN_MACD_VAL: # حتما باید منفی و از صفر فاصله داشته باشه
                     b_p1_macd = macd_val
                     b_p1_price = df['Close'].iloc[i-1]
                     b_p1_idx = i-1
@@ -258,7 +261,7 @@ def detect_macd_divergence(df):
         elif b_state == 2:
             if prev_slope < 0 and current_slope >= 0:
                 macd_val = df['MACD'].iloc[i-1]
-                if macd_val < 0:
+                if macd_val < -MIN_MACD_VAL:
                     all_below_zero = (df['MACD'].iloc[b_p1_idx:i] < 0).all()
                     if all_below_zero:
                         cond_macd = abs(b_p1_macd) > abs(macd_val)
@@ -278,7 +281,7 @@ def detect_macd_divergence(df):
         if s_state == 0:
             if prev_slope > 0 and current_slope <= 0:
                 macd_val = df['MACD'].iloc[i-1]
-                if macd_val > 0:
+                if macd_val > MIN_MACD_VAL:
                     s_p1_macd = macd_val
                     s_p1_price = df['Close'].iloc[i-1]
                     s_p1_idx = i-1
@@ -295,7 +298,7 @@ def detect_macd_divergence(df):
         elif s_state == 2:
             if prev_slope > 0 and current_slope <= 0:
                 macd_val = df['MACD'].iloc[i-1]
-                if macd_val > 0:
+                if macd_val > MIN_MACD_VAL:
                     all_above_zero = (df['MACD'].iloc[s_p1_idx:i] > 0).all()
                     if all_above_zero:
                         cond_macd = s_p1_macd > macd_val
@@ -332,7 +335,6 @@ last_signal_times = {}
 
 def macd_scanner():
     global last_source_name, last_divergences
-    print("Scanner thread started successfully.")
     while True:
         try:
             if not subscribed_users:
@@ -341,11 +343,9 @@ def macd_scanner():
                 
             for symbol, persian_name in SYMBOLS.items():
                 for tf_code, tf_name in TIMEFRAMES.items():
-                    print(f"Fetching {symbol} {tf_name}...") # لاگ برای رندر
                     df, err = fetch_tradingview_candles(symbol, tf_code, 220)
                     
                     if df is None:
-                        print(f"Failed {symbol} {tf_name}: {err}")
                         continue
                     
                     signals = detect_macd_divergence(df)
@@ -355,29 +355,24 @@ def macd_scanner():
                         sig_time = latest_sig["time"]
                         key = f"{symbol}_{tf_name}"
                         
-                        stored_sig = last_divergences.get(key)
-                        is_newer = False
-                        if not stored_sig:
-                            is_newer = True
-                        else:
-                            try:
-                                if sig_time > pd.to_datetime(stored_sig['time'], utc=True):
-                                    is_newer = True
-                            except:
-                                is_newer = True
-                                
-                        if is_newer:
-                            last_divergences[key] = latest_sig
-                            save_state()
+                        # ۱. ذخیره برای دکمه "آخرین سیگنال‌ها" (همیشه ذخیره میشه)
+                        last_divergences[key] = latest_sig
+                        save_state()
 
+                        # ۲. ارسال پیام پوش (فقط اگر در بازه زمانی اخیر باشه)
                         now_utc = pd.Timestamp.now(tz='UTC')
-                        time_diff = (now_utc - sig_time).total_seconds()
+                        
+                        # محاسبه اختلاف زمان با استفاده از قدر مطلق برای جلوگیری از باگ
+                        time_diff = abs((now_utc - sig_time).total_seconds())
+                        
+                        # استانه زمانی: M1=90s, M5=300s, M15=900s
                         live_threshold = 90 if tf_name == "M1" else (300 if tf_name == "M5" else 900)
                         
-                        if time_diff <= live_threshold: 
+                        if 0 <= time_diff <= live_threshold: 
                             if last_signal_times.get(key) != sig_time:
                                 current_macd = df['MACD'].iloc[-1]
                                 
+                                # فیلتر نهایی
                                 if latest_sig['type'] == "Bullish" and current_macd >= 0:
                                     continue
                                 if latest_sig['type'] == "Bearish" and current_macd <= 0:
@@ -415,9 +410,8 @@ def macd_scanner():
                                         f"✅ <i>قیمت سقف دوم بالاتر است</i>"
                                     )
                                 broadcast(msg)
-                                print(f"Signal broadcasted for {key}")
 
-                    time.sleep(0.5) # استراحت کوتاه بین درخواست‌ها
+                    time.sleep(0.5) 
             time.sleep(5) 
         except Exception as e:
             print(f"Error in scanner: {e}")
@@ -428,25 +422,20 @@ def macd_scanner():
 # ۶. اجرای اصلی
 # ==========================================
 if __name__ == "__main__":
-    print("Starting bot...")
-    
     t = threading.Thread(target=macd_scanner)
     t.daemon = True
     t.start()
     
     def run_bot_polling():
-        # حلقه برای جلوگیری از کرش کردن ربات در صورت خطای شبکه یا Conflict
         while True:
             try:
-                print("Starting Telegram polling...")
                 bot.infinity_polling(timeout=20, long_polling_timeout=15)
             except Exception as e:
-                print(f"Polling Error (Retrying in 10s): {e}")
+                print(f"Polling Error: {e}")
                 time.sleep(10)
     
     bot_thread = threading.Thread(target=run_bot_polling)
     bot_thread.daemon = True
     bot_thread.start()
     
-    # Flask در ترد اصلی اجرا می‌شود تا رندر پورت را بشناسد
     run_web()
