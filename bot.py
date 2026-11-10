@@ -10,7 +10,6 @@ import pytz
 import websocket
 from flask import Flask
 import telebot
-from telebot import types
 import pandas as pd
 
 app = Flask(__name__)
@@ -18,44 +17,8 @@ app = Flask(__name__)
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
 bot = telebot.TeleBot(BOT_TOKEN) if BOT_TOKEN else None
 
-STATE_FILE = "bot_state.json"
 subscribed_users = set()
-last_divergences = {} 
 tehran_tz = pytz.timezone('Asia/Tehran')
-
-def save_state():
-    try:
-        with open(STATE_FILE, "w") as f:
-            serializable_divs = {}
-            for key, data in last_divergences.items():
-                serializable_divs[key] = {
-                    "type": data["type"],
-                    "price": float(data["price"]),
-                    "p1_price": float(data.get("p1_price", 0)),
-                    "macd": float(data.get("macd", 0)),
-                    "p1_macd": float(data.get("p1_macd", 0)),
-                    "time": str(data["time"]),
-                    "bars_ago": int(data.get("bars_ago", 0))
-                }
-            json.dump({"users": list(subscribed_users), "last_divs": serializable_divs}, f)
-    except Exception as e:
-        print(f"Save state error: {e}")
-
-def load_state():
-    global subscribed_users, last_divergences
-    try:
-        if os.path.exists(STATE_FILE):
-            with open(STATE_FILE, "r") as f:
-                data = json.load(f)
-                subscribed_users = set(data.get("users", []))
-                loaded_divs = data.get("last_divs", {})
-                for k, v in loaded_divs.items():
-                    v["time"] = pd.to_datetime(v["time"], utc=True)
-                    last_divergences[k] = v
-    except Exception as e:
-        print(f"Load state error: {e}")
-
-load_state()
 
 def broadcast(text):
     if not bot: return
@@ -66,7 +29,7 @@ def broadcast(text):
             print(f"Telegram send error: {e}")
 
 SYMBOLS = {
-    "OANDA:XAUUSD": "Gold (XAUUSD)",
+    "OANDA:XAUUSD": "XAUUSD",
     "FX:EURUSD": "EURUSD",
     "FX:GBPUSD": "GBPUSD",
     "FX:USDJPY": "USDJPY",
@@ -76,84 +39,23 @@ SYMBOLS = {
     "FX:NZDUSD": "NZDUSD"
 }
 
-TIMEFRAMES = {"1": "M1", "5": "M5", "15": "M15", "60": "H1", "240": "H4"}
-
-def get_main_menu():
-    markup = types.InlineKeyboardMarkup(row_width=2)
-    btn_live = types.InlineKeyboardButton("Live Radar", callback_data="menu_live")
-    btn_history = types.InlineKeyboardButton("History", callback_data="menu_history")
-    markup.row(btn_live, btn_history)
-    btns = []
-    for sym, name in SYMBOLS.items():
-        btns.append(types.InlineKeyboardButton(name, callback_data=f"sym_{sym}"))
-    markup.add(*btns)
-    return markup
+TIMEFRAMES = {"1": "M1", "5": "M5"}
 
 if bot:
     @bot.message_handler(commands=['start'])
     def send_welcome(message):
         subscribed_users.add(message.chat.id)
-        save_state()
         bot.reply_to(
             message, 
-            "Bot is active.\nStrategy: 5-step Histogram Divergence.", 
-            reply_markup=get_main_menu()
+            "Bot is active.\n\n"
+            "Scanning Gold and Majors in M1 and M5.\n"
+            "Waiting for the pattern to form. We will alert you as soon as the 3rd histogram closes.", 
+            parse_mode="HTML"
         )
-
-    @bot.callback_query_handler(func=lambda call: True)
-    def handle_query(call):
-        bot.answer_callback_query(call.id, "Processing...")
-        
-        if call.data == "menu_live":
-            msg = "<b>Live Divergences:</b>\n\n"
-            found = False
-            for sym, name in SYMBOLS.items():
-                for tf_code in ["1", "5", "15"]:
-                    tf_name = TIMEFRAMES[tf_code]
-                    df, err = fetch_tradingview_candles(sym, tf_code, 220)
-                    if df is not None:
-                        signals = detect_macd_divergence(df)
-                        if signals:
-                            latest = signals[-1]
-                            if latest['bars_ago'] <= 3: 
-                                dt_tehran = latest["time"].astimezone(tehran_tz).strftime('%H:%M')
-                                sig_type = "Bullish" if latest['type'] == 'Bullish' else "Bearish"
-                                msg += f"{name} | {tf_name}: {sig_type} | {dt_tehran}\n"
-                                found = True
-            if not found:
-                msg += "No live signals found. ❌"
-            bot.send_message(call.message.chat.id, msg, parse_mode="HTML", reply_markup=get_main_menu())
-            
-        elif call.data == "menu_history":
-            bot.send_message(call.message.chat.id, "Select a pair from the menu below:", reply_markup=get_main_menu())
-            
-        elif call.data.startswith("sym_"):
-            sym = call.data.replace("sym_", "")
-            name = SYMBOLS[sym]
-            msg = f"<b>Last Divergences for {name}:</b>\n\n"
-            found_any = False
-            for tf_code, tf_name in TIMEFRAMES.items():
-                df, err = fetch_tradingview_candles(sym, tf_code, 220)
-                if df is not None:
-                    signals = detect_macd_divergence(df)
-                    if signals:
-                        latest = signals[-1]
-                        dt_tehran = latest["time"].astimezone(tehran_tz).strftime('%Y-%m-%d %H:%M')
-                        sig_type = "Bullish" if latest['type'] == 'Bullish' else "Bearish"
-                        bars_ago = latest.get('bars_ago', 0)
-                        msg += f"{tf_name}: {sig_type} | {dt_tehran} | ({bars_ago} bars ago)\n"
-                        found_any = True
-                    else:
-                        msg += f"{tf_name}: No Signal ❌\n"
-                else:
-                    msg += f"{tf_name}: Data Error ⚠️\n"
-            if not found_any:
-                msg += "\nNo valid divergences found."
-            bot.send_message(call.message.chat.id, msg, parse_mode="HTML", reply_markup=get_main_menu())
 
 @app.route('/')
 def home():
-    return "MACD Bot is LIVE!"
+    return "Bot is LIVE!"
 
 def run_web():
     port = int(os.environ.get("PORT", 7860))
@@ -226,167 +128,158 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
             except: pass
         
         if len(bars) < 150: 
-            return None, f"bars={len(bars)}"
-            
+            return None
         df = pd.DataFrame(bars)
         df["Time"] = pd.to_datetime(df["Time"], unit="s", utc=True)
         df.set_index("Time", inplace=True)
         df = df[~df.index.duplicated(keep="last")].sort_index()
-        return df, None
+        return df
     except Exception as e:
         if ws:
             try: ws.close()
             except Exception: pass
-        return None, str(e)[:50]
+        return None
 
-def detect_macd_divergence(df):
+def check_divergence(df, symbol, tf_name):
     if df is None or len(df) < 150:
-        return []
+        return
 
+    # Drop the live candle
     df = df.iloc[:-1] 
     if len(df) < 150:
-        return []
+        return
 
     exp1 = df['Close'].ewm(span=48, adjust=False).mean()
-    exp2 = df['Close'].ewm(span=104, adjust=False).mean()
+    exp2 = df['Close'].ewm(span=106, adjust=False).mean()
     macd_line = exp1 - exp2
     signal_line = macd_line.ewm(span=36, adjust=False).mean()
-    
     df['Histogram'] = macd_line - signal_line
-    df['Slope'] = df['Histogram'].diff()
-
-    signals = []
-    total_bars = len(df)
     
-    b_state = 0
-    b_p1_hist, b_p1_low, b_p1_idx = None, None, None
+    hist = df['Histogram']
     
-    s_state = 0
-    s_p1_hist, s_p1_high, s_p1_idx = None, None, None
-
-    for i in range(2, len(df)):
-        curr_slope = df['Slope'].iloc[i]
-        prev_slope = df['Slope'].iloc[i-1]
+    bottoms = []
+    tops = []
+    
+    for i in range(1, len(df) - 1):
+        h_prev = hist.iloc[i-1]
+        h_curr = hist.iloc[i]
+        h_next = hist.iloc[i+1]
         
-        if b_state == 0:
-            if prev_slope < 0 and curr_slope >= 0:
-                hist_val = df['Histogram'].iloc[i-1]
-                if hist_val < 0: 
-                    b_p1_hist = hist_val
-                    b_p1_low = df['Low'].iloc[i-1] 
-                    b_p1_idx = i-1
-                    b_state = 1
-        elif b_state == 1:
-            if prev_slope > 0 and curr_slope <= 0:
-                hist_val = df['Histogram'].iloc[i-1]
-                if hist_val < 0:
-                    b_state = 2
-                else:
-                    b_state = 0 
-        elif b_state == 2:
-            if prev_slope < 0 and curr_slope >= 0:
-                hist_val = df['Histogram'].iloc[i-1]
-                if hist_val < 0:
-                    all_below = (df['Histogram'].iloc[b_p1_idx:i] < 0).all()
-                    if all_below:
-                        cond_hist = abs(b_p1_hist) > abs(hist_val)
-                        cond_price = b_p1_low > df['Low'].iloc[i-1]
-                        if cond_hist and cond_price:
-                            bars_ago = total_bars - 1 - (i-1)
-                            signals.append({
-                                "type": "Bullish",
-                                "price": df['Low'].iloc[i-1],
-                                "p1_price": b_p1_low,
-                                "macd": hist_val,
-                                "p1_macd": b_p1_hist,
-                                "time": df.index[i-1],
-                                "bars_ago": bars_ago
-                            })
-                    b_state = 0
+        # BULLISH: In negative zone
+        # Bottom: middle bar has max absolute value
+        if h_curr < 0 and abs(h_curr) > abs(h_prev) and abs(h_curr) > abs(h_next):
+            bottoms.append(i)
+            
+        # Middle Top: middle bar has min absolute value
+        if h_curr < 0 and abs(h_curr) < abs(h_prev) and abs(h_curr) < abs(h_next):
+            tops.append(i)
+            
+    # Check Bullish Divergence
+    if len(bottoms) >= 2:
+        b1_idx = bottoms[-2]
+        b2_idx = bottoms[-1]
+        
+        # Ensure the 3rd histogram of the second bottom just closed (b2_idx is middle, b2_idx+1 is right)
+        # len(df)-1 is the last closed bar. If b2_idx+1 == len(df)-1, then the 3rd bar just closed.
+        if b2_idx + 1 == len(df) - 1:
+            
+            # Is there a middle top between them?
+            has_middle_top = any(b1_idx < t < b2_idx for t in tops)
+            
+            # Is the whole path negative?
+            all_neg = (hist.iloc[b1_idx:b2_idx+1] < 0).all()
+            
+            if has_middle_top and all_neg:
+                b1_hist = hist.iloc[b1_idx]
+                b2_hist = hist.iloc[b2_idx]
+                b1_low = df['Low'].iloc[b1_idx]
+                b2_low = df['Low'].iloc[b2_idx]
+                
+                if abs(b1_hist) > abs(b2_hist) and b1_low > b2_low:
+                    dt_tehran = df.index[b2_idx].astimezone(tehran_tz).strftime('%H:%M')
+                    msg = (
+                        f"🚀 <b>Bullish Divergence</b> 🚀\n\n"
+                        f"💎 Symbol: <b>{SYMBOLS[symbol]}</b>\n"
+                        f"⏳ Timeframe: <b>{tf_name}</b>\n"
+                        f"⏰ Time (Tehran): <b>{dt_tehran}</b>\n\n"
+                        f"📊 <b>Abs Histogram:</b>\n"
+                        f"🔹 Bottom 1: <code>{abs(b1_hist):.5f}</code>\n"
+                        f"🔹 Bottom 2: <code>{abs(b2_hist):.5f}</code>\n\n"
+                        f"💰 <b>Price (Shadow):</b>\n"
+                        f"🔹 Bottom 1: <code>{b1_low:.5f}</code>\n"
+                        f"🔹 Bottom 2: <code>{b2_low:.5f}</code>"
+                    )
+                    broadcast(msg)
+                    print(f"Signal Sent: {symbol} {tf_name} Bullish")
 
-        if s_state == 0:
-            if prev_slope > 0 and curr_slope <= 0:
-                hist_val = df['Histogram'].iloc[i-1]
-                if hist_val > 0:
-                    s_p1_hist = hist_val
-                    s_p1_high = df['High'].iloc[i-1]
-                    s_p1_idx = i-1
-                    s_state = 1
-        elif s_state == 1:
-            if prev_slope < 0 and curr_slope >= 0:
-                hist_val = df['Histogram'].iloc[i-1]
-                if hist_val > 0:
-                    s_state = 2
-                else:
-                    s_state = 0
-        elif s_state == 2:
-            if prev_slope > 0 and curr_slope <= 0:
-                hist_val = df['Histogram'].iloc[i-1]
-                if hist_val > 0:
-                    all_above = (df['Histogram'].iloc[s_p1_idx:i] > 0).all()
-                    if all_above:
-                        cond_hist = s_p1_hist > hist_val
-                        cond_price = s_p1_high < df['High'].iloc[i-1]
-                        if cond_hist and cond_price:
-                            bars_ago = total_bars - 1 - (i-1)
-                            signals.append({
-                                "type": "Bearish",
-                                "price": df['High'].iloc[i-1],
-                                "p1_price": s_p1_high,
-                                "macd": hist_val,
-                                "p1_macd": s_p1_hist,
-                                "time": df.index[i-1],
-                                "bars_ago": bars_ago
-                            })
-                    s_state = 0
-
-    if signals:
-        return [signals[-1]]
-    return []
-
-live_notifications_cache = {}
+    # BEARISH: In positive zone
+    tops_pos = []
+    bottoms_pos = []
+    
+    for i in range(1, len(df) - 1):
+        h_prev = hist.iloc[i-1]
+        h_curr = hist.iloc[i]
+        h_next = hist.iloc[i+1]
+        
+        # Top: middle bar has max value
+        if h_curr > 0 and h_curr > h_prev and h_curr > h_next:
+            tops_pos.append(i)
+            
+        # Middle Bottom: middle bar has min value
+        if h_curr > 0 and h_curr < h_prev and h_curr < h_next:
+            bottoms_pos.append(i)
+            
+    # Check Bearish Divergence
+    if len(tops_pos) >= 2:
+        t1_idx = tops_pos[-2]
+        t2_idx = tops_pos[-1]
+        
+        # Ensure the 3rd histogram of the second top just closed
+        if t2_idx + 1 == len(df) - 1:
+            
+            # Is there a middle bottom between them?
+            has_middle_bottom = any(t1_idx < b < t2_idx for b in bottoms_pos)
+            
+            # Is the whole path positive?
+            all_pos = (hist.iloc[t1_idx:t2_idx+1] > 0).all()
+            
+            if has_middle_bottom and all_pos:
+                t1_hist = hist.iloc[t1_idx]
+                t2_hist = hist.iloc[t2_idx]
+                t1_high = df['High'].iloc[t1_idx]
+                t2_high = df['High'].iloc[t2_idx]
+                
+                if t1_hist > t2_hist and t1_high < t2_high:
+                    dt_tehran = df.index[t2_idx].astimezone(tehran_tz).strftime('%H:%M')
+                    msg = (
+                        f"📉 <b>Bearish Divergence</b> 📉\n\n"
+                        f"💎 Symbol: <b>{SYMBOLS[symbol]}</b>\n"
+                        f"⏳ Timeframe: <b>{tf_name}</b>\n"
+                        f"⏰ Time (Tehran): <b>{dt_tehran}</b>\n\n"
+                        f"📊 <b>Histogram:</b>\n"
+                        f"🔹 Top 1: <code>{t1_hist:.5f}</code>\n"
+                        f"🔹 Top 2: <code>{t2_hist:.5f}</code>\n\n"
+                        f"💰 <b>Price (Shadow):</b>\n"
+                        f"🔹 Top 1: <code>{t1_high:.5f}</code>\n"
+                        f"🔹 Top 2: <code>{t2_high:.5f}</code>"
+                    )
+                    broadcast(msg)
+                    print(f"Signal Sent: {symbol} {tf_name} Bearish")
 
 def live_scanner():
     while True:
         try:
-            if not bot or not subscribed_users:
-                time.sleep(10)
+            if not subscribed_users:
+                time.sleep(5)
                 continue
                 
-            for symbol, persian_name in SYMBOLS.items():
+            for symbol in SYMBOLS.keys():
                 for tf_code, tf_name in TIMEFRAMES.items():
-                    df, err = fetch_tradingview_candles(symbol, tf_code, 220)
-                    if df is None: continue
-                    
-                    signals = detect_macd_divergence(df)
-                    if signals:
-                        latest_sig = signals[-1]
-                        sig_time = latest_sig["time"]
-                        key = f"{symbol}_{tf_name}"
-                        
-                        if latest_sig['bars_ago'] == 0: 
-                            if live_notifications_cache.get(key) != sig_time:
-                                live_notifications_cache[key] = sig_time
-                                last_divergences[key] = latest_sig
-                                save_state()
-                                
-                                dt_tehran = sig_time.astimezone(tehran_tz).strftime('%H:%M')
-                                icon = "🚀" if latest_sig['type'] == "Bullish" else "📉"
-                                title = "Bullish Divergence" if latest_sig['type'] == "Bullish" else "Bearish Divergence"
-                                
-                                msg = (
-                                    f"{icon} <b>{title} MACD</b>\n\n"
-                                    f"Symbol: <b>{persian_name}</b>\n"
-                                    f"Timeframe: <b>{tf_name}</b>\n"
-                                    f"Time (Tehran): <b>{dt_tehran}</b>\n\n"
-                                    f"Hist 1: {latest_sig['p1_macd']:.5f}\n"
-                                    f"Hist 2: {latest_sig['macd']:.5f}\n"
-                                    f"Price 1: {latest_sig['p1_price']:.5f}\n"
-                                    f"Price 2: {latest_sig['price']:.5f}"
-                                )
-                                broadcast(msg)
-                    time.sleep(0.5) 
-            time.sleep(10) 
+                    df = fetch_tradingview_candles(symbol, tf_code, 220)
+                    if df is not None:
+                        check_divergence(df, symbol, tf_name)
+                    time.sleep(1) 
+            time.sleep(5) 
         except Exception as e:
             traceback.print_exc()
             time.sleep(10)
@@ -401,10 +294,8 @@ if __name__ == "__main__":
         def run_bot_polling():
             while True:
                 try:
-                    print("Starting Telegram polling...")
                     bot.infinity_polling(timeout=20, long_polling_timeout=15)
                 except Exception as e:
-                    print(f"Polling Error: {e}")
                     time.sleep(10)
         
         bot_thread = threading.Thread(target=run_bot_polling)
