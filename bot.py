@@ -14,8 +14,14 @@ from telebot import types
 import pandas as pd
 
 app = Flask(__name__)
+
+# چک کردن اینکه توکن حتما ست شده باشه
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
-bot = telebot.TeleBot(BOT_TOKEN) if BOT_TOKEN else None
+if not BOT_TOKEN:
+    print("WARNING: BOT_TOKEN is not set in environment variables!")
+    bot = None
+else:
+    bot = telebot.TeleBot(BOT_TOKEN)
 
 STATE_FILE = "bot_state.json"
 subscribed_users = set()
@@ -74,7 +80,6 @@ SYMBOLS = {
 }
 
 TIMEFRAMES = {"1": "M1", "5": "M5", "15": "M15", "60": "H1", "240": "H4"}
-tf_order = {"M1": 1, "M5": 2, "M15": 3, "H1": 4, "H4": 5}
 
 def get_main_menu():
     markup = types.InlineKeyboardMarkup(row_width=2)
@@ -87,71 +92,72 @@ def get_main_menu():
     markup.add(*btns)
     return markup
 
-@bot.message_handler(commands=['start'])
-def send_welcome(message):
-    subscribed_users.add(message.chat.id)
-    save_state()
-    bot.reply_to(
-        message, 
-        "✅ <b>ربات اسکنر MACD هیستوگرام روشن شد.</b>\n\n"
-        "منطق: پیدا کردن کف/سقف بر اساس صفر شدن شیب هیستوگرام (فقط کندل‌های بسته شده).\n\n"
-        "یک گزینه را انتخاب کنید:", 
-        reply_markup=get_main_menu(),
-        parse_mode="HTML"
-    )
+if bot:
+    @bot.message_handler(commands=['start'])
+    def send_welcome(message):
+        subscribed_users.add(message.chat.id)
+        save_state()
+        bot.reply_to(
+            message, 
+            "✅ <b>ربات اسکنر MACD هیستوگرام روشن شد.</b>\n\n"
+            "منطق: پیدا کردن کف/سقف بر اساس صفر شدن شیب هیستوگرام (فقط کندل‌های بسته شده).\n\n"
+            "یک گزینه را انتخاب کنید:", 
+            reply_markup=get_main_menu(),
+            parse_mode="HTML"
+        )
 
-@bot.callback_query_handler(func=lambda call: True)
-def handle_query(call):
-    bot.answer_callback_query(call.id, "در حال پردازش... ⏳")
-    
-    if call.data == "menu_live":
-        msg = "🔴 <b>دایورجنس‌های ۱۵ دقیقه اخیر (رادار زنده):</b>\n\n"
-        found = False
-        for sym, name in SYMBOLS.items():
-            for tf_code in ["1", "5", "15"]:
-                tf_name = TIMEFRAMES[tf_code]
-                df, err = fetch_tradingview_candles(sym, tf_code, 100)
+    @bot.callback_query_handler(func=lambda call: True)
+    def handle_query(call):
+        bot.answer_callback_query(call.id, "در حال پردازش... ⏳")
+        
+        if call.data == "menu_live":
+            msg = "🔴 <b>دایورجنس‌های ۱۵ دقیقه اخیر (رادار زنده):</b>\n\n"
+            found = False
+            for sym, name in SYMBOLS.items():
+                for tf_code in ["1", "5", "15"]:
+                    tf_name = TIMEFRAMES[tf_code]
+                    df, err = fetch_tradingview_candles(sym, tf_code, 100)
+                    if df is not None:
+                        signals = detect_macd_divergence(df)
+                        if signals:
+                            latest = signals[-1]
+                            now_utc = pd.Timestamp.now(tz='UTC')
+                            diff = (now_utc - latest["time"]).total_seconds()
+                            if diff <= 900: 
+                                dt_tehran = latest["time"].astimezone(tehran_tz).strftime('%H:%M')
+                                sig_type = "صعودی 🟢" if latest['type'] == 'Bullish' else "نزولی 🔴"
+                                msg += f"💎 <b>{name}</b> | {tf_name}: {sig_type} | {dt_tehran}\n"
+                                found = True
+            if not found:
+                msg += "هیچ سیگنال زنده‌ای در ۱۵ دقیقه اخیر یافت نشد. ❌"
+            bot.send_message(call.message.chat.id, msg, parse_mode="HTML", reply_markup=get_main_menu())
+            
+        elif call.data == "menu_history":
+            bot.send_message(call.message.chat.id, "برای دیدن تاریخچه، یک جفت‌ارز را از منوی زیر انتخاب کنید:", reply_markup=get_main_menu())
+            
+        elif call.data.startswith("sym_"):
+            sym = call.data.replace("sym_", "")
+            name = SYMBOLS[sym]
+            msg = f"📋 <b>آخرین دایورجنس‌های {name} (در ۲۲۰ کندل اخیر):</b>\n\n"
+            found_any = False
+            for tf_code, tf_name in TIMEFRAMES.items():
+                df, err = fetch_tradingview_candles(sym, tf_code, 220)
                 if df is not None:
                     signals = detect_macd_divergence(df)
                     if signals:
                         latest = signals[-1]
-                        now_utc = pd.Timestamp.now(tz='UTC')
-                        diff = (now_utc - latest["time"]).total_seconds()
-                        if diff <= 900: 
-                            dt_tehran = latest["time"].astimezone(tehran_tz).strftime('%H:%M')
-                            sig_type = "صعودی 🟢" if latest['type'] == 'Bullish' else "نزولی 🔴"
-                            msg += f"💎 <b>{name}</b> | {tf_name}: {sig_type} | {dt_tehran}\n"
-                            found = True
-        if not found:
-            msg += "هیچ سیگنال زنده‌ای در ۱۵ دقیقه اخیر یافت نشد. ❌"
-        bot.send_message(call.message.chat.id, msg, parse_mode="HTML", reply_markup=get_main_menu())
-        
-    elif call.data == "menu_history":
-        bot.send_message(call.message.chat.id, "برای دیدن تاریخچه، یک جفت‌ارز را از منوی زیر انتخاب کنید:", reply_markup=get_main_menu())
-        
-    elif call.data.startswith("sym_"):
-        sym = call.data.replace("sym_", "")
-        name = SYMBOLS[sym]
-        msg = f"📋 <b>آخرین دایورجنس‌های {name} (در ۲۲۰ کندل اخیر):</b>\n\n"
-        found_any = False
-        for tf_code, tf_name in TIMEFRAMES.items():
-            df, err = fetch_tradingview_candles(sym, tf_code, 220)
-            if df is not None:
-                signals = detect_macd_divergence(df)
-                if signals:
-                    latest = signals[-1]
-                    dt_tehran = latest["time"].astimezone(tehran_tz).strftime('%Y-%m-%d %H:%M')
-                    sig_type = "صعودی 🟢" if latest['type'] == 'Bullish' else "نزولی 🔴"
-                    bars_ago = latest.get('bars_ago', 0)
-                    msg += f"⏱ <b>{tf_name}</b>: {sig_type} | {dt_tehran} | ({bars_ago} کندل قبل)\n"
-                    found_any = True
+                        dt_tehran = latest["time"].astimezone(tehran_tz).strftime('%Y-%m-%d %H:%M')
+                        sig_type = "صعودی 🟢" if latest['type'] == 'Bullish' else "نزولی 🔴"
+                        bars_ago = latest.get('bars_ago', 0)
+                        msg += f"⏱ <b>{tf_name}</b>: {sig_type} | {dt_tehran} | ({bars_ago} کندل قبل)\n"
+                        found_any = True
+                    else:
+                        msg += f"⏱ <b>{tf_name}</b>: بدون سیگنال ❌\n"
                 else:
-                    msg += f"⏱ <b>{tf_name}</b>: بدون سیگنال ❌\n"
-            else:
-                msg += f"⏱ <b>{tf_name}</b>: خطا در دیتا ⚠️\n"
-        if not found_any:
-            msg += "\nهیچ دایورجنس معتبری پیدا نشد."
-        bot.send_message(call.message.chat.id, msg, parse_mode="HTML", reply_markup=get_main_menu())
+                    msg += f"⏱ <b>{tf_name}</b>: خطا در دیتا ⚠️\n"
+            if not found_any:
+                msg += "\nهیچ دایورجنس معتبری پیدا نشد."
+            bot.send_message(call.message.chat.id, msg, parse_mode="HTML", reply_markup=get_main_menu())
 
 @app.route('/')
 def home():
@@ -175,7 +181,7 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
                 "Origin": "https://www.tradingview.com",
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
             },
-            timeout=5
+            timeout=10
         )
         chart_session = "cs" + "".join(random.choices(string.ascii_lowercase + string.digits, k=12))
         tv_send(ws, "set_auth_token", ["unauthorized_user_token"])
@@ -186,7 +192,7 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
         
         bars = []
         start_t = time.time()
-        while time.time() - start_t < 5:
+        while time.time() - start_t < 10:
             try:
                 raw = ws.recv()
             except Exception:
@@ -220,7 +226,7 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
                                 })
                 elif m_type == "series_completed":
                     break
-            if len(bars) >= n_bars * 0.8: 
+            if len(bars) >= 50: 
                 break
             
         if ws:
@@ -345,7 +351,7 @@ live_notifications_cache = {}
 def live_scanner():
     while True:
         try:
-            if not subscribed_users:
+            if not bot or not subscribed_users:
                 time.sleep(10)
                 continue
                 
@@ -389,20 +395,27 @@ def live_scanner():
 
 if __name__ == "__main__":
     print("Starting bot...")
+    
+    # 1. Start Scanner
     t = threading.Thread(target=live_scanner)
     t.daemon = True
     t.start()
     
-    def run_bot_polling():
-        while True:
-            try:
-                bot.infinity_polling(timeout=20, long_polling_timeout=15)
-            except Exception as e:
-                print(f"Polling Error: {e}")
-                time.sleep(10)
+    # 2. Start Telegram Polling
+    if bot:
+        def run_bot_polling():
+            while True:
+                try:
+                    print("Starting Telegram polling...")
+                    bot.infinity_polling(timeout=20, long_polling_timeout=15)
+                except Exception as e:
+                    print(f"Polling Error: {e}")
+                    time.sleep(10)
+        
+        bot_thread = threading.Thread(target=run_bot_polling)
+        bot_thread.daemon = True
+        bot_thread.start()
     
-    bot_thread = threading.Thread(target=run_bot_polling)
-    bot_thread.daemon = True
-    bot_thread.start()
-    
+    # 3. Start Flask Web Server
+    print("Starting Flask web server...")
     run_web()
