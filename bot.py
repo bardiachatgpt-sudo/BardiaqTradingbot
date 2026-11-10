@@ -1,89 +1,162 @@
-import time
+import os
+import re
 import json
-import logging
+import html
+import time
+import random
+import string
 import threading
-import requests
-import numpy as np
+from datetime import datetime
+import pytz
+import websocket
+from flask import Flask, request
+import telebot
 import pandas as pd
-from flask import Flask
+import numpy as np
 
-# ==================== 🔑 اطلاعات خودت را همینجا مستقیم وارد کن ====================
-OANDA_API_KEY = "توکن_اواندا_اینجا"
-OANDA_ACCOUNT_ID = "آی_دی_حساب_اواندا_اینجا"
-OANDA_ENVIRONMENT = "practice"  # اگر اکانت اصلی است بنویس live
-
-TELEGRAM_BOT_TOKEN = "توکن_ربات_تلگرام_اینجا"
-TELEGRAM_CHAT_ID = "چت_آیدی_عددی_تلگرام_خودت_اینجا"
-# ================================================================================
+# ==================== ⚙️ تنظیمات اولیه ====================
+BOT_TOKEN = os.environ.get("BOT_TOKEN")
+bot = telebot.TeleBot(BOT_TOKEN) if BOT_TOKEN else None
 
 SYMBOLS = [
-    "EUR_USD", "GBP_USD", "USD_JPY", "AUD_USD", 
-    "USD_CAD", "NZD_USD", "USD_CHF", "XAU_USD"
+    {"symbol": "OANDA:XAUUSD", "name": "XAUUSD (طلا)"},
+    {"symbol": "FX_IDC:EURUSD", "name": "EURUSD"},
+    {"symbol": "FX_IDC:GBPUSD", "name": "GBPUSD"},
+    {"symbol": "FX_IDC:USDJPY", "name": "USDJPY"}
 ]
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-sent_macro_alerts = {}
+STATE_FILE = "bot_state.json"
+subscribed_users = set()
+signal_history = []
+last_source_name = "در حال اتصال مستقیم به TradingView..."
 
-# وب‌سرور ساده برای روشن ماندن ۲۴ ساعته در رندر (با کمک سایت Cron)
 app = Flask(__name__)
+
+def save_state():
+    try:
+        with open(STATE_FILE, "w") as f:
+            json.dump({"users": list(subscribed_users), "history": signal_history}, f)
+    except Exception:
+        pass
+
+def load_state():
+    global subscribed_users, signal_history
+    try:
+        if os.path.exists(STATE_FILE):
+            with open(STATE_FILE, "r") as f:
+                data = json.load(f)
+                subscribed_users = set(data.get("users", []))
+                signal_history = data.get("history", [])
+    except Exception:
+        pass
+
+load_state()
+
+def broadcast(text, reply_markup=None):
+    if not bot:
+        return
+    for chat_id in list(subscribed_users):
+        try:
+            bot.send_message(chat_id, text, parse_mode="HTML", reply_markup=reply_markup)
+        except Exception as e:
+            print(f"Telegram send error: {e}")
 
 @app.route('/')
 def home():
-    return "Autonomous Trading Bot is running!"
+    return f"TradingView WebSocket MACD Bot is LIVE! Source: {last_source_name}"
 
-def run_flask():
-    app.run(host='0.0.0.0', port=10000)
+def run_web():
+    port = int(os.environ.get("PORT", 7860))
+    app.run(host="0.0.0.0", port=port)
 
 
-# ==================== 📊 دریافت خودکار داده از اواندا ====================
-class OandaDataLoader:
-    def __init__(self):
-        if OANDA_ENVIRONMENT == "live":
-            self.base_url = "https://api-fxtrade.oanda.com/v3"
-        else:
-            self.base_url = "https://api-fxpractice.oanda.com/v3"
-            
-        self.headers = {
-            "Authorization": f"Bearer {OANDA_API_KEY}",
-            "Accept-DatetimeFormat": "RFC3339"
-        }
+# ==================== 🔌 موتور اتصال وب‌سوکت تریدینگ‌ویو ====================
+def _tv_send(ws, func, params):
+    payload = json.dumps({"m": func, "p": params}, separators=(",", ":"))
+    frame = f"~m~{len(payload)}~m~{payload}"
+    ws.send(frame)
 
-    def fetch_candles(self, instrument: str, granularity: str, count: int = 300) -> pd.DataFrame:
-        url = f"{self.base_url}/instruments/{instrument}/candles"
-        params = {"granularity": granularity, "count": count, "price": "M"}
-        try:
-            response = requests.get(url, headers=self.headers, params=params, timeout=10)
-            if response.status_code != 200:
-                return pd.DataFrame()
-            data = response.json()
-            candles = data.get("candles", [])
-            parsed_data = []
-            for c in candles:
-                if c.get("complete", False):
-                    mid = c["mid"]
-                    parsed_data.append({
-                        "time": c["time"],
-                        "open": float(mid["o"]),
-                        "high": float(mid["h"]),
-                        "low": float(mid["l"]),
-                        "close": float(mid["c"]),
-                        "volume": int(c["volume"])
-                    })
-            df = pd.DataFrame(parsed_data)
-            if not df.empty:
-                df["time"] = pd.to_datetime(df["time"])
-                df.set_index("time", inplace=True)
-            return df
-        except Exception as e:
-            logging.error(f"خطا در ارتباط با اواندا برای {instrument}: {e}")
+def fetch_tv_candles(symbol="OANDA:XAUUSD", interval="5", n_bars=250):
+    global last_source_name
+    ws = None
+    try:
+        ws = websocket.create_connection(
+            "wss://data.tradingview.com/socket.io/websocket?from=chart%2F",
+            headers={
+                "Origin": "https://www.tradingview.com",
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+            },
+            timeout=12
+        )
+        chart_session = "cs" + "".join(random.choices(string.ascii_lowercase + string.digits, k=12))
+        _tv_send(ws, "set_auth_token", ["unauthorized_user_token"])
+        _tv_send(ws, "chart_create_session", [chart_session, ""])
+        sym_json = json.dumps({"symbol": symbol, "adjustment": "splits"}, separators=(",", ":"))
+        _tv_send(ws, "resolve_symbol", [chart_session, "sds_sym_1", f"={sym_json}"])
+        _tv_send(ws, "create_series", [chart_session, "sds_1", "s1", "sds_sym_1", str(interval), n_bars, ""])
+        
+        bars = []
+        start_t = time.time()
+        while time.time() - start_t < 10:
+            raw = ws.recv()
+            if not raw:
+                break
+            if raw.startswith("~m~") and "~h~" in raw:
+                ws.send(raw)
+                continue
+            parts = re.split(r"~m~\d+~m~", raw)
+            for part in parts:
+                if not part.strip():
+                    continue
+                try:
+                    msg = json.loads(part)
+                except Exception:
+                    continue
+                m_type = msg.get("m")
+                if m_type in ("timescale_update", "du"):
+                    p_data = msg.get("p", [])
+                    if len(p_data) >= 2 and isinstance(p_data[1], dict):
+                        sds = p_data[1].get("sds_1", {})
+                        s_list = sds.get("s", [])
+                        for item in s_list:
+                            v = item.get("v", [])
+                            if len(v) >= 5:
+                                bars.append({
+                                    "Time": int(v[0]),
+                                    "Open": float(v[1]),
+                                    "High": float(v[2]),
+                                    "Low": float(v[3]),
+                                    "Close": float(v[4])
+                                })
+                elif m_type == "series_completed":
+                    break
+            if len(bars) >= 50:
+                break
+        ws.close()
+        
+        if len(bars) < 50:
             return pd.DataFrame()
+            
+        df = pd.DataFrame(bars)
+        df["Time"] = pd.to_datetime(df["Time"], unit="s", utc=True)
+        df.set_index("Time", inplace=True)
+        df = df[~df.index.duplicated(keep="last")].sort_index()
+        last_source_name = f"TradingView ({symbol})"
+        return df
+    except Exception as e:
+        if ws:
+            try:
+                ws.close()
+            except Exception:
+                pass
+        return pd.DataFrame()
 
 
-# ==================== 📈 محاسبه اندیکاتورها و دایورجنس ====================
+# ==================== 📊 اندیکاتورها و تحلیل استراتژی ====================
 def calculate_macd(df: pd.DataFrame, fast: int = 48, slow: int = 106, signal: int = 36) -> pd.DataFrame:
     df = df.copy()
-    ema_fast = df['close'].ewm(span=fast, adjust=False).mean()
-    ema_slow = df['close'].ewm(span=slow, adjust=False).mean()
+    ema_fast = df['Close'].ewm(span=fast, adjust=False).mean()
+    ema_slow = df['Close'].ewm(span=slow, adjust=False).mean()
     df['macd_line'] = ema_fast - ema_slow
     df['signal_line'] = df['macd_line'].ewm(span=signal, adjust=False).mean()
     df['histogram'] = df['macd_line'] - df['signal_line']
@@ -93,8 +166,9 @@ def find_pivots(df: pd.DataFrame, order: int = 5) -> pd.DataFrame:
     df = df.copy()
     df['pivot_high'] = np.nan
     df['pivot_low'] = np.nan
-    highs = df['high'].values
-    lows = df['low'].values
+    highs = df['High'].values
+    lows = df['Low'].values
+    
     for i in range(order, len(df) - order):
         if highs[i] == max(highs[i - order:i + order + 1]):
             df.iloc[i, df.columns.get_loc('pivot_high')] = highs[i]
@@ -102,141 +176,140 @@ def find_pivots(df: pd.DataFrame, order: int = 5) -> pd.DataFrame:
             df.iloc[i, df.columns.get_loc('pivot_low')] = lows[i]
     return df
 
-def detect_divergence(df: pd.DataFrame) -> dict:
-    result = {"bullish_div": False, "bearish_div": False}
-    if len(df) < 30:
-        return result
-    recent_lows = df[df['pivot_low'].notna()].tail(2)
-    recent_highs = df[df['pivot_high'].notna()].tail(2)
-    if len(recent_lows) == 2:
+def evaluate_multi_timeframe(sym_dict: dict) -> dict:
+    symbol = sym_dict["symbol"]
+    name = sym_dict["name"]
+    
+    # دریافت داده‌های تایم‌فریم بالا (Daily) و تایم پایین (M5) از وب‌سوکت تریدینگ‌ویو
+    df_daily = fetch_tv_candles(symbol, interval="D", n_bars=100)
+    df_m5 = fetch_tv_candles(symbol, interval="5", n_bars=250)
+    
+    if df_daily.empty or df_m5.empty:
+        return {"signal": None}
+        
+    # ۱. بررسی روند در تایم دیلی با مکدی بزرگ
+    df_daily = calculate_macd(df_daily, fast=48, slow=106, signal=36)
+    daily_bias = "BULLISH" if df_daily['histogram'].iloc[-1] > 0 else "BEARISH"
+    
+    # ۲. بررسی دایورجنس در تایم ۵ دقیقه (M5)
+    df_m5 = calculate_macd(df_m5, fast=48, slow=106, signal=36)
+    df_m5 = find_pivots(df_m5, order=5)
+    
+    recent_lows = df_m5[df_m5['pivot_low'].notna()].tail(2)
+    recent_highs = df_m5[df_m5['pivot_high'].notna()].tail(2)
+    
+    current_price = float(df_m5['Close'].iloc[-1])
+    
+    # تایید همزمانی: دایورجنس صعودی M5 در راستای روند صعودی دیلی
+    if len(recent_lows) == 2 and daily_bias == "BULLISH":
         p1, p2 = recent_lows.iloc[0], recent_lows.iloc[1]
-        if p2['close'] < p1['close'] and p2['macd_line'] > p1['macd_line']:
-            result["bullish_div"] = True
-    if len(recent_highs) == 2:
+        if p2['Close'] < p1['Close'] and p2['macd_line'] > p1['macd_line']:
+            return {
+                "signal": "BUY",
+                "name": name,
+                "price": current_price,
+                "text": f"🟢 <b>دایورجنس صعودی M5 با تایید روند صعودی دیلی</b>\n💰 قیمت: <code>{current_price:.2f}</code>"
+            }
+            
+    # تایید همزمانی: دایورجنس نزولی M5 در راستای روند نزولی دیلی
+    if len(recent_highs) == 2 and daily_bias == "BEARISH":
         h1, h2 = recent_highs.iloc[0], recent_highs.iloc[1]
-        if h2['close'] > h1['close'] and h2['macd_line'] < h1['macd_line']:
-            result["bearish_div"] = True
-    return result
+        if h2['Close'] > h1['Close'] and h2['macd_line'] < h1['macd_line']:
+            return {
+                "signal": "SELL",
+                "name": name,
+                "price": current_price,
+                "text": f"🔴 <b>دایورجنس نزولی M5 با تایید روند نزولی دیلی</b>\n💰 قیمت: <code>{current_price:.2f}</code>"
+            }
+            
+    return {"signal": None}
 
 
-# ==================== 🔍 اسکنر خودکار دایورجنس M5 (مکدی ۴۸-۱۰۶-۳۶) ====================
-def scan_m5_divergence(symbol: str) -> list:
-    loader = OandaDataLoader()
-    alerts = []
-    df = loader.fetch_candles(symbol, "M5", count=250)
-    if df.empty or len(df) < 130:
-        return alerts
-    
-    # اعمال تنظیمات مکدی درخواستی شما
-    df = calculate_macd(df, fast=48, slow=106, signal=36)
-    df = find_pivots(df, order=5)
-    div = detect_divergence(df)
-    current_price = df.iloc[-1]['close']
-    
-    if div["bullish_div"]:
-        alerts.append({"type": "BULLISH", "text": "🟢 دایورجنس صعودی M5 (مکدی 48-106-36)", "price": current_price})
-    elif div["bearish_div"]:
-        alerts.append({"type": "BEARISH", "text": "🔴 دایورجنس نزولی M5 (مکدی 48-106-36)", "price": current_price})
-    return alerts
-
-
-# ==================== 🤖 ارسال پیام به تلگرام ====================
-def send_telegram_message(chat_id, text, reply_markup=None):
-    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
-    payload = {"chat_id": chat_id, "text": text, "parse_mode": "Markdown"}
-    if reply_markup:
-        payload["reply_markup"] = json.dumps(reply_markup)
-    try:
-        requests.post(url, json=payload, timeout=10)
-    except Exception as e:
-        logging.error(f"خطا در ارسال پیام تلگرام: {e}")
-
+# ==================== 🤖 رابط کاربری تلگرام (دکمه‌ها و منو) ====================
 def get_main_keyboard():
-    return {
-        "keyboard": [
-            [{"text": "📊 وضعیت ربات"}, {"text": "🔍 اسکن آنی بازار"}]
-        ],
-        "resize_keyboard": True
-    }
+    markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
+    markup.add(telebot.types.KeyboardButton("📊 وضعیت ربات"), telebot.types.KeyboardButton("📜 آخرین سیگنال‌ها (History)"))
+    return markup
+
+@bot.message_handler(commands=['start'])
+def handle_start(message):
+    chat_id = message.chat.id
+    subscribed_users.add(chat_id)
+    save_state()
+    bot.send_message(chat_id, "🤖 <b>ربات همزمانی مکدی (اتصال مستقیم وب‌سوکت تریدینگ‌ویو) فعال شد!</b>", parse_mode="HTML", reply_markup=get_main_keyboard())
+
+@bot.message_handler(func=lambda message: message.text == "📊 وضعیت ربات")
+def handle_status(message):
+    txt = (
+        f"📊 <b>وضعیت ربات:</b>\n\n"
+        f"📡 منبع داده: <code>{last_source_name}</code>\n"
+        f"👥 کاربران فعال: <b>{len(subscribed_users)}</b>\n"
+        f"🟢 سیستم وب‌سوکت بدون نیاز به API یا تنظیمات دستی روشن است."
+    )
+    bot.send_message(message.chat.id, txt, parse_mode="HTML", reply_markup=get_main_keyboard())
+
+@bot.message_handler(func=lambda message: message.text == "📜 آخرین سیگنال‌ها (History)")
+def handle_history(message):
+    if not signal_history:
+        bot.send_message(message.chat.id, "📂 هنوز سیگنالی ثبت نشده است.", reply_markup=get_main_keyboard())
+    else:
+        history_text = "📜 <b>آخرین سیگنال‌های تاییدشده:</b>\n\n" + "\n".join(signal_history)
+        bot.send_message(message.chat.id, history_text, parse_mode="HTML", reply_markup=get_main_keyboard())
 
 
-# ==================== 💬 بخش تعاملی تلگرام (دکمه‌ها) ====================
-def telegram_listener():
-    logging.info("بخش شنود تلگرام فعال شد...")
-    offset = 0
+# ==================== 🔄 اسکنر پس‌زمینه ====================
+def background_scanner():
+    global signal_history
+    sent_tracker = {}
+    time.sleep(15) # مکث اولیه برای روشن شدن وب‌سرور
+    
     while True:
         try:
-            url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/getUpdates"
-            params = {"offset": offset, "timeout": 30}
-            response = requests.get(url, params=params, timeout=35)
-            if response.status_code == 200:
-                for update in response.json().get("result", []):
-                    offset = update["update_id"] + 1
-                    message = update.get("message", {})
-                    chat_id = message.get("chat", {}).get("id")
-                    text = message.get("text", "").strip()
-                    if not chat_id or not text:
-                        continue
+            if not subscribed_users:
+                time.sleep(10)
+                continue
+                
+            for sym_dict in SYMBOLS:
+                symbol = sym_dict["symbol"]
+                res = evaluate_multi_timeframe(sym_dict)
+                time.sleep(2) # وقفه بین درخواست‌ها برای حفظ پایداری وب‌سوکت
+                
+                if res.get("signal"):
+                    sig_type = res["signal"]
+                    key = f"{symbol}_{sig_type}"
                     
-                    if text in ["/start", "شروع"]:
-                        send_telegram_message(chat_id, "👋 سلام! ربات خودمختار شما روشن است و بازار را رصد می‌کند.", reply_markup=get_main_keyboard())
-                    elif text == "📊 وضعیت ربات":
-                        send_telegram_message(chat_id, "✅ ربات بدون واسطه متصل به اوانداست و در پس‌زمینه بازار را اسکن می‌کند.")
-                    elif text == "🔍 اسکن آنی بازار":
-                        send_telegram_message(chat_id, "🔍 در حال اسکن تمام نمادها برای یافتن دایورجنس M5...")
-                        found = False
-                        for symbol in SYMBOLS:
-                            for al in scan_m5_divergence(symbol):
-                                found = True
-                                send_telegram_message(chat_id, f"📡 **[بررسی دستی]** `{symbol}`\n{al['text']}\nقیمت: `{al['price']}`")
-                        if not found:
-                            send_telegram_message(chat_id, "📊 در حال حاضر هیچ دایورجنس فعالی در M5 یافت نشد.")
+                    if sent_tracker.get(key) != "sent":
+                        sent_tracker[key] = "sent"
+                        msg = f"🚨 **سیگنال همزمانی MACD (TradingView WebSocket)** 🚨\n\n🔹 نماد: `{res['name']}`\n{res['text']}"
+                        
+                        signal_history.insert(0, f"🔹 {res['name']} | {sig_type} | قیمت: {res['price']}")
+                        if len(signal_history) > 10:
+                            signal_history.pop()
+                        save_state()
+                        
+                        broadcast(msg, reply_markup=get_main_keyboard())
+                else:
+                    sent_tracker.pop(f"{symbol}_BUY", None)
+                    sent_tracker.pop(f"{symbol}_SELL", None)
+                    
         except Exception as e:
-            logging.error(f"خطا در تلگرام: {e}")
-            time.sleep(5)
+            print(f"Scanner error: {e}")
+            
+        time.sleep(120) # بررسی دوره‌ای بازار هر ۲ دقیقه
 
 
-# ==================== 🔄 اسکنر خودکار پس‌زمینه (ارسال اتوماتیک پیام) ====================
-def background_auto_scanner():
-    global sent_macro_alerts
-    logging.info("اسکنر خودکار پشت صحنه روشن شد...")
-    while True:
-        for symbol in SYMBOLS:
-            try:
-                # اسکن اتوماتیک دایورجنس M5
-                m5_alerts = scan_m5_divergence(symbol)
-                for al in m5_alerts:
-                    key = f"{symbol}_M5_{al['type']}"
-                    # ارسال پیام خودکار فقط وقتی دایورجنس جدید باشد تا اسپم نشود
-                    if sent_macro_alerts.get(key) != "sent":
-                        sent_macro_alerts[key] = "sent"
-                        msg = (
-                            f"🚨 **سیگنال خودکار دایورجنس** 🚨\n\n"
-                            f"🔹 **نماد:** `{symbol}`\n"
-                            f"{al['text']}\n"
-                            f"💵 **قیمت لحظه‌ای:** `{al['price']}`"
-                        )
-                        send_telegram_message(TELEGRAM_CHAT_ID, msg, reply_markup=get_main_keyboard())
-                
-                # پاکسازی حافظه اگر دایورجنس تمام شده باشد
-                active_keys = [f"{symbol}_M5_{al['type']}" for al in m5_alerts]
-                for k in list(sent_macro_alerts.keys()):
-                    if k.startswith(symbol) and k not in active_keys:
-                        del sent_macro_alerts[k]
-
-            except Exception as e:
-                logging.error(f"خطا در اسکن خودکار {symbol}: {e}")
-                
-        time.sleep(60)  # بررسی مداوم هر ۶۰ ثانیه
-
-
-# ==================== 🚀 اجرای کل سیستم ====================
+# ==================== 🚀 اجرای همزمان سرویس‌ها ====================
 if __name__ == "__main__":
-    # ۱. راه‌اندازی وب‌سرور برای روشن ماندن در رندر
-    threading.Thread(target=run_flask, daemon=True).start()
+    t_web = threading.Thread(target=run_web, daemon=True)
+    t_web.start()
     
-    # ۲. راه‌اندازی شنود دکمه‌های تلگرام
-    threading.Thread(target=telegram_listener, daemon=True).start()
+    t_scanner = threading.Thread(target=background_scanner, daemon=True)
+    t_scanner.start()
     
-    # ۳. اجرای اسکنر خودکار پس‌زمینه (که خودش اتوماتیک پیام می‌دهد)
-    background_auto_scanner()
+    if bot:
+        t_bot = threading.Thread(target=bot.infinity_polling, skip_pending=True)
+        t_bot.start()
+        
+    print("Bot is running with direct TradingView WebSockets...")
+    while True:
+        time.sleep(60)
