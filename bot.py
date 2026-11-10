@@ -21,39 +21,26 @@ bot = telebot.TeleBot(BOT_TOKEN) if BOT_TOKEN else None
 
 STATE_FILE = "bot_state.json"
 subscribed_users = set()
-last_divergences = {} 
 
 tehran_tz = pytz.timezone('Asia/Tehran')
+
+# Dictionary to store live signals temporarily (for notifications)
+live_notifications_cache = {}
 
 def save_state():
     try:
         with open(STATE_FILE, "w") as f:
-            serializable_divs = {}
-            for key, data in last_divergences.items():
-                serializable_divs[key] = {
-                    "type": data["type"],
-                    "price": float(data["price"]),
-                    "macd": float(data["macd"]),
-                    "p1_macd": float(data.get("p1_macd", 0)),
-                    "p1_price": float(data.get("p1_price", 0)),
-                    "time": str(data["time"]),
-                    "bars_ago": int(data.get("bars_ago", 0))
-                }
-            json.dump({"users": list(subscribed_users), "last_divs": serializable_divs}, f)
+            json.dump({"users": list(subscribed_users)}, f)
     except Exception as e:
         print(f"Save state error: {e}")
 
 def load_state():
-    global subscribed_users, last_divergences
+    global subscribed_users
     try:
         if os.path.exists(STATE_FILE):
             with open(STATE_FILE, "r") as f:
                 data = json.load(f)
                 subscribed_users = set(data.get("users", []))
-                loaded_divs = data.get("last_divs", {})
-                for k, v in loaded_divs.items():
-                    v["time"] = pd.to_datetime(v["time"], utc=True)
-                    last_divergences[k] = v
     except Exception as e:
         print(f"Load state error: {e}")
 
@@ -67,11 +54,35 @@ def broadcast(text):
         except Exception as e:
             print(f"Telegram send error: {e}")
 
-# 2. Telegram Handlers
-def get_main_keyboard():
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    btn_last = types.KeyboardButton("📊 آخرین سیگنال‌ها")
-    markup.add(btn_last)
+# 2. Telegram Handlers & UI
+SYMBOLS = {
+    "OANDA:XAUUSD": "طلا (XAUUSD)",
+    "FX:EURUSD": "یورو/دلار (EURUSD)",
+    "FX:GBPUSD": "پوند/دلار (GBPUSD)",
+    "FX:USDJPY": "دلار/ین (USDJPY)",
+    "FX:AUDUSD": "دلار استرالیا/دلار (AUDUSD)",
+    "FX:USDCAD": "دلار آمریکا/دلار کانادا (USDCAD)",
+    "FX:USDCHF": "دلار آمریکا/فرانک (USDCHF)",
+    "FX:NZDUSD": "دلار نیوزیلند/دلار (NZDUSD)"
+}
+
+TIMEFRAMES = {"1": "M1", "5": "M5", "15": "M15", "60": "H1", "240": "H4"}
+tf_order = {"M1": 1, "M5": 2, "M15": 3, "H1": 4, "H4": 5}
+
+def get_main_menu():
+    markup = types.InlineKeyboardMarkup(row_width=2)
+    
+    # Live and History Buttons
+    btn_live = types.InlineKeyboardButton("🔴 رادار زنده (Live)", callback_data="menu_live")
+    btn_history = types.InlineKeyboardButton("📜 تاریخچه ۲۲۰ کندل", callback_data="menu_history")
+    markup.row(btn_live, btn_history)
+    
+    # Symbol Buttons
+    btns = []
+    for sym, name in SYMBOLS.items():
+        btns.append(types.InlineKeyboardButton(name, callback_data=f"sym_{sym}"))
+    
+    markup.add(*btns)
     return markup
 
 @bot.message_handler(commands=['start'])
@@ -80,53 +91,74 @@ def send_welcome(message):
     save_state()
     bot.reply_to(
         message, 
-        "✅ ربات اسکنر MACD روشن شد.\n\n"
-        "استراتژی: دایورجنس صعودی و نزولی (M1, M5, M15, H1, H4)\n"
-        "نمادها: طلا و جفت‌ارزهای ماژور\n"
-        "برای دیدن وضعیت، دکمه زیر را بزنید:", 
-        reply_markup=get_main_keyboard()
+        "✅ <b>ربات اسکنر MACD روشن شد.</b>\n\n"
+        "از منوی زیر انتخاب کنید که می‌خواهید چه چیزی را بررسی کنید.\n"
+        "می‌توانید یک جفت‌ارز خاص را انتخاب کنید یا رادار زنده را بزنید:", 
+        reply_markup=get_main_menu(),
+        parse_mode="HTML"
     )
 
-@bot.message_handler(func=lambda message: message.text == '📊 آخرین سیگنال‌ها' or message.text == '/last')
-def send_last_signals(message):
-    if not last_divergences:
-        bot.reply_to(message, "⏳ هنوز دیتایی ثبت نشده. لطفاً صبر کنید تا ربات بازار را اسکن کند.")
-        return
-
-    grouped_data = {}
-    for key, data in last_divergences.items():
-        if "_" in key:
-            symbol, tf = key.rsplit("_", 1)
-            if symbol not in grouped_data:
-                grouped_data[symbol] = {}
-            grouped_data[symbol][tf] = data
-
-    msg = "📋 <b>گزارش آخرین دایورجنس‌ها (در ۲۲۰ کندل اخیر):</b>\n\n"
+@bot.callback_query_handler(func=lambda call: True)
+def handle_query(call):
+    bot.answer_callback_query(call.id, "در حال اسکن بازار... لطفاً چند لحظه صبر کنید ⏳")
     
-    tf_order = {"M1": 1, "M5": 2, "M15": 3, "H1": 4, "H4": 5}
-    
-    for symbol, tfs in grouped_data.items():
-        persian_name = SYMBOLS.get(symbol, symbol)
-        msg += f"💎 <b>{persian_name}</b>\n"
+    if call.data == "menu_live":
+        # Scan for live signals (happened in the last 15 mins)
+        msg = "🔴 <b>رادار زنده (دایورجنس‌های ۱۵ دقیقه اخیر):</b>\n\n"
+        found = False
         
-        sorted_tfs = sorted(tfs.keys(), key=lambda x: tf_order.get(x, 99))
+        # Check only M1 and M5 for live signals to be fast
+        for sym, name in SYMBOLS.items():
+            for tf_code in ["1", "5", "15"]:
+                tf_name = TIMEFRAMES[tf_code]
+                df, err = fetch_tradingview_candles(sym, tf_code, 100)
+                if df is not None:
+                    signals = detect_macd_divergence(df)
+                    if signals:
+                        latest = signals[-1]
+                        now_utc = pd.Timestamp.now(tz='UTC')
+                        diff = (now_utc - latest["time"]).total_seconds()
+                        if diff <= 900: # Last 15 mins
+                            dt_tehran = latest["time"].astimezone(tehran_tz).strftime('%H:%M')
+                            sig_type = "صعودی 🟢" if latest['type'] == 'Bullish' else "نزولی 🔴"
+                            msg += f"💎 <b>{name}</b> | {tf_name}: {sig_type} | {dt_tehran}\n"
+                            found = True
         
-        for tf in sorted_tfs:
-            data = tfs[tf]
-            try:
-                dt_tehran = data['time'].astimezone(tehran_tz).strftime('%Y-%m-%d %H:%M')
-            except:
-                dt_tehran = "نامشخص"
+        if not found:
+            msg += "هیچ سیگنال زنده‌ای در ۱۵ دقیقه اخیر یافت نشد. ❌"
+            
+        bot.send_message(call.message.chat.id, msg, parse_mode="HTML", reply_markup=get_main_menu())
+        
+    elif call.data == "menu_history":
+        bot.send_message(call.message.chat.id, "برای دیدن تاریخچه، یک جفت‌ارز را از منوی زیر انتخاب کنید:", reply_markup=get_main_menu())
+        
+    elif call.data.startswith("sym_"):
+        sym = call.data.replace("sym_", "")
+        name = SYMBOLS[sym]
+        
+        msg = f"📋 <b>آخرین دایورجنس‌های {name} (در ۲۲۰ کندل اخیر):</b>\n\n"
+        found_any = False
+        
+        for tf_code, tf_name in TIMEFRAMES.items():
+            df, err = fetch_tradingview_candles(sym, tf_code, 220)
+            if df is not None:
+                signals = detect_macd_divergence(df)
+                if signals:
+                    latest = signals[-1]
+                    dt_tehran = latest["time"].astimezone(tehran_tz).strftime('%Y-%m-%d %H:%M')
+                    sig_type = "صعودی 🟢" if latest['type'] == 'Bullish' else "نزولی 🔴"
+                    bars_ago = latest.get('bars_ago', 0)
+                    msg += f"⏱ <b>{tf_name}</b>: {sig_type} | {dt_tehran} | ({bars_ago} کندل قبل)\n"
+                    found_any = True
+                else:
+                    msg += f"⏱ <b>{tf_name}</b>: بدون سیگنال ❌\n"
+            else:
+                msg += f"⏱ <b>{tf_name}</b>: خطا در دریافت دیتا ⚠️\n"
                 
-            sig_type = "صعودی 🟢" if data['type'] == 'Bullish' else "نزولی 🔴"
-            bars_ago = data.get('bars_ago', 0)
+        if not found_any:
+            msg += "\nهیچ دایورجنس معتبری در این ۲۲۰ کندل پیدا نشد."
             
-            msg += f"  ⏱ <b>{tf}</b>: {sig_type} | {dt_tehran} | ({bars_ago} کندل قبل)\n"
-            
-        msg += "\n"
-        
-    for i in range(0, len(msg), 4000):
-        bot.reply_to(message, msg[i:i+4000], parse_mode="HTML")
+        bot.send_message(call.message.chat.id, msg, parse_mode="HTML", reply_markup=get_main_menu())
 
 @app.route('/')
 def home():
@@ -136,7 +168,7 @@ def run_web():
     port = int(os.environ.get("PORT", 7860))
     app.run(host="0.0.0.0", port=port)
 
-# 3. TradingView WebSocket Connection
+# 3. TradingView WebSocket Connection (Optimized)
 def tv_send(ws, func, params):
     payload = json.dumps({"m": func, "p": params}, separators=(",", ":"))
     frame = f"~m~{len(payload)}~m~{payload}"
@@ -151,7 +183,7 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
                 "Origin": "https://www.tradingview.com",
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
             },
-            timeout=8
+            timeout=4 # Reduced timeout for faster scanning
         )
         chart_session = "cs" + "".join(random.choices(string.ascii_lowercase + string.digits, k=12))
         tv_send(ws, "set_auth_token", ["unauthorized_user_token"])
@@ -162,7 +194,7 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
         
         bars = []
         start_t = time.time()
-        while time.time() - start_t < 8:
+        while time.time() - start_t < 4:
             try:
                 raw = ws.recv()
             except Exception:
@@ -202,7 +234,7 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
             try: ws.close()
             except: pass
         
-        if len(bars) < 150: 
+        if len(bars) < 50: 
             return None, f"bars={len(bars)}"
             
         df = pd.DataFrame(bars)
@@ -239,7 +271,7 @@ def detect_macd_divergence(df):
         current_slope = df['Slope'].iloc[i]
         prev_slope = df['Slope'].iloc[i-1]
         
-        # Bullish Divergence
+        # Bullish
         if b_state == 0:
             if prev_slope < 0 and current_slope > 0:
                 macd_val = df['MACD'].iloc[i-1]
@@ -276,7 +308,7 @@ def detect_macd_divergence(df):
                             })
                     b_state = 0
 
-        # Bearish Divergence
+        # Bearish
         if s_state == 0:
             if prev_slope > 0 and current_slope < 0:
                 macd_val = df['MACD'].iloc[i-1]
@@ -315,100 +347,56 @@ def detect_macd_divergence(df):
 
     return signals
 
-# 5. Scanner Loop
-SYMBOLS = {
-    "OANDA:XAUUSD": "طلا (XAUUSD)",
-    "FX:EURUSD": "یورو/دلار (EURUSD)",
-    "FX:GBPUSD": "پوند/دلار (GBPUSD)",
-    "FX:USDJPY": "دلار/ین (USDJPY)",
-    "FX:AUDUSD": "دلار استرالیا/دلار (AUDUSD)",
-    "FX:USDCAD": "دلار آمریکا/دلار کانادا (USDCAD)",
-    "FX:USDCHF": "دلار آمریکا/فرانک (USDCHF)",
-    "FX:NZDUSD": "دلار نیوزیلند/دلار (NZDUSD)"
-}
-
-TIMEFRAMES = {"1": "M1", "5": "M5", "15": "M15", "60": "H1", "240": "H4"}
-last_signal_times = {}
-
-def macd_scanner():
-    global last_source_name, last_divergences
+# 5. Background Live Scanner (For Push Notifications)
+def live_scanner():
     while True:
         try:
             if not subscribed_users:
-                time.sleep(5)
+                time.sleep(10)
                 continue
                 
             for symbol, persian_name in SYMBOLS.items():
                 for tf_code, tf_name in TIMEFRAMES.items():
-                    df, err = fetch_tradingview_candles(symbol, tf_code, 220)
-                    
-                    if df is None:
-                        continue
+                    df, err = fetch_tradingview_candles(symbol, tf_code, 100)
+                    if df is None: continue
                     
                     signals = detect_macd_divergence(df)
-                    
                     if signals:
-                        latest_sig = signals[-1] 
+                        latest_sig = signals[-1]
                         sig_time = latest_sig["time"]
                         key = f"{symbol}_{tf_name}"
                         
-                        stored_sig = last_divergences.get(key)
-                        is_newer = False
-                        if not stored_sig:
-                            is_newer = True
-                        else:
-                            try:
-                                if sig_time > pd.to_datetime(stored_sig['time'], utc=True):
-                                    is_newer = True
-                            except:
-                                is_newer = True
-                                
-                        if is_newer:
-                            last_divergences[key] = latest_sig
-                            save_state()
-
                         now_utc = pd.Timestamp.now(tz='UTC')
                         time_diff = (now_utc - sig_time).total_seconds()
                         live_threshold = 90 if tf_name == "M1" else (300 if tf_name == "M5" else (900 if tf_name == "M15" else 3600))
                         
                         if 0 <= time_diff <= live_threshold: 
-                            if last_signal_times.get(key) != sig_time:
+                            if live_notifications_cache.get(key) != sig_time:
                                 current_macd = df['MACD'].iloc[-1]
-                                
-                                if latest_sig['type'] == "Bullish" and current_macd >= 0:
-                                    continue
-                                if latest_sig['type'] == "Bearish" and current_macd <= 0:
-                                    continue
+                                if latest_sig['type'] == "Bullish" and current_macd >= 0: continue
+                                if latest_sig['type'] == "Bearish" and current_macd <= 0: continue
                                     
-                                last_signal_times[key] = sig_time
+                                live_notifications_cache[key] = sig_time
                                 dt_tehran = sig_time.astimezone(tehran_tz).strftime('%H:%M')
                                 
-                                if latest_sig['type'] == "Bullish":
-                                    msg = (
-                                        f"🚀 <b>دایورجنس صعودی MACD</b>\n\n"
-                                        f"💎 نماد: <b>{persian_name}</b>\n"
-                                        f"⏳ تایم‌فریم: <b>{tf_name}</b>\n"
-                                        f"⏰ زمان (تهران): <b>{dt_tehran}</b>"
-                                    )
-                                else:
-                                    msg = (
-                                        f"📉 <b>دایورجنس نزولی MACD</b>\n\n"
-                                        f"💎 نماد: <b>{persian_name}</b>\n"
-                                        f"⏳ تایم‌فریم: <b>{tf_name}</b>\n"
-                                        f"⏰ زمان (تهران): <b>{dt_tehran}</b>"
-                                    )
+                                icon = "🚀" if latest_sig['type'] == "Bullish" else "📉"
+                                title = "دایورجنس صعودی" if latest_sig['type'] == "Bullish" else "دایورجنس نزولی"
+                                
+                                msg = (
+                                    f"{icon} <b>{title} MACD</b>\n\n"
+                                    f"💎 نماد: <b>{persian_name}</b>\n"
+                                    f"⏳ تایم‌فریم: <b>{tf_name}</b>\n"
+                                    f"⏰ زمان (تهران): <b>{dt_tehran}</b>"
+                                )
                                 broadcast(msg)
-
                     time.sleep(0.5) 
-            time.sleep(5) 
+            time.sleep(10) 
         except Exception as e:
-            print(f"Error in scanner: {e}")
-            traceback.print_exc()
             time.sleep(10)
 
 # 6. Main Execution
 if __name__ == "__main__":
-    t = threading.Thread(target=macd_scanner)
+    t = threading.Thread(target=live_scanner)
     t.daemon = True
     t.start()
     
@@ -417,7 +405,6 @@ if __name__ == "__main__":
             try:
                 bot.infinity_polling(timeout=20, long_polling_timeout=15)
             except Exception as e:
-                print(f"Polling Error: {e}")
                 time.sleep(10)
     
     bot_thread = threading.Thread(target=run_bot_polling)
