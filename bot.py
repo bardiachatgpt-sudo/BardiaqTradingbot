@@ -66,10 +66,41 @@ if bot:
         bot.reply_to(
             message, 
             f"Bot is active.\nCurrent Session: {session}\n\n"
-            "Scanning Gold and Majors in M1 and M5.\n"
-            "Waiting for the pattern to form. You will be alerted as soon as the 3rd histogram closes.", 
+            "I will alert you when a Divergence is confirmed (3rd bar closed).\n"
+            "Use /status to see current Histogram/Price status.", 
             parse_mode="HTML"
         )
+
+    @bot.message_handler(commands=['status'])
+    def send_status(message):
+        bot.reply_to(message, "Fetching live data for all pairs...")
+        status_msg = "📊 <b>Current Market Status:</b>\n\n"
+        
+        for symbol in SYMBOLS.keys():
+            for tf_code, tf_name in TIMEFRAMES.items():
+                df = fetch_tradingview_candles(symbol, tf_code, 100)
+                if df is not None:
+                    df_closed = df.iloc[:-1]
+                    if len(df_closed) < 150: continue
+                    
+                    exp1 = df_closed['Close'].ewm(span=48, adjust=False).mean()
+                    exp2 = df_closed['Close'].ewm(span=106, adjust=False).mean()
+                    macd_line = exp1 - exp2
+                    signal_line = macd_line.ewm(span=36, adjust=False).mean()
+                    hist = macd_line - signal_line
+                    
+                    last_hist = hist.iloc[-1]
+                    last_low = df_closed['Low'].iloc[-1]
+                    last_high = df_closed['High'].iloc[-1]
+                    
+                    status_msg += f"💎 <b>{SYMBOLS[symbol]}</b> ({tf_name}):\n"
+                    status_msg += f"Hist: <code>{last_hist:.6f}</code> | Low: <code>{last_low:.5f}</code> | High: <code>{last_high:.5f}</code>\n\n"
+        
+        if len(status_msg) > 4000:
+            for i in range(0, len(status_msg), 4000):
+                bot.send_message(message.chat.id, status_msg[i:i+4000], parse_mode="HTML")
+        else:
+            bot.send_message(message.chat.id, status_msg, parse_mode="HTML")
 
 @app.route('/')
 def home():
@@ -170,37 +201,32 @@ def check_divergence(df, symbol, tf_name):
     exp2 = df['Close'].ewm(span=106, adjust=False).mean()
     macd_line = exp1 - exp2
     signal_line = macd_line.ewm(span=36, adjust=False).mean()
-    df['Histogram'] = macd_line - signal_line
-    hist = df['Histogram']
+    hist = macd_line - signal_line
 
-    bottoms = []
-    tops = []
-    middle_peaks = []
-    middle_troughs = []
+    neg_hist = hist[hist < 0]
+    pos_hist = hist[hist > 0]
+    
+    # 1. Find the absolute global min/max
+    if len(neg_hist) == 0 or len(pos_hist) == 0:
+        return
 
-    for i in range(1, len(df) - 1):
-        h_prev = hist.iloc[i-1]
-        h_curr = hist.iloc[i]
-        h_next = hist.iloc[i+1]
-        
-        if h_curr < 0 and abs(h_curr) > abs(h_prev) and abs(h_curr) > abs(h_next):
-            bottoms.append(i)
-            
-        if h_curr < 0 and abs(h_curr) < abs(h_prev) and abs(h_curr) < abs(h_next):
-            middle_peaks.append(i)
-            
-        if h_curr > 0 and h_curr > h_prev and h_curr > h_next:
-            tops.append(i)
-            
-        if h_curr > 0 and h_curr < h_prev and h_curr < h_next:
-            middle_troughs.append(i)
+    global_min_idx = neg_hist.idxmin()
+    global_max_idx = pos_hist.idxmax()
 
-    for i in range(len(bottoms) - 1):
-        b1_idx = bottoms[i]
-        b2_idx = bottoms[i+1]
-        
-        if (b2_idx - b1_idx) >= 30:
-            has_peak = any(b1_idx < mp < b2_idx for mp in middle_peaks)
+    # Bullish Divergence Logic
+    b1_idx = df.index.get_loc(global_min_idx)
+    
+    for i in range(b1_idx + 30, len(df) - 1):
+        if hist.iloc[i] < 0 and abs(hist.iloc[i]) > abs(hist.iloc[i-1]) and abs(hist.iloc[i]) > abs(hist.iloc[i+1]):
+            b2_idx = i
+            
+            # Check for middle peak between b1 and b2
+            has_peak = False
+            for j in range(b1_idx + 1, b2_idx):
+                if hist.iloc[j] < 0 and abs(hist.iloc[j]) < abs(hist.iloc[j-1]) and abs(hist.iloc[j]) < abs(hist.iloc[j+1]):
+                    has_peak = True
+                    break
+            
             all_neg = (hist.iloc[b1_idx:b2_idx+1] < 0).all()
             
             if has_peak and all_neg:
@@ -209,18 +235,19 @@ def check_divergence(df, symbol, tf_name):
                 b1_low = df['Low'].iloc[b1_idx]
                 b2_low = df['Low'].iloc[b2_idx]
                 
-                if abs(b1_hist) > (abs(b2_hist) * 1.05) and b1_low > b2_low:
+                if abs(b1_hist) > abs(b2_hist) and b1_low > b2_low:
+                    # Check if the 3rd bar of b2 just closed
                     if b2_idx + 1 == len(df) - 1:
                         dt_tehran = df.index[b2_idx].astimezone(tehran_tz).strftime('%H:%M')
                         session = get_current_session()
                         msg = (
-                            f"🚀 <b>Bullish Divergence</b> 🚀\n\n"
+                            f"🚀 <b>Bullish Divergence CONFIRMED</b> 🚀\n\n"
                             f"💎 Symbol: <b>{SYMBOLS[symbol]}</b>\n"
                             f"⏳ Timeframe: <b>{tf_name}</b>\n"
                             f"⏰ Time (Tehran): <b>{dt_tehran}</b>\n"
                             f"🌐 Session: <b>{session}</b>\n\n"
                             f"📊 <b>Abs Histogram:</b>\n"
-                            f"🔹 Bottom 1: <code>{abs(b1_hist):.6f}</code>\n"
+                            f"🔹 Bottom 1 (Deepest): <code>{abs(b1_hist):.6f}</code>\n"
                             f"🔹 Bottom 2: <code>{abs(b2_hist):.6f}</code>\n\n"
                             f"💰 <b>Price (Shadow):</b>\n"
                             f"🔹 Bottom 1: <code>{b1_low:.6f}</code>\n"
@@ -229,12 +256,20 @@ def check_divergence(df, symbol, tf_name):
                         broadcast(msg)
                         print(f"Signal Sent: {symbol} {tf_name} Bullish")
 
-    for i in range(len(tops) - 1):
-        t1_idx = tops[i]
-        t2_idx = tops[i+1]
-        
-        if (t2_idx - t1_idx) >= 30:
-            has_trough = any(t1_idx < mt < t2_idx for mt in middle_troughs)
+    # Bearish Divergence Logic
+    t1_idx = df.index.get_loc(global_max_idx)
+    
+    for i in range(t1_idx + 30, len(df) - 1):
+        if hist.iloc[i] > 0 and hist.iloc[i] > hist.iloc[i-1] and hist.iloc[i] > hist.iloc[i+1]:
+            t2_idx = i
+            
+            # Check for middle trough between t1 and t2
+            has_trough = False
+            for j in range(t1_idx + 1, t2_idx):
+                if hist.iloc[j] > 0 and hist.iloc[j] < hist.iloc[j-1] and hist.iloc[j] < hist.iloc[j+1]:
+                    has_trough = True
+                    break
+            
             all_pos = (hist.iloc[t1_idx:t2_idx+1] > 0).all()
             
             if has_trough and all_pos:
@@ -243,18 +278,18 @@ def check_divergence(df, symbol, tf_name):
                 t1_high = df['High'].iloc[t1_idx]
                 t2_high = df['High'].iloc[t2_idx]
                 
-                if t1_hist > (t2_hist * 1.05) and t1_high < t2_high:
+                if t1_hist > t2_hist and t1_high < t2_high:
                     if t2_idx + 1 == len(df) - 1:
                         dt_tehran = df.index[t2_idx].astimezone(tehran_tz).strftime('%H:%M')
                         session = get_current_session()
                         msg = (
-                            f"📉 <b>Bearish Divergence</b> 📉\n\n"
+                            f"📉 <b>Bearish Divergence CONFIRMED</b> 📉\n\n"
                             f"💎 Symbol: <b>{SYMBOLS[symbol]}</b>\n"
                             f"⏳ Timeframe: <b>{tf_name}</b>\n"
                             f"⏰ Time (Tehran): <b>{dt_tehran}</b>\n"
                             f"🌐 Session: <b>{session}</b>\n\n"
                             f"📊 <b>Histogram:</b>\n"
-                            f"🔹 Top 1: <code>{t1_hist:.6f}</code>\n"
+                            f"🔹 Top 1 (Highest): <code>{t1_hist:.6f}</code>\n"
                             f"🔹 Top 2: <code>{t2_hist:.6f}</code>\n\n"
                             f"💰 <b>Price (Shadow):</b>\n"
                             f"🔹 Top 1: <code>{t1_high:.6f}</code>\n"
