@@ -93,7 +93,7 @@ def fetch_tv_candles(symbol, interval, n_bars=200):
         ws = websocket.create_connection(
             "wss://data.tradingview.com/socket.io/websocket?from=chart%2F",
             headers={"Origin": "https://www.tradingview.com", "User-Agent": "Mozilla/5.0"},
-            timeout=12
+            timeout=15
         )
         ws.settimeout(5)
         session = "cs" + "".join(random.choices(string.ascii_lowercase + string.digits, k=12))
@@ -106,7 +106,7 @@ def fetch_tv_candles(symbol, interval, n_bars=200):
         
         bars = []
         start_t = time.time()
-        while time.time() - start_t < 10:
+        while time.time() - start_t < 12: # کمی بیشتر برای کندی‌های تریدینگ‌ویو
             try: raw = ws.recv()
             except: break
             if not raw: break
@@ -130,12 +130,15 @@ def fetch_tv_candles(symbol, interval, n_bars=200):
                                 bars.append({"Time": int(v[0]), "Open": float(v[1]), "High": float(v[2]), "Low": float(v[3]), "Close": float(v[4])})
                 elif msg.get("m") == "series_completed":
                     break
-            if len(bars) >= 50: break
+            
+            # نکته مهم اصلاح شده: به جای ۵۰، تا تعداد n_bars صبر کن
+            if len(bars) >= n_bars: 
+                break
         
         try: ws.close()
         except: pass
 
-        if len(bars) < 50: return pd.DataFrame()
+        if len(bars) < 20: return pd.DataFrame()
 
         df = pd.DataFrame(bars)
         df["Time"] = pd.to_datetime(df["Time"], unit="s", utc=True)
@@ -180,7 +183,6 @@ def check_step1_daily(df_daily):
     return current_macd < 0 or hist < 0
 
 def check_divergence_generic(df, order=5):
-    """دایورجنس دیفالت (12,26,9) برای H4 و M5"""
     if len(df) < 50: return None
     df = add_macd(df, 12, 26, 9, 'def')
     df = find_pivots(df, 'def_macd', order=order)
@@ -200,10 +202,9 @@ def check_divergence_generic(df, order=5):
     return None
 
 def check_divergence_4x_m1(df):
-    """دایورجنس ۴ برابری (48,106,36) مخصوص تایم ۱ دقیقه"""
-    if len(df) < 100: return None
+    if len(df) < 150: return None
     df = add_macd(df, 48, 106, 36, 'macd4x')
-    df = find_pivots(df, 'macd4x_macd', order=3) # order=3 برای M1 بهتره چون نویز کمتره
+    df = find_pivots(df, 'macd4x_macd', order=3)
     df_closed = df.iloc[:-1]
 
     lows = df_closed[df_closed['macd4x_macd_pivot_low'].notna()].tail(2)
@@ -259,7 +260,8 @@ def scanner_loop():
                 if not trend:
                     time.sleep(2); continue
                 
-                df_m1 = fetch_tv_candles(sym_code, "1", 50)
+                # برای M1، ۱۵۰ کندل بگیر تا مکدی دقیق‌تر باشه
+                df_m1 = fetch_tv_candles(sym_code, "1", 150)
                 if df_m1.empty:
                     time.sleep(2); continue
                 
@@ -354,6 +356,10 @@ def cmd_market(message):
             text += f"🔹 <b>{sym['name']}</b>\n❌ خطا در دریافت داده\n───────────────\n"
         time.sleep(1)
     
+    # جلوگیری از خطای طولانی بودن پیام
+    if len(text) > 4000:
+        text = text[:3950] + "\n... (پیام کوتاه شد)"
+    
     bot.edit_message_text(text, chat_id=message.chat.id, message_id=msg.message_id, parse_mode="HTML")
 
 @bot.message_handler(func=lambda m: m.text == "🎯 استراتژی فعلی")
@@ -370,66 +376,80 @@ def cmd_strategy(message):
 # ==================== 🔍 دکمه رادار دایورجنس (سه لایه) ====================
 @bot.message_handler(func=lambda m: m.text == "🔍 رادار دایورجنس")
 def cmd_radar(message):
-    msg = bot.send_message(message.chat.id, "⏳ در حال اسکن ۳ لایه (H4, M5, M1)...")
-    radar_text = "🔍 <b>رادار دایورجنس (سه لایه)</b>\n━━━━━━━━━━━━━━━━━\n\n"
+    # پیام اولیه
+    msg = bot.send_message(message.chat.id, "⏳ در حال اسکن ۳ لایه (H4, M5, M1)... لطفاً صبر کنید، این عملیات حدود ۱ دقیقه طول می‌کشد.")
     
-    found_any = False
-    for sym in SYMBOLS:
-        sym_name = sym["name"]
-        sym_code = sym["symbol"]
+    # اجرای اسکن در یک ترد جداگانه تا تلگرام Timeout نده
+    def run_radar():
+        radar_text = "🔍 <b>رادار دایورجنس (سه لایه)</b>\n━━━━━━━━━━━━━━━━━\n\n"
+        found_any = False
         
-        # لایه ۱: H4
-        df_h4 = fetch_tv_candles(sym_code, "240", 100)
-        h4_div = check_divergence_generic(df_h4) if not df_h4.empty else None
-        h4_price = df_h4['Close'].iloc[-1] if not df_h4.empty else 0.0
-
-        # لایه ۲: M5
-        df_m5 = fetch_tv_candles(sym_code, "5", 100)
-        m5_div = check_divergence_generic(df_m5) if not df_m5.empty else None
-        m5_price = df_m5['Close'].iloc[-1] if not df_m5.empty else 0.0
-
-        # لایه ۳: M1 (۴ برابری)
-        df_m1 = fetch_tv_candles(sym_code, "1", 150) # ۱۵۰ کندل برای محاسبه ۴ برابری لازمه
-        m1_div = check_divergence_4x_m1(df_m1) if not df_m1.empty else None
-        m1_price = df_m1['Close'].iloc[-1] if not df_m1.empty else 0.0
-
-        if h4_div or m5_div or m1_div:
-            found_any = True
-            radar_text += f"🔹 <b>{sym_name}</b>\n"
+        for sym in SYMBOLS:
+            sym_name = sym["name"]
+            sym_code = sym["symbol"]
             
-            # H4
-            if h4_div:
-                d = "صعودی 🟢" if h4_div == "BUY" else "نزولی 🔴"
-                radar_text += f"⏱ H4 (دیفالت): دایورجنس {d}\n"
-            else:
-                radar_text += f"⏱ H4 (دیفالت): بدون دایورجنس\n"
-            
-            # M5
-            if m5_div:
-                d = "صعودی 🟢" if m5_div == "BUY" else "نزولی 🔴"
-                radar_text += f"⏱ M5 (دیفالت): دایورجنس {d}\n"
-            else:
-                radar_text += f"⏱ M5 (دیفالت): بدون دایورجنس\n"
+            # لایه ۱: H4
+            df_h4 = fetch_tv_candles(sym_code, "240", 100)
+            h4_div = check_divergence_generic(df_h4) if not df_h4.empty else None
+            h4_price = df_h4['Close'].iloc[-1] if not df_h4.empty else 0.0
 
-            # M1 (۴ برابری)
-            if m1_div:
-                d = "صعودی 🟢" if m1_div == "BUY" else "نزولی 🔴"
-                radar_text += f"⚡ M1 (۴ برابری): دایورجنس {d}\n"
-            else:
-                radar_text += f"⚡ M1 (۴ برابری): بدون دایورجنس\n"
+            # لایه ۲: M5
+            df_m5 = fetch_tv_candles(sym_code, "5", 100)
+            m5_div = check_divergence_generic(df_m5) if not df_m5.empty else None
+            m5_price = df_m5['Close'].iloc[-1] if not df_m5.empty else 0.0
 
-            # قیمت‌ها
-            radar_text += f"💰 قیمت H4: <code>{h4_price:.5f}</code>\n"
-            radar_text += f"💰 قیمت M5: <code>{m5_price:.5f}</code>\n"
-            radar_text += f"💰 قیمت M1: <code>{m1_price:.5f}</code>\n"
-            radar_text += "───────────────\n"
+            # لایه ۳: M1 (۴ برابری) - برای مکدی ۴۸,۱۰۶,۳۶ حداقل ۲۵۰ کندل نیازه
+            df_m1 = fetch_tv_candles(sym_code, "1", 250) 
+            m1_div = check_divergence_4x_m1(df_m1) if not df_m1.empty else None
+            m1_price = df_m1['Close'].iloc[-1] if not df_m1.empty else 0.0
+
+            if h4_div or m5_div or m1_div:
+                found_any = True
+                radar_text += f"🔹 <b>{sym_name}</b>\n"
+                
+                if h4_div:
+                    d = "صعودی 🟢" if h4_div == "BUY" else "نزولی 🔴"
+                    radar_text += f"⏱ H4 (دیفالت): دایورجنس {d}\n"
+                else:
+                    radar_text += f"⏱ H4 (دیفالت): بدون دایورجنس\n"
+                
+                if m5_div:
+                    d = "صعودی 🟢" if m5_div == "BUY" else "نزولی 🔴"
+                    radar_text += f"⏱ M5 (دیفالت): دایورجنس {d}\n"
+                else:
+                    radar_text += f"⏱ M5 (دیفالت): بدون دایورجنس\n"
+
+                if m1_div:
+                    d = "صعودی 🟢" if m1_div == "BUY" else "نزولی 🔴"
+                    radar_text += f"⚡ M1 (۴ برابری): دایورجنس {d}\n"
+                else:
+                    radar_text += f"⚡ M1 (۴ برابری): بدون دایورجنس\n"
+
+                radar_text += f"💰 قیمت H4: <code>{h4_price:.5f}</code>\n"
+                radar_text += f"💰 قیمت M5: <code>{m5_price:.5f}</code>\n"
+                radar_text += f"💰 قیمت M1: <code>{m1_price:.5f}</code>\n"
+                radar_text += "───────────────\n"
+                
+            time.sleep(1)
             
-        time.sleep(1)
+        if not found_any:
+            radar_text += "هیچ نمادی در حال حاضر دایورجنس معتبر در لایه‌های H4، M5 یا M1 ندارد."
         
-    if not found_any:
-        radar_text += "هیچ نمادی در حال حاضر دایورجنس معتبر در لایه‌های H4، M5 یا M1 ندارد."
-        
-    bot.edit_message_text(radar_text, chat_id=message.chat.id, message_id=msg.message_id, parse_mode="HTML")
+        # جلوگیری از خطای طولانی بودن پیام
+        if len(radar_text) > 4000:
+            radar_text = radar_text[:3900] + "\n\n... (ادامه پیام به دلیل طولانی شدن کوتاه شد)"
+
+        try:
+            bot.edit_message_text(radar_text, chat_id=message.chat.id, message_id=msg.message_id, parse_mode="HTML")
+        except Exception as e:
+            print(f"Radar edit error: {e}")
+            # اگه ویرایش نشد، پیام جدید بفرست
+            try:
+                bot.send_message(message.chat.id, radar_text, parse_mode="HTML")
+            except:
+                pass
+
+    threading.Thread(target=run_radar, daemon=True).start()
 
 # ==================== 🚀 اجرا ====================
 if __name__ == "__main__":
