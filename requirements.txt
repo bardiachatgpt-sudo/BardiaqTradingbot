@@ -1,5 +1,6 @@
-pyTelegramBotAPI
-websocket-client
-pandas
-numpy
-Flask
+Flask==3.0.3
+pyTelegramBotAPI==4.20.0
+pandas==2.2.2
+numpy==1.26.4
+websocket-client==1.8.0
+pytz==2024.1
