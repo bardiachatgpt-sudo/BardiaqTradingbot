@@ -65,18 +65,33 @@ if bot:
 
     @bot.message_handler(commands=['status'])
     def send_status(message):
-        bot.reply_to(message, "Fetching live data. Please wait...")
-        status_msg = "📊 <b>Current Market Status:</b>\n\n"
-        
-        for symbol in SYMBOLS.keys():
-            for tf_code, tf_name in TIMEFRAMES.items():
-                df = fetch_tradingview_candles(symbol, tf_code, 220)
-                if df is not None:
-                    state_text = analyze_current_state(df)
-                    status_msg += f"💎 <b>{SYMBOLS[symbol]}</b> ({tf_name}):\n{state_text}\n\n"
-        
-        for i in range(0, len(status_msg), 4000):
-            bot.send_message(message.chat.id, status_msg[i:i+4000], parse_mode="HTML")
+        try:
+            bot.reply_to(message, "Fetching live data. Please wait...")
+            status_msg = "📊 <b>Current Market Status:</b>\n\n"
+            
+            for symbol in SYMBOLS.keys():
+                for tf_code, tf_name in TIMEFRAMES.items():
+                    df = fetch_tradingview_candles(symbol, tf_code, 220)
+                    if df is not None:
+                        state_text = analyze_current_state(df)
+                        status_msg += f"💎 <b>{SYMBOLS[symbol]}</b> ({tf_name}):\n{state_text}\n\n"
+                    time.sleep(1)
+            
+            lines = status_msg.split('\n')
+            current_msg = ""
+            for line in lines:
+                if len(current_msg) + len(line) > 3500:
+                    bot.send_message(message.chat.id, current_msg, parse_mode="HTML")
+                    current_msg = line + "\n"
+                else:
+                    current_msg += line + "\n"
+            if current_msg:
+                bot.send_message(message.chat.id, current_msg, parse_mode="HTML")
+                
+        except Exception as e:
+            print(f"Status Error: {e}")
+            traceback.print_exc()
+            bot.reply_to(message, f"An error occurred: {e}")
 
 @app.route('/')
 def home():
@@ -100,7 +115,7 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
                 "Origin": "https://www.tradingview.com",
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
             },
-            timeout=10
+            timeout=5
         )
         chart_session = "cs" + "".join(random.choices(string.ascii_lowercase + string.digits, k=12))
         tv_send(ws, "set_auth_token", ["unauthorized_user_token"])
@@ -111,7 +126,7 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
         
         bars = []
         start_t = time.time()
-        while time.time() - start_t < 10:
+        while time.time() - start_t < 5:
             try: raw = ws.recv()
             except Exception: break
             if not raw: break
@@ -164,7 +179,7 @@ def get_histogram(df):
     df_closed = df.iloc[:-1].copy()
     if len(df_closed) < 150: return None, None
     exp1 = df_closed['Close'].ewm(span=48, adjust=False).mean()
-    exp2 = df_closed['Close'].ewm(span=106, adjust=False).mean()
+    exp2 = df_closed['Close'].ewm(span=104, adjust=False).mean()
     macd_line = exp1 - exp2
     signal_line = macd_line.ewm(span=36, adjust=False).mean()
     df_closed['Histogram'] = macd_line - signal_line
@@ -177,6 +192,7 @@ def analyze_current_state(df):
     last_hist = hist[-1]
     
     if last_hist < 0:
+        # NEGATIVE PHASE
         phase_start = 0
         for i in range(len(hist)-1, -1, -1):
             if hist[i] > 0:
@@ -184,6 +200,7 @@ def analyze_current_state(df):
                 break
                 
         phase_hist = hist[phase_start:]
+        if not phase_hist: return "Not enough data."
         
         b1_val = min(phase_hist)
         b1_idx = phase_start + phase_hist.index(b1_val)
@@ -191,23 +208,46 @@ def analyze_current_state(df):
         if b1_idx == len(hist) - 1:
             return f"🔴 <b>Phase: Negative</b>\nStill dropping. Bottom 1 forming at {df_closed['Low'].iloc[b1_idx]:.5f} (Abs: {abs(b1_val):.6f}).\nWaiting for retracement..."
             
-        post_b1 = hist[b1_idx:]
-        peak_val = max(post_b1)
-        peak_idx = b1_idx + post_b1.index(peak_val)
+        up_bars_count = 0
+        peak_idx = -1
+        peak_val = -999999
         
-        if peak_idx == len(hist) - 1:
-            return f"🔴 <b>Phase: Negative</b>\nBottom 1: {df_closed['Low'].iloc[b1_idx]:.5f} (Abs: {abs(b1_val):.6f})\nMiddle Peak forming at {df_closed['Low'].iloc[peak_idx]:.5f} (Abs: {abs(peak_val):.6f}).\nWaiting for it to finish..."
+        for i in range(b1_idx + 1, len(hist) - 1):
+            if hist[i] > hist[i-1]:
+                up_bars_count += 1
+            else:
+                if up_bars_count >= 7:
+                    peak_idx = i - 1
+                    peak_val = hist[peak_idx]
+                    break
+                else:
+                    up_bars_count = 0
+                    
+        if peak_idx == -1:
+            return f"🔴 <b>Phase: Negative</b>\nBottom 1: {df_closed['Low'].iloc[b1_idx]:.5f} (Abs: {abs(b1_val):.6f})\n⏳ Waiting for valid Middle Peak (min 7-8 rising bars)..."
             
-        post_peak = hist[peak_idx:]
-        b2_val = min(post_peak)
-        b2_idx = peak_idx + post_peak.index(b2_val)
+        down_bars_count = 0
+        b2_idx = -1
+        b2_val = 999999
         
-        if b2_idx == len(hist) - 1:
-            return f"🔴 <b>Phase: Negative</b>\nBottom 1: {df_closed['Low'].iloc[b1_idx]:.5f} (Abs: {abs(b1_val):.6f})\nMiddle Peak: {df_closed['Low'].iloc[peak_idx]:.5f} (Abs: {abs(peak_val):.6f})\nNew Bottom forming at {df_closed['Low'].iloc[b2_idx]:.5f} (Abs: {abs(b2_val):.6f}).\nWatching for confirmation..."
+        for i in range(peak_idx + 1, len(hist) - 1):
+            if hist[i] < hist[i-1]:
+                down_bars_count += 1
+            else:
+                if down_bars_count >= 3:
+                    b2_idx = i - 1
+                    b2_val = hist[b2_idx]
+                    break
+                else:
+                    down_bars_count = 0
+                    
+        if b2_idx == -1:
+            return f"🔴 <b>Phase: Negative</b>\nBottom 1: {df_closed['Low'].iloc[b1_idx]:.5f} (Abs: {abs(b1_val):.6f})\nMiddle Peak: {df_closed['Low'].iloc[peak_idx]:.5f} (Abs: {abs(peak_val):.6f})\n⏳ Waiting for Bottom 2 to form..."
             
         return f"🔴 <b>Phase: Negative</b>\nBottom 1: {df_closed['Low'].iloc[b1_idx]:.5f} (Abs: {abs(b1_val):.6f})\nMiddle Peak: {df_closed['Low'].iloc[peak_idx]:.5f} (Abs: {abs(peak_val):.6f})\nBottom 2 formed at {df_closed['Low'].iloc[b2_idx]:.5f} (Abs: {abs(b2_val):.6f})."
         
     elif last_hist > 0:
+        # POSITIVE PHASE
         phase_start = 0
         for i in range(len(hist)-1, -1, -1):
             if hist[i] < 0:
@@ -215,6 +255,7 @@ def analyze_current_state(df):
                 break
                 
         phase_hist = hist[phase_start:]
+        if not phase_hist: return "Not enough data."
         
         t1_val = max(phase_hist)
         t1_idx = phase_start + phase_hist.index(t1_val)
@@ -222,19 +263,41 @@ def analyze_current_state(df):
         if t1_idx == len(hist) - 1:
             return f"🟢 <b>Phase: Positive</b>\nStill rising. Top 1 forming at {df_closed['High'].iloc[t1_idx]:.5f} (Val: {t1_val:.6f}).\nWaiting for pullback..."
             
-        post_t1 = hist[t1_idx:]
-        trough_val = min(post_t1)
-        trough_idx = t1_idx + post_t1.index(trough_val)
+        down_bars_count = 0
+        trough_idx = -1
+        trough_val = 999999
         
-        if trough_idx == len(hist) - 1:
-            return f"🟢 <b>Phase: Positive</b>\nTop 1: {df_closed['High'].iloc[t1_idx]:.5f} (Val: {t1_val:.6f})\nMiddle Trough forming at {df_closed['High'].iloc[trough_idx]:.5f} (Val: {trough_val:.6f}).\nWaiting for it to finish..."
+        for i in range(t1_idx + 1, len(hist) - 1):
+            if hist[i] < hist[i-1]:
+                down_bars_count += 1
+            else:
+                if down_bars_count >= 7:
+                    trough_idx = i - 1
+                    trough_val = hist[trough_idx]
+                    break
+                else:
+                    down_bars_count = 0
+                    
+        if trough_idx == -1:
+            return f"🟢 <b>Phase: Positive</b>\nTop 1: {df_closed['High'].iloc[t1_idx]:.5f} (Val: {t1_val:.6f})\n⏳ Waiting for valid Middle Trough (min 7-8 falling bars)..."
             
-        post_trough = hist[trough_idx:]
-        t2_val = max(post_trough)
-        t2_idx = trough_idx + post_trough.index(t2_val)
+        up_bars_count = 0
+        t2_idx = -1
+        t2_val = -999999
         
-        if t2_idx == len(hist) - 1:
-            return f"🟢 <b>Phase: Positive</b>\nTop 1: {df_closed['High'].iloc[t1_idx]:.5f} (Val: {t1_val:.6f})\nMiddle Trough: {df_closed['High'].iloc[trough_idx]:.5f} (Val: {trough_val:.6f})\nNew Top forming at {df_closed['High'].iloc[t2_idx]:.5f} (Val: {t2_val:.6f}).\nWatching for confirmation..."
+        for i in range(trough_idx + 1, len(hist) - 1):
+            if hist[i] > hist[i-1]:
+                up_bars_count += 1
+            else:
+                if up_bars_count >= 3:
+                    t2_idx = i - 1
+                    t2_val = hist[t2_idx]
+                    break
+                else:
+                    up_bars_count = 0
+                    
+        if t2_idx == -1:
+            return f"🟢 <b>Phase: Positive</b>\nTop 1: {df_closed['High'].iloc[t1_idx]:.5f} (Val: {t1_val:.6f})\nMiddle Trough: {df_closed['High'].iloc[trough_idx]:.5f} (Val: {trough_val:.6f})\n⏳ Waiting for Top 2 to form..."
             
         return f"🟢 <b>Phase: Positive</b>\nTop 1: {df_closed['High'].iloc[t1_idx]:.5f} (Val: {t1_val:.6f})\nMiddle Trough: {df_closed['High'].iloc[trough_idx]:.5f} (Val: {trough_val:.6f})\nTop 2 formed at {df_closed['High'].iloc[t2_idx]:.5f} (Val: {t2_val:.6f})."
         
@@ -254,22 +317,46 @@ def check_divergence(df, symbol, tf_name):
                 break
                 
         phase_hist = hist[phase_start:]
+        if not phase_hist: return
+        
         b1_val = min(phase_hist)
         b1_idx = phase_start + phase_hist.index(b1_val)
         
         if b1_idx == len(hist) - 1: return 
             
-        post_b1 = hist[b1_idx:]
-        peak_val = max(post_b1)
-        peak_idx = b1_idx + post_b1.index(peak_val)
+        up_bars_count = 0
+        peak_idx = -1
+        for i in range(b1_idx + 1, len(hist) - 1):
+            if hist[i] > hist[i-1]:
+                up_bars_count += 1
+            else:
+                if up_bars_count >= 7:
+                    peak_idx = i - 1
+                    break
+                else:
+                    up_bars_count = 0
+                    
+        if peak_idx == -1: return
         
-        if peak_idx == len(hist) - 1: return 
+        down_bars_count = 0
+        b2_idx = -1
+        for i in range(peak_idx + 1, len(hist) - 1):
+            if hist[i] < hist[i-1]:
+                down_bars_count += 1
+            else:
+                if down_bars_count >= 3:
+                    b2_idx = i - 1
+                    break
+                else:
+                    down_bars_count = 0
+                    
+        if b2_idx == -1: return
+        
+        if b2_idx + 1 == len(hist) - 1:
+            b1_val = hist[b1_idx]
+            b2_val = hist[b2_idx]
+            peak_val = hist[peak_idx]
             
-        post_peak = hist[peak_idx:]
-        b2_val = min(post_peak)
-        b2_idx = peak_idx + post_peak.index(b2_val)
-        
-        if b2_idx == len(hist) - 2:
             if (b2_idx - b1_idx) >= 30 and abs(b1_val) > abs(b2_val) and df_closed['Low'].iloc[b1_idx] > df_closed['Low'].iloc[b2_idx]:
                 dt_tehran = df_closed.index[b2_idx].astimezone(tehran_tz).strftime('%H:%M')
                 session = get_current_session()
@@ -299,22 +386,46 @@ def check_divergence(df, symbol, tf_name):
                 break
                 
         phase_hist = hist[phase_start:]
+        if not phase_hist: return
+        
         t1_val = max(phase_hist)
         t1_idx = phase_start + phase_hist.index(t1_val)
         
         if t1_idx == len(hist) - 1: return
             
-        post_t1 = hist[t1_idx:]
-        trough_val = min(post_t1)
-        trough_idx = t1_idx + post_t1.index(trough_val)
+        down_bars_count = 0
+        trough_idx = -1
+        for i in range(t1_idx + 1, len(hist) - 1):
+            if hist[i] < hist[i-1]:
+                down_bars_count += 1
+            else:
+                if down_bars_count >= 7:
+                    trough_idx = i - 1
+                    break
+                else:
+                    down_bars_count = 0
+                    
+        if trough_idx == -1: return
         
-        if trough_idx == len(hist) - 1: return
+        up_bars_count = 0
+        t2_idx = -1
+        for i in range(trough_idx + 1, len(hist) - 1):
+            if hist[i] > hist[i-1]:
+                up_bars_count += 1
+            else:
+                if up_bars_count >= 3:
+                    t2_idx = i - 1
+                    break
+                else:
+                    up_bars_count = 0
+                    
+        if t2_idx == -1: return
+        
+        if t2_idx + 1 == len(hist) - 1:
+            t1_val = hist[t1_idx]
+            t2_val = hist[t2_idx]
+            trough_val = hist[trough_idx]
             
-        post_trough = hist[trough_idx:]
-        t2_val = max(post_trough)
-        t2_idx = trough_idx + post_trough.index(t2_val)
-        
-        if t2_idx == len(hist) - 2:
             if (t2_idx - t1_idx) >= 30 and t1_val > t2_val and df_closed['High'].iloc[t1_idx] < df_closed['High'].iloc[t2_idx]:
                 dt_tehran = df_closed.index[t2_idx].astimezone(tehran_tz).strftime('%H:%M')
                 session = get_current_session()
