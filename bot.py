@@ -6,6 +6,7 @@ import time
 import random
 import string
 import threading
+import traceback
 from datetime import datetime
 import pytz
 import websocket
@@ -114,7 +115,7 @@ def send_last_signals(message):
         msg += (
             f"💎 <b>{key}</b> | {signal_type}\n"
             f"⏰ زمان: {dt_tehran} (تهران)\n"
-            f"📉 مکدی: کف/سقف اول {data.get('p1_macd', 0):.4f} | کف/سقف دوم {data['macd']:.4f}\n"
+            f"📉 مکدی: اول {data.get('p1_macd', 0):.4f} | دوم {data['macd']:.4f}\n"
             f"💰 قیمت: اول {data.get('p1_price', 0):.5f} | دوم {data['price']:.5f}\n\n"
         )
     
@@ -127,6 +128,7 @@ def home():
 
 def run_web():
     port = int(os.environ.get("PORT", 7860))
+    print(f"Web server starting on port {port}...")
     app.run(host="0.0.0.0", port=port)
 
 # ==========================================
@@ -146,7 +148,7 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
                 "Origin": "https://www.tradingview.com",
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
             },
-            timeout=12
+            timeout=8 # کاهش تایم‌اوت برای جلوگیری از هنگ کردن
         )
         chart_session = "cs" + "".join(random.choices(string.ascii_lowercase + string.digits, k=12))
         tv_send(ws, "set_auth_token", ["unauthorized_user_token"])
@@ -157,8 +159,12 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
         
         bars = []
         start_t = time.time()
-        while time.time() - start_t < 10:
-            raw = ws.recv()
+        while time.time() - start_t < 8:
+            try:
+                raw = ws.recv()
+            except Exception:
+                break # در صورت قطعی اتصال، حلقه را بشکن
+                
             if not raw: break
             if raw.startswith("~m~") and "~h~" in raw:
                 ws.send(raw)
@@ -188,7 +194,10 @@ def fetch_tradingview_candles(symbol="OANDA:XAUUSD", interval="1", n_bars=220):
                 elif m_type == "series_completed":
                     break
             if len(bars) >= 50: break
-        ws.close()
+            
+        if ws:
+            try: ws.close()
+            except: pass
         
         if len(bars) < 150: 
             return None, f"bars={len(bars)}"
@@ -218,11 +227,9 @@ def detect_macd_divergence(df):
 
     signals = []
     
-    # --- استیت ماشین برای دایورجنس صعودی ---
     b_state = 0
     b_p1_macd, b_p1_price, b_p1_idx = None, None, None
     
-    # --- استیت ماشین برای دایورجنس نزولی ---
     s_state = 0
     s_p1_macd, s_p1_price, s_p1_idx = None, None, None
 
@@ -230,9 +237,7 @@ def detect_macd_divergence(df):
         current_slope = df['Slope'].iloc[i]
         prev_slope = df['Slope'].iloc[i-1]
         
-        # ==========================================
-        # ۱. بررسی دایورجنس صعودی (کف‌ها - فاز منفی)
-        # ==========================================
+        # --- دایورجنس صعودی ---
         if b_state == 0:
             if prev_slope < 0 and current_slope >= 0:
                 macd_val = df['MACD'].iloc[i-1]
@@ -269,36 +274,30 @@ def detect_macd_divergence(df):
                             })
                     b_state = 0
 
-        # ==========================================
-        # ۲. بررسی دایورجنس نزولی (سقف‌ها - فاز مثبت)
-        # ==========================================
+        # --- دایورجنس نزولی ---
         if s_state == 0:
-            # سقف اول: شیب از مثبت به منفی تغییر کرد
             if prev_slope > 0 and current_slope <= 0:
                 macd_val = df['MACD'].iloc[i-1]
-                if macd_val > 0: # شرط فاز مثبت
+                if macd_val > 0:
                     s_p1_macd = macd_val
                     s_p1_price = df['Close'].iloc[i-1]
                     s_p1_idx = i-1
                     s_state = 1
 
         elif s_state == 1:
-            # کف میانی: شیب از منفی به مثبت تغییر کرد
             if prev_slope < 0 and current_slope >= 0:
                 macd_val = df['MACD'].iloc[i-1]
-                if macd_val > 0: # کف میانی نباید زیر صفر بره
+                if macd_val > 0:
                     s_state = 2
                 else:
                     s_state = 0 
 
         elif s_state == 2:
-            # سقف دوم: شیب دوباره از مثبت به منفی تغییر کرد
             if prev_slope > 0 and current_slope <= 0:
                 macd_val = df['MACD'].iloc[i-1]
                 if macd_val > 0:
                     all_above_zero = (df['MACD'].iloc[s_p1_idx:i] > 0).all()
                     if all_above_zero:
-                        # سقف دوم باید ضعیف‌تر باشه (مقدار مکدی کمتر) و قیمت بالاتر
                         cond_macd = s_p1_macd > macd_val
                         cond_price = s_p1_price < df['Close'].iloc[i-1]
                         if cond_macd and cond_price:
@@ -328,34 +327,34 @@ SYMBOLS = {
     "FX:NZDUSD": "دلار نیوزیلند/دلار (NZDUSD)"
 }
 
-# تغییر تایم‌فریم‌ها به M1, M5, M15
 TIMEFRAMES = {"1": "M1", "5": "M5", "15": "M15"}
 last_signal_times = {}
 
 def macd_scanner():
     global last_source_name, last_divergences
+    print("Scanner thread started successfully.")
     while True:
         try:
             if not subscribed_users:
-                time.sleep(10)
+                time.sleep(5)
                 continue
                 
             for symbol, persian_name in SYMBOLS.items():
                 for tf_code, tf_name in TIMEFRAMES.items():
+                    print(f"Fetching {symbol} {tf_name}...") # لاگ برای رندر
                     df, err = fetch_tradingview_candles(symbol, tf_code, 220)
                     
                     if df is None:
+                        print(f"Failed {symbol} {tf_name}: {err}")
                         continue
                     
                     signals = detect_macd_divergence(df)
                     
                     if signals:
-                        # آخرین سیگنال (چه صعودی چه نزولی) رو جدا می‌کنیم
                         latest_sig = signals[-1] 
                         sig_time = latest_sig["time"]
                         key = f"{symbol}_{tf_name}"
                         
-                        # ذخیره در حافظه
                         stored_sig = last_divergences.get(key)
                         is_newer = False
                         if not stored_sig:
@@ -371,18 +370,14 @@ def macd_scanner():
                             last_divergences[key] = latest_sig
                             save_state()
 
-                        # ارسال پیام
                         now_utc = pd.Timestamp.now(tz='UTC')
                         time_diff = (now_utc - sig_time).total_seconds()
-                        
-                        # استانه زمانی بر اساس تایم‌فریم
                         live_threshold = 90 if tf_name == "M1" else (300 if tf_name == "M5" else 900)
                         
                         if time_diff <= live_threshold: 
                             if last_signal_times.get(key) != sig_time:
                                 current_macd = df['MACD'].iloc[-1]
                                 
-                                # فیلتر نهایی: برای صعودی مکدی باید منفی باشه، برای نزولی باید مثبت باشه
                                 if latest_sig['type'] == "Bullish" and current_macd >= 0:
                                     continue
                                 if latest_sig['type'] == "Bearish" and current_macd <= 0:
@@ -399,7 +394,7 @@ def macd_scanner():
                                         f"📊 <b>بررسی شرط ۱ (قدر مطلق MACD):</b>\n"
                                         f"🔹 کف اول (Abs): <code>{abs(latest_sig['p1_macd']):.4f}</code>\n"
                                         f"🔹 کف دوم (Abs): <code>{abs(latest_sig['macd']):.4f}</code>\n"
-                                        f"✅ <i>کف اول بزرگتر است (ضعف مومنتوم نزولی)</i>\n\n"
+                                        f"✅ <i>کف اول بزرگتر است</i>\n\n"
                                         f"💰 <b>بررسی شرط ۲ (قیمت):</b>\n"
                                         f"🔹 قیمت کف اول: <code>{latest_sig['p1_price']:.5f}</code>\n"
                                         f"🔹 قیمت کف دوم: <code>{latest_sig['price']:.5f}</code>\n"
@@ -413,35 +408,45 @@ def macd_scanner():
                                         f"📊 <b>بررسی شرط ۱ (مقدار MACD):</b>\n"
                                         f"🔹 سقف اول: <code>{latest_sig['p1_macd']:.4f}</code>\n"
                                         f"🔹 سقف دوم: <code>{latest_sig['macd']:.4f}</code>\n"
-                                        f"✅ <i>سقف اول بزرگتر است (ضعف مومنتوم صعودی)</i>\n\n"
+                                        f"✅ <i>سقف اول بزرگتر است</i>\n\n"
                                         f"💰 <b>بررسی شرط ۲ (قیمت):</b>\n"
                                         f"🔹 قیمت سقف اول: <code>{latest_sig['p1_price']:.5f}</code>\n"
                                         f"🔹 قیمت سقف دوم: <code>{latest_sig['price']:.5f}</code>\n"
                                         f"✅ <i>قیمت سقف دوم بالاتر است</i>"
                                     )
                                 broadcast(msg)
+                                print(f"Signal broadcasted for {key}")
 
-                    time.sleep(1) 
-            time.sleep(10) 
+                    time.sleep(0.5) # استراحت کوتاه بین درخواست‌ها
+            time.sleep(5) 
         except Exception as e:
-            time.sleep(15)
+            print(f"Error in scanner: {e}")
+            traceback.print_exc()
+            time.sleep(10)
 
 # ==========================================
 # ۶. اجرای اصلی
 # ==========================================
 if __name__ == "__main__":
+    print("Starting bot...")
+    
     t = threading.Thread(target=macd_scanner)
     t.daemon = True
     t.start()
     
     def run_bot_polling():
-        try:
-            bot.infinity_polling(timeout=20, long_polling_timeout=15)
-        except Exception as e:
-            pass
+        # حلقه برای جلوگیری از کرش کردن ربات در صورت خطای شبکه یا Conflict
+        while True:
+            try:
+                print("Starting Telegram polling...")
+                bot.infinity_polling(timeout=20, long_polling_timeout=15)
+            except Exception as e:
+                print(f"Polling Error (Retrying in 10s): {e}")
+                time.sleep(10)
     
     bot_thread = threading.Thread(target=run_bot_polling)
     bot_thread.daemon = True
     bot_thread.start()
     
+    # Flask در ترد اصلی اجرا می‌شود تا رندر پورت را بشناسد
     run_web()
