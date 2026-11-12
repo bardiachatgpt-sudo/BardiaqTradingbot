@@ -281,6 +281,7 @@ def extract_tv_messages(raw):
         if not chunk:
             continue
 
+        # Skip heartbeat chunks
         if chunk.startswith("~h~"):
             continue
 
@@ -336,7 +337,7 @@ def extract_ohlc_records(obj):
 
 
 # ============================================================
-# TRADINGVIEW CANDLE FETCHER
+# TRADINGVIEW CANDLE FETCHER  (FIXED)
 # ============================================================
 
 def fetch_tradingview_candles(
@@ -353,21 +354,23 @@ def fetch_tradingview_candles(
 
     try:
 
+        # ---------------------------------------------------------
+        # FIX 1: use proper `header=[...]` list format
+        # ---------------------------------------------------------
         ws = websocket.create_connection(
             "wss://data.tradingview.com/socket.io/websocket?from=chart%2F",
             header=[
                 "Origin: https://www.tradingview.com",
-                "User-Agent: Mozilla/5.0",
+                "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36",
             ],
-            timeout=10,
+            timeout=12,
             enable_multithread=True,
         )
 
         ws.settimeout(1)
 
         chart_session = "cs_" + uuid.uuid4().hex[:16]
-
-        _ = "qs_" + uuid.uuid4().hex[:16]
 
         tv_send(
             ws,
@@ -381,11 +384,13 @@ def fetch_tradingview_candles(
             [chart_session, ""],
         )
 
+        # ---------------------------------------------------------
+        # FIX 2: removed "session": "regular"
+        # ---------------------------------------------------------
         symbol_data = json.dumps(
             {
                 "symbol": symbol,
                 "adjustment": "splits",
-                "session": "regular",
             },
             separators=(",", ":"),
         )
@@ -442,7 +447,12 @@ def fetch_tradingview_candles(
             if isinstance(raw, bytes):
                 raw = raw.decode("utf-8", errors="ignore")
 
-            if raw.startswith("~h~"):
+            # ---------------------------------------------------------
+            # FIX 3 (CRITICAL): heartbeat handling.
+            # TradingView wraps heartbeats as ~m~4~m~~h~1
+            # The old check `raw.startswith("~h~")` never matched.
+            # ---------------------------------------------------------
+            if raw.startswith("~m~") and "~h~" in raw:
                 try:
                     ws.send(raw)
                 except Exception:
