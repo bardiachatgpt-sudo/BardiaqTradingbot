@@ -1,265 +1,373 @@
-from __future__ import annotations
-
 import os
 import re
 import json
 import time
+import uuid
 import logging
-import random
-import string
 import threading
-from datetime import datetime, timezone
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime, timezone, timedelta
 
+import numpy as np
 import pandas as pd
 import pytz
 import websocket
 import telebot
-
 from flask import Flask, jsonify
-
-try:
-    from dotenv import load_dotenv
-    load_dotenv()
-except ImportError:
-    pass
 
 
 # ============================================================
 # CONFIGURATION
 # ============================================================
 
-HOST = os.getenv("HOST", "0.0.0.0")
 PORT = int(os.getenv("PORT", "8080"))
+HOST = os.getenv("HOST", "0.0.0.0")
+
+BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", os.getenv("BOT_TOKEN", "")).strip()
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "").strip()
+
+SCAN_INTERVAL = int(os.getenv("SCAN_INTERVAL", "30"))
+TV_TIMEOUT = int(os.getenv("TV_TIMEOUT", "30"))
+TV_IDLE_TIMEOUT = float(os.getenv("TV_IDLE_TIMEOUT", "4"))
+
+STATE_FILE = os.getenv("STATE_FILE", "scanner_state.json")
+PRICE_MATCH_WINDOW = int(os.getenv("PRICE_MATCH_WINDOW", "4"))
 
 TEHRAN = pytz.timezone("Asia/Tehran")
 
-TIMEFRAME_CONFIG = {
-    "1": 1440,
-    "5": 150,
+SYMBOL = "XAUUSD"
+
+TIMEFRAMES = {
+    "M1": {
+        "interval": "1",
+        "bars": 1440,
+        "seconds": 60,
+    },
+    "M5": {
+        "interval": "5",
+        "bars": 150,
+        "seconds": 300,
+    },
 }
 
-SCAN_INTERVALS = {
-    "1": 60,
-    "5": 300,
-}
-
-PRICE_MATCH_WINDOW = int(
-    os.getenv("PRICE_MATCH_WINDOW", "4")
-)
-
-SYMBOLS = {
-    "XAUUSD": [
-        "OANDA:XAUUSD",
-        "FOREXCOM:XAUUSD",
-        "FX_IDC:XAUUSD",
-    ],
-    "EURUSD": [
-        "OANDA:EURUSD",
-        "FOREXCOM:EURUSD",
-        "FX:EURUSD",
-    ],
-    "GBPUSD": [
-        "OANDA:GBPUSD",
-        "FOREXCOM:GBPUSD",
-        "FX:GBPUSD",
-    ],
-    "USDJPY": [
-        "OANDA:USDJPY",
-        "FOREXCOM:USDJPY",
-        "FX:USDJPY",
-    ],
-    "USDCHF": [
-        "OANDA:USDCHF",
-        "FOREXCOM:USDCHF",
-        "FX:USDCHF",
-    ],
-    "USDCAD": [
-        "OANDA:USDCAD",
-        "FOREXCOM:USDCAD",
-        "FX:USDCAD",
-    ],
-    "AUDUSD": [
-        "OANDA:AUDUSD",
-        "FOREXCOM:AUDUSD",
-        "FX:AUDUSD",
-    ],
-    "NZDUSD": [
-        "OANDA:NZDUSD",
-        "FOREXCOM:NZDUSD",
-        "FX:NZDUSD",
-    ],
-}
-
-MACD_STRUCTURE = (48, 104, 36)
-MACD_READY = (12, 26, 9)
-MACD_FIRE = (3, 6, 2)
-
-
-# ============================================================
-# LOGGING
-# ============================================================
+TV_SOURCES = [
+    "OANDA:XAUUSD",
+    "FOREXCOM:XAUUSD",
+    "FX_IDC:XAUUSD",
+]
 
 logging.basicConfig(
-    level=logging.INFO,
+    level=os.getenv("LOG_LEVEL", "INFO").upper(),
     format="%(asctime)s %(levelname)s %(message)s",
 )
 
-log = logging.getLogger("MACD_ENGINE")
+log = logging.getLogger("macd-divergence-scanner")
+
+app = Flask(__name__)
+
+bot = telebot.TeleBot(BOT_TOKEN, threaded=True) if BOT_TOKEN else None
+
+state_lock = threading.RLock()
+
+subscribed_users = set()
+event_history = []
+seen_event_ids = set()
+
+source_locks = {}
+
+latest_data = {}
+latest_errors = {}
+
+scanner_started = False
+
+
+# ============================================================
+# STATE MANAGEMENT
+# ============================================================
+
+def load_state():
+    global subscribed_users
+    global event_history
+    global seen_event_ids
+
+    try:
+        if not os.path.exists(STATE_FILE):
+            return
+
+        with open(STATE_FILE, "r", encoding="utf-8") as file:
+            data = json.load(file)
+
+        subscribed_users = set(data.get("users", []))
+        event_history = data.get("events", [])
+
+        seen_event_ids = {
+            item.get("id")
+            for item in event_history
+            if item.get("id")
+        }
+
+    except Exception:
+        log.exception("State loading failed")
+
+
+def save_state():
+    try:
+        with state_lock:
+            payload = {
+                "users": list(subscribed_users),
+                "events": event_history[-1000:],
+            }
+
+            temporary = STATE_FILE + ".tmp"
+
+            with open(temporary, "w", encoding="utf-8") as file:
+                json.dump(
+                    payload,
+                    file,
+                    ensure_ascii=False,
+                    indent=2,
+                )
+
+            os.replace(temporary, STATE_FILE)
+
+    except Exception:
+        log.exception("State saving failed")
+
+
+load_state()
+
+
+# ============================================================
+# TIME AND PRICE FORMATTING
+# ============================================================
+
+def utc_now():
+    return datetime.now(timezone.utc)
+
+
+def to_tehran(value):
+    timestamp = pd.Timestamp(value)
+
+    if timestamp.tzinfo is None:
+        timestamp = timestamp.tz_localize("UTC")
+
+    return timestamp.tz_convert(TEHRAN)
+
+
+def format_time(value):
+    try:
+        return to_tehran(value).strftime("%Y-%m-%d %H:%M:%S")
+    except Exception:
+        return str(value)
+
+
+def format_price(value, symbol=SYMBOL):
+    digits = 2 if symbol.endswith("JPY") else 4
+    return f"{float(value):.{digits}f}"
 
 
 # ============================================================
 # TELEGRAM
 # ============================================================
 
-BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "").strip()
-CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "").strip()
+def send_message(message, chat_id=None):
+    if not bot:
+        log.info("ALERT: %s", message)
+        return
 
-bot = (
-    telebot.TeleBot(BOT_TOKEN)
-    if BOT_TOKEN and CHAT_ID
-    else None
-)
+    targets = []
+
+    if chat_id is not None:
+        targets.append(chat_id)
+    else:
+        if TELEGRAM_CHAT_ID:
+            targets.append(TELEGRAM_CHAT_ID)
+
+        with state_lock:
+            targets.extend(list(subscribed_users))
+
+    targets = list(dict.fromkeys(targets))
+
+    for target in targets:
+        try:
+            bot.send_message(
+                target,
+                message,
+                disable_web_page_preview=True,
+            )
+        except Exception:
+            log.exception("Telegram message failed")
 
 
-def send_alert(message: str):
-    if bot is None:
-        log.info("ALERT:\n%s", message)
+def broadcast(message):
+    send_message(message)
+
+
+if bot:
+
+    @bot.message_handler(commands=["start", "subscribe"])
+    def telegram_start(message):
+        with state_lock:
+            subscribed_users.add(message.chat.id)
+            save_state()
+
+        send_message(
+            "عضویت شما در اسکنر MACD فعال شد.\n"
+            "دستور /report برای گزارش وضعیت و "
+            "/status برای بررسی اتصال استفاده می‌شود.",
+            message.chat.id,
+        )
+
+    @bot.message_handler(commands=["stop", "unsubscribe"])
+    def telegram_stop(message):
+        with state_lock:
+            subscribed_users.discard(message.chat.id)
+            save_state()
+
+        send_message(
+            "ارسال هشدار برای این حساب متوقف شد.",
+            message.chat.id,
+        )
+
+    @bot.message_handler(commands=["report", "status"])
+    def telegram_report(message):
+        send_message(
+            build_report(),
+            message.chat.id,
+        )
+
+
+def telegram_polling():
+    if not bot:
+        log.warning("Telegram bot token is not configured.")
         return
 
     try:
-        bot.send_message(
-            CHAT_ID,
-            message,
-            disable_web_page_preview=True,
+        bot.infinity_polling(
+            skip_pending=True,
+            timeout=20,
+            long_polling_timeout=20,
         )
     except Exception:
-        log.exception("Telegram delivery failed")
+        log.exception("Telegram polling stopped")
 
 
 # ============================================================
-# PRICE FORMATTING
+# TRADINGVIEW MESSAGE PROTOCOL
 # ============================================================
-
-def format_price(symbol, price):
-    digits = 2 if symbol.endswith("JPY") else 4
-    return f"{float(price):.{digits}f}"
-
-
-def to_tehran(timestamp):
-    if timestamp.tzinfo is None:
-        timestamp = timestamp.tz_localize("UTC")
-
-    return timestamp.tz_convert(TEHRAN).strftime(
-        "%Y-%m-%d %H:%M:%S"
-    )
-
-
-# ============================================================
-# TRADINGVIEW WEBSOCKET
-# ============================================================
-
-TV_URL = (
-    "wss://data.tradingview.com/"
-    "socket.io/websocket?from=chart%2F"
-)
-
 
 def tv_send(ws, method, params):
     payload = json.dumps(
-        {"m": method, "p": params},
+        {
+            "m": method,
+            "p": params,
+        },
         separators=(",", ":"),
     )
 
-    ws.send(
-        f"~m~{len(payload)}~m~{payload}"
-    )
+    ws.send(f"~m~{len(payload)}~m~{payload}")
 
 
-def decode_tv_frames(raw):
-    messages = []
-    heartbeats = []
-
+def extract_tv_messages(raw):
     if not raw:
-        return messages, heartbeats
+        return []
 
-    if raw.startswith("~h~"):
-        heartbeats.append(raw)
-        return messages, heartbeats
+    messages = []
 
-    position = 0
+    chunks = re.split(r"~m~\d+~m~", raw)
 
-    while True:
-        start = raw.find("~m~", position)
+    for chunk in chunks:
+        chunk = chunk.strip()
 
-        if start < 0:
-            break
-
-        length_start = start + 3
-        separator = raw.find("~m~", length_start)
-
-        if separator < 0:
-            break
-
-        length_text = raw[length_start:separator]
-
-        if not length_text.isdigit():
-            position = length_start
+        if not chunk:
             continue
 
-        payload_start = separator + 3
-        payload_length = int(length_text)
-        payload_end = payload_start + payload_length
+        if chunk.startswith("~h~"):
+            continue
 
-        if payload_end > len(raw):
-            break
+        try:
+            messages.append(json.loads(chunk))
+        except Exception:
+            continue
 
-        payload = raw[payload_start:payload_end]
+    return messages
 
-        if payload.startswith("~h~"):
-            heartbeats.append(
-                raw[start:payload_end]
-            )
-        else:
+
+def extract_ohlc_records(obj):
+    records = []
+
+    if isinstance(obj, dict):
+
+        values = obj.get("v")
+
+        if isinstance(values, list) and len(values) >= 5:
+
             try:
-                messages.append(json.loads(payload))
-            except Exception:
+                timestamp = float(values[0])
+
+                if timestamp > 100000000:
+
+                    record = {
+                        "time": int(timestamp),
+                        "open": float(values[1]),
+                        "high": float(values[2]),
+                        "low": float(values[3]),
+                        "close": float(values[4]),
+                    }
+
+                    if all(
+                        np.isfinite(record[key])
+                        for key in ("open", "high", "low", "close")
+                    ):
+                        if record["high"] >= record["low"]:
+                            records.append(record)
+
+            except (TypeError, ValueError, OverflowError):
                 pass
 
-        position = payload_end
+        for value in obj.values():
+            records.extend(extract_ohlc_records(value))
 
-    return messages, heartbeats
+    elif isinstance(obj, list):
+
+        for item in obj:
+            records.extend(extract_ohlc_records(item))
+
+    return records
 
 
-def fetch_candles(
-    tv_symbol,
-    interval="1",
-    n_bars=1440,
-    timeout=20,
+# ============================================================
+# TRADINGVIEW CANDLE FETCHER
+# ============================================================
+
+def fetch_tradingview_candles(
+    symbol,
+    interval,
+    n_bars,
+    candle_seconds,
 ):
     ws = None
 
+    bars_by_time = {}
+
+    server_errors = []
+
     try:
+
         ws = websocket.create_connection(
-            TV_URL,
+            "wss://data.tradingview.com/socket.io/websocket?from=chart%2F",
             header=[
                 "Origin: https://www.tradingview.com",
                 "User-Agent: Mozilla/5.0",
             ],
-            timeout=12,
+            timeout=10,
             enable_multithread=True,
         )
 
-        chart_session = (
-            "cs_"
-            + "".join(
-                random.choices(
-                    string.ascii_lowercase
-                    + string.digits,
-                    k=12,
-                )
-            )
-        )
+        ws.settimeout(1)
+
+        chart_session = "cs_" + uuid.uuid4().hex[:16]
+
+        _ = "qs_" + uuid.uuid4().hex[:16]
 
         tv_send(
             ws,
@@ -273,10 +381,11 @@ def fetch_candles(
             [chart_session, ""],
         )
 
-        symbol_json = json.dumps(
+        symbol_data = json.dumps(
             {
-                "symbol": tv_symbol,
+                "symbol": symbol,
                 "adjustment": "splits",
+                "session": "regular",
             },
             separators=(",", ":"),
         )
@@ -286,8 +395,8 @@ def fetch_candles(
             "resolve_symbol",
             [
                 chart_session,
-                "sds_sym_1",
-                f"={symbol_json}",
+                "symbol_1",
+                "=" + symbol_data,
             ],
         )
 
@@ -296,219 +405,228 @@ def fetch_candles(
             "create_series",
             [
                 chart_session,
-                "sds_1",
+                "series_1",
                 "s1",
-                "sds_sym_1",
+                "symbol_1",
                 str(interval),
-                int(n_bars) + 1,
+                int(n_bars),
                 "",
             ],
         )
 
-        bars = {}
-        completed = False
-        started = time.monotonic()
+        start_time = time.time()
+        last_data_time = None
 
-        while time.monotonic() - started < timeout:
+        while time.time() - start_time < TV_TIMEOUT:
 
             try:
                 raw = ws.recv()
+
             except websocket.WebSocketTimeoutException:
+                if bars_by_time:
+                    if (
+                        last_data_time is not None
+                        and time.time() - last_data_time >= TV_IDLE_TIMEOUT
+                    ):
+                        break
+
                 continue
 
-            if not raw:
+            except Exception as exc:
+                server_errors.append(str(exc))
                 break
 
-            messages, heartbeats = decode_tv_frames(raw)
+            if not raw:
+                continue
 
-            for heartbeat in heartbeats:
-                ws.send(heartbeat)
+            if isinstance(raw, bytes):
+                raw = raw.decode("utf-8", errors="ignore")
+
+            if raw.startswith("~h~"):
+                try:
+                    ws.send(raw)
+                except Exception:
+                    pass
+                continue
+
+            messages = extract_tv_messages(raw)
 
             for msg in messages:
 
                 method = msg.get("m")
                 params = msg.get("p", [])
 
-                if method in ("timescale_update", "du"):
-
-                    if len(params) < 2:
-                        continue
-
-                    if not isinstance(params[1], dict):
-                        continue
-
-                    series = params[1].get(
-                        "sds_1",
-                        {},
-                    )
-
-                    for item in series.get("s", []):
-
-                        values = item.get("v", [])
-
-                        if len(values) < 5:
-                            continue
-
-                        try:
-                            timestamp = int(values[0])
-
-                            open_price = float(values[1])
-                            high_price = float(values[2])
-                            low_price = float(values[3])
-                            close_price = float(values[4])
-
-                            if not all(
-                                pd.notna(v)
-                                for v in (
-                                    open_price,
-                                    high_price,
-                                    low_price,
-                                    close_price,
-                                )
-                            ):
-                                continue
-
-                            if (
-                                high_price < low_price
-                                or high_price < max(
-                                    open_price,
-                                    close_price,
-                                )
-                                or low_price > min(
-                                    open_price,
-                                    close_price,
-                                )
-                            ):
-                                continue
-
-                            bars[timestamp] = (
-                                open_price,
-                                high_price,
-                                low_price,
-                                close_price,
-                            )
-
-                        except (ValueError, TypeError):
-                            continue
-
-                elif method == "series_completed":
-                    completed = True
-
-                elif method in (
+                if method in (
                     "symbol_error",
                     "series_error",
+                    "critical_error",
                 ):
-                    raise RuntimeError(
-                        str(params)[:200]
-                    )
+                    server_errors.append(str(params))
+                    continue
 
-            if completed:
-                break
+                if method in ("timescale_update", "du"):
 
-        if not bars:
-            raise RuntimeError("No market data received")
+                    found = []
 
-        if not completed:
-            raise RuntimeError(
-                "TradingView series did not complete"
+                    for param in params:
+                        found.extend(extract_ohlc_records(param))
+
+                    if found:
+                        for record in found:
+                            bars_by_time[record["time"]] = record
+
+                        last_data_time = time.time()
+
+                elif method == "series_completed":
+                    if bars_by_time:
+                        last_data_time = time.time()
+
+        if ws:
+            ws.close()
+            ws = None
+
+        if not bars_by_time:
+
+            error = (
+                "; ".join(server_errors)
+                if server_errors
+                else "TradingView returned no OHLC records"
             )
 
-        df = pd.DataFrame.from_dict(
-            bars,
-            orient="index",
-            columns=[
-                "open",
-                "high",
-                "low",
-                "close",
-            ],
-        )
+            return None, f"{symbol}: {error}"
 
-        df = df.sort_index()
+        df = pd.DataFrame(list(bars_by_time.values()))
 
-        df.index = pd.to_datetime(
-            df.index,
+        df = df.sort_values("time")
+
+        df["time"] = pd.to_datetime(
+            df["time"],
             unit="s",
             utc=True,
         )
 
-        df.index.name = "time"
-
-        # Remove only genuinely unfinished bars.
-        interval_seconds = int(interval) * 60
-
-        now_utc = pd.Timestamp.now(tz="UTC")
-
-        closed_mask = (
-            df.index
-            + pd.Timedelta(seconds=interval_seconds)
-            <= now_utc
+        df = df.drop_duplicates(
+            subset=["time"],
+            keep="last",
         )
 
-        df = df.loc[closed_mask]
+        df = df.set_index("time")
 
-        df = df.tail(int(n_bars))
+        df = df[
+            ["open", "high", "low", "close"]
+        ].astype(float)
 
-        if df.empty:
-            raise RuntimeError("No closed candles available")
+        now = pd.Timestamp.now(tz="UTC")
+
+        closed_until = now - pd.Timedelta(
+            seconds=candle_seconds
+        )
+
+        df = df[df.index <= closed_until]
+
+        df = df[
+            np.isfinite(df["open"])
+            & np.isfinite(df["high"])
+            & np.isfinite(df["low"])
+            & np.isfinite(df["close"])
+        ]
+
+        df = df[
+            (df["high"] >= df["low"])
+            & (df["high"] >= df["open"])
+            & (df["high"] >= df["close"])
+            & (df["low"] <= df["open"])
+            & (df["low"] <= df["close"])
+        ]
+
+        df = df.sort_index()
+
+        if len(df) > n_bars:
+            df = df.iloc[-n_bars:]
+
+        if len(df) < 150:
+            return None, (
+                f"{symbol}: only {len(df)} closed candles received; "
+                f"minimum required is 150"
+            )
 
         return df, None
 
     except Exception as exc:
 
-        return None, (
-            f"{tv_symbol}: {str(exc)[:120]}"
-        )
-
-    finally:
-
-        if ws is not None:
+        if ws:
             try:
                 ws.close()
             except Exception:
                 pass
 
+        return None, f"{symbol}: {type(exc).__name__}: {str(exc)[:200]}"
+
 
 # ============================================================
-# SYMBOL SOURCE MANAGER
+# SOURCE FAILOVER
 # ============================================================
 
-def get_closed_candles(
-    name,
-    interval,
-    n_bars,
-):
+def fetch_market_data(timeframe):
+    config = TIMEFRAMES[timeframe]
+
+    previous_source = source_locks.get(timeframe)
+
+    ordered_sources = []
+
+    if previous_source in TV_SOURCES:
+        ordered_sources.append(previous_source)
+
+    for source in TV_SOURCES:
+        if source not in ordered_sources:
+            ordered_sources.append(source)
+
     errors = []
 
-    for source in SYMBOLS[name]:
+    for source in ordered_sources:
 
-        df, error = fetch_candles(
+        frame, error = fetch_tradingview_candles(
+            symbol=source,
+            interval=config["interval"],
+            n_bars=config["bars"],
+            candle_seconds=config["seconds"],
+        )
+
+        if frame is not None:
+
+            source_changed = (
+                previous_source is not None
+                and previous_source != source
+            )
+
+            source_locks[timeframe] = source
+
+            if source_changed:
+                log.warning(
+                    "DATA SOURCE CHANGED: %s -> %s (%s)",
+                    previous_source,
+                    source,
+                    timeframe,
+                )
+
+            return frame, source, source_changed, None
+
+        errors.append(error or f"{source}: unknown error")
+
+        log.warning(
+            "TradingView source failed: %s | %s",
             source,
-            interval=interval,
-            n_bars=n_bars,
+            error,
         )
 
-        if df is not None and len(df) >= 150:
-
-            return df, source, None
-
-        errors.append(
-            error or f"{source}: insufficient data"
-        )
-
-    return None, None, " | ".join(errors)
+    return None, None, False, " | ".join(errors)
 
 
 # ============================================================
 # MACD HISTOGRAM
 # ============================================================
 
-def macd_histogram(
-    close,
-    fast,
-    slow,
-    signal,
-):
+def macd_histogram(close, fast, slow, signal):
 
     fast_ema = close.ewm(
         span=fast,
@@ -542,7 +660,7 @@ class Extreme:
     def __init__(
         self,
         index,
-        time,
+        timestamp,
         histogram,
         same_bar_price,
         window_price,
@@ -550,11 +668,11 @@ class Extreme:
     ):
 
         self.index = index
-        self.time = time
-        self.histogram = histogram
-        self.same_bar_price = same_bar_price
-        self.window_price = window_price
-        self.phase_extreme_price = phase_extreme_price
+        self.time = str(timestamp)
+        self.histogram = float(histogram)
+        self.same_bar_price = float(same_bar_price)
+        self.window_price = float(window_price)
+        self.phase_extreme_price = float(phase_extreme_price)
 
 
 class DivergenceEvent:
@@ -585,10 +703,7 @@ class DivergenceTracker:
 
     def __init__(self, price_window=4):
 
-        self.price_window = max(
-            0,
-            int(price_window),
-        )
+        self.price_window = max(0, int(price_window))
 
         self.reset_all()
 
@@ -608,37 +723,19 @@ class DivergenceTracker:
         self.previous_previous_hist = None
 
         self.last_event_key = None
-        self._last_processed_time = None
+        self.last_processed_time = None
 
-    def _price_extreme(
-        self,
-        df,
-        idx,
-        side,
-    ):
+    def price_extreme(self, df, idx, side):
 
-        left = max(
-            0,
-            idx - self.price_window,
-        )
+        left = max(0, idx - self.price_window)
+        right = min(len(df) - 1, idx + self.price_window)
 
-        right = min(
-            len(df) - 1,
-            idx + self.price_window,
-        )
-
-        segment = df.iloc[
-            left:right + 1
-        ]
-
+        segment = df.iloc[left:right + 1]
         row = df.iloc[idx]
 
         if side == "bull":
 
-            window_price = float(
-                segment["low"].min()
-            )
-
+            window_price = float(segment["low"].min())
             same_bar = float(row["low"])
 
             phase_price = (
@@ -649,10 +746,7 @@ class DivergenceTracker:
 
         else:
 
-            window_price = float(
-                segment["high"].max()
-            )
-
+            window_price = float(segment["high"].max())
             same_bar = float(row["high"])
 
             phase_price = (
@@ -662,13 +756,145 @@ class DivergenceTracker:
             )
 
         return Extreme(
-            index=idx,
-            time=str(df.index[idx]),
-            histogram=float(df.iloc[idx]["h"]),
-            same_bar_price=same_bar,
-            window_price=window_price,
-            phase_extreme_price=float(phase_price),
+            idx,
+            df.index[idx],
+            float(df.iloc[idx]["h"]),
+            same_bar,
+            window_price,
+            phase_price,
         )
+
+    def handle_bull_trough(self, df, idx):
+
+        h = float(df.iloc[idx]["h"])
+
+        if self.phase != "negative":
+            return None
+
+        candidate = self.price_extreme(df, idx, "bull")
+
+        if self.first is None:
+
+            self.first = candidate
+            self.middle_index = None
+            self.middle_histogram = None
+
+            return None
+
+        if abs(h) > abs(self.first.histogram):
+
+            self.first = candidate
+            self.middle_index = None
+            self.middle_histogram = None
+
+            return None
+
+        if (
+            self.middle_index is None
+            or self.middle_index <= self.first.index
+        ):
+            return None
+
+        if (
+            abs(h) < abs(self.first.histogram)
+            and candidate.window_price < self.first.window_price
+        ):
+
+            key = ("bull", self.first.index, idx)
+
+            if key == self.last_event_key:
+                return None
+
+            self.last_event_key = key
+
+            event = DivergenceEvent(
+                "bull",
+                self.first,
+                self.middle_index,
+                self.middle_histogram,
+                candidate,
+                (
+                    f"BULLISH DIVERGENCE | "
+                    f"H1={self.first.histogram:.6f}, "
+                    f"H2={h:.6f}, "
+                    f"Price1={self.first.window_price}, "
+                    f"Price2={candidate.window_price}"
+                ),
+            )
+
+            self.first = candidate
+            self.middle_index = None
+            self.middle_histogram = None
+
+            return event
+
+        return None
+
+    def handle_bear_peak(self, df, idx):
+
+        h = float(df.iloc[idx]["h"])
+
+        if self.phase != "positive":
+            return None
+
+        candidate = self.price_extreme(df, idx, "bear")
+
+        if self.first is None:
+
+            self.first = candidate
+            self.middle_index = None
+            self.middle_histogram = None
+
+            return None
+
+        if abs(h) > abs(self.first.histogram):
+
+            self.first = candidate
+            self.middle_index = None
+            self.middle_histogram = None
+
+            return None
+
+        if (
+            self.middle_index is None
+            or self.middle_index <= self.first.index
+        ):
+            return None
+
+        if (
+            abs(h) < abs(self.first.histogram)
+            and candidate.window_price > self.first.window_price
+        ):
+
+            key = ("bear", self.first.index, idx)
+
+            if key == self.last_event_key:
+                return None
+
+            self.last_event_key = key
+
+            event = DivergenceEvent(
+                "bear",
+                self.first,
+                self.middle_index,
+                self.middle_histogram,
+                candidate,
+                (
+                    f"BEARISH DIVERGENCE | "
+                    f"H1={self.first.histogram:.6f}, "
+                    f"H2={h:.6f}, "
+                    f"Price1={self.first.window_price}, "
+                    f"Price2={candidate.window_price}"
+                ),
+            )
+
+            self.first = candidate
+            self.middle_index = None
+            self.middle_histogram = None
+
+            return event
+
+        return None
 
     def update(self, df):
 
@@ -677,17 +903,15 @@ class DivergenceTracker:
         if len(df) < 3:
             return events
 
-        last_time = self._last_processed_time
-
-        if last_time is None:
+        if self.last_processed_time is None:
 
             start = 0
 
-        elif last_time in df.index:
+        elif self.last_processed_time in df.index:
 
-            start = (
-                int(df.index.get_loc(last_time)) + 1
-            )
+            start = int(
+                df.index.get_loc(self.last_processed_time)
+            ) + 1
 
         else:
 
@@ -697,19 +921,16 @@ class DivergenceTracker:
         for i in range(start, len(df)):
 
             h = float(df.iloc[i]["h"])
-
             low = float(df.iloc[i]["low"])
             high = float(df.iloc[i]["high"])
 
             self.phase_low = (
-                low
-                if self.phase_low is None
+                low if self.phase_low is None
                 else min(self.phase_low, low)
             )
 
             self.phase_high = (
-                high
-                if self.phase_high is None
+                high if self.phase_high is None
                 else max(self.phase_high, high)
             )
 
@@ -723,10 +944,7 @@ class DivergenceTracker:
 
                 self.phase = phase_now
 
-            elif (
-                phase_now != self.phase
-                and phase_now != "zero"
-            ):
+            elif phase_now != self.phase and phase_now != "zero":
 
                 self.phase = phase_now
 
@@ -737,7 +955,6 @@ class DivergenceTracker:
                 self.phase_low = low
                 self.phase_high = high
 
-            # Local extrema are confirmed by the next closed bar.
             if i >= 2:
 
                 h0 = float(df.iloc[i - 2]["h"])
@@ -758,7 +975,7 @@ class DivergenceTracker:
 
                 if is_trough:
 
-                    event = self._handle_bull_trough(
+                    event = self.handle_bull_trough(
                         df,
                         i - 1,
                     )
@@ -768,7 +985,7 @@ class DivergenceTracker:
 
                 if is_peak:
 
-                    event = self._handle_bear_peak(
+                    event = self.handle_bear_peak(
                         df,
                         i - 1,
                     )
@@ -776,230 +993,42 @@ class DivergenceTracker:
                     if event:
                         events.append(event)
 
-            # Dynamic middle point in negative phase.
             if (
                 self.phase == "negative"
                 and self.first is not None
+                and i > self.first.index
+                and h < 0
             ):
 
                 if (
-                    i > self.first.index
-                    and h < 0
+                    self.middle_histogram is None
+                    or h > self.middle_histogram
                 ):
 
-                    if (
-                        self.middle_histogram is None
-                        or h > self.middle_histogram
-                    ):
+                    self.middle_histogram = h
+                    self.middle_index = i
 
-                        self.middle_histogram = h
-                        self.middle_index = i
-
-            # Dynamic middle point in positive phase.
             if (
                 self.phase == "positive"
                 and self.first is not None
+                and i > self.first.index
+                and h > 0
             ):
 
                 if (
-                    i > self.first.index
-                    and h > 0
+                    self.middle_histogram is None
+                    or h < self.middle_histogram
                 ):
 
-                    if (
-                        self.middle_histogram is None
-                        or h < self.middle_histogram
-                    ):
+                    self.middle_histogram = h
+                    self.middle_index = i
 
-                        self.middle_histogram = h
-                        self.middle_index = i
-
-            self.previous_previous_hist = (
-                self.previous_hist
-            )
-
+            self.previous_previous_hist = self.previous_hist
             self.previous_hist = h
 
-        if len(df):
-            self._last_processed_time = df.index[-1]
+        self.last_processed_time = df.index[-1]
 
         return events
-
-    def _handle_bull_trough(
-        self,
-        df,
-        idx,
-    ):
-
-        h = float(df.iloc[idx]["h"])
-
-        if self.phase != "negative":
-            return None
-
-        candidate = self._price_extreme(
-            df,
-            idx,
-            "bull",
-        )
-
-        if self.first is None:
-
-            self.first = candidate
-
-            self.middle_index = None
-            self.middle_histogram = None
-
-            return None
-
-        # A deeper negative trough invalidates
-        # the previous reference and middle point.
-        if abs(h) > abs(self.first.histogram):
-
-            self.first = candidate
-
-            self.middle_index = None
-            self.middle_histogram = None
-
-            return None
-
-        if (
-            self.middle_index is None
-            or self.middle_index <= self.first.index
-        ):
-
-            return None
-
-        # Regular bullish divergence.
-        if (
-            abs(h) < abs(self.first.histogram)
-            and candidate.window_price
-            < self.first.window_price
-        ):
-
-            key = (
-                "bull",
-                self.first.time,
-                candidate.time,
-            )
-
-            if key == self.last_event_key:
-                return None
-
-            self.last_event_key = key
-
-            event = DivergenceEvent(
-                side="bull",
-                first=self.first,
-                middle_index=self.middle_index,
-                middle_histogram=float(
-                    self.middle_histogram
-                ),
-                second=candidate,
-                message=(
-                    "BULLISH DIVERGENCE\n"
-                    f"H1={self.first.histogram:.6f}\n"
-                    f"H2={h:.6f}\n"
-                    f"Price1={self.first.window_price}\n"
-                    f"Price2={candidate.window_price}"
-                ),
-            )
-
-            self.first = candidate
-
-            self.middle_index = None
-            self.middle_histogram = None
-
-            return event
-
-        return None
-
-    def _handle_bear_peak(
-        self,
-        df,
-        idx,
-    ):
-
-        h = float(df.iloc[idx]["h"])
-
-        if self.phase != "positive":
-            return None
-
-        candidate = self._price_extreme(
-            df,
-            idx,
-            "bear",
-        )
-
-        if self.first is None:
-
-            self.first = candidate
-
-            self.middle_index = None
-            self.middle_histogram = None
-
-            return None
-
-        # A stronger positive peak invalidates
-        # the previous reference and middle point.
-        if abs(h) > abs(self.first.histogram):
-
-            self.first = candidate
-
-            self.middle_index = None
-            self.middle_histogram = None
-
-            return None
-
-        if (
-            self.middle_index is None
-            or self.middle_index <= self.first.index
-        ):
-
-            return None
-
-        # Regular bearish divergence.
-        if (
-            abs(h) < abs(self.first.histogram)
-            and candidate.window_price
-            > self.first.window_price
-        ):
-
-            key = (
-                "bear",
-                self.first.time,
-                candidate.time,
-            )
-
-            if key == self.last_event_key:
-                return None
-
-            self.last_event_key = key
-
-            event = DivergenceEvent(
-                side="bear",
-                first=self.first,
-                middle_index=self.middle_index,
-                middle_histogram=float(
-                    self.middle_histogram
-                ),
-                second=candidate,
-                message=(
-                    "BEARISH DIVERGENCE\n"
-                    f"H1={self.first.histogram:.6f}\n"
-                    f"H2={h:.6f}\n"
-                    f"Price1={self.first.window_price}\n"
-                    f"Price2={candidate.window_price}"
-                ),
-            )
-
-            self.first = candidate
-
-            self.middle_index = None
-            self.middle_histogram = None
-
-            return event
-
-        return None
 
 
 # ============================================================
@@ -1010,7 +1039,7 @@ class StrategyEngine:
 
     def __init__(self):
 
-        self.divergence_trackers = {}
+        self.trackers = {}
 
         self.ready_state = {}
         self.fire_armed = {}
@@ -1018,449 +1047,523 @@ class StrategyEngine:
         self.last_bar_time = {}
         self.fire_history = {}
 
-        self.last_divergence_time = {}
+    def reset_key(self, key):
 
-        self.lock = threading.RLock()
+        self.trackers.pop(key, None)
+        self.ready_state.pop(key, None)
+        self.fire_armed.pop(key, None)
+        self.last_bar_time.pop(key, None)
+        self.fire_history.pop(key, None)
 
-    def on_candles(
-        self,
-        symbol,
-        timeframe,
-        candles,
-    ):
+    def process(self, symbol, timeframe, candles):
 
-        with self.lock:
+        key = (symbol, timeframe)
 
-            df = candles.copy()
+        df = candles.copy()
 
-            if "time" in df.columns:
-                df = df.set_index("time")
+        df = df.sort_index()
 
-            required = {
-                "open",
-                "high",
-                "low",
-                "close",
-            }
+        if len(df) < 150:
+            return []
 
-            missing = required.difference(df.columns)
+        h1 = macd_histogram(
+            df["close"],
+            48,
+            104,
+            36,
+        )
 
-            if missing:
-                raise ValueError(
-                    f"Missing OHLC columns: {sorted(missing)}"
-                )
+        h2 = macd_histogram(
+            df["close"],
+            12,
+            26,
+            9,
+        )
 
-            if "closed" in df.columns:
-                df = df[df["closed"].astype(bool)]
+        h3 = macd_histogram(
+            df["close"],
+            3,
+            6,
+            2,
+        )
 
-            df = df.sort_index()
+        work = df.copy()
+        work["h"] = h1
 
-            df = df[
-                ["open", "high", "low", "close"]
-            ].astype(float)
+        tracker = self.trackers.setdefault(
+            key,
+            DivergenceTracker(PRICE_MATCH_WINDOW),
+        )
 
-            if len(df) < 150:
-                return []
+        emitted = []
 
-            key = (symbol, timeframe)
+        valid_work = work.dropna(subset=["h"])
 
-            h1 = macd_histogram(
-                df["close"],
-                *MACD_STRUCTURE,
-            )
+        for event in tracker.update(valid_work):
 
-            h2 = macd_histogram(
-                df["close"],
-                *MACD_READY,
-            )
-
-            h3 = macd_histogram(
-                df["close"],
-                *MACD_FIRE,
-            )
-
-            work = df.copy()
-            work["h"] = h1
-
-            tracker = self.divergence_trackers.setdefault(
-                key,
-                DivergenceTracker(
-                    price_window=PRICE_MATCH_WINDOW
+            emitted.append({
+                "type": (
+                    "DIVERGENCE_BULL"
+                    if event.side == "bull"
+                    else "DIVERGENCE_BEAR"
                 ),
-            )
+                "time": event.second.time,
+                "message": event.message,
+            })
 
-            emitted = []
+        aligned = pd.DataFrame({
+            "h2": h2,
+            "h3": h3,
+        }).dropna()
 
-            for event in tracker.update(
-                work.dropna(subset=["h"])
-            ):
-
-                self.last_divergence_time[key] = (
-                    event.second.time
-                )
-
-                message = (
-                    f"{symbol} {timeframe}\n"
-                    f"{event.message}\n"
-                    f"Time: {to_tehran(event.second_time) if hasattr(event, 'second_time') else to_tehran(pd.Timestamp(event.second.time))}"
-                )
-
-                send_alert(message)
-                emitted.append(message)
-
-            aligned = pd.DataFrame(
-                {
-                    "h2": h2,
-                    "h3": h3,
-                }
-            ).dropna()
-
-            if len(aligned) < 3:
-                return emitted
-
-            last_time = self.last_bar_time.get(key)
-
-            if last_time is None:
-
-                new_rows = aligned.iloc[-2:]
-
-            elif last_time in aligned.index:
-
-                new_rows = aligned.loc[
-                    aligned.index > last_time
-                ]
-
-            else:
-
-                new_rows = aligned.iloc[-2:]
-
-            history = self.fire_history.setdefault(
-                key,
-                [],
-            )
-
-            previous_h2 = None
-
-            for timestamp, row in new_rows.iterrows():
-
-                now2 = float(row["h2"])
-                now3 = float(row["h3"])
-
-                if previous_h2 is None:
-
-                    pos = aligned.index.get_loc(timestamp)
-
-                    if pos > 0:
-
-                        previous_h2 = float(
-                            aligned.iloc[pos - 1]["h2"]
-                        )
-
-                # READY:
-                # MACD(12,26,9) crosses from negative to positive.
-                if (
-                    previous_h2 is not None
-                    and previous_h2 <= 0 < now2
-                ):
-
-                    if not self.ready_state.get(key, False):
-
-                        self.ready_state[key] = True
-                        self.fire_armed[key] = False
-
-                        history.clear()
-
-                        message = (
-                            f"{symbol} {timeframe}\n"
-                            "READY\n"
-                            "MACD(12,26,9) histogram "
-                            "crossed above zero."
-                        )
-
-                        send_alert(message)
-                        emitted.append(message)
-
-                previous_h2 = now2
-
-                # FIRE:
-                # After READY, MACD(3,6,2) enters
-                # negative phase and forms its first trough.
-                if self.ready_state.get(key, False):
-
-                    if (
-                        len(history) >= 1
-                        and history[-1] >= 0 > now3
-                    ):
-
-                        self.fire_armed[key] = True
-
-                        history[:] = [now3]
-
-                    elif self.fire_armed.get(key, False):
-
-                        if len(history) >= 2:
-
-                            older, previous = (
-                                history[-2],
-                                history[-1],
-                            )
-
-                            if (
-                                previous < 0
-                                and previous <= older
-                                and previous < now3
-                            ):
-
-                                message = (
-                                    f"{symbol} {timeframe}\n"
-                                    "FIRE\n"
-                                    "First confirmed negative "
-                                    "MACD(3,6,2) histogram extremum."
-                                )
-
-                                send_alert(message)
-                                emitted.append(message)
-
-                                self.ready_state[key] = False
-                                self.fire_armed[key] = False
-
-                                history.clear()
-
-                        history.append(now3)
-                        history[:] = history[-2:]
-
-                    else:
-
-                        history.append(now3)
-                        history[:] = history[-2:]
-
-                self.last_bar_time[key] = timestamp
-
+        if len(aligned) < 3:
             return emitted
 
+        last_time = self.last_bar_time.get(key)
 
-# ============================================================
-# GLOBAL ENGINE
-# ============================================================
+        if last_time is None:
+
+            new_rows = aligned.iloc[-2:]
+
+        elif last_time in aligned.index:
+
+            new_rows = aligned.loc[
+                aligned.index > last_time
+            ]
+
+        else:
+
+            new_rows = aligned.iloc[-2:]
+
+        history = self.fire_history.setdefault(key, [])
+
+        previous_h2 = None
+
+        for timestamp, row in new_rows.iterrows():
+
+            now2 = float(row["h2"])
+            now3 = float(row["h3"])
+
+            if previous_h2 is None:
+
+                pos = aligned.index.get_loc(timestamp)
+
+                if pos > 0:
+                    previous_h2 = float(
+                        aligned.iloc[pos - 1]["h2"]
+                    )
+
+            # READY: negative to positive histogram crossing.
+
+            if (
+                previous_h2 is not None
+                and previous_h2 <= 0 < now2
+            ):
+
+                if not self.ready_state.get(key, False):
+
+                    self.ready_state[key] = True
+                    self.fire_armed[key] = False
+
+                    history.clear()
+
+                    emitted.append({
+                        "type": "READY",
+                        "time": timestamp.isoformat(),
+                        "message": (
+                            "READY: MACD(12,26,9) "
+                            "histogram crossed above zero."
+                        ),
+                    })
+
+            previous_h2 = now2
+
+            # FIRE: first confirmed negative histogram trough
+            # after READY and after entering negative phase.
+
+            if self.ready_state.get(key, False):
+
+                if (
+                    len(history) >= 1
+                    and history[-1] >= 0
+                    and now3 < 0
+                ):
+
+                    self.fire_armed[key] = True
+                    history[:] = [now3]
+
+                elif self.fire_armed.get(key, False):
+
+                    if len(history) >= 2:
+
+                        older = history[-2]
+                        previous = history[-1]
+
+                        if (
+                            previous < 0
+                            and previous <= older
+                            and previous < now3
+                        ):
+
+                            emitted.append({
+                                "type": "FIRE",
+                                "time": timestamp.isoformat(),
+                                "message": (
+                                    "FIRE: first confirmed negative "
+                                    "MACD(3,6,2) histogram extremum."
+                                ),
+                            })
+
+                            self.ready_state[key] = False
+                            self.fire_armed[key] = False
+
+                            history.clear()
+
+                    history.append(now3)
+                    history[:] = history[-2:]
+
+                else:
+
+                    history.append(now3)
+                    history[:] = history[-2:]
+
+            self.last_bar_time[key] = timestamp
+
+        return emitted
+
 
 engine = StrategyEngine()
 
 
 # ============================================================
-# MARKET SCANNER
+# EVENT MANAGEMENT
 # ============================================================
 
-def scan_symbol(name, interval):
+def register_event(symbol, timeframe, event):
 
-    n_bars = TIMEFRAME_CONFIG[interval]
+    event_time = pd.Timestamp(event["time"])
 
-    df, source, error = get_closed_candles(
-        name,
-        interval,
-        n_bars,
+    if event_time.tzinfo is None:
+        event_time = event_time.tz_localize("UTC")
+
+    event_time = event_time.tz_convert("UTC")
+
+    event_id = (
+        f"{symbol}|{timeframe}|"
+        f"{event['type']}|{event_time.isoformat()}"
     )
 
-    if df is None:
+    with state_lock:
 
-        log.warning(
-            "%s M%s failed: %s",
-            name,
-            interval,
+        if event_id in seen_event_ids:
+            return
+
+        seen_event_ids.add(event_id)
+
+        item = {
+            "id": event_id,
+            "symbol": symbol,
+            "timeframe": timeframe,
+            "type": event["type"],
+            "time": event_time.isoformat(),
+            "message": event["message"],
+        }
+
+        event_history.append(item)
+
+        event_history[:] = event_history[-1000:]
+
+        save_state()
+
+    alert = (
+        f"🔔 {symbol} | {timeframe}\n"
+        f"{event['type']}\n\n"
+        f"{event['message']}\n\n"
+        f"زمان تهران: {format_time(event_time)}"
+    )
+
+    broadcast(alert)
+
+    log.info("EVENT: %s", alert)
+
+
+def recent_events(hours=24):
+
+    cutoff = utc_now() - timedelta(hours=hours)
+
+    with state_lock:
+        events = list(event_history)
+
+    result = []
+
+    for item in events:
+
+        try:
+            timestamp = pd.Timestamp(item["time"])
+
+            if timestamp.tzinfo is None:
+                timestamp = timestamp.tz_localize("UTC")
+
+            if timestamp.to_pydatetime() >= cutoff:
+                result.append(item)
+
+        except Exception:
+            continue
+
+    return result
+
+
+# ============================================================
+# REPORT
+# ============================================================
+
+def build_report():
+
+    events = recent_events(24)
+
+    lines = [
+        "MACD DIVERGENCE SCANNER",
+        "Period: Last 24 Hours",
+        "",
+    ]
+
+    for timeframe in TIMEFRAMES:
+
+        divergence_count = sum(
+            1 for event in events
+            if event["timeframe"] == timeframe
+            and event["type"] in (
+                "DIVERGENCE_BULL",
+                "DIVERGENCE_BEAR",
+            )
+        )
+
+        ready_count = sum(
+            1 for event in events
+            if event["timeframe"] == timeframe
+            and event["type"] == "READY"
+        )
+
+        fire_count = sum(
+            1 for event in events
+            if event["timeframe"] == timeframe
+            and event["type"] == "FIRE"
+        )
+
+        lines.extend([
+            f"Symbol Report: {SYMBOL}",
+            f"Timeframe: {timeframe}",
+            f"Source: {source_locks.get(timeframe, 'Not connected')}",
+            f"Candles: {latest_data.get(timeframe, {}).get('count', 0)}",
+            f"DIVERGENCE: {divergence_count}",
+            f"READY: {ready_count}",
+            f"FIRE: {fire_count}",
+            "",
+        ])
+
+        error = latest_errors.get(timeframe)
+
+        if error:
+            lines.append(f"DATA ERROR: {error}")
+            lines.append("")
+
+    lines.append("Recent Events:")
+
+    if not events:
+
+        lines.append("No recorded events in the last 24 hours.")
+
+    else:
+
+        for event in sorted(
+            events,
+            key=lambda item: item["time"],
+            reverse=True,
+        )[:30]:
+
+            lines.append(
+                f"{event['timeframe']} | "
+                f"{event['type']} | "
+                f"{format_time(event['time'])}"
+            )
+
+            lines.append(event["message"])
+            lines.append("")
+
+    return "\n".join(lines)
+
+
+# ============================================================
+# SCANNER
+# ============================================================
+
+def scan_timeframe(timeframe):
+
+    log.info("Fetching %s candles", timeframe)
+
+    frame, source, source_changed, error = fetch_market_data(
+        timeframe
+    )
+
+    if frame is None:
+
+        latest_errors[timeframe] = error
+
+        log.error(
+            "No candles returned for %s: %s",
+            timeframe,
             error,
         )
 
-        return None
+        return
+
+    latest_errors[timeframe] = None
+
+    latest_data[timeframe] = {
+        "count": len(frame),
+        "last_time": frame.index[-1].isoformat(),
+        "last_close": float(frame["close"].iloc[-1]),
+    }
+
+    if source_changed:
+
+        engine.reset_key((SYMBOL, timeframe))
+
+        log.warning(
+            "Strategy state reset because data source changed: %s",
+            timeframe,
+        )
 
     log.info(
-        "%s M%s source=%s bars=%d last=%s",
-        name,
-        interval,
+        "DATA OK | %s | %s | candles=%s | last_close=%s",
+        timeframe,
         source,
-        len(df),
-        to_tehran(df.index[-1]),
+        len(frame),
+        format_price(frame["close"].iloc[-1]),
     )
 
-    return name, df, source
-
-
-def scan_timeframe(interval):
-
-    log.info(
-        "Starting M%s scan",
-        interval,
+    events = engine.process(
+        SYMBOL,
+        timeframe,
+        frame,
     )
 
-    results = []
+    for event in events:
+        register_event(
+            SYMBOL,
+            timeframe,
+            event,
+        )
 
-    with ThreadPoolExecutor(
-        max_workers=4
-    ) as executor:
-
-        futures = {
-            executor.submit(
-                scan_symbol,
-                name,
-                interval,
-            ): name
-            for name in SYMBOLS
-        }
-
-        for future in as_completed(futures):
-
-            try:
-
-                result = future.result()
-
-                if result is not None:
-                    results.append(result)
-
-            except Exception:
-
-                log.exception(
-                    "Symbol scanning error"
-                )
-
-    for name, df, source in results:
-
-        try:
-
-            events = engine.on_candles(
-                symbol=name,
-                timeframe=f"M{interval}",
-                candles=df,
-            )
-
-            if events:
-
-                log.info(
-                    "%s M%s emitted %d alerts",
-                    name,
-                    interval,
-                    len(events),
-                )
-
-        except Exception:
-
-            log.exception(
-                "Strategy processing failed: %s M%s",
-                name,
-                interval,
-            )
-
-    log.info(
-        "Completed M%s scan: %d/%d symbols",
-        interval,
-        len(results),
-        len(SYMBOLS),
-    )
-
-
-# ============================================================
-# BACKGROUND SCANNER
-# ============================================================
 
 def scanner_loop():
 
-    next_scan = {
-        "1": 0,
-        "5": 0,
-    }
+    global scanner_started
+
+    log.info("MACD scanner started")
+
+    scanner_started = True
 
     while True:
 
-        try:
+        cycle_start = time.time()
 
-            now = time.monotonic()
+        for timeframe in TIMEFRAMES:
 
-            for interval in ("1", "5"):
+            try:
+                scan_timeframe(timeframe)
 
-                if now >= next_scan[interval]:
+            except Exception:
+                log.exception(
+                    "Scanner error on timeframe %s",
+                    timeframe,
+                )
 
-                    scan_timeframe(interval)
+        log.info("\n%s", build_report())
 
-                    next_scan[interval] = (
-                        time.monotonic()
-                        + SCAN_INTERVALS[interval]
-                    )
+        elapsed = time.time() - cycle_start
 
-            time.sleep(1)
+        sleep_time = max(
+            1,
+            SCAN_INTERVAL - elapsed,
+        )
 
-        except Exception:
-
-            log.exception(
-                "Scanner loop failure"
-            )
-
-            time.sleep(10)
+        time.sleep(sleep_time)
 
 
 # ============================================================
-# FLASK SERVER
+# FLASK ENDPOINTS
 # ============================================================
-
-app = Flask(__name__)
-
 
 @app.get("/")
 def index():
 
-    return jsonify(
-        message="MACD Divergence Engine is running",
-        service="TradingView WebSocket Scanner",
-    )
+    return jsonify({
+        "service": "MACD Divergence Scanner",
+        "status": "running",
+        "timeframes": list(TIMEFRAMES.keys()),
+    })
 
 
 @app.get("/health")
 def health():
 
+    return jsonify({
+        "status": "ok",
+        "scanner_started": scanner_started,
+        "sources": source_locks,
+        "latest_data": latest_data,
+        "errors": latest_errors,
+    })
+
+
+@app.get("/report")
+def report():
+
+    return app.response_class(
+        build_report(),
+        mimetype="text/plain",
+    )
+
+
+@app.get("/events")
+def events_endpoint():
+
     return jsonify(
-        status="ok",
-        service="macd-divergence-engine",
-        strategy="histogram-only",
-        macd={
-            "structure": MACD_STRUCTURE,
-            "ready": MACD_READY,
-            "fire": MACD_FIRE,
-        },
-        timeframes={
-            "M1": 1440,
-            "M5": 150,
-        },
-        symbols=list(SYMBOLS.keys()),
-        telegram=bot is not None,
+        recent_events(24)
     )
 
 
 # ============================================================
-# MAIN
+# STARTUP
 # ============================================================
 
-if __name__ == "__main__":
-
-    log.info(
-        "Starting MACD Divergence Engine"
-    )
-
-    log.info(
-        "Symbols: %s",
-        ", ".join(SYMBOLS.keys()),
-    )
-
-    log.info(
-        "M1 history: 1440 candles"
-    )
-
-    log.info(
-        "M5 history: 150 candles"
-    )
+def start_background_threads():
 
     scanner_thread = threading.Thread(
         target=scanner_loop,
         daemon=True,
-        name="MarketScanner",
+        name="market-scanner",
     )
 
     scanner_thread.start()
+
+    if bot:
+
+        telegram_thread = threading.Thread(
+            target=telegram_polling,
+            daemon=True,
+            name="telegram-polling",
+        )
+
+        telegram_thread.start()
+
+
+if __name__ == "__main__":
+
+    log.info("Starting MACD Divergence Scanner")
+
+    start_background_threads()
 
     app.run(
         host=HOST,
