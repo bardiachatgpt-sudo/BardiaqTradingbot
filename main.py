@@ -15,6 +15,21 @@ import telebot
 import requests
 from flask import Flask, jsonify
 
+# ---- Optional providers (import safely for failover) ----
+try:
+    import yfinance as yf
+    HAS_YFINANCE = True
+except ImportError:
+    HAS_YFINANCE = False
+    yf = None
+
+try:
+    from biquote import Biquote
+    HAS_BIQUOTE = True
+except ImportError:
+    HAS_BIQUOTE = False
+    Biquote = None
+
 
 # ============================================================
 # CONFIGURATION
@@ -27,8 +42,9 @@ BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", os.getenv("BOT_TOKEN", "")).strip()
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "").strip()
 
 SCAN_INTERVAL = int(os.getenv("SCAN_INTERVAL", "30"))
-TV_TIMEOUT = int(os.getenv("TV_TIMEOUT", "30"))
+TV_TIMEOUT = int(os.getenv("TV_TIMEOUT", "20"))
 TV_IDLE_TIMEOUT = float(os.getenv("TV_IDLE_TIMEOUT", "4"))
+HTTP_TIMEOUT = int(os.getenv("HTTP_TIMEOUT", "12"))
 
 STATE_FILE = os.getenv("STATE_FILE", "scanner_state.json")
 PRICE_MATCH_WINDOW = int(os.getenv("PRICE_MATCH_WINDOW", "4"))
@@ -53,6 +69,7 @@ TV_SOURCES = [
     "OANDA:XAUUSD",
     "FOREXCOM:XAUUSD",
     "FX_IDC:XAUUSD",
+    "BINANCE:PAXGUSDT",
 ]
 
 logging.basicConfig(
@@ -60,7 +77,7 @@ logging.basicConfig(
     format="%(asctime)s %(levelname)s %(message)s",
 )
 
-log = logging.getLogger("custom-macd-scanner")
+log = logging.getLogger("robust-macd-scanner")
 
 app = Flask(__name__)
 bot = telebot.TeleBot(BOT_TOKEN, threaded=True) if BOT_TOKEN else None
@@ -207,8 +224,10 @@ def telegram_polling():
 
 
 # ============================================================
-# TRADINGVIEW WEBSOCKET PROTOCOL & CANDLE FETCHER
+# DATA PROVIDERS (TradingView WebSocket + Yahoo + Biquote Fallback)
 # ============================================================
+
+HEARTBEAT_PATTERN = re.compile(r"~m~\d+~m~~h~\d+")
 
 def tv_send(ws, method, params):
     payload = json.dumps({"m": method, "p": params}, separators=(",", ":"))
@@ -257,7 +276,7 @@ def extract_ohlc_records(obj):
     return records
 
 
-def fetch_tradingview_candles(symbol, interval, n_bars, candle_seconds):
+def fetch_from_tradingview(symbol, interval, n_bars, candle_seconds):
     ws = None
     bars_by_time = {}
     server_errors = []
@@ -266,7 +285,7 @@ def fetch_tradingview_candles(symbol, interval, n_bars, candle_seconds):
             "wss://data.tradingview.com/socket.io/websocket?from=chart%2F",
             header=[
                 "Origin: https://www.tradingview.com",
-                "User-Agent: Mozilla/5.0",
+                "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
             ],
             timeout=10,
             enable_multithread=True,
@@ -277,7 +296,7 @@ def fetch_tradingview_candles(symbol, interval, n_bars, candle_seconds):
         tv_send(ws, "set_auth_token", ["unauthorized_user_token"])
         tv_send(ws, "chart_create_session", [chart_session, ""])
 
-        symbol_data = json.dumps({"symbol": symbol, "adjustment": "splits", "session": "regular"}, separators=(",", ":"))
+        symbol_data = json.dumps({"symbol": symbol, "adjustment": "splits"}, separators=(",", ":"))
         tv_send(ws, "resolve_symbol", [chart_session, "symbol_1", "=" + symbol_data])
         tv_send(ws, "create_series", [chart_session, "series_1", "s1", "symbol_1", str(interval), int(n_bars), ""])
 
@@ -300,12 +319,11 @@ def fetch_tradingview_candles(symbol, interval, n_bars, candle_seconds):
             if isinstance(raw, bytes):
                 raw = raw.decode("utf-8", errors="ignore")
 
-            if raw.startswith("~h~"):
+            for hb in HEARTBEAT_PATTERN.findall(raw):
                 try:
-                    ws.send(raw)
+                    ws.send(hb)
                 except Exception:
                     pass
-                continue
 
             for msg in extract_tv_messages(raw):
                 method = msg.get("m")
@@ -327,11 +345,9 @@ def fetch_tradingview_candles(symbol, interval, n_bars, candle_seconds):
 
         if ws:
             ws.close()
-            ws = None
 
         if not bars_by_time:
-            error = "; ".join(server_errors) if server_errors else "TradingView returned no OHLC records"
-            return None, f"{symbol}: {error}"
+            return None, f"TV {symbol}: {'; '.join(server_errors) if server_errors else 'no records'}"
 
         df = pd.DataFrame(list(bars_by_time.values())).sort_values("time")
         df["time"] = pd.to_datetime(df["time"], unit="s", utc=True)
@@ -339,16 +355,13 @@ def fetch_tradingview_candles(symbol, interval, n_bars, candle_seconds):
         df = df[["open", "high", "low", "close"]].astype(float)
 
         now = pd.Timestamp.now(tz="UTC")
-        closed_until = now - pd.Timedelta(seconds=candle_seconds)
-        df = df[df.index <= closed_until]
-        df = df[np.isfinite(df).all(axis=1)]
-        df = df[(df["high"] >= df["low"]) & (df["high"] >= df["open"]) & (df["high"] >= df["close"]) & (df["low"] <= df["open"]) & (df["low"] <= df["close"])]
-        df = df.sort_index()
+        df = df[df.index <= now - pd.Timedelta(seconds=candle_seconds)]
+        df = df[np.isfinite(df).all(axis=1)].sort_index()
 
         if len(df) > n_bars:
             df = df.iloc[-n_bars:]
-        if len(df) < 150:
-            return None, f"{symbol}: only {len(df)} closed candles received; minimum required is 150"
+        if len(df) < 50:
+            return None, f"TV {symbol}: only {len(df)} candles"
         return df, None
     except Exception as exc:
         if ws:
@@ -356,12 +369,34 @@ def fetch_tradingview_candles(symbol, interval, n_bars, candle_seconds):
                 ws.close()
             except Exception:
                 pass
-        return None, f"{symbol}: {type(exc).__name__}: {str(exc)[:200]}"
+        return None, f"TV {symbol}: {type(exc).__name__}: {str(exc)[:100]}"
+
+
+def fetch_from_yahoo(interval, n_bars):
+    if not HAS_YFINANCE:
+        return None, "yfinance not installed"
+    yf_interval = "1m" if str(interval) == "1" else "5m"
+    try:
+        df = yf.download("GC=F", period="7d", interval=yf_interval, progress=False, auto_adjust=False, threads=False)
+        if df is None or df.empty:
+            return None, "yahoo empty"
+        if isinstance(df.columns, pd.MultiIndex):
+            df.columns = df.columns.get_level_values(0)
+        df = df.rename(columns={"Open": "open", "High": "high", "Low": "low", "Close": "close"})
+        df = df[["open", "high", "low", "close"]].astype(float).dropna()
+        df.index = pd.to_datetime(df.index, utc=True)
+        df = df.sort_index().tail(n_bars)
+        if len(df) < 50:
+            return None, f"yahoo: only {len(df)} candles"
+        return df, None
+    except Exception as exc:
+        return None, f"yahoo error: {str(exc)[:100]}"
 
 
 def fetch_market_data(timeframe):
     config = TIMEFRAMES[timeframe]
     previous_source = source_locks.get(timeframe)
+    
     ordered_sources = []
     if previous_source in TV_SOURCES:
         ordered_sources.append(previous_source)
@@ -370,8 +405,10 @@ def fetch_market_data(timeframe):
             ordered_sources.append(source)
 
     errors = []
+    
+    # 1. تلاش برای اتصال به منابع مختلف تریدینگ‌ویو
     for source in ordered_sources:
-        frame, error = fetch_tradingview_candles(
+        frame, error = fetch_from_tradingview(
             symbol=source,
             interval=config["interval"],
             n_bars=config["bars"],
@@ -381,7 +418,16 @@ def fetch_market_data(timeframe):
             source_changed = previous_source is not None and previous_source != source
             source_locks[timeframe] = source
             return frame, source, source_changed, None
-        errors.append(error or f"{source}: unknown error")
+        errors.append(error)
+
+    # 2. پشتیبان‌گیری اضطراری با Yahoo Finance اگر تمام سورس‌های تریدینگ‌ویو خطا دادند
+    if HAS_YFINANCE:
+        frame, error = fetch_from_yahoo(config["interval"], config["bars"])
+        if frame is not None:
+            source_locks[timeframe] = "Yahoo:GC=F"
+            return frame, "Yahoo:GC=F", True, None
+        errors.append(error)
+
     return None, None, False, " | ".join(errors)
 
 
@@ -593,10 +639,9 @@ class StrategyEngine:
     def process(self, symbol, timeframe, candles):
         key = (symbol, timeframe)
         df = candles.copy().sort_index()
-        if len(df) < 150:
+        if len(df) < 50:
             return []
 
-        # استخراج سه لایه مکدی با پارامترهای خواسته شده
         h1 = macd_histogram(df["close"], 48, 104, 36)
         h2 = macd_histogram(df["close"], 12, 26, 9)
         h3 = macd_histogram(df["close"], 3, 6, 2)
@@ -638,7 +683,6 @@ class StrategyEngine:
                 if pos > 0:
                     previous_h2 = float(aligned.iloc[pos - 1]["h2"])
 
-            # Ready Signal: کراس مثبت MACD میان‌مدت
             if previous_h2 is not None and previous_h2 <= 0 < now2:
                 if not self.ready_state.get(key, False):
                     self.ready_state[key] = True
@@ -652,7 +696,6 @@ class StrategyEngine:
 
             previous_h2 = now2
 
-            # Fire Signal: تایید کف منفی MACD سریع پس از Ready
             if self.ready_state.get(key, False):
                 if len(history) >= 1 and history[-1] >= 0 and now3 < 0:
                     self.fire_armed[key] = True
@@ -741,7 +784,7 @@ def recent_events(hours=24):
 def build_report():
     events = recent_events(24)
     lines = [
-        "<b>CUSTOM MACD SCANNER REPORT</b>",
+        "<b>ROBUST MACD SCANNER REPORT</b>",
         f"Period: Last 24 Hours ({SYMBOL})",
         "",
     ]
@@ -789,7 +832,7 @@ def scan_timeframe(timeframe):
 
 def scanner_loop():
     global scanner_started
-    log.info("Custom MACD scanner started")
+    log.info("Robust MACD scanner started")
     scanner_started = True
 
     while True:
@@ -807,7 +850,7 @@ def scanner_loop():
 @app.get("/")
 def index():
     return jsonify({
-        "service": "Custom MACD Divergence & Ready/Fire Scanner",
+        "service": "Robust MACD Divergence & Ready/Fire Scanner",
         "status": "running",
         "symbol": SYMBOL,
         "timeframes": list(TIMEFRAMES.keys()),
@@ -846,6 +889,6 @@ def start_background_threads():
 
 
 if __name__ == "__main__":
-    log.info("Starting Custom MACD Application...")
+    log.info("Starting Robust MACD Application...")
     start_background_threads()
     app.run(host=HOST, port=PORT, debug=False, use_reloader=False, threaded=True)
