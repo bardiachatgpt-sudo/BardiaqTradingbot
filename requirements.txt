@@ -1,6 +1,10 @@
-Flask==3.1.1
-numpy==2.2.6
-pandas==2.3.0
-pyTelegramBotAPI==4.28.0
-websocket-client==1.8.0
-pytz==2025.2
+flask
+pandas
+numpy
+pytz
+websocket-client
+pyTelegramBotAPI
+yfinance>=0.2.40
+requests
+biquote
+tvdatafeed-enhanced
