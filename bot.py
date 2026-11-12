@@ -6,18 +6,19 @@ import html
 import sqlite3
 import random
 import string
-import threading
 import logging
-from datetime import datetime, timedelta, timezone
+import threading
+
+from datetime import datetime, timezone
 from collections import deque
 
 import numpy as np
 import pandas as pd
-import pytz
 import websocket
 import telebot
 
 from flask import Flask
+
 
 logging.basicConfig(
     level=logging.INFO,
@@ -30,13 +31,10 @@ BOT_TOKEN = os.getenv("BOT_TOKEN", "")
 bot = telebot.TeleBot(BOT_TOKEN) if BOT_TOKEN else None
 
 DB_PATH = os.getenv("DB_PATH", "scanner.db")
-POLL_SECONDS = int(os.getenv("POLL_SECONDS", "12"))
-TV_INTERVAL = "1"
-LIVE_BARS = int(os.getenv("LIVE_BARS", "300"))
-HISTORY_BARS = int(os.getenv("HISTORY_BARS", "1700"))
-EXTREMA_WINDOW = int(os.getenv("EXTREMA_WINDOW", "3"))
-PROMINENCE_FACTOR = float(os.getenv("PROMINENCE_FACTOR", "0.0"))
-TEHRAN = pytz.timezone("Asia/Tehran")
+POLL_SECONDS = int(os.getenv("POLL_SECONDS", "15"))
+LIVE_BARS = int(os.getenv("LIVE_BARS", "350"))
+HISTORY_BARS = int(os.getenv("HISTORY_BARS", "300"))
+TV_TIMEOUT = int(os.getenv("TV_TIMEOUT", "20"))
 
 SYMBOLS_RAW = os.getenv(
     "SYMBOLS",
@@ -61,14 +59,16 @@ if not SYMBOLS:
 
 DB_LOCK = threading.RLock()
 ENGINE_LOCK = threading.RLock()
+
 ENGINES = {}
 LAST_SEEN = {}
 SOURCE_STATUS = {}
 SUBSCRIBED_USERS = set()
+
 RUNNING = True
 
 
-def db():
+def db_connect():
     connection = sqlite3.connect(DB_PATH, timeout=30)
     connection.row_factory = sqlite3.Row
     return connection
@@ -76,16 +76,15 @@ def db():
 
 def init_db():
     with DB_LOCK:
-        con = db()
-        cur = con.cursor()
+        con = db_connect()
 
-        cur.execute("""
+        con.execute("""
             CREATE TABLE IF NOT EXISTS users (
                 chat_id INTEGER PRIMARY KEY
             )
         """)
 
-        cur.execute("""
+        con.execute("""
             CREATE TABLE IF NOT EXISTS events (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 symbol TEXT NOT NULL,
@@ -98,7 +97,7 @@ def init_db():
             )
         """)
 
-        cur.execute("""
+        con.execute("""
             CREATE TABLE IF NOT EXISTS runtime (
                 symbol TEXT PRIMARY KEY,
                 last_seen TEXT,
@@ -109,24 +108,43 @@ def init_db():
 
         con.commit()
 
-        for row in cur.execute("SELECT chat_id FROM users"):
-            SUBSCRIBED_USERS.add(int(row["chat_id"]))
+        rows = con.execute(
+            "SELECT chat_id FROM users"
+        ).fetchall()
 
-        for row in cur.execute(
-            "SELECT symbol, last_seen, source FROM runtime"
-        ):
-            if row["last_seen"]:
-                LAST_SEEN[row["symbol"]] = pd.Timestamp(row["last_seen"])
-            SOURCE_STATUS[row["symbol"]] = row["source"] or ""
+        for row in rows:
+            SUBSCRIBED_USERS.add(int(row["chat_id"]))
 
         con.close()
 
 
-def save_runtime(symbol, last_seen, source):
+def save_user(chat_id):
     with DB_LOCK:
-        con = db()
+        con = db_connect()
+        con.execute(
+            "INSERT OR IGNORE INTO users(chat_id) VALUES (?)",
+            (int(chat_id),)
+        )
+        con.commit()
+        con.close()
+
+    SUBSCRIBED_USERS.add(int(chat_id))
+
+
+def save_runtime(symbol, timestamp, source):
+    timestamp_text = (
+        pd.Timestamp(timestamp).isoformat()
+        if timestamp is not None
+        else None
+    )
+
+    with DB_LOCK:
+        con = db_connect()
+
         con.execute("""
-            INSERT INTO runtime(symbol, last_seen, source, updated_at)
+            INSERT INTO runtime(
+                symbol, last_seen, source, updated_at
+            )
             VALUES (?, ?, ?, ?)
             ON CONFLICT(symbol) DO UPDATE SET
                 last_seen=excluded.last_seen,
@@ -134,47 +152,45 @@ def save_runtime(symbol, last_seen, source):
                 updated_at=excluded.updated_at
         """, (
             symbol,
-            last_seen.isoformat() if last_seen is not None else None,
+            timestamp_text,
             source,
             datetime.now(timezone.utc).isoformat()
         ))
+
         con.commit()
         con.close()
 
 
-def save_user(chat_id):
-    with DB_LOCK:
-        con = db()
-        con.execute(
-            "INSERT OR IGNORE INTO users(chat_id) VALUES (?)",
-            (chat_id,)
-        )
-        con.commit()
-        con.close()
-        SUBSCRIBED_USERS.add(chat_id)
-
-
-def save_event(symbol, direction, stage, event_time, details=None):
-    timestamp = pd.Timestamp(event_time).isoformat()
+def save_event(event):
+    event_time = pd.Timestamp(event["time"]).isoformat()
 
     with DB_LOCK:
-        con = db()
-        cur = con.cursor()
+        con = db_connect()
 
-        cur.execute("""
-            INSERT OR IGNORE INTO events
-            (symbol, direction, stage, event_time, details, created_at)
+        cur = con.execute("""
+            INSERT OR IGNORE INTO events(
+                symbol,
+                direction,
+                stage,
+                event_time,
+                details,
+                created_at
+            )
             VALUES (?, ?, ?, ?, ?, ?)
         """, (
-            symbol,
-            direction,
-            stage,
-            timestamp,
-            json.dumps(details or {}, ensure_ascii=False),
+            event["symbol"],
+            event["direction"],
+            event["stage"],
+            event_time,
+            json.dumps(
+                event.get("details", {}),
+                ensure_ascii=False
+            ),
             datetime.now(timezone.utc).isoformat()
         ))
 
         inserted = cur.rowcount > 0
+
         con.commit()
         con.close()
 
@@ -182,23 +198,35 @@ def save_event(symbol, direction, stage, event_time, details=None):
 
 
 def get_events(symbol, hours=24):
-    cutoff = datetime.now(timezone.utc) - timedelta(hours=hours)
+    cutoff = (
+        pd.Timestamp.now(tz="UTC")
+        - pd.Timedelta(hours=hours)
+    )
 
     with DB_LOCK:
-        con = db()
+        con = db_connect()
+
         rows = con.execute("""
-            SELECT * FROM events
-            WHERE symbol = ? AND event_time >= ?
-            ORDER BY event_time ASC
-        """, (symbol, cutoff.isoformat())).fetchall()
+            SELECT *
+            FROM events
+            WHERE symbol = ?
+            ORDER BY event_time DESC
+        """, (symbol,)).fetchall()
+
         con.close()
 
-    return [dict(row) for row in rows]
+    result = []
 
+    for row in rows:
+        event_time = pd.Timestamp(row["event_time"])
 
-def format_price(symbol, value):
-    digits = 2 if "JPY" in symbol.upper() else 4
-    return f"{float(value):.{digits}f}"
+        if event_time.tzinfo is None:
+            event_time = event_time.tz_localize("UTC")
+
+        if event_time >= cutoff:
+            result.append(dict(row))
+
+    return result
 
 
 def tehran_time(value):
@@ -209,9 +237,14 @@ def tehran_time(value):
     else:
         timestamp = timestamp.tz_convert("UTC")
 
-    return timestamp.tz_convert("Asia/Tehran").strftime(
-        "%Y-%m-%d %H:%M:%S"
-    )
+    return timestamp.tz_convert(
+        "Asia/Tehran"
+    ).strftime("%Y-%m-%d %H:%M:%S")
+
+
+def format_price(symbol, value):
+    digits = 2 if "JPY" in symbol.upper() else 4
+    return f"{float(value):.{digits}f}"
 
 
 def tv_send(ws, function, params):
@@ -219,6 +252,7 @@ def tv_send(ws, function, params):
         {"m": function, "p": params},
         separators=(",", ":")
     )
+
     ws.send(f"~m~{len(payload)}~m~{payload}")
 
 
@@ -233,17 +267,47 @@ def parse_tv_messages(raw):
 
         try:
             messages.append(json.loads(part))
-        except Exception:
+        except (ValueError, TypeError):
             continue
 
     return messages
 
 
+def extract_series_entries(payload):
+    if not isinstance(payload, dict):
+        return []
+
+    result = []
+
+    for series_name in ("sds_1", "series_1"):
+        series = payload.get(series_name)
+
+        if not isinstance(series, dict):
+            continue
+
+        entries = series.get("s", [])
+
+        if isinstance(entries, list):
+            result.extend(entries)
+
+        updates = series.get("ns", {})
+
+        if isinstance(updates, dict):
+            for update in updates.values():
+                if isinstance(update, dict):
+                    values = update.get("v")
+
+                    if isinstance(values, list):
+                        result.append({"v": values})
+
+    return result
+
+
 def fetch_tradingview_candles(
     symbol,
     interval="1",
-    n_bars=300,
-    timeout_seconds=18
+    n_bars=350,
+    timeout_seconds=20
 ):
     ws = None
     bars = {}
@@ -268,8 +332,18 @@ def fetch_tradingview_candles(
             )
         )
 
-        tv_send(ws, "set_auth_token", ["unauthorized_user_token"])
-        tv_send(ws, "chart_create_session", [chart_session, ""])
+        tv_send(
+            ws,
+            "set_auth_token",
+            ["unauthorized_user_token"]
+        )
+
+        tv_send(
+            ws,
+            "chart_create_session",
+            [chart_session, ""]
+        )
+
         tv_send(
             ws,
             "resolve_symbol",
@@ -277,7 +351,10 @@ def fetch_tradingview_candles(
                 chart_session,
                 "symbol_1",
                 json.dumps(
-                    {"symbol": symbol, "adjustment": "splits"},
+                    {
+                        "symbol": symbol,
+                        "adjustment": "splits"
+                    },
                     separators=(",", ":")
                 )
             ]
@@ -288,7 +365,7 @@ def fetch_tradingview_candles(
             "create_series",
             [
                 chart_session,
-                "series_1",
+                "sds_1",
                 "s1",
                 "symbol_1",
                 str(interval),
@@ -297,9 +374,9 @@ def fetch_tradingview_candles(
             ]
         )
 
-        start = time.time()
+        start_time = time.time()
 
-        while time.time() - start < timeout_seconds:
+        while time.time() - start_time < timeout_seconds:
             try:
                 raw = ws.recv()
             except websocket.WebSocketTimeoutException:
@@ -316,23 +393,32 @@ def fetch_tradingview_candles(
                 message_type = message.get("m")
                 params = message.get("p", [])
 
-                if message_type not in ("timescale_update", "du"):
+                if message_type not in (
+                    "timescale_update",
+                    "du"
+                ):
                     continue
 
-                if len(params) < 2 or not isinstance(params[1], dict):
+                if len(params) < 2:
                     continue
 
-                series = params[1].get("series_1", {})
-                entries = series.get("s", [])
+                payload = params[1]
 
-                for entry in entries:
+                if not isinstance(payload, dict):
+                    continue
+
+                for entry in extract_series_entries(payload):
                     values = entry.get("v", [])
+
+                    if not isinstance(values, list):
+                        continue
 
                     if len(values) < 5:
                         continue
 
                     try:
                         timestamp = int(values[0])
+
                         bars[timestamp] = {
                             "Time": timestamp,
                             "Open": float(values[1]),
@@ -340,16 +426,21 @@ def fetch_tradingview_candles(
                             "Low": float(values[3]),
                             "Close": float(values[4])
                         }
-                    except (ValueError, TypeError):
+
+                    except (ValueError, TypeError, IndexError):
                         continue
 
-        if ws:
-            ws.close()
+        ws.close()
+        ws = None
 
         if not bars:
-            return None, f"No candles returned for {symbol}"
+            return None, (
+                f"No candles returned for {symbol}. "
+                "TradingView returned no usable OHLC data."
+            )
 
         frame = pd.DataFrame(list(bars.values()))
+
         frame["Time"] = pd.to_datetime(
             frame["Time"],
             unit="s",
@@ -362,29 +453,29 @@ def fetch_tradingview_candles(
         return frame, None
 
     except Exception as exc:
-        if ws:
+        if ws is not None:
             try:
                 ws.close()
             except Exception:
                 pass
 
-        return None, f"{symbol}: {str(exc)[:180]}"
+        return None, f"{symbol}: {str(exc)[:250]}"
 
 
-def calculate_macd(close, fast, slow, signal):
-    fast_line = close.ewm(
+def calculate_macd_histogram(close, fast, slow, signal):
+    fast_ema = close.ewm(
         span=fast,
         adjust=False,
         min_periods=fast
     ).mean()
 
-    slow_line = close.ewm(
+    slow_ema = close.ewm(
         span=slow,
         adjust=False,
         min_periods=slow
     ).mean()
 
-    macd_line = fast_line - slow_line
+    macd_line = fast_ema - slow_ema
 
     signal_line = macd_line.ewm(
         span=signal,
@@ -392,67 +483,104 @@ def calculate_macd(close, fast, slow, signal):
         min_periods=signal
     ).mean()
 
-    histogram = macd_line - signal_line
-
-    return histogram
+    return macd_line - signal_line
 
 
 def calculate_indicators(frame):
     result = frame.copy()
 
-    result["H1"] = calculate_macd(
-        result["Close"], 48, 104, 36
+    result["H1"] = calculate_macd_histogram(
+        result["Close"],
+        48,
+        104,
+        36
     )
 
-    result["H2"] = calculate_macd(
-        result["Close"], 12, 26, 9
+    result["H2"] = calculate_macd_histogram(
+        result["Close"],
+        12,
+        26,
+        9
     )
 
-    result["H3"] = calculate_macd(
-        result["Close"], 3, 6, 2
+    result["H3"] = calculate_macd_histogram(
+        result["Close"],
+        3,
+        6,
+        2
     )
 
     return result
 
 
+def confirmed_extremum(history, key):
+    if len(history) < 3:
+        return None
+
+    left, middle, right = list(history)[-3:]
+
+    a = left[key]
+    b = middle[key]
+    c = right[key]
+
+    if not np.isfinite([a, b, c]).all():
+        return None
+
+    if b < a and b <= c:
+        return "LOW", middle
+
+    if b > a and b >= c:
+        return "HIGH", middle
+
+    return None
+
+
 class DirectionState:
+
     def __init__(self, direction):
         self.direction = direction
-        self.phase_active = False
         self.first = None
         self.middle = None
         self.second = None
         self.divergence = None
         self.ready = False
-        self.fire = False
-        self.last_fire_time = None
+        self.fire_armed = False
+        self.fire_armed_at = None
+        self.fired = False
 
     def reset_phase(self):
-        self.phase_active = False
         self.first = None
         self.middle = None
         self.second = None
-
-    def reset_cycle(self):
-        self.reset_phase()
         self.divergence = None
         self.ready = False
-        self.fire = False
-        self.last_fire_time = None
+        self.fire_armed = False
+        self.fire_armed_at = None
+        self.fired = False
 
 
 class SymbolEngine:
+
     def __init__(self, symbol):
         self.symbol = symbol
+
         self.bull = DirectionState("BULLISH")
         self.bear = DirectionState("BEARISH")
-        self.history = deque(maxlen=8)
+
+        self.h1_history = deque(maxlen=3)
+        self.h3_history = deque(maxlen=3)
+
         self.previous_h2 = None
         self.previous_h3 = None
-        self.events = []
 
-    def emit(self, direction, stage, timestamp, details=None):
-        event = {
+    def make_event(
+        self,
+        direction,
+        stage,
+        timestamp,
+        details=None
+    ):
+        return {
             "symbol": self.symbol,
             "direction": direction,
             "stage": stage,
@@ -460,157 +588,175 @@ class SymbolEngine:
             "details": details or {}
         }
 
-        self.events.append(event)
-        return event
-
-    def pivot(self):
-        if len(self.history) < 3:
-            return None
-
-        left, middle, right = list(self.history)[-3:]
-
-        h_left = left["H1"]
-        h_mid = middle["H1"]
-        h_right = right["H1"]
-
-        if not np.isfinite([h_left, h_mid, h_right]).all():
-            return None
-
-        if h_mid < h_left and h_mid <= h_right:
-            return "LOW", middle
-
-        if h_mid > h_left and h_mid >= h_right:
-            return "HIGH", middle
-
-        return None
-
-    def update_divergence(self, candle, pivot):
+    def update_bullish_divergence(self, candle, pivot):
         state = self.bull
-        direction = "BULLISH"
+        value = candle["H1"]
+        events = []
 
-        if candle["H1"] >= 0:
+        if value >= 0:
             state.reset_phase()
-        else:
-            state.phase_active = True
+            return events
 
-        if pivot:
-            kind, point = pivot
+        if state.first is None:
+            state.first = candle
+            return events
 
-            if kind == "LOW" and point["H1"] < 0:
-                if state.first is None:
-                    state.first = point
-                    state.middle = None
-                    state.second = None
+        if value <= state.first["H1"]:
+            state.first = candle
+            state.middle = None
+            state.second = None
+            state.divergence = None
+            state.ready = False
+            state.fire_armed = False
+            state.fire_armed_at = None
+            state.fired = False
+            return events
 
-                elif point["H1"] <= state.first["H1"]:
-                    state.first = point
-                    state.middle = None
-                    state.second = None
+        if (
+            pivot
+            and pivot[0] == "HIGH"
+            and state.first["Time"] < pivot[1]["Time"]
+            and pivot[1]["H1"] < 0
+        ):
+            point = pivot[1]
 
-                elif state.middle is not None:
-                    state.second = point
+            if (
+                state.middle is None
+                or point["H1"] > state.middle["H1"]
+            ):
+                state.middle = point
 
-                    first_abs = abs(state.first["H1"])
-                    second_abs = abs(state.second["H1"])
+        if (
+            pivot
+            and pivot[0] == "LOW"
+            and state.middle is not None
+        ):
+            point = pivot[1]
 
-                    if (
-                        second_abs < first_abs
-                        and state.second["Low"] < state.first["Low"]
-                    ):
-                        state.divergence = point
-                        state.ready = False
-                        state.fire = False
+            if (
+                point["H1"] < 0
+                and state.first["Time"] < state.middle["Time"]
+                and state.middle["Time"] < point["Time"]
+            ):
+                state.second = point
 
-                        self.emit(
-                            direction,
+                if (
+                    abs(point["H1"]) < abs(state.first["H1"])
+                    and point["Low"] < state.first["Low"]
+                ):
+                    state.divergence = point
+                    state.ready = False
+                    state.fire_armed = False
+                    state.fire_armed_at = None
+                    state.fired = False
+
+                    events.append(
+                        self.make_event(
+                            "BULLISH",
                             "DIVERGENCE",
                             point["Time"],
                             {
                                 "histogram_first": state.first["H1"],
-                                "histogram_second": state.second["H1"],
+                                "histogram_second": point["H1"],
                                 "price_first": state.first["Low"],
-                                "price_second": state.second["Low"]
+                                "price_second": point["Low"],
+                                "middle_histogram": state.middle["H1"]
                             }
                         )
+                    )
 
-            elif (
-                kind == "HIGH"
-                and point["H1"] < 0
-                and state.first is not None
-                and point["Time"] > state.first["Time"]
-            ):
-                if (
-                    state.middle is None
-                    or abs(point["H1"]) < abs(state.middle["H1"])
-                ):
-                    state.middle = point
+        return events
 
+    def update_bearish_divergence(self, candle, pivot):
         state = self.bear
-        direction = "BEARISH"
+        value = candle["H1"]
+        events = []
 
-        if candle["H1"] <= 0:
+        if value <= 0:
             state.reset_phase()
-        else:
-            state.phase_active = True
+            return events
 
-        if pivot:
-            kind, point = pivot
+        if state.first is None:
+            state.first = candle
+            return events
 
-            if kind == "HIGH" and point["H1"] > 0:
-                if state.first is None:
-                    state.first = point
-                    state.middle = None
-                    state.second = None
+        if value >= state.first["H1"]:
+            state.first = candle
+            state.middle = None
+            state.second = None
+            state.divergence = None
+            state.ready = False
+            state.fire_armed = False
+            state.fire_armed_at = None
+            state.fired = False
+            return events
 
-                elif point["H1"] >= state.first["H1"]:
-                    state.first = point
-                    state.middle = None
-                    state.second = None
+        if (
+            pivot
+            and pivot[0] == "LOW"
+            and state.first["Time"] < pivot[1]["Time"]
+            and pivot[1]["H1"] > 0
+        ):
+            point = pivot[1]
 
-                elif state.middle is not None:
-                    state.second = point
+            if (
+                state.middle is None
+                or point["H1"] < state.middle["H1"]
+            ):
+                state.middle = point
 
-                    first_abs = abs(state.first["H1"])
-                    second_abs = abs(state.second["H1"])
+        if (
+            pivot
+            and pivot[0] == "HIGH"
+            and state.middle is not None
+        ):
+            point = pivot[1]
 
-                    if (
-                        second_abs < first_abs
-                        and state.second["High"] > state.first["High"]
-                    ):
-                        state.divergence = point
-                        state.ready = False
-                        state.fire = False
+            if (
+                point["H1"] > 0
+                and state.first["Time"] < state.middle["Time"]
+                and state.middle["Time"] < point["Time"]
+            ):
+                state.second = point
 
-                        self.emit(
-                            direction,
+                if (
+                    abs(point["H1"]) < abs(state.first["H1"])
+                    and point["High"] > state.first["High"]
+                ):
+                    state.divergence = point
+                    state.ready = False
+                    state.fire_armed = False
+                    state.fire_armed_at = None
+                    state.fired = False
+
+                    events.append(
+                        self.make_event(
+                            "BEARISH",
                             "DIVERGENCE",
                             point["Time"],
                             {
                                 "histogram_first": state.first["H1"],
-                                "histogram_second": state.second["H1"],
+                                "histogram_second": point["H1"],
                                 "price_first": state.first["High"],
-                                "price_second": state.second["High"]
+                                "price_second": point["High"],
+                                "middle_histogram": state.middle["H1"]
                             }
                         )
+                    )
 
-            elif (
-                kind == "LOW"
-                and point["H1"] > 0
-                and state.first is not None
-                and point["Time"] > state.first["Time"]
-            ):
-                if (
-                    state.middle is None
-                    or abs(point["H1"]) < abs(state.middle["H1"])
-                ):
-                    state.middle = point
+        return events
 
     def update_ready(self, candle):
+        events = []
         h2 = candle["H2"]
 
-        if self.previous_h2 is None or not np.isfinite(h2):
+        if self.previous_h2 is None:
             self.previous_h2 = h2
-            return
+            return events
+
+        if not np.isfinite([h2, self.previous_h2]).all():
+            self.previous_h2 = h2
+            return events
 
         if (
             self.bull.divergence is not None
@@ -619,7 +765,14 @@ class SymbolEngine:
             and h2 > 0
         ):
             self.bull.ready = True
-            self.emit("BULLISH", "READY", candle["Time"])
+
+            events.append(
+                self.make_event(
+                    "BULLISH",
+                    "READY",
+                    candle["Time"]
+                )
+            )
 
         if (
             self.bear.divergence is not None
@@ -628,56 +781,94 @@ class SymbolEngine:
             and h2 < 0
         ):
             self.bear.ready = True
-            self.emit("BEARISH", "READY", candle["Time"])
+
+            events.append(
+                self.make_event(
+                    "BEARISH",
+                    "READY",
+                    candle["Time"]
+                )
+            )
 
         self.previous_h2 = h2
+        return events
 
     def update_fire(self, candle, pivot):
+        events = []
         h3 = candle["H3"]
 
-        if self.previous_h3 is None or not np.isfinite(h3):
+        if self.previous_h3 is None:
             self.previous_h3 = h3
-            return
+            return events
 
-        if self.bull.ready and not self.bull.fire:
+        if not np.isfinite([h3, self.previous_h3]).all():
+            self.previous_h3 = h3
+            return events
+
+        if self.bull.ready and not self.bull.fired:
+
             if (
-                self.previous_h2 > 0
+                not self.bull.fire_armed
                 and self.previous_h3 >= 0
                 and h3 < 0
+            ):
+                self.bull.fire_armed = True
+                self.bull.fire_armed_at = candle["Time"]
+
+            if (
+                self.bull.fire_armed
                 and pivot
                 and pivot[0] == "LOW"
                 and pivot[1]["H3"] < 0
+                and pivot[1]["Time"] >= self.bull.fire_armed_at
             ):
-                self.bull.fire = True
-                self.bull.last_fire_time = candle["Time"]
+                self.bull.fired = True
 
-                self.emit(
-                    "BULLISH",
-                    "FIRE",
-                    candle["Time"],
-                    {"extremum": pivot[1]["H3"]}
+                events.append(
+                    self.make_event(
+                        "BULLISH",
+                        "FIRE",
+                        candle["Time"],
+                        {
+                            "extremum_time": str(pivot[1]["Time"]),
+                            "histogram_extremum": pivot[1]["H3"]
+                        }
+                    )
                 )
 
-        if self.bear.ready and not self.bear.fire:
+        if self.bear.ready and not self.bear.fired:
+
             if (
-                self.previous_h2 < 0
+                not self.bear.fire_armed
                 and self.previous_h3 <= 0
                 and h3 > 0
+            ):
+                self.bear.fire_armed = True
+                self.bear.fire_armed_at = candle["Time"]
+
+            if (
+                self.bear.fire_armed
                 and pivot
                 and pivot[0] == "HIGH"
                 and pivot[1]["H3"] > 0
+                and pivot[1]["Time"] >= self.bear.fire_armed_at
             ):
-                self.bear.fire = True
-                self.bear.last_fire_time = candle["Time"]
+                self.bear.fired = True
 
-                self.emit(
-                    "BEARISH",
-                    "FIRE",
-                    candle["Time"],
-                    {"extremum": pivot[1]["H3"]}
+                events.append(
+                    self.make_event(
+                        "BEARISH",
+                        "FIRE",
+                        candle["Time"],
+                        {
+                            "extremum_time": str(pivot[1]["Time"]),
+                            "histogram_extremum": pivot[1]["H3"]
+                        }
+                    )
                 )
 
         self.previous_h3 = h3
+        return events
 
     def process(self, row):
         candle = {
@@ -691,60 +882,102 @@ class SymbolEngine:
             "H3": float(row["H3"])
         }
 
-        if not np.isfinite(
-            [candle["H1"], candle["H2"], candle["H3"]]
-        ).all():
+        if not np.isfinite([
+            candle["H1"],
+            candle["H2"],
+            candle["H3"]
+        ]).all():
             return []
 
-        self.history.append(candle)
-        pivot = self.pivot()
+        self.h1_history.append(candle)
+        self.h3_history.append(candle)
 
-        self.update_divergence(candle, pivot)
-        self.update_ready(candle)
-        self.update_fire(candle, pivot)
+        h1_pivot = confirmed_extremum(
+            self.h1_history,
+            "H1"
+        )
 
-        new_events = self.events[:]
-        self.events.clear()
+        h3_pivot = confirmed_extremum(
+            self.h3_history,
+            "H3"
+        )
 
-        return new_events
+        events = []
+
+        events.extend(
+            self.update_bullish_divergence(
+                candle,
+                h1_pivot
+            )
+        )
+
+        events.extend(
+            self.update_bearish_divergence(
+                candle,
+                h1_pivot
+            )
+        )
+
+        events.extend(
+            self.update_ready(candle)
+        )
+
+        events.extend(
+            self.update_fire(
+                candle,
+                h3_pivot
+            )
+        )
+
+        return events
 
 
 def event_message(event):
     symbol = event["symbol"]
     direction = event["direction"]
     stage = event["stage"]
-    timestamp = tehran_time(event["time"])
 
     direction_text = (
-        "صعودی" if direction == "BULLISH" else "نزولی"
+        "صعودی"
+        if direction == "BULLISH"
+        else "نزولی"
     )
 
-    title = {
+    stage_text = {
         "DIVERGENCE": "واگرایی شناسایی شد",
-        "READY": "مرحله READY فعال شد",
-        "FIRE": "مرحله FIRE ثبت شد"
+        "READY": "مرحله آماده‌باش فعال شد",
+        "FIRE": "اکسترمم مرحله نهایی تأیید شد"
     }.get(stage, stage)
 
-    details = event.get("details", {})
     lines = [
-        f"<b>{html.escape(title)}</b>",
-        f"نماد: <code>{html.escape(symbol)}</code>",
-        f"جهت: <b>{direction_text}</b>",
-        f"مرحله: <code>{stage}</code>",
-        f"زمان تهران: <code>{timestamp}</code>"
+        f"<b>{html.escape(stage_text)}</b>",
+        f"Symbol: <code>{html.escape(symbol)}</code>",
+        f"Direction: <b>{direction_text}</b>",
+        f"Stage: <code>{html.escape(stage)}</code>",
+        f"Tehran time: <code>{tehran_time(event['time'])}</code>"
     ]
 
+    details = event.get("details", {})
+
     if "histogram_first" in details:
-        lines.append(
-            "Histogram اول: <code>"
+        lines.extend([
+            "First Histogram: <code>"
             + str(round(details["histogram_first"], 8))
-            + "</code>"
-        )
-        lines.append(
-            "Histogram دوم: <code>"
+            + "</code>",
+            "Second Histogram: <code>"
             + str(round(details["histogram_second"], 8))
             + "</code>"
-        )
+        ])
+
+    if "price_first" in details:
+        lines.extend([
+            "First Price: <code>"
+            + format_price(symbol, details["price_first"])
+            + "</code>",
+            "Second Price: <code>"
+            + format_price(symbol, details["price_second"])
+            + "</code>"
+        ])
 
     return "\n".join(lines)
 
@@ -761,17 +994,15 @@ def broadcast(message):
                 parse_mode="HTML"
             )
         except Exception as exc:
-            logging.warning("Telegram delivery error: %s", exc)
+            logging.warning(
+                "Telegram delivery failed for %s: %s",
+                chat_id,
+                exc
+            )
 
 
 def store_and_send(event):
-    inserted = save_event(
-        event["symbol"],
-        event["direction"],
-        event["stage"],
-        event["time"],
-        event.get("details")
-    )
+    inserted = save_event(event)
 
     if inserted:
         broadcast(event_message(event))
@@ -796,10 +1027,6 @@ def build_main_keyboard():
         telebot.types.InlineKeyboardButton(
             "All Symbols Status",
             callback_data="all_status"
-        ),
-        telebot.types.InlineKeyboardButton(
-            "Today's Events",
-            callback_data="all_today"
         )
     )
 
@@ -815,7 +1042,7 @@ def build_symbol_keyboard(symbol):
             callback_data=f"status:{symbol}"
         ),
         telebot.types.InlineKeyboardButton(
-            "Last 24 Hours",
+            "Last 100 Candles",
             callback_data=f"history:{symbol}"
         )
     )
@@ -843,12 +1070,11 @@ def symbol_status(symbol):
         if event["stage"] in counts:
             counts[event["stage"]] += 1
 
-    source = SOURCE_STATUS.get(symbol, "Unknown")
-    latest = events[-1] if events else None
+    source = SOURCE_STATUS.get(symbol, "Connecting")
 
     lines = [
         f"<b>Symbol Report: {html.escape(symbol)}</b>",
-        f"Timeframe: <code>M1</code>",
+        "Timeframe: <code>M1</code>",
         f"Source: <code>{html.escape(source)}</code>",
         "",
         f"DIVERGENCE: <b>{counts['DIVERGENCE']}</b>",
@@ -856,19 +1082,20 @@ def symbol_status(symbol):
         f"FIRE: <b>{counts['FIRE']}</b>"
     ]
 
-    if latest:
+    if events:
+        latest = events[0]
+
         lines.extend([
             "",
             "<b>Latest Recorded Event</b>",
-            f"Direction: {latest['direction']}",
-            f"Stage: {latest['stage']}",
-            f"Tehran time: {tehran_time(latest['event_time'])}"
+            f"Direction: {html.escape(latest['direction'])}",
+            f"Stage: {html.escape(latest['stage'])}",
+            f"Time: <code>{tehran_time(latest['event_time'])}</code>"
         ])
     else:
-        lines.extend([
-            "",
-            "No recorded event in the last 24 hours."
-        ])
+        lines.append(
+            "\nNo recorded events in the last 24 hours."
+        )
 
     return "\n".join(lines)
 
@@ -883,7 +1110,7 @@ def historical_report(symbol):
         source,
         "1",
         HISTORY_BARS,
-        timeout_seconds=25
+        TV_TIMEOUT
     )
 
     if frame is None:
@@ -892,27 +1119,29 @@ def historical_report(symbol):
             f"{html.escape(error or '')}"
         )
 
+    if frame.empty:
+        return f"No candles returned for {symbol}."
+
+    frame = frame.sort_index()
+    frame = frame[~frame.index.duplicated(keep="last")]
+
     frame = calculate_indicators(frame)
 
     now = pd.Timestamp.now(tz="UTC")
-    cutoff = now - pd.Timedelta(hours=24)
 
-    closed = frame.iloc[:-1].copy()
-    warmup = closed[closed.index < cutoff]
-    target = closed[closed.index >= cutoff]
+    closed = frame[
+        frame.index + pd.Timedelta(minutes=1) <= now
+    ].copy()
 
-    if target.empty:
-        return (
-            f"No closed candles found for {symbol} "
-            "inside the requested period."
-        )
+    if closed.empty:
+        return f"No closed candles available for {symbol}."
+
+    target = closed.tail(100).copy()
 
     engine = SymbolEngine(symbol)
     events = []
 
-    combined = pd.concat([warmup.tail(300), target])
-
-    for _, row in combined.iterrows():
+    for _, row in closed.iterrows():
         events.extend(engine.process(row))
 
     target_start = target.index[0]
@@ -930,13 +1159,14 @@ def historical_report(symbol):
     }
 
     for event in events:
-        counts[event["stage"]] += 1
+        if event["stage"] in counts:
+            counts[event["stage"]] += 1
 
     lines = [
         f"<b>Historical Report: {html.escape(symbol)}</b>",
         "Timeframe: <code>M1</code>",
-        f"Available candles: <b>{len(closed)}</b>",
-        f"Candles in 24h window: <b>{len(target)}</b>",
+        f"Available closed candles: <b>{len(closed)}</b>",
+        f"Analyzed candles: <b>{len(target)}</b>",
         f"First candle: <code>{tehran_time(target_start)}</code>",
         f"Last candle: <code>{tehran_time(target_end)}</code>",
         "",
@@ -945,14 +1175,19 @@ def historical_report(symbol):
         f"FIRE: <b>{counts['FIRE']}</b>"
     ]
 
+    if len(target) < 100:
+        lines.append(
+            f"\nWarning: Only {len(target)} closed candles were available."
+        )
+
     if not events:
         lines.append(
-            "\nNo complete events detected in the available period."
+            "\nNo complete events detected in the last 100 candles."
         )
     else:
         lines.append("\n<b>Detected Events</b>")
 
-        for event in events[-12:]:
+        for event in events[-15:]:
             lines.append(
                 f"{event['direction']} | {event['stage']} | "
                 f"{tehran_time(event['time'])}"
@@ -965,12 +1200,140 @@ def all_symbols_status():
     lines = ["<b>Scanner Status</b>", ""]
 
     for symbol in SYMBOLS:
+        status = SOURCE_STATUS.get(symbol, "Connecting")
+
         lines.append(
             f"<b>{html.escape(symbol)}</b>\n"
-            f"{html.escape(SOURCE_STATUS.get(symbol, 'Connecting'))}"
+            f"{html.escape(status)}"
         )
 
     return "\n\n".join(lines)
+
+
+def initialize_live_engine(symbol, frame):
+    engine = SymbolEngine(symbol)
+
+    frame = calculate_indicators(frame)
+
+    now = pd.Timestamp.now(tz="UTC")
+
+    closed = frame[
+        frame.index + pd.Timedelta(minutes=1) <= now
+    ]
+
+    for _, row in closed.iterrows():
+        engine.process(row)
+
+    ENGINES[symbol] = engine
+
+    if not closed.empty:
+        LAST_SEEN[symbol] = closed.index[-1]
+
+        save_runtime(
+            symbol,
+            closed.index[-1],
+            SYMBOLS[symbol]
+        )
+
+    logging.info(
+        "Live baseline initialized for %s with %s candles",
+        symbol,
+        len(closed)
+    )
+
+
+def scanner_loop():
+    while RUNNING:
+
+        for symbol, source in SYMBOLS.items():
+
+            if not RUNNING:
+                break
+
+            try:
+                frame, error = fetch_tradingview_candles(
+                    source,
+                    "1",
+                    LIVE_BARS,
+                    TV_TIMEOUT
+                )
+
+                if frame is None:
+                    SOURCE_STATUS[symbol] = error or "Feed unavailable"
+
+                    logging.warning(
+                        "%s",
+                        SOURCE_STATUS[symbol]
+                    )
+
+                    continue
+
+                SOURCE_STATUS[symbol] = (
+                    f"Connected: {len(frame)} candles received"
+                )
+
+                if len(frame) < 150:
+                    logging.warning(
+                        "Insufficient history for %s: %s",
+                        symbol,
+                        len(frame)
+                    )
+                    continue
+
+                frame = calculate_indicators(frame)
+
+                now = pd.Timestamp.now(tz="UTC")
+
+                closed = frame[
+                    frame.index + pd.Timedelta(minutes=1) <= now
+                ].copy()
+
+                if closed.empty:
+                    continue
+
+                with ENGINE_LOCK:
+
+                    if symbol not in ENGINES:
+                        initialize_live_engine(symbol, frame)
+                        continue
+
+                    last_seen = LAST_SEEN.get(symbol)
+
+                    if last_seen is None:
+                        initialize_live_engine(symbol, frame)
+                        continue
+
+                    new_rows = closed[
+                        closed.index > last_seen
+                    ]
+
+                    if new_rows.empty:
+                        continue
+
+                    engine = ENGINES[symbol]
+
+                    for timestamp, row in new_rows.iterrows():
+
+                        events = engine.process(row)
+
+                        for event in events:
+                            store_and_send(event)
+
+                        LAST_SEEN[symbol] = timestamp
+
+                        save_runtime(
+                            symbol,
+                            timestamp,
+                            source
+                        )
+
+            except Exception:
+                logging.exception(
+                    "Scanner error for %s",
+                    symbol
+                )
+
+        time.sleep(POLL_SECONDS)
 
 
 if bot:
@@ -1015,16 +1378,15 @@ if bot:
                     parse_mode="HTML"
                 )
 
-            elif data == "all_today":
-                for symbol in SYMBOLS:
-                    bot.send_message(
-                        call.message.chat.id,
-                        symbol_status(symbol),
-                        parse_mode="HTML"
-                    )
-
             elif data.startswith("symbol:"):
                 symbol = data.split(":", 1)[1]
+
+                if symbol not in SYMBOLS:
+                    bot.answer_callback_query(
+                        call.id,
+                        "Unknown symbol."
+                    )
+                    return
 
                 bot.edit_message_text(
                     f"Selected: {html.escape(symbol)}",
@@ -1046,9 +1408,21 @@ if bot:
             elif data.startswith("history:"):
                 symbol = data.split(":", 1)[1]
 
+                if symbol not in SYMBOLS:
+                    bot.answer_callback_query(
+                        call.id,
+                        "Unknown symbol."
+                    )
+                    return
+
+                bot.answer_callback_query(
+                    call.id,
+                    "Historical scan started."
+                )
+
                 bot.send_message(
                     call.message.chat.id,
-                    f"Scanning the last 24 hours of {symbol}...",
+                    f"Scanning the last 100 candles of {symbol}..."
                 )
 
                 report = historical_report(symbol)
@@ -1059,18 +1433,24 @@ if bot:
                     parse_mode="HTML"
                 )
 
+                return
+
             bot.answer_callback_query(call.id)
 
-        except Exception as exc:
-            logging.exception("Callback error")
-            bot.answer_callback_query(
-                call.id,
-                "Request failed."
-            )
+        except Exception:
+            logging.exception("Telegram callback error")
+
+            try:
+                bot.answer_callback_query(
+                    call.id,
+                    "Request failed."
+                )
+            except Exception:
+                pass
 
     @bot.message_handler(
-        func=lambda message: bool(message.text),
-        content_types=["text"]
+        content_types=["text"],
+        func=lambda message: bool(message.text)
     )
     def text_handler(message):
         text_value = message.text.strip().lower()
@@ -1078,12 +1458,16 @@ if bot:
         aliases = {
             "طلا": "XAUUSD",
             "gold": "XAUUSD",
+            "xauusd": "XAUUSD",
             "eurusd": "EURUSD",
             "یورو": "EURUSD",
             "پوند": "GBPUSD",
             "gbpusd": "GBPUSD",
             "ین": "USDJPY",
-            "usdjpy": "USDJPY"
+            "usdjpy": "USDJPY",
+            "audusd": "AUDUSD",
+            "usdchf": "USDCHF",
+            "usdcad": "USDCAD"
         }
 
         selected = None
@@ -1093,149 +1477,41 @@ if bot:
                 selected = symbol
                 break
 
-        if selected:
-            if any(word in text_value for word in [
-                "امروز", "تاریخچه", "گذشته", "24", "۲۴"
-            ]):
-                bot.send_message(
-                    message.chat.id,
-                    f"Scanning {selected} history..."
-                )
+        if selected is None:
+            bot.send_message(
+                message.chat.id,
+                "Please select a symbol using /start."
+            )
+            return
 
-                bot.send_message(
-                    message.chat.id,
-                    historical_report(selected),
-                    parse_mode="HTML"
-                )
-            else:
-                bot.send_message(
-                    message.chat.id,
-                    symbol_status(selected),
-                    parse_mode="HTML",
-                    reply_markup=build_symbol_keyboard(selected)
-                )
+        if any(word in text_value for word in (
+            "100",
+            "صد",
+            "تاریخچه",
+            "کندل",
+            "گذشته",
+            "history"
+        )):
+            bot.send_message(
+                message.chat.id,
+                f"Scanning the last 100 candles of {selected}..."
+            )
+
+            report = historical_report(selected)
+
+            bot.send_message(
+                message.chat.id,
+                report,
+                parse_mode="HTML"
+            )
+
         else:
             bot.send_message(
                 message.chat.id,
-                "Please select a symbol from the menu or use /start."
+                symbol_status(selected),
+                parse_mode="HTML",
+                reply_markup=build_symbol_keyboard(selected)
             )
-
-
-def scanner_loop():
-    global RUNNING
-
-    while RUNNING:
-        for symbol, source in SYMBOLS.items():
-            if not RUNNING:
-                break
-
-            try:
-                frame, error = fetch_tradingview_candles(
-                    source,
-                    TV_INTERVAL,
-                    LIVE_BARS
-                )
-
-                if frame is None:
-                    SOURCE_STATUS[symbol] = error or "Feed unavailable"
-                    logging.warning("%s", SOURCE_STATUS[symbol])
-                    continue
-
-                SOURCE_STATUS[symbol] = source
-
-                if len(frame) < 120:
-                    logging.warning(
-                        "Insufficient candles for %s: %s",
-                        symbol,
-                        len(frame)
-                    )
-                    continue
-
-                frame = calculate_indicators(frame)
-
-                closed = frame.iloc[:-1].copy()
-
-                if closed.empty:
-                    continue
-
-                latest_closed = closed.index[-1]
-
-                if symbol not in LAST_SEEN:
-                    LAST_SEEN[symbol] = latest_closed
-                    save_runtime(symbol, latest_closed, source)
-
-                    logging.info(
-                        "Live baseline established for %s at %s",
-                        symbol,
-                        latest_closed
-                    )
-                    continue
-
-                new_rows = closed[
-                    closed.index > LAST_SEEN[symbol]
-                ]
-
-                if new_rows.empty:
-                    continue
-
-                with ENGINE_LOCK:
-                    if symbol not in ENGINES:
-                        ENGINES[symbol] = SymbolEngine(symbol)
-
-                    engine = ENGINES[symbol]
-
-                    for timestamp, row in new_rows.iterrows():
-                        events = engine.process(row)
-
-                        for event in events:
-                            store_and_send(event)
-
-                        LAST_SEEN[symbol] = timestamp
-
-                        save_runtime(
-                            symbol,
-                            timestamp,
-                            source
-                        )
-
-            except Exception:
-                logging.exception(
-                    "Scanner error for %s",
-                    symbol
-                )
-
-        time.sleep(POLL_SECONDS)
-
-
-@app.route("/")
-def home():
-    return {
-        "service": "MACD Divergence Scanner",
-        "status": "running",
-        "timeframe": "M1",
-        "symbols": list(SYMBOLS.keys()),
-        "timezone": "Asia/Tehran"
-    }
-
-
-@app.route("/health")
-def health():
-    return {
-        "status": "ok",
-        "symbols": len(SYMBOLS),
-        "telegram": bool(bot)
-    }
-
-
-def run_web():
-    port = int(os.getenv("PORT", "8080"))
-
-    app.run(
-        host="0.0.0.0",
-        port=port,
-        debug=False,
-        use_reloader=False
-    )
 
 
 def run_telegram():
@@ -1250,18 +1526,35 @@ def run_telegram():
                 long_polling_timeout=30,
                 skip_pending=True
             )
+
         except Exception:
             logging.exception("Telegram polling error")
             time.sleep(5)
 
 
+@app.route("/")
+def home():
+    return {
+        "service": "MACD Divergence Scanner",
+        "status": "running",
+        "timeframe": "M1",
+        "symbols": list(SYMBOLS.keys()),
+        "historical_report_candles": 100,
+        "timezone": "Asia/Tehran"
+    }
+
+
+@app.route("/health")
+def health():
+    return {
+        "status": "ok",
+        "symbols": len(SYMBOLS),
+        "telegram": bool(bot)
+    }
+
+
 def main():
     init_db()
-
-    threading.Thread(
-        target=run_web,
-        daemon=True
-    ).start()
 
     threading.Thread(
         target=scanner_loop,
@@ -1274,8 +1567,14 @@ def main():
             daemon=True
         ).start()
 
-    while True:
-        time.sleep(60)
+    port = int(os.getenv("PORT", "8080"))
+
+    app.run(
+        host="0.0.0.0",
+        port=port,
+        debug=False,
+        use_reloader=False
+    )
 
 
 if __name__ == "__main__":
