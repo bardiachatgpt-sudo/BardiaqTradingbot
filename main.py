@@ -44,7 +44,7 @@ PRICE_MATCH_WINDOW = 7  # ۷ کندل رو به عقب برای قیمت کف/س
 
 TEHRAN = pytz.timezone("Asia/Tehran")
 
-# ۸ نماد (طلا و هفت ماژور)
+# ۸ نماد (طلا و هفت جفت ارز ماژور)
 SYMBOLS = [
     "XAUUSD",
     "EURUSD",
@@ -69,15 +69,16 @@ TIMEFRAMES = {
     },
 }
 
+# نقشه جامع سورس‌های تریدینگ‌ویو با پشتیبانی کامل از فال‌بک صرافی‌ها و بروکرها
 TV_SOURCES_MAP = {
-    "XAUUSD": ["OANDA:XAUUSD", "FOREXCOM:XAUUSD", "FX_IDC:XAUUSD", "BINANCE:PAXGUSDT"],
-    "EURUSD": ["OANDA:EURUSD", "FOREXCOM:EURUSD", "FX_IDC:EURUSD"],
-    "GBPUSD": ["OANDA:GBPUSD", "FOREXCOM:GBPUSD", "FX_IDC:GBPUSD"],
-    "USDJPY": ["OANDA:USDJPY", "FOREXCOM:USDJPY", "FX_IDC:USDJPY"],
-    "AUDUSD": ["OANDA:AUDUSD", "FOREXCOM:AUDUSD", "FX_IDC:AUDUSD"],
-    "USDCAD": ["OANDA:USDCAD", "FOREXCOM:USDCAD", "FX_IDC:USDCAD"],
-    "NZDUSD": ["OANDA:NZDUSD", "FOREXCOM:NZDUSD", "FX_IDC:NZDUSD"],
-    "USDCHF": ["OANDA:USDCHF", "FOREXCOM:USDCHF", "FX_IDC:USDCHF"],
+    "XAUUSD": ["OANDA:XAUUSD", "FOREXCOM:XAUUSD", "FX_IDC:XAUUSD", "BINANCE:PAXGUSDT", "TVC:GOLD"],
+    "EURUSD": ["OANDA:EURUSD", "FOREXCOM:EURUSD", "FX_IDC:EURUSD", "FX:EURUSD"],
+    "GBPUSD": ["OANDA:GBPUSD", "FOREXCOM:GBPUSD", "FX_IDC:GBPUSD", "FX:GBPUSD"],
+    "USDJPY": ["OANDA:USDJPY", "FOREXCOM:USDJPY", "FX_IDC:USDJPY", "FX:USDJPY"],
+    "AUDUSD": ["OANDA:AUDUSD", "FOREXCOM:AUDUSD", "FX_IDC:AUDUSD", "FX:AUDUSD"],
+    "USDCAD": ["OANDA:USDCAD", "FOREXCOM:USDCAD", "FX_IDC:USDCAD", "FX:USDCAD"],
+    "NZDUSD": ["OANDA:NZDUSD", "FOREXCOM:NZDUSD", "FX_IDC:NZDUSD", "FX:NZDUSD"],
+    "USDCHF": ["OANDA:USDCHF", "FOREXCOM:USDCHF", "FX_IDC:USDCHF", "FX:USDCHF"],
 }
 
 logging.basicConfig(
@@ -85,7 +86,7 @@ logging.basicConfig(
     format="%(asctime)s %(levelname)s %(message)s",
 )
 
-log = logging.getLogger("robust-macd-scanner")
+log = logging.getLogger("multi-symbol-macd-scanner")
 
 app = Flask(__name__)
 bot = telebot.TeleBot(BOT_TOKEN, threaded=True) if BOT_TOKEN else None
@@ -141,7 +142,7 @@ load_state()
 
 
 # ============================================================
-# TIME AND PRICE FORMATTING
+# TIME AND PRICE FORMATTING (Tehran Time)
 # ============================================================
 
 def utc_now():
@@ -168,7 +169,7 @@ def format_price(value, symbol="XAUUSD"):
 
 
 # ============================================================
-# TELEGRAM BOT HANDLERS
+# TELEGRAM BOT HANDLERS & HISTORY BUTTONS
 # ============================================================
 
 def send_message(message, chat_id=None):
@@ -203,7 +204,7 @@ if bot:
             save_state()
         send_message(
             "عضویت شما در اسکنر تخصصی MACD فعال شد.\n"
-            "دستور /report برای گزارش وضعیت یا ارسال نام نماد (مثلا XAUUSD) برای مشاهده آخرین FIRE.",
+            "دستور /report برای گزارش وضعیت یا ارسال نام نماد (مثلا XAUUSD یا EURUSD) برای مشاهده آخرین FIRE.",
             message.chat.id,
         )
 
@@ -253,7 +254,7 @@ def telegram_polling():
 
 
 # ============================================================
-# DATA PROVIDERS (TradingView WebSocket - Exact Robust Pattern)
+# TRADINGVIEW DATA PROVIDER (WebSocket Failover)
 # ============================================================
 
 HEARTBEAT_PATTERN = re.compile(r"~m~\d+~m~~h~\d+")
@@ -430,7 +431,7 @@ def fetch_market_data(symbol, timeframe):
 
 
 # ============================================================
-# MACD & STRATEGIC ENGINE
+# MACD & STRATEGIC ENGINE (Exact Specifications)
 # ============================================================
 
 def macd_histogram(close, fast, slow, signal):
