@@ -35,8 +35,9 @@ BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", os.getenv("BOT_TOKEN", "")).strip()
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "").strip()
 
 SCAN_INTERVAL = int(os.getenv("SCAN_INTERVAL", "30"))
-TV_TIMEOUT = int(os.getenv("TV_TIMEOUT", "30"))
+TV_TIMEOUT = int(os.getenv("TV_TIMEOUT", "20"))
 TV_IDLE_TIMEOUT = float(os.getenv("TV_IDLE_TIMEOUT", "4"))
+HTTP_TIMEOUT = int(os.getenv("HTTP_TIMEOUT", "12"))
 
 STATE_FILE = os.getenv("STATE_FILE", "scanner_state.json")
 PRICE_MATCH_WINDOW = 7  # ۷ کندل رو به عقب برای قیمت کف/سقف
@@ -68,17 +69,29 @@ TIMEFRAMES = {
     },
 }
 
+TV_SOURCES_MAP = {
+    "XAUUSD": ["OANDA:XAUUSD", "FOREXCOM:XAUUSD", "FX_IDC:XAUUSD", "BINANCE:PAXGUSDT"],
+    "EURUSD": ["OANDA:EURUSD", "FOREXCOM:EURUSD", "FX_IDC:EURUSD"],
+    "GBPUSD": ["OANDA:GBPUSD", "FOREXCOM:GBPUSD", "FX_IDC:GBPUSD"],
+    "USDJPY": ["OANDA:USDJPY", "FOREXCOM:USDJPY", "FX_IDC:USDJPY"],
+    "AUDUSD": ["OANDA:AUDUSD", "FOREXCOM:AUDUSD", "FX_IDC:AUDUSD"],
+    "USDCAD": ["OANDA:USDCAD", "FOREXCOM:USDCAD", "FX_IDC:USDCAD"],
+    "NZDUSD": ["OANDA:NZDUSD", "FOREXCOM:NZDUSD", "FX_IDC:NZDUSD"],
+    "USDCHF": ["OANDA:USDCHF", "FOREXCOM:USDCHF", "FX_IDC:USDCHF"],
+}
+
 logging.basicConfig(
     level=os.getenv("LOG_LEVEL", "INFO").upper(),
     format="%(asctime)s %(levelname)s %(message)s",
 )
 
-log = logging.getLogger("custom-macd-scanner")
+log = logging.getLogger("robust-macd-scanner")
 
 app = Flask(__name__)
 bot = telebot.TeleBot(BOT_TOKEN, threaded=True) if BOT_TOKEN else None
 
 state_lock = threading.RLock()
+
 subscribed_users = set()
 event_history = []
 seen_event_ids = set()
@@ -128,7 +141,7 @@ load_state()
 
 
 # ============================================================
-# TIME AND PRICE FORMATTING (Tehran Time)
+# TIME AND PRICE FORMATTING
 # ============================================================
 
 def utc_now():
@@ -155,7 +168,7 @@ def format_price(value, symbol="XAUUSD"):
 
 
 # ============================================================
-# TELEGRAM BOT HANDLERS & HISTORY BUTTONS
+# TELEGRAM BOT HANDLERS
 # ============================================================
 
 def send_message(message, chat_id=None):
@@ -190,7 +203,7 @@ if bot:
             save_state()
         send_message(
             "عضویت شما در اسکنر تخصصی MACD فعال شد.\n"
-            "دستور /report برای گزارش وضعیت یا ارسال نام نماد (مثلا XAUUSD) برای مشاهده تاریخچه آخرین FIRE.",
+            "دستور /report برای گزارش وضعیت یا ارسال نام نماد (مثلا XAUUSD) برای مشاهده آخرین FIRE.",
             message.chat.id,
         )
 
@@ -199,7 +212,7 @@ if bot:
         with state_lock:
             subscribed_users.discard(message.chat.id)
             save_state()
-        send_message("ارسال هشدار متوقف شد.", message.chat.id)
+        send_message("ارسال هشدار برای این حساب متوقف شد.", message.chat.id)
 
     @bot.message_handler(commands=["report", "status"])
     def telegram_report(message):
@@ -223,17 +236,24 @@ if bot:
 
 def telegram_polling():
     if not bot:
+        log.warning("Telegram bot token is not configured.")
         return
+    try:
+        bot.remove_webhook()
+        time.sleep(1)
+    except Exception:
+        pass
+
     while True:
         try:
             bot.infinity_polling(skip_pending=True, timeout=20, long_polling_timeout=20)
         except Exception:
-            log.exception("Telegram polling error; retrying...")
+            log.exception("Telegram polling stopped; retrying in 5s")
             time.sleep(5)
 
 
 # ============================================================
-# TRADINGVIEW DATA PROVIDER
+# DATA PROVIDERS (TradingView WebSocket - Exact Robust Pattern)
 # ============================================================
 
 HEARTBEAT_PATTERN = re.compile(r"~m~\d+~m~~h~\d+")
@@ -285,14 +305,17 @@ def extract_ohlc_records(obj):
     return records
 
 
-def fetch_from_tradingview(tv_symbol, interval, n_bars, candle_seconds):
+def fetch_from_tradingview(symbol, interval, n_bars, candle_seconds):
     ws = None
     bars_by_time = {}
     server_errors = []
     try:
         ws = websocket.create_connection(
             "wss://data.tradingview.com/socket.io/websocket?from=chart%2F",
-            header=["Origin: https://www.tradingview.com", "User-Agent: Mozilla/5.0"],
+            header=[
+                "Origin: https://www.tradingview.com",
+                "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+            ],
             timeout=10,
             enable_multithread=True,
         )
@@ -302,7 +325,7 @@ def fetch_from_tradingview(tv_symbol, interval, n_bars, candle_seconds):
         tv_send(ws, "set_auth_token", ["unauthorized_user_token"])
         tv_send(ws, "chart_create_session", [chart_session, ""])
 
-        symbol_data = json.dumps({"symbol": tv_symbol, "adjustment": "splits"}, separators=(",", ":"))
+        symbol_data = json.dumps({"symbol": symbol, "adjustment": "splits"}, separators=(",", ":"))
         tv_send(ws, "resolve_symbol", [chart_session, "symbol_1", "=" + symbol_data])
         tv_send(ws, "create_series", [chart_session, "series_1", "s1", "symbol_1", str(interval), int(n_bars), ""])
 
@@ -353,7 +376,7 @@ def fetch_from_tradingview(tv_symbol, interval, n_bars, candle_seconds):
             ws.close()
 
         if not bars_by_time:
-            return None, f"TV {tv_symbol}: no records"
+            return None, f"TV {symbol}: {'; '.join(server_errors) if server_errors else 'no records'}"
 
         df = pd.DataFrame(list(bars_by_time.values())).sort_values("time")
         df["time"] = pd.to_datetime(df["time"], unit="s", utc=True)
@@ -366,8 +389,8 @@ def fetch_from_tradingview(tv_symbol, interval, n_bars, candle_seconds):
 
         if len(df) > n_bars:
             df = df.iloc[-n_bars:]
-        if len(df) < 150:
-            return None, f"TV {tv_symbol}: only {len(df)} candles"
+        if len(df) < 50:
+            return None, f"TV {symbol}: only {len(df)} candles"
         return df, None
     except Exception as exc:
         if ws:
@@ -375,33 +398,39 @@ def fetch_from_tradingview(tv_symbol, interval, n_bars, candle_seconds):
                 ws.close()
             except Exception:
                 pass
-        return None, f"TV {tv_symbol}: {type(exc).__name__}"
+        return None, f"TV {symbol}: {type(exc).__name__}: {str(exc)[:100]}"
 
 
 def fetch_market_data(symbol, timeframe):
     config = TIMEFRAMES[timeframe]
-    sources = [f"OANDA:{symbol}", f"FOREXCOM:{symbol}", f"FX_IDC:{symbol}"]
-    if symbol == "XAUUSD":
-        sources.append("BINANCE:PAXGUSDT")
+    sources = TV_SOURCES_MAP.get(symbol, [f"OANDA:{symbol}"])
+    previous_source = source_locks.get((symbol, timeframe))
+
+    ordered_sources = []
+    if previous_source in sources:
+        ordered_sources.append(previous_source)
+    for source in sources:
+        if source not in ordered_sources:
+            ordered_sources.append(source)
 
     errors = []
-    for tv_sym in sources:
+    for source in ordered_sources:
         frame, error = fetch_from_tradingview(
-            tv_symbol=tv_sym,
+            symbol=source,
             interval=config["interval"],
             n_bars=config["bars"],
             candle_seconds=config["seconds"],
         )
         if frame is not None:
-            source_locks[(symbol, timeframe)] = tv_sym
-            return frame, tv_sym, None
+            source_locks[(symbol, timeframe)] = source
+            return frame, source, None
         errors.append(error)
 
     return None, None, " | ".join(errors)
 
 
 # ============================================================
-# MACD & STRATEGIC ENGINE (Exact Specifications)
+# MACD & STRATEGIC ENGINE
 # ============================================================
 
 def macd_histogram(close, fast, slow, signal):
@@ -414,7 +443,7 @@ def macd_histogram(close, fast, slow, signal):
 
 class DivergenceTracker:
     def __init__(self, side="bull", price_window=7):
-        self.side = side  # "bull" یا "bear"
+        self.side = side
         self.price_window = price_window
         self.reset_all()
 
@@ -430,12 +459,9 @@ class DivergenceTracker:
     def get_price_extreme(self, df, idx):
         left = max(0, idx - self.price_window)
         segment = df.iloc[left : idx + 1]
-        if self.side == "bull":
-            return float(segment["low"].min())
-        else:
-            return float(segment["high"].max())
+        return float(segment["low"].min()) if self.side == "bull" else float(segment["high"].max())
 
-    def update(self, df, is_warmup=False):
+    def update(self, df):
         events = []
         if len(df) < 3:
             return events
@@ -527,18 +553,16 @@ class StrategyEngine:
         for side in ["bull", "bear"]:
             key = (symbol, timeframe, side)
             
-            # لایه اول: مکدی (48, 104, 36)
             h1 = macd_histogram(df["close"], 48, 104, 36)
             work = df.copy()
             work["h"] = h1
             tracker = self.trackers.setdefault(key, DivergenceTracker(side=side, price_window=PRICE_MATCH_WINDOW))
             
             valid_work = work.dropna(subset=["h"])
-            for event in tracker.update(valid_work, is_warmup=is_warmup):
+            for event in tracker.update(valid_work):
                 if not is_warmup:
                     emitted.append(event)
 
-            # لایه‌های دوم و سوم (READY & FIRE) روی M1
             if timeframe == "M1":
                 h2 = macd_histogram(df["close"], 12, 26, 9)
                 h3 = macd_histogram(df["close"], 3, 6, 2)
@@ -548,11 +572,7 @@ class StrategyEngine:
                     continue
 
                 last_time = self.last_bar_time.get(key)
-                if is_warmup:
-                    # در حالت گرم‌شدن، کل تاریخچه ۲۴ ساعته بازار بازپخش می‌شود بدون ارسال الرت
-                    new_rows = aligned
-                else:
-                    new_rows = aligned.iloc[-2:] if last_time is None else aligned.loc[aligned.index > last_time]
+                new_rows = aligned if is_warmup else (aligned.iloc[-2:] if last_time is None else aligned.loc[aligned.index > last_time])
 
                 history = self.fire_history.setdefault(key, [])
                 previous_h2 = None
@@ -566,10 +586,7 @@ class StrategyEngine:
                         if pos > 0:
                             previous_h2 = float(aligned.iloc[pos - 1]["h2"])
 
-                    if side == "bull":
-                        is_ready_condition = (previous_h2 is not None and previous_h2 <= 0 < now2)
-                    else:
-                        is_ready_condition = (previous_h2 is not None and previous_h2 >= 0 > now2)
+                    is_ready_condition = (previous_h2 is not None and previous_h2 <= 0 < now2) if side == "bull" else (previous_h2 is not None and previous_h2 >= 0 > now2)
 
                     if is_ready_condition:
                         if not self.ready_state.get(key, False):
@@ -623,7 +640,7 @@ engine = StrategyEngine()
 
 
 # ============================================================
-# EVENT REGISTRATION & TEHRAN TIME ALERTS
+# EVENT REGISTRATION & TELEGRAM ALERTS
 # ============================================================
 
 def register_event(symbol, timeframe, event):
@@ -670,16 +687,14 @@ def build_report():
 
 
 # ============================================================
-# SCANNER LOOP & WARM-UP REPLAY
+# SCANNER LOOP & WARM-UP
 # ============================================================
 
 def warmup_symbol(symbol):
     for timeframe in TIMEFRAMES:
-        frame, source, error = fetch_market_data(symbol, timeframe)
-        if frame is None:
-            continue
-        # بازپخش ۲۴ ساعته برای پر کردن تاریخچه و دکمه‌های هیستوری بدون ارسال پیام
-        engine.process(symbol, timeframe, frame, is_warmup=True)
+        frame, _, _ = fetch_market_data(symbol, timeframe)
+        if frame is not None:
+            engine.process(symbol, timeframe, frame, is_warmup=True)
     engine.warmed_up.add(symbol)
     log.info("Warm-up completed for %s", symbol)
 
@@ -690,17 +705,15 @@ def scan_symbol(symbol):
         return
 
     for timeframe in TIMEFRAMES:
-        frame, source, error = fetch_market_data(symbol, timeframe)
-        if frame is None:
-            continue
-        events = engine.process(symbol, timeframe, frame, is_warmup=False)
-        for event in events:
-            register_event(symbol, timeframe, event)
+        frame, _, _ = fetch_market_data(symbol, timeframe)
+        if frame is not None:
+            for event in engine.process(symbol, timeframe, frame, is_warmup=False):
+                register_event(symbol, timeframe, event)
 
 
 def scanner_loop():
     global scanner_started
-    log.info("Multi-symbol MACD scanner started.")
+    log.info("Robust Multi-Symbol MACD scanner started.")
     scanner_started = True
 
     while True:
