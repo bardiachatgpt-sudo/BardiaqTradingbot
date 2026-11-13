@@ -18,6 +18,7 @@ from telebot import types
 # ============================== تنظیمات ==============================
 TEHRAN = pytz.timezone("Asia/Tehran")
 PRICE_WINDOW = 7        # تعداد کندل قبل از کندل کف/قله برای قیمت (قابل‌تنظیم)
+READY_BARS = 3          # حداقل تعداد میله‌ی پیاپی (12,26,9) در سمت درست برای READY (قابل‌تنظیم)
 WARMUP = 1000           # کندل‌های گرم‌شدن اندیکاتور (بدون تشخیص)
 INIT_BARS = 2500        # تاریخچه‌ی بازپخش هنگام راه‌اندازی
 POLL_BARS = 60          # تعداد کندل در هر دور بررسی زنده
@@ -53,6 +54,26 @@ FLAGS = {
 
 def label(name):
     return f"{FLAGS.get(name, '')} {name}".strip()
+
+
+# سشن‌ها: ساعت محلی هر بازار (تقریبی؛ تغییر ساعت تابستانی خودکار اعمال می‌شود)
+SESSIONS = [
+    ("Sydney", "Australia/Sydney", 7, 16),
+    ("Tokyo", "Asia/Tokyo", 9, 18),
+    ("London", "Europe/London", 8, 17),
+    ("New York", "America/New_York", 8, 17),
+]
+_SESS_TZ = {n: pytz.timezone(tz) for n, tz, a, b in SESSIONS}
+
+
+def session_at(ts):
+    act = []
+    for n, tz, a, b in SESSIONS:
+        if a <= ts.tz_convert(_SESS_TZ[n]).hour < b:
+            act.append(n)
+    if not act:
+        return "Off-hours"
+    return " · ".join(act) + (" (overlap)" if len(act) > 1 else "")
 
 # ============================== حالت و ذخیره ==============================
 _lock = threading.Lock()
@@ -95,10 +116,14 @@ def to_tehran(ts):
     return ts.tz_convert(TEHRAN).strftime("%Y-%m-%d %H:%M")
 
 
+def to_tehran_short(ts):
+    return ts.tz_convert(TEHRAN).strftime("%d %b %H:%M")
+
+
 def fmt_gap(td):
     m = int(td.total_seconds() // 60)
     h, m = divmod(m, 60)
-    return f"{h}س {m}د" if h else f"{m}د"
+    return f"{h}h {m}m" if h else f"{m}m"
 
 
 def fmt_price(sym, x):
@@ -288,19 +313,34 @@ class Cycle:
         self.phase_bars = None
         self.alive = True
 
-    def step(self, x2, x3h, now, created=False):
+    def step(self, x2, pos2, x3h, now, pm, h1m, created=False):
+        """
+        x2   : هیستوگرام (12,26,9) آینه‌شده
+        pos2 : تعداد میله‌ی پیاپی x2 > 0
+        pm   : قیمت آینه‌شده‌ی کندل (صعودی: Low ، نزولی: -High)
+        h1m  : هیستوگرام (48,104,36) آینه‌شده‌ی این کندل
+        """
+        # قانون ساختار: میله‌ای عمیق‌تر از کف/قله‌ی اول آمد، مرجع واگرایی باطل است
+        if h1m < self.s * self.detail["first"][0]:
+            self.alive = False
+            if self.stage == "WAIT_FIRE":
+                return [("INVALID", {"reason": "deeper"})]
+            return []   # پیش از READY: بی‌صدا حذف می‌شود
         if self.stage == "WAIT_READY":
-            if x2 > 0:
+            if pos2 >= READY_BARS:
                 self.stage = "WAIT_FIRE"
                 self.ready_time = now
-                self.ready_mode = "already" if created else "cross"
+                self.ready_mode = "already" if created else "built"
                 self.phase_bars = 1 if x3h[-1] < 0 else None
-                return [("READY", {})]
+                return [("READY", {"pos2": pos2})]
             return []
-        # WAIT_FIRE: ابطال مقدم است
+        # WAIT_FIRE: ابطال‌ها مقدم‌اند
         if x2 < 0:
             self.alive = False
-            return [("INVALID", {})]
+            return [("INVALID", {"reason": "hist"})]
+        if pm < self.s * self.detail["second"][1]:     # قیمت از کف/قله‌ی دوم عبور کرد
+            self.alive = False
+            return [("INVALID", {"reason": "price"})]
         x3 = x3h[-1]
         if self.phase_bars is None:
             if x3 < 0:
@@ -329,6 +369,7 @@ class SymbolEngine:
         self.det5 = {1: DivDetector(), -1: DivDetector()}
         self.cycles = {1: [], -1: []}
         self.x3 = {1: deque(maxlen=3), -1: deque(maxlen=3)}
+        self.pos2 = {1: 0, -1: 0}
         self.bucket = None
         self.n = 0
         self.last_time = None
@@ -348,7 +389,7 @@ class SymbolEngine:
     def _mk(self, kind, info, cyc, now):
         ev = {"kind": kind, "sym": self.name, "s": cyc.s, "time": now,
               "div": cyc.div_time, "ready": cyc.ready_time, "mode": cyc.ready_mode,
-              "detail": cyc.detail}
+              "detail": cyc.detail, "reason": info.get("reason"), "pos2": info.get("pos2")}
         if kind == "FIRE":
             d5 = self.det5[cyc.s]
             ev["path"] = info["path"]
@@ -382,18 +423,20 @@ class SymbolEngine:
         for s in (1, -1):
             self.x3[s].append(s * h3)
             x2 = s * h2
+            self.pos2[s] = self.pos2[s] + 1 if x2 > 0 else 0
+            h1m = s * h1
+            pm = lo if s > 0 else -hi
+            pkm = hi if s > 0 else -lo
             for cyc in list(self.cycles[s]):
-                for kind, info in cyc.step(x2, self.x3[s], close_t):
+                for kind, info in cyc.step(x2, self.pos2[s], self.x3[s], close_t, pm, h1m):
                     events.append(self._mk(kind, info, cyc, close_t))
                 if not cyc.alive:
                     self.cycles[s].remove(cyc)
-            pm = lo if s > 0 else -hi
-            pkm = hi if s > 0 else -lo
-            if self.det1[s].update(s * h1, pm, pkm, ts, enabled):
+            if self.det1[s].update(h1m, pm, pkm, ts, enabled):
                 d = self.det1[s].detail
                 detail = {k: (s * v[0], s * v[1], v[2]) for k, v in d.items()}
                 cyc = Cycle(s, close_t, detail)
-                for kind, info in cyc.step(x2, self.x3[s], close_t, created=True):
+                for kind, info in cyc.step(x2, self.pos2[s], self.x3[s], close_t, pm, h1m, created=True):
                     events.append(self._mk(kind, info, cyc, close_t))
                 if cyc.alive:
                     self.cycles[s].append(cyc)
@@ -401,50 +444,74 @@ class SymbolEngine:
         self.last_time = ts
         return events
 
-# ============================== پیام‌ها ==============================
+# ============================== پیام‌ها (انگلیسی) ==============================
+LINE = "━" * 16
+LINE2 = "━" * 26
+
+
 def detail_block(ev):
     s, sym, d = ev["s"], ev["sym"], ev["detail"]
-    names = ("کف اول", "سقف میانی", "کف دوم") if s > 0 else ("قله‌ی اول", "کف میانی", "قله‌ی دوم")
+    low, opp = ("low", "high") if s > 0 else ("high", "low")
+    mark = "🔻" if s > 0 else "🔺"
 
-    def line(name, k):
+    def pt(k):
         h, p, t = d[k]
-        return f"{name}: هیستوگرام {fmt_h(h)} | قیمت {fmt_price(sym, p)} | کندل {to_tehran(t)}"
+        return fmt_price(sym, p), to_tehran_short(t), fmt_h(h)
 
-    return ("\n📐 جزئیات واگرایی M1 (۴۸،۱۰۴،۳۶)\n"
-            f"تأیید واگرایی: {to_tehran(ev['div'])}\n"
-            f"{line(names[0], 'first')}\n"
-            f"{line(names[1], 'mid')}\n"
-            f"{line(names[2], 'second')}")
+    p1, t1, h1 = pt("first")
+    pm, tm, hm = pt("mid")
+    p2, t2, h2 = pt("second")
+    return (f"\n{LINE2}\n"
+            "📐 <b>Divergence · MACD (48,104,36)</b>\n"
+            f"Confirmed: {to_tehran_short(ev['div'])}\n"
+            f"{mark} <b>1st {low}</b>  ·  {p1}  ·  {t1}\n"
+            f"{mark} <b>2nd {low}</b>  ·  {p2}  ·  {t2}\n"
+            f"▫️ Mid {opp}  ·  {pm}  ·  {tm}\n"
+            f"📊 Hist: 1st {h1} | mid {hm} | 2nd {h2}")
 
 
 def build_msg(ev):
     s = ev["s"]
-    side = "صعودی" if s > 0 else "نزولی"
+    side = "BULLISH📈" if s > 0 else "BEARISH📉"
     icon = "🟢" if s > 0 else "🔴"
-    pos = "مثبت" if s > 0 else "منفی"
-    lbl = label(ev["sym"])
+    pos_w = "above" if s > 0 else "below"
+    neg_w = "below" if s > 0 else "above"
+    low = "low" if s > 0 else "high"
+    t = ev["time"]
+    head2 = f"<b>{label(ev['sym'])}</b>  ·  M1\n{LINE}\n"
+    when = f"🕒 <b>{to_tehran(t)}</b> Tehran\n🌍 {session_at(t)}\n"
+
     if ev["kind"] == "READY":
-        mode = f"از قبل {pos} بود" if ev["mode"] == "already" else f"عبور به {pos}"
-        return (f"{icon} READY {side} ـ {lbl}\n"
-                f"READY: {to_tehran(ev['time'])} ({mode})"
+        return (f"{icon} <b>READY · {side}</b>\n" + head2 + when +
+                f"✅ MACD (12,26,9) {pos_w} zero for {ev['pos2']} bars\n"
+                f"👀 Now watching MACD (3,6,2) for the FIRE"
                 + detail_block(ev))
+
     if ev["kind"] == "INVALID":
-        return (f"⚪ ابطال {side} ـ {lbl}\n"
-                f"READY بود: {to_tehran(ev['ready'])}\n"
-                f"ابطال: {to_tehran(ev['time'])}"
+        if ev["reason"] == "price":
+            why = (f"Price broke {neg_w} the 2nd {low} "
+                   f"({fmt_price(ev['sym'], ev['detail']['second'][1])})")
+        elif ev["reason"] == "deeper":
+            why = (f"MACD (48,104,36) printed a deeper {low} than the 1st one — "
+                   f"divergence reference is void")
+        else:
+            why = f"MACD (12,26,9) crossed {neg_w} zero"
+        return (f"⚪ <b>CANCELLED · {side}</b>\n" + head2 + when +
+                f"❌ {why}\n"
+                f"READY was at {to_tehran_short(ev['ready'])}"
                 + detail_block(ev))
+
     # FIRE
     if ev["path"] == 1:
-        path = "تأیید اولین دره" if s > 0 else "تأیید اولین قله"
+        path = f"first {'trough' if s > 0 else 'peak'} confirmed"
     else:
-        path = f"برگشت به {pos}"
-    strong = "  ⭐ قوی" if ev["strong"] else ""
-    txt = (f"🔥 FIRE {side} ـ {lbl}{strong}\n"
-           f"FIRE: {to_tehran(ev['time'])}\n"
-           f"راه صدور: {ev['path']} ({path})\n"
-           f"فاصله‌ی واگرایی تا FIRE: {fmt_gap(ev['time'] - ev['div'])}")
+        path = f"back {'above' if s > 0 else 'below'} zero"
+    strong = "  ⭐ <b>STRONG</b>" if ev["strong"] else ""
+    txt = (f"🔥 <b>FIRE · {side}</b>{strong}\n" + head2 + when +
+           f"⚡ Trigger: path {ev['path']} — {path}\n"
+           f"⏱ Divergence → FIRE: {fmt_gap(t - ev['div'])}")
     if ev["strong"] and ev["m5_time"] is not None:
-        txt += f"\nواگرایی M5 تأیید شده: {to_tehran(ev['m5_time'])}"
+        txt += f"\n📈 M5 divergence confirmed: {to_tehran_short(ev['m5_time'])}"
     return txt + detail_block(ev)
 
 # ============================== تلگرام ==============================
@@ -458,7 +525,7 @@ def broadcast(text):
         return
     for chat_id in list(users):
         try:
-            bot.send_message(chat_id, text)
+            bot.send_message(chat_id, text, parse_mode="HTML")
         except Exception as e:
             print("telegram send error:", e)
 
@@ -472,11 +539,11 @@ def keyboard():
 def last_fire_text(name):
     r = last_fire.get(name)
     if not r:
-        return f"{label(name)}: FIRE ثبت نشده"
+        return f"{label(name)}: no FIRE recorded yet"
     if r.get("msg"):
         return r["msg"]
-    side = "صعودی" if r["d"] > 0 else "نزولی"
-    return f"{label(name)}: {to_tehran(pd.Timestamp(r['t']))} ({side})"
+    side = "bullish" if r["d"] > 0 else "bearish"
+    return f"{label(name)}: {to_tehran(pd.Timestamp(r['t']))} Tehran ({side})"
 
 
 if bot:
@@ -485,8 +552,8 @@ if bot:
         users.add(m.chat.id)
         save_state()
         bot.send_message(m.chat.id,
-                         "ثبت‌نام شد. الرت READY و FIRE می‌آید.\n"
-                         "برای دیدن آخرین FIRE، یک نماد را بزنید:",
+                         "✅ Registered. You will receive READY and FIRE alerts.\n"
+                         "Tap a pair to see its last FIRE:",
                          reply_markup=keyboard())
 
     @bot.callback_query_handler(func=lambda c: c.data and c.data.startswith("last:"))
@@ -494,7 +561,10 @@ if bot:
         name = c.data.split(":", 1)[1]
         bot.answer_callback_query(c.id)
         if name in SYMBOLS:
-            bot.send_message(c.message.chat.id, last_fire_text(name))
+            try:
+                bot.send_message(c.message.chat.id, last_fire_text(name), parse_mode="HTML")
+            except Exception:
+                bot.send_message(c.message.chat.id, last_fire_text(name))
 
 # ============================== اسکنر ==============================
 def feed(eng, df, silent):
