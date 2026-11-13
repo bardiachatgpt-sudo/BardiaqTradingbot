@@ -39,10 +39,25 @@ SYMBOLS = {
     "NZDUSD": _chain("NZDUSD"),
 }
 
+FLAGS = {
+    "XAUUSD": "🥇🇺🇸",
+    "EURUSD": "🇪🇺🇺🇸",
+    "GBPUSD": "🇬🇧🇺🇸",
+    "USDJPY": "🇺🇸🇯🇵",
+    "USDCHF": "🇺🇸🇨🇭",
+    "USDCAD": "🇺🇸🇨🇦",
+    "AUDUSD": "🇦🇺🇺🇸",
+    "NZDUSD": "🇳🇿🇺🇸",
+}
+
+
+def label(name):
+    return f"{FLAGS.get(name, '')} {name}".strip()
+
 # ============================== حالت و ذخیره ==============================
 _lock = threading.Lock()
 users = set()
-last_fire = {}   # {symbol: {"t": iso_utc, "d": +1/-1}}
+last_fire = {}   # {symbol: {"t": iso_utc, "d": +1/-1, "msg": متن کامل پیام FIRE}}
 
 
 def save_state():
@@ -66,10 +81,10 @@ def load_state():
         print("load_state error:", e)
 
 
-def record_fire(name, s, ts):
+def record_fire(name, s, ts, msg=None):
     cur = last_fire.get(name)
     if cur is None or ts > pd.Timestamp(cur["t"]):
-        last_fire[name] = {"t": ts.isoformat(), "d": s}
+        last_fire[name] = {"t": ts.isoformat(), "d": s, "msg": msg}
         save_state()
 
 
@@ -339,7 +354,7 @@ class SymbolEngine:
             ev["path"] = info["path"]
             ev["strong"] = d5.done
             ev["m5_time"] = d5.confirm_time if d5.done else None
-            record_fire(self.name, cyc.s, now)
+            record_fire(self.name, cyc.s, now, build_msg(ev))
         return ev
 
     def on_bar(self, ts, op, hi, lo, cl):
@@ -407,14 +422,14 @@ def build_msg(ev):
     side = "صعودی" if s > 0 else "نزولی"
     icon = "🟢" if s > 0 else "🔴"
     pos = "مثبت" if s > 0 else "منفی"
-    sym = ev["sym"]
+    lbl = label(ev["sym"])
     if ev["kind"] == "READY":
         mode = f"از قبل {pos} بود" if ev["mode"] == "already" else f"عبور به {pos}"
-        return (f"{icon} READY {side} ـ {sym}\n"
+        return (f"{icon} READY {side} ـ {lbl}\n"
                 f"READY: {to_tehran(ev['time'])} ({mode})"
                 + detail_block(ev))
     if ev["kind"] == "INVALID":
-        return (f"⚪ ابطال {side} ـ {sym}\n"
+        return (f"⚪ ابطال {side} ـ {lbl}\n"
                 f"READY بود: {to_tehran(ev['ready'])}\n"
                 f"ابطال: {to_tehran(ev['time'])}"
                 + detail_block(ev))
@@ -424,7 +439,7 @@ def build_msg(ev):
     else:
         path = f"برگشت به {pos}"
     strong = "  ⭐ قوی" if ev["strong"] else ""
-    txt = (f"🔥 FIRE {side} ـ {sym}{strong}\n"
+    txt = (f"🔥 FIRE {side} ـ {lbl}{strong}\n"
            f"FIRE: {to_tehran(ev['time'])}\n"
            f"راه صدور: {ev['path']} ({path})\n"
            f"فاصله‌ی واگرایی تا FIRE: {fmt_gap(ev['time'] - ev['div'])}")
@@ -450,16 +465,18 @@ def broadcast(text):
 
 def keyboard():
     kb = types.InlineKeyboardMarkup(row_width=2)
-    kb.add(*[types.InlineKeyboardButton(n, callback_data="last:" + n) for n in SYMBOLS])
+    kb.add(*[types.InlineKeyboardButton(label(n), callback_data="last:" + n) for n in SYMBOLS])
     return kb
 
 
 def last_fire_text(name):
     r = last_fire.get(name)
     if not r:
-        return f"{name}: FIRE ثبت نشده"
+        return f"{label(name)}: FIRE ثبت نشده"
+    if r.get("msg"):
+        return r["msg"]
     side = "صعودی" if r["d"] > 0 else "نزولی"
-    return f"{name}: {to_tehran(pd.Timestamp(r['t']))} ({side})"
+    return f"{label(name)}: {to_tehran(pd.Timestamp(r['t']))} ({side})"
 
 
 if bot:
@@ -469,7 +486,7 @@ if bot:
         save_state()
         bot.send_message(m.chat.id,
                          "ثبت‌نام شد. الرت READY و FIRE می‌آید.\n"
-                         "برای دیدن زمان آخرین FIRE، یک نماد را بزنید:",
+                         "برای دیدن آخرین FIRE، یک نماد را بزنید:",
                          reply_markup=keyboard())
 
     @bot.callback_query_handler(func=lambda c: c.data and c.data.startswith("last:"))
