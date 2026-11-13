@@ -23,8 +23,10 @@ INIT_BARS = 2500        # تاریخچه‌ی بازپخش هنگام راه‌�
 POLL_BARS = 60          # تعداد کندل در هر دور بررسی زنده
 STATE_FILE = "bot_state.json"
 
+
 def _chain(base):
     return [f"OANDA:{base}", f"FOREXCOM:{base}", f"FX:{base}"]
+
 
 SYMBOLS = {
     "XAUUSD": ["OANDA:XAUUSD", "FOREXCOM:XAUUSD", "FX_IDC:XAUUSD"],
@@ -73,7 +75,7 @@ def record_fire(name, s, ts):
 
 load_state()
 
-# ============================== زمان ==============================
+# ============================== قالب‌بندی ==============================
 def to_tehran(ts):
     return ts.tz_convert(TEHRAN).strftime("%Y-%m-%d %H:%M")
 
@@ -82,6 +84,15 @@ def fmt_gap(td):
     m = int(td.total_seconds() // 60)
     h, m = divmod(m, 60)
     return f"{h}س {m}د" if h else f"{m}د"
+
+
+def fmt_price(sym, x):
+    d = 2 if sym == "XAUUSD" else (3 if "JPY" in sym else 5)
+    return f"{x:.{d}f}"
+
+
+def fmt_h(x):
+    return f"{x:.4g}"
 
 # ============================== دریافت قیمت (وب‌سوکت TradingView) ==============================
 def _send(ws, func, params):
@@ -174,38 +185,46 @@ class EMA:
 
 
 class MACDHist:
+    """میله‌ها = خط MACD (مثل MT5)، نه MACD منهای Signal."""
+
     def __init__(self, fast, slow, sig):
-        self.f, self.s, self.g = EMA(fast), EMA(slow), EMA(sig)
+        self.f, self.s = EMA(fast), EMA(slow)
 
     def update(self, close):
-        m = self.f.update(close) - self.s.update(close)
-        return m - self.g.update(m)
+        return self.f.update(close) - self.s.update(close)
 
 # ============================== لایه‌ی اول: تشخیص واگرایی ==============================
 class DivDetector:
     """
     منطق صعودی روی هیستوگرام و قیمت آینه‌شده.
-    مسیر نزولی با ضرب هیستوگرام در -1 و استفاده از -High به‌جای Low اجرا می‌شود.
+    مسیر نزولی با ضرب هیستوگرام در -1 اجرا می‌شود:
+      p  = قیمت کف/قله (صعودی: Low ، نزولی: -High)
+      pk = قیمت سقف/کف میانی (صعودی: High ، نزولی: -Low)  [فقط برای نمایش]
     """
 
     def __init__(self):
         self.h = deque(maxlen=12)
         self.p = deque(maxlen=12)
+        self.pk = deque(maxlen=12)
+        self.t = deque(maxlen=12)
         self.n = 0
         self.confirm_time = None
+        self.detail = None
         self._clear()
 
     def _clear(self):
         self.active = False
         self.start = None
-        self.first = None   # (hist, price)
-        self.mid = None     # hist
+        self.first = None   # (hist, price, time)
+        self.mid = None     # (hist, price, time)
         self.done = False
 
-    def update(self, h, p, enabled):
+    def update(self, h, p, pk, ts, enabled):
         prev = self.h[-1] if self.h else None
         self.h.append(h)
         self.p.append(p)
+        self.pk.append(pk)
+        self.t.append(ts)
         idx = self.n
         self.n += 1
         if not enabled or prev is None:
@@ -223,26 +242,31 @@ class DivDetector:
         if k < self.start:
             return False
         hk, hkk = self.h[-2], self.h[-3]
+        tk = self.t[-2]
         is_trough = hk <= hkk and hk < h
         is_peak = hk >= hkk and hk > h
+        w = PRICE_WINDOW + 2
         if is_peak:
-            if self.first is not None and (self.mid is None or hk > self.mid):
-                self.mid = hk
+            if self.first is not None and (self.mid is None or hk > self.mid[0]):
+                self.mid = (hk, max(list(self.pk)[-w:-1]), tk)
         elif is_trough:
-            price = min(list(self.p)[-(PRICE_WINDOW + 2):-1])
+            price = min(list(self.p)[-w:-1])
             if self.first is None or hk < self.first[0]:
-                self.first = (hk, price)
+                self.first = (hk, price, tk)
                 self.mid = None
             elif hk > self.first[0] and self.mid is not None and price < self.first[1]:
                 self.done = True
+                self.detail = {"first": self.first, "mid": self.mid,
+                               "second": (hk, price, tk)}
                 return True
         return False
 
 # ============================== لایه‌ی دوم و سوم: چرخه ==============================
 class Cycle:
-    def __init__(self, s, div_time):
+    def __init__(self, s, div_time, detail):
         self.s = s
         self.div_time = div_time
+        self.detail = detail
         self.stage = "WAIT_READY"
         self.ready_time = None
         self.ready_mode = None
@@ -302,12 +326,14 @@ class SymbolEngine:
         close5 = b["t"] + pd.Timedelta(minutes=5)
         for s in (1, -1):
             pm = b["lo"] if s > 0 else -b["hi"]
-            if self.det5[s].update(s * h5, pm, enabled):
+            pkm = b["hi"] if s > 0 else -b["lo"]
+            if self.det5[s].update(s * h5, pm, pkm, b["t"], enabled):
                 self.det5[s].confirm_time = close5
 
     def _mk(self, kind, info, cyc, now):
         ev = {"kind": kind, "sym": self.name, "s": cyc.s, "time": now,
-              "div": cyc.div_time, "ready": cyc.ready_time, "mode": cyc.ready_mode}
+              "div": cyc.div_time, "ready": cyc.ready_time, "mode": cyc.ready_mode,
+              "detail": cyc.detail}
         if kind == "FIRE":
             d5 = self.det5[cyc.s]
             ev["path"] = info["path"]
@@ -347,8 +373,11 @@ class SymbolEngine:
                 if not cyc.alive:
                     self.cycles[s].remove(cyc)
             pm = lo if s > 0 else -hi
-            if self.det1[s].update(s * h1, pm, enabled):
-                cyc = Cycle(s, close_t)
+            pkm = hi if s > 0 else -lo
+            if self.det1[s].update(s * h1, pm, pkm, ts, enabled):
+                d = self.det1[s].detail
+                detail = {k: (s * v[0], s * v[1], v[2]) for k, v in d.items()}
+                cyc = Cycle(s, close_t, detail)
                 for kind, info in cyc.step(x2, self.x3[s], close_t, created=True):
                     events.append(self._mk(kind, info, cyc, close_t))
                 if cyc.alive:
@@ -358,6 +387,21 @@ class SymbolEngine:
         return events
 
 # ============================== پیام‌ها ==============================
+def detail_block(ev):
+    s, sym, d = ev["s"], ev["sym"], ev["detail"]
+    names = ("کف اول", "سقف میانی", "کف دوم") if s > 0 else ("قله‌ی اول", "کف میانی", "قله‌ی دوم")
+
+    def line(name, k):
+        h, p, t = d[k]
+        return f"{name}: هیستوگرام {fmt_h(h)} | قیمت {fmt_price(sym, p)} | کندل {to_tehran(t)}"
+
+    return ("\n📐 جزئیات واگرایی M1 (۴۸،۱۰۴،۳۶)\n"
+            f"تأیید واگرایی: {to_tehran(ev['div'])}\n"
+            f"{line(names[0], 'first')}\n"
+            f"{line(names[1], 'mid')}\n"
+            f"{line(names[2], 'second')}")
+
+
 def build_msg(ev):
     s = ev["s"]
     side = "صعودی" if s > 0 else "نزولی"
@@ -367,13 +411,13 @@ def build_msg(ev):
     if ev["kind"] == "READY":
         mode = f"از قبل {pos} بود" if ev["mode"] == "already" else f"عبور به {pos}"
         return (f"{icon} READY {side} ـ {sym}\n"
-                f"واگرایی M1: {to_tehran(ev['div'])}\n"
-                f"READY: {to_tehran(ev['time'])} ({mode})")
+                f"READY: {to_tehran(ev['time'])} ({mode})"
+                + detail_block(ev))
     if ev["kind"] == "INVALID":
         return (f"⚪ ابطال {side} ـ {sym}\n"
-                f"واگرایی M1: {to_tehran(ev['div'])}\n"
-                f"READY: {to_tehran(ev['ready'])}\n"
-                f"ابطال: {to_tehran(ev['time'])}")
+                f"READY بود: {to_tehran(ev['ready'])}\n"
+                f"ابطال: {to_tehran(ev['time'])}"
+                + detail_block(ev))
     # FIRE
     if ev["path"] == 1:
         path = "تأیید اولین دره" if s > 0 else "تأیید اولین قله"
@@ -383,11 +427,10 @@ def build_msg(ev):
     txt = (f"🔥 FIRE {side} ـ {sym}{strong}\n"
            f"FIRE: {to_tehran(ev['time'])}\n"
            f"راه صدور: {ev['path']} ({path})\n"
-           f"واگرایی M1: {to_tehran(ev['div'])}\n"
            f"فاصله‌ی واگرایی تا FIRE: {fmt_gap(ev['time'] - ev['div'])}")
     if ev["strong"] and ev["m5_time"] is not None:
-        txt += f"\nواگرایی M5: {to_tehran(ev['m5_time'])}"
-    return txt
+        txt += f"\nواگرایی M5 تأیید شده: {to_tehran(ev['m5_time'])}"
+    return txt + detail_block(ev)
 
 # ============================== تلگرام ==============================
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
