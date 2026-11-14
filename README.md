@@ -38,3 +38,16 @@ python -m unittest discover -s tests -v
 The Postgres storage tests run only when `TEST_DATABASE_URL` points at a throwaway database (its tables are dropped).
 
 `tests/test_strategy.py` replays deterministic synthetic candles and checks that every alert matches `tests/golden_events.json` exactly. If you change the signal logic or message text on purpose, regenerate it with `python tests/test_strategy.py --regen` and review the diff.
+
+## Backtest
+
+Runs the bot's own strategy engine (`bot/strategy.py`) over historical 1-minute candles: BTC from the official Binance archive (data.binance.vision), gold and forex from Dukascopy (datafeed.dukascopy.com, BID prices). Downloads are cached in `backtest/cache/`.
+
+```
+python -m backtest.run --start 2026-05-14 --end 2026-11-14
+python -m backtest.run --symbols BTCUSD --start 2026-08-01 --end 2026-11-14
+```
+
+For every FIRE it reports the move 15m / 1h / 4h later in the signal's direction, and a simple trade check: entry at the FIRE price, stop at the divergence's 2nd high/low, and whether 1R or 2R is reached before the stop (within 24h; if one candle touches both, it counts as a loss). Spread and fees are not included. Per-FIRE rows go to `backtest/results/fires.csv`.
+
+Dukascopy is slow and rate-limited; `python -m backtest.fetch_all <start> <end> <workers> <SYM,SYM>` pre-downloads the cache in the background.

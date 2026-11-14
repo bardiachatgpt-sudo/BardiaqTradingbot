@@ -11,3 +11,4 @@ Dockerfile
 README.md
 .pytest_cache
 tests
+backtest
