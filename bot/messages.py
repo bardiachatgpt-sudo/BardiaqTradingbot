@@ -1,81 +1,50 @@
-"""ساخت متن پیام‌های تلگرام (انگلیسی، HTML)."""
+"""ساخت متن پیام‌های تلگرام (انگلیسی، HTML).
+
+جزئیات واگرایی پشت صحنه می‌ماند؛ پیام فقط جهت، قیمت لحظه و زمان را نشان می‌دهد.
+"""
+import pytz
+
 from .config import decimals, label
-from .timefmt import fmt_gap, session_at, to_tehran, to_tehran_short
+from .timefmt import session_at, to_tehran
+
+LONDON = pytz.timezone("Europe/London")
+LINE = "━" * 16
 
 
 def fmt_price(sym, x):
     return f"{x:.{decimals(sym)}f}"
 
 
-def fmt_h(x):
-    return f"{x:.4g}"
-
-
-LINE = "━" * 16
-LINE2 = "━" * 26
-
-
-def detail_block(ev):
-    s, sym, d = ev["s"], ev["sym"], ev["detail"]
-    low, opp = ("low", "high") if s > 0 else ("high", "low")
-    mark = "🔻" if s > 0 else "🔺"
-
-    def pt(k):
-        h, p, t = d[k]
-        return fmt_price(sym, p), to_tehran_short(t), fmt_h(h)
-
-    p1, t1, h1 = pt("first")
-    pm, tm, hm = pt("mid")
-    p2, t2, h2 = pt("second")
-    return (f"\n{LINE2}\n"
-            "📐 <b>Divergence · MACD (48,104,36)</b>\n"
-            f"Confirmed: {to_tehran_short(ev['div'])}\n"
-            f"{mark} <b>1st {low}</b>  ·  {p1}  ·  {t1}\n"
-            f"{mark} <b>2nd {low}</b>  ·  {p2}  ·  {t2}\n"
-            f"▫️ Mid {opp}  ·  {pm}  ·  {tm}\n"
-            f"📊 Hist: 1st {h1} | mid {hm} | 2nd {h2}")
+def to_london(ts):
+    return ts.tz_convert(LONDON).strftime("%Y-%m-%d %H:%M")
 
 
 def build_msg(ev):
-    s = ev["s"]
+    s, sym, t = ev["s"], ev["sym"], ev["time"]
     side = "BULLISH📈" if s > 0 else "BEARISH📉"
     icon = "🟢" if s > 0 else "🔴"
-    pos_w = "above" if s > 0 else "below"
-    neg_w = "below" if s > 0 else "above"
-    low = "low" if s > 0 else "high"
-    t = ev["time"]
-    head2 = f"<b>{label(ev['sym'])}</b>  ·  M1\n{LINE}\n"
-    when = f"🕒 <b>{to_tehran(t)}</b> Tehran\n🌍 {session_at(t)}\n"
 
     if ev["kind"] == "READY":
-        return (f"{icon} <b>READY · {side}</b>\n" + head2 + when +
-                f"✅ MACD (12,26,9) {pos_w} zero for {ev['pos2']} bars\n"
-                f"👀 Now watching MACD (3,6,2) for the FIRE"
-                + detail_block(ev))
+        head = f"{icon} <b>READY · {side}</b>"
+    elif ev["kind"] == "FIRE":
+        head = f"🔥 <b>FIRE · {side}</b>" + ("  ⭐ <b>STRONG</b>" if ev["strong"] else "")
+    else:
+        head = f"⚪ <b>CANCELLED · {side}</b>"
+
+    txt = (f"{head}\n"
+           f"<b>{label(sym)}</b>  ·  M1\n{LINE}\n"
+           f"💰 Price: <b>{fmt_price(sym, ev['price'])}</b>\n"
+           f"🕒 <b>{to_tehran(t)}</b> Tehran\n"
+           f"🕒 <b>{to_london(t)}</b> London (for Kamyar)\n"
+           f"🌍 {session_at(t)}")
 
     if ev["kind"] == "INVALID":
         if ev["reason"] == "price":
-            why = (f"Price broke {neg_w} the 2nd {low} "
-                   f"({fmt_price(ev['sym'], ev['detail']['second'][1])})")
+            level = fmt_price(sym, ev["detail"]["second"][1])
+            why = f"Price broke {'below' if s > 0 else 'above'} {level}"
         elif ev["reason"] == "deeper":
-            why = (f"MACD (48,104,36) printed a deeper {low} than the 1st one — "
-                   f"divergence reference is void")
+            why = "Setup invalidated by a new extreme"
         else:
-            why = f"MACD (12,26,9) crossed {neg_w} zero"
-        return (f"⚪ <b>CANCELLED · {side}</b>\n" + head2 + when +
-                f"❌ {why}\n"
-                f"READY was at {to_tehran_short(ev['ready'])}"
-                + detail_block(ev))
-
-    # FIRE
-    if ev["path"] == 1:
-        path = f"first {'trough' if s > 0 else 'peak'} confirmed"
-    else:
-        path = f"back {'above' if s > 0 else 'below'} zero"
-    strong = "  ⭐ <b>STRONG</b>" if ev["strong"] else ""
-    txt = (f"🔥 <b>FIRE · {side}</b>{strong}\n" + head2 + when +
-           f"⚡ Trigger: path {ev['path']} — {path}\n"
-           f"⏱ Divergence → FIRE: {fmt_gap(t - ev['div'])}")
-    if ev["strong"] and ev["m5_time"] is not None:
-        txt += f"\n📈 M5 divergence confirmed: {to_tehran_short(ev['m5_time'])}"
-    return txt + detail_block(ev)
+            why = f"MACD (12,26,9) crossed {'below' if s > 0 else 'above'} zero"
+        txt += f"\n❌ {why}"
+    return txt

@@ -213,6 +213,8 @@ class SymbolEngine:
                     events.append(self._mk(kind, info, cyc, close_t))
                 if cyc.alive:
                     self.cycles[s].append(cyc)
+        for ev in events:
+            ev["price"] = cl          # قیمت لحظه‌ی رویداد = Close همین کندل
         self.n += 1
         self.last_time = ts
         return events
