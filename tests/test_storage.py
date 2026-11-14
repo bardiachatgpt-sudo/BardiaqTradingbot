@@ -28,11 +28,12 @@ class Common:
         st.record_fire("BTCUSD", -1, T1, "msg1")
         st.record_fire("BTCUSD", 1, T2, "msg2")
         st.record_fire("BTCUSD", -1, T1, "older")       # قدیمی‌تر: نباید جایگزین شود
-        st.record_fire("EURUSD", 1, T1, None)
+        st.record_fire("EURUSD", 1, T1, "old text")
+        st.record_fire("EURUSD", 1, T1, "new text")     # همان زمان (بازپخش پس از ری‌استارت): متن به‌روز شود
         again = self.make().load()                     # مثل راه‌اندازی دوباره پس از دیپلوی
         self.assertEqual(again.users, {111, 222})
         self.assertEqual(again.last_fire["BTCUSD"], {"t": T2.isoformat(), "d": 1, "msg": "msg2"})
-        self.assertEqual(again.last_fire["EURUSD"], {"t": T1.isoformat(), "d": 1, "msg": None})
+        self.assertEqual(again.last_fire["EURUSD"], {"t": T1.isoformat(), "d": 1, "msg": "new text"})
 
 
 class CleanUrlTest(unittest.TestCase):

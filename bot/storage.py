@@ -57,7 +57,7 @@ class State:
 
     def record_fire(self, name, s, ts, msg=None):
         cur = self.last_fire.get(name)
-        if cur is None or ts > pd.Timestamp(cur["t"]):
+        if cur is None or ts >= pd.Timestamp(cur["t"]):   # >= : همان FIRE پس از ری‌استارت، متنش به‌روز می‌شود
             self.last_fire[name] = {"t": ts.isoformat(), "d": s, "msg": msg}
             self._store_fire(name)
 
@@ -133,7 +133,7 @@ class PgState(State):
                 con.execute(
                     "INSERT INTO last_fire (symbol, t, d, msg) VALUES (%s, %s, %s, %s) "
                     "ON CONFLICT (symbol) DO UPDATE SET t = EXCLUDED.t, d = EXCLUDED.d, msg = EXCLUDED.msg "
-                    "WHERE last_fire.t < EXCLUDED.t",
+                    "WHERE last_fire.t <= EXCLUDED.t",
                     (name, pd.Timestamp(r["t"]).to_pydatetime(), r["d"], r["msg"]))
         except Exception as e:
             print("db record_fire error:", e)
