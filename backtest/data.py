@@ -77,6 +77,8 @@ def dukascopy(sym, start, end, pause=0.3):
             continue
         path = os.path.join(CACHE, "duka", sym, f"{d:%Y-%m-%d}.pkl")
         fresh = not os.path.exists(path)
+        if fresh and os.environ.get("BACKTEST_OFFLINE"):
+            continue                       # فقط داده‌ی کش‌شده (روزهای جاافتاده رد می‌شوند)
         parts.append(_cached(path, lambda d=d: _duka_day(sym, d)))
         if fresh:
             time.sleep(pause)
