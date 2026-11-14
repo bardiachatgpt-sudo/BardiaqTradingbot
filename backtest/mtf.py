@@ -75,7 +75,7 @@ def macd_peek(m, close):
     return f - s
 
 
-def run(sym, start, end, warm_days=150):
+def run(sym, start, end, warm_days=150, zero_rule="trend"):
     df = data.candles(sym, pd.Timestamp(start) - pd.Timedelta(days=warm_days), end)
     t_from = pd.Timestamp(start, tz="UTC")
 
@@ -86,6 +86,8 @@ def run(sym, start, end, warm_days=150):
     m5_bars = Bars(lambda st: (st.date(), st.hour, st.minute // 5))
 
     d362 = MACDHist(3, 6, 2)
+    d12 = MACDHist(12, 26, 9)
+    d12_v = 0.0
     d_hist = deque(maxlen=2)                     # (3,6,2) دیلی دو روز بسته‌شده‌ی اخیر
     d_rng, d_hi, d_lo = deque(maxlen=14), deque(maxlen=3), deque(maxlen=3)
     h4m = MACDHist(48, 104, 36)
@@ -122,6 +124,7 @@ def run(sym, start, end, warm_days=150):
         done = d_bars.update(st, o, h, l, c)
         if done:
             d_hist.append(d362.update(done["c"]))
+            d12_v = d12.update(done["c"])
             d_rng.append(done["h"] - done["l"])
             d_hi.append(done["h"])
             d_lo.append(done["l"])
@@ -152,7 +155,15 @@ def run(sym, start, end, warm_days=150):
         if len(d_hist) == 2 and len(d_rng) >= 5:
             now = macd_peek(d362, c)
             y2, y1 = d_hist
-            turn = -1 if (y1 > y2 and now < y1 and y1 > 0) else (1 if (y1 < y2 and now > y1 and y1 < 0) else 0)
+            # سقف بالای صفر / کف زیر صفر همیشه معتبر است. در روند شدید (به تشخیص 12,26,9 دیلی)
+            # سقف زیر صفر (روند نزولی) و کف بالای صفر (روند صعودی) هم معتبرند.
+            if zero_rule == "strict":
+                top_ok, bot_ok = y1 > 0, y1 < 0
+            elif zero_rule == "none":
+                top_ok = bot_ok = True
+            else:
+                top_ok, bot_ok = (y1 > 0 or d12_v < 0), (y1 < 0 or d12_v > 0)
+            turn = -1 if (y1 > y2 and now < y1 and top_ok) else (1 if (y1 < y2 and now > y1 and bot_ok) else 0)
             if turn and turn != bias:
                 if open_tr:
                     close_all(t, c, "daily flip")
@@ -207,8 +218,10 @@ def main():
     ap.add_argument("--from", dest="start", default="2026-11-03")
     ap.add_argument("--to", dest="end", default="2026-11-14")
     ap.add_argument("--warm", type=int, default=150, help="روزهای گرم‌کردن اندیکاتورها قبل از --from")
+    ap.add_argument("--zero", default="trend", choices=["trend", "strict", "none"],
+                    help="شرط صفر برای سقف/کف (3,6,2) دیلی")
     a = ap.parse_args()
-    trades, log = run(a.symbol, a.start, a.end, a.warm)
+    trades, log = run(a.symbol, a.start, a.end, a.warm, a.zero)
     teh = "Asia/Tehran"
     print(f"{a.symbol}  {a.start} → {a.end}\n")
     print("Daily direction changes (UTC):")
