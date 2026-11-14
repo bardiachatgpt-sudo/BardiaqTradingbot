@@ -88,3 +88,61 @@ def run(sym, df, parts=("trend", "rev"), rev_tp="2R", bias=None, bias_parts=("tr
     if not r.empty:
         r["t"] = df.index[r["entry_i"]]
     return r
+
+
+def run_div(sym, df, entry="div", exit_on="div", hard_stop=True, bias=None, hours=None):
+    """سیستم واگرایی‌به‌واگرایی روی (48,104,36):
+    ورود با واگرایی (entry="div") یا FIRE (entry="fire")؛ خروج با واگرایی مخالف بعدی (exit_on="div")
+    یا FIRE مخالف (exit_on="fire"). حد ضرر = پشت قله/کف دوم واگرایی (اندازه‌ی ریسک؛ با hard_stop واقعاً اجرا می‌شود).
+    bias: فقط ورودهای هم‌جهت با دیلی (خروج همیشه با سیگنال مخالف)."""
+    o, h, l, c = (df[k].to_numpy() for k in ("Open", "High", "Low", "Close"))
+    hr = df.index.tz_convert("Asia/Tehran").hour.to_numpy()
+    sp = spread_for(sym)
+    eng = SymbolEngine(sym)
+    seen = {1: None, -1: None}
+    pos, trades = None, []
+
+    def close(i, px, why):
+        nonlocal pos
+        s = pos["s"]
+        pos.update(exit_i=i, why=why, R=(s * (px - pos["entry"]) - sp) / pos["risk"])
+        trades.append(pos)
+        pos = None
+
+    for i, ts in enumerate(df.index):
+        evs = eng.on_bar(ts, o[i], h[i], l[i], c[i])
+        if pos is not None and hard_stop:
+            s = pos["s"]
+            if (l[i] <= pos["stop"]) if s > 0 else (h[i] >= pos["stop"]):
+                close(i, pos["stop"], "stop")
+        sig = {}                                   # s → قیمت قله/کف دوم
+        if entry == "div" or exit_on == "div":
+            for s in (1, -1):
+                d = eng.det1[s].detail
+                if d is not None and d is not seen[s]:
+                    seen[s] = d
+                    sig.setdefault(("div", s), s * d["second"][1])
+        for e in evs:
+            if e["kind"] == "FIRE":
+                sig[("fire", e["s"])] = e["detail"]["second"][1]
+        if i < 1500:
+            continue
+        if pos is not None and (exit_on, -pos["s"]) in sig:
+            close(i, c[i], "opposite " + exit_on)
+        if pos is None and (hours is None or hours[0] <= hr[i] < hours[1]):
+            for s in (1, -1):
+                if (entry, s) not in sig:
+                    continue
+                if bias is not None and bias[i] != s:
+                    continue
+                stop = sig[(entry, s)] - s * sp
+                risk = s * (c[i] - stop)
+                if risk <= 0:
+                    continue
+                pos = {"s": s, "entry_i": i, "entry": c[i], "stop": stop, "risk": risk}
+                break
+    r = pd.DataFrame(trades)
+    if not r.empty:
+        r["t"] = df.index[r["entry_i"]]
+        r["hold_min"] = (r["exit_i"] - r["entry_i"])
+    return r
