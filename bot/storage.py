@@ -139,9 +139,24 @@ class PgState(State):
             print("db record_fire error:", e)
 
 
+def clean_db_url(raw):
+    """رشته‌ی اتصال را از چیزهای اضافه‌ای که معمولاً همراهش کپی می‌شود پاک می‌کند:
+    خطوط بعدی (.env کامل)، پیشوند DATABASE_URL=، دستور psql و گیومه‌ها."""
+    s = (raw or "").strip()
+    if not s:
+        return ""
+    for tok in s.replace("\n", " ").split():
+        tok = tok.strip().strip("'\"")
+        if "=" in tok and tok.split("=", 1)[0].isupper():
+            tok = tok.split("=", 1)[1].strip().strip("'\"")      # DATABASE_URL=...
+        if tok.startswith(("postgresql://", "postgres://")):
+            return tok
+    return s
+
+
 def open_state(json_path):
     """Postgres اگر DATABASE_URL تنظیم شده باشد، وگرنه فایل JSON. اگر دیتابیس در دسترس نباشد، به فایل برمی‌گردد."""
-    url = os.environ.get("DATABASE_URL", "").strip()
+    url = clean_db_url(os.environ.get("DATABASE_URL"))
     if url:
         for attempt in range(6):
             try:

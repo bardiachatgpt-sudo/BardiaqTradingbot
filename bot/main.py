@@ -25,10 +25,10 @@ def run_web():
 
 
 def main():
+    threading.Thread(target=run_web, daemon=True).start()   # اول وب‌سرور، تا Render منتظر دیتابیس نماند
     state = open_state(STATE_FILE)
     print(f"storage: {state.describe()}, users={len(state.users)}")
     tg = Telegram(os.environ.get("BOT_TOKEN"), state)
-    threading.Thread(target=run_web, daemon=True).start()
     threading.Thread(target=run_scanner, args=(state, tg.broadcast), daemon=True).start()
     tg.run()
 
