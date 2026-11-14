@@ -25,12 +25,21 @@ class BarTypes(unittest.TestCase):
         self.assertTrue(df["is_doji"].iat[-2])
         self.assertEqual(df["direction"].iat[-1], 1)
         self.assertTrue(df["strong"].iat[-1])
-        self.assertEqual(df["strength"].iat[-1], 5)
+        self.assertEqual(df["strength"].iat[-1], 6)
 
     def test_weak_bull_bar_big_tail(self):
         df = bars.classify(mk(BASE + [(100, 104, 99.9, 101.1)]))     # long upper tail
         self.assertEqual(df["direction"].iat[-1], 1)
         self.assertFalse(df["strong"].iat[-1])
+
+
+class Exhaustion(unittest.TestCase):
+    def test_huge_bar_after_long_trend(self):
+        rows = [(100 + i, 101.2 + i, 99.8 + i, 101 + i) for i in range(40)]   # 40-bar bull trend
+        rows.append((140, 146.1, 139.9, 146))                                  # extremely large bull bar
+        df = bars.classify(mk(rows))
+        self.assertTrue(df["exhaustion"].iat[-1])
+        self.assertFalse(df["exhaustion"].iat[20])
 
 
 class Climax(unittest.TestCase):

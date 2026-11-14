@@ -38,6 +38,9 @@ def draw(df, title, out):
         ax.add_patch(plt.Rectangle((i - 0.32, min(o, c)), 0.64, max(abs(c - o), rng * 0.0015),
                                    facecolor="white" if bull else "black", edgecolor="black",
                                    linewidth=1.6 if b["strong"].iat[i] else 0.8))
+        if b["exhaustion"].iat[i]:
+            ax.text(i, (l if c < o else h) + (-1 if c < o else 1) * rng * 0.07, "X", ha="center",
+                    fontsize=9, color="darkorange", weight="bold")
         if b["is_doji"].iat[i]:
             ax.text(i, h + rng * 0.012, "D", ha="center", fontsize=7, color="tab:blue")
         lab = b["leg"].iat[i]
@@ -57,7 +60,7 @@ def draw(df, title, out):
     ax.set_xticks(range(0, n, step))
     ax.set_xticklabels([t.strftime("%H:%M") for t in b.index[::step]], fontsize=8)
     ax.set_xlim(-1, n)
-    ax.set_title(title + "   (D doji · bold outline = strong trend bar · shaded = climax · ★ climactic reversal)",
+    ax.set_title(title + "   (D doji · bold outline = strong trend bar · shaded = climax · ★ climactic reversal · X possible exhaustion)",
                  fontsize=9)
     ax.grid(alpha=0.2)
     fig.tight_layout()

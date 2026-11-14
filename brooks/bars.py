@@ -8,9 +8,11 @@ Concepts (summarised in our own words; thresholds are tunable, see PARAMS):
   trend bar vs doji   Every bar is either a trend bar (one side controlled it, it has a
                       real body) or a doji (small body relative to the bar and to recent
                       bodies: a one-bar trading range). "Close is close enough."
-  trend bar strength  Body at least the median body of recent bars, close near its
-                      extreme, open near the other extreme, close beyond prior closes and
-                      the prior bar's extreme, small tails.
+  trend bar strength  Body at least the median body of the recent bars, open near one
+                      extreme and close near the other, close at or beyond the closes and
+                      highs of several prior bars, high beyond one or more prior bars,
+                      small tails. A very large body after a protracted move (30+ bars
+                      without much of a pullback) is flagged as possible exhaustion.
   climax              Consecutive trend bars in one direction; it ends at the first pause
                       bar (doji, inside bar, opposite trend bar, or a bar with a prominent
                       tail against the move).
@@ -35,9 +37,14 @@ PARAMS = {
     "extreme_frac": 1 / 3,      # "near the high/low" = within this fraction of the range
     "small_tail_frac": 0.2,     # tail below this fraction of the range = small
     "pause_tail_frac": 0.4,     # tail against the move above this = prominent (pause)
-    "climax_min_bars": 3,       # consecutive trend bars that make a climax
-    "reversal_within": 5,       # bars after a climax to look for the opposite strong bar
-    "strong_score": 3,          # strength score (0-5) for a "strong" trend bar
+    "climax_min_bars": 3,       # consecutive trend bars that make a climax (the book's example: three)
+    "reversal_within": 10,      # bars after a climax to look for the opposite strong bar
+                                # (book: the two trend bars "are often separated by many bars")
+    "prior_bars": 3,            # "closes and highs of several prior bars"
+    "strong_score": 4,          # strength score (0-6) for a "strong" trend bar
+    "exhaustion_body_x": 2.0,   # "extremely large body": body >= this x median body
+    "protracted_bars": 30,      # "a trend that has gone on for 30 or more bars without much of a pullback"
+    "ema": 20,                  # the book's 20-bar exponential moving average
     "pressure_window": 20,
     "trending_doji_min": 3,
 }
@@ -56,31 +63,48 @@ def classify(df, p=PARAMS):
     is_doji |= rng <= 0
     direction = np.where(is_doji, 0, np.sign(c - o)).astype(int)
 
-    ex = p["extreme_frac"]
+    # Strength = the signs of a strong trend bar listed in the book (score 0-6), bull side:
+    #   1 body at least the median body of the recent bars
+    #   2 open on or near the low            3 close on or near the high
+    #   4 close at or above the closes and highs of several prior bars
+    #   5 high above the high of one or more prior bars
+    #   6 small tails
+    ex, k = p["extreme_frac"], p["prior_bars"]
     strength = np.zeros(len(c), dtype=int)
     for i in range(len(c)):
         d = direction[i]
         if d == 0 or rng[i] <= 0:
             continue
-        s = 0
-        if not np.isnan(med[i]) and body[i] >= med[i]:
-            s += 1
+        a = max(0, i - k)
+        s = int(not np.isnan(med[i]) and body[i] >= med[i])
+        small_tails = (h[i] - max(o[i], c[i]) <= p["small_tail_frac"] * rng[i]
+                       and min(o[i], c[i]) - l[i] <= p["small_tail_frac"] * rng[i])
         if d > 0:
-            s += c[i] >= h[i] - ex * rng[i]                     # close near the high
-            s += o[i] <= l[i] + ex * rng[i]                     # open near the low
-            s += i > 0 and c[i] > c[i - 1] and c[i] > h[i - 1]  # close above prior close and high
-            s += (h[i] - c[i]) <= p["small_tail_frac"] * rng[i] and (o[i] - l[i]) <= p["small_tail_frac"] * rng[i]
+            s += o[i] <= l[i] + ex * rng[i]
+            s += c[i] >= h[i] - ex * rng[i]
+            s += i > 0 and c[i] >= max(c[a:i].max(), h[a:i].max())
+            s += i > 0 and h[i] > h[a:i].min()
         else:
-            s += c[i] <= l[i] + ex * rng[i]
             s += o[i] >= h[i] - ex * rng[i]
-            s += i > 0 and c[i] < c[i - 1] and c[i] < l[i - 1]
-            s += (c[i] - l[i]) <= p["small_tail_frac"] * rng[i] and (h[i] - o[i]) <= p["small_tail_frac"] * rng[i]
+            s += c[i] <= l[i] + ex * rng[i]
+            s += i > 0 and c[i] <= min(c[a:i].min(), l[a:i].min())
+            s += i > 0 and l[i] < l[a:i].max()
+        s += small_tails
         strength[i] = s
+    # Exhaustion: an extremely large body after a protracted move (30+ bars on one side of
+    # the 20-bar EMA, i.e. without much of a pullback) can be a climactic end, not a start.
+    ema = pd.Series(c).ewm(span=p["ema"], adjust=False).mean().to_numpy()
+    above = pd.Series((c > ema).astype(int)).rolling(p["protracted_bars"]).sum().to_numpy()
+    below = pd.Series((c < ema).astype(int)).rolling(p["protracted_bars"]).sum().to_numpy()
+    big = body >= p["exhaustion_body_x"] * np.nan_to_num(med, nan=np.inf)
+    prot = np.where(direction > 0, np.r_[np.nan, above[:-1]], np.r_[np.nan, below[:-1]]) >= p["protracted_bars"]
     out = df.copy()
     out["body"], out["range"] = body, rng
     out["direction"], out["is_doji"] = direction, is_doji
     out["strength"] = strength
     out["strong"] = strength >= p["strong_score"]
+    out["exhaustion"] = (direction != 0) & big & prot
+    out["ema20"] = ema
     return out
 
 
@@ -173,37 +197,52 @@ def leg_counts(df):
 
 
 def pressure(df, p=PARAMS):
-    """Buying minus selling pressure over a rolling window (positive = buying pressure)."""
+    """Buying minus selling pressure over a rolling window (positive = buying pressure).
+
+    Signs of buying pressure listed in the book (selling pressure is the mirror):
+      - bars with large bull bodies (body at least the recent median)
+      - tails at the bottoms of bars
+      - bull reversal bars at the bottoms of down swings (new low, close up near the high)
+      - two-bar reversals (a bear bar followed by a bull bar of similar size that closes
+        above the bear bar's open)
+    """
     o, h, l, c = (df[k].to_numpy(float) for k in ("Open", "High", "Low", "Close"))
     rng = np.where(h - l > 0, h - l, np.nan)
-    d = df["direction"].to_numpy()
+    body = np.abs(c - o)
+    med = pd.Series(body).shift(1).rolling(p["median_window"], min_periods=3).median().to_numpy()
+    large = body >= np.nan_to_num(med, nan=np.inf)
     lower_tail = (np.minimum(o, c) - l) / rng >= 1 / 3
     upper_tail = (h - np.maximum(o, c)) / rng >= 1 / 3
-    prev_low = np.r_[np.inf, l[:-1]]
-    prev_high = np.r_[-np.inf, h[:-1]]
-    bull_rev = (l < prev_low) & (c > o) & (c >= h - rng / 3)     # new low, closes up near high
+    prev_low, prev_high = np.r_[np.inf, l[:-1]], np.r_[-np.inf, h[:-1]]
+    po, pc, pb = np.r_[np.nan, o[:-1]], np.r_[np.nan, c[:-1]], np.r_[np.nan, body[:-1]]
+    bull_rev = (l < prev_low) & (c > o) & (c >= h - rng / 3)
     bear_rev = (h > prev_high) & (c < o) & (c <= l + rng / 3)
-    buy = (d > 0).astype(int) + lower_tail.astype(int) + bull_rev.astype(int)
-    sell = (d < 0).astype(int) + upper_tail.astype(int) + bear_rev.astype(int)
+    two_bull = (pc < po) & (c > o) & (c > po) & (body >= 0.7 * pb)
+    two_bear = (pc > po) & (c < o) & (c < po) & (body >= 0.7 * pb)
+    buy = ((c > o) & large).astype(int) + lower_tail + bull_rev + two_bull
+    sell = ((c < o) & large).astype(int) + upper_tail + bear_rev + two_bear
     w = p["pressure_window"]
-    return pd.Series(buy - sell, index=df.index).rolling(w, min_periods=1).sum()
+    return pd.Series((buy - sell).astype(float), index=df.index).rolling(w, min_periods=1).sum()
 
 
 def trending_dojis(df, p=PARAMS):
-    """Runs of >= trending_doji_min dojis with rising (or falling) closes, highs and lows.
+    """A series of dojis, each with a higher close and most with a high above the prior
+    bar's high and a low above the prior bar's low, is a trend (mirror for down).
     Returns list of dict(start, end, direction)."""
     dj = df["is_doji"].to_numpy()
     h, l, c = (df[k].to_numpy(float) for k in ("High", "Low", "Close"))
-    out = []
+    n, out = len(c), []
     for s in (1, -1):
-        i, n = 1, len(c)
+        i = 1
         while i < n:
             j = i
-            while (j < n and dj[j] and s * (c[j] - c[j - 1]) > 0 and s * (h[j] - h[j - 1]) > 0
-                   and s * (l[j] - l[j - 1]) > 0):
+            while j < n and dj[j] and s * (c[j] - c[j - 1]) > 0:
                 j += 1
-            if j - i >= p["trending_doji_min"]:
-                out.append({"start": i, "end": j - 1, "direction": s})
+            run = j - i
+            if run >= p["trending_doji_min"]:
+                hh = sum(s * (h[t] - h[t - 1]) > 0 and s * (l[t] - l[t - 1]) > 0 for t in range(i, j))
+                if hh > run / 2:
+                    out.append({"start": i, "end": j - 1, "direction": s})
             i = max(j, i + 1)
     return sorted(out, key=lambda x: x["start"])
 
