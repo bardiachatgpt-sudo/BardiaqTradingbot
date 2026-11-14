@@ -9,7 +9,7 @@ from flask import Flask
 
 from .config import STATE_FILE
 from .scanner import run_scanner
-from .storage import State
+from .storage import open_state
 from .telegram_bot import Telegram
 
 app = Flask(__name__)
@@ -25,7 +25,8 @@ def run_web():
 
 
 def main():
-    state = State(STATE_FILE).load()
+    state = open_state(STATE_FILE)
+    print(f"storage: {state.describe()}, users={len(state.users)}")
     tg = Telegram(os.environ.get("BOT_TOKEN"), state)
     threading.Thread(target=run_web, daemon=True).start()
     threading.Thread(target=run_scanner, args=(state, tg.broadcast), daemon=True).start()
