@@ -148,7 +148,10 @@ def run2(sym, df, m1, stop_mode="prev", target_mode="1R", hours=(4, 16), bias=No
     big, fast = macd(c, 48, 104), macd(c, 3, 6)
     hr = df.index.tz_convert("Asia/Tehran").hour.to_numpy()
     sp = spread_for(sym)
-    dd = daily_dir(df, m1, bias) if bias else None
+    if isinstance(bias, np.ndarray):           # جهت از پیش محاسبه‌شده (مثلاً قدم ۱)
+        dd = bias
+    else:
+        dd = daily_dir(df, m1, bias) if bias else None
     ht, hb = htf_last_extreme(df, m1, htf) if stop_mode == "htf" else (None, None)
     n = len(c)
     peaks, troughs = [], []
