@@ -75,7 +75,7 @@ def macd_peek(m, close):
     return f - s
 
 
-def run(sym, start, end, warm_days=150, zero_rule="trend"):
+def run(sym, start, end, warm_days=150, zero_rule="trend", mode="swing"):
     df = data.candles(sym, pd.Timestamp(start) - pd.Timedelta(days=warm_days), end)
     t_from = pd.Timestamp(start, tz="UTC")
 
@@ -101,6 +101,7 @@ def run(sym, start, end, warm_days=150, zero_rule="trend"):
     recent = deque(maxlen=120)                   # (High, Low) دو ساعت اخیر M1
 
     bias, bias_t, zone, entry1_done = 0, None, None, False
+    seen_div = {1: None, -1: None}               # آخرین واگرایی دیده‌شده‌ی (48,104,36) M1
     trades, open_tr, log = [], [], []
 
     def close_all(t, price, why):
@@ -185,8 +186,18 @@ def run(sym, start, end, warm_days=150, zero_rule="trend"):
 
         # ---- موتور M1 فعلی ربات
         evs = eng.on_bar(ts, o, h, l, c)
+        new_div = []
+        for s in (1, -1):
+            d = eng.det1[s].detail
+            if d is not None and d is not seen_div[s]:
+                seen_div[s] = d
+                new_div.append(s)
         if not live or bias == 0:
             continue
+
+        # خروج (mode=swing): واگرایی خلاف جهت روی (48,104,36) M1
+        if mode == "swing" and open_tr and -bias in new_div:
+            close_all(t, c, "M1 4x opposite divergence")
 
         # ورود اول
         if not entry1_done:
@@ -200,8 +211,12 @@ def run(sym, start, end, warm_days=150, zero_rule="trend"):
                 enter("ENTRY-1 (H1 div + M1 FIRE)", t, c)
                 entry1_done = True
 
-        # ورودهای بعدی
-        if m5_peak == bias and len(h4_hist) == 2:
+        # ورود دوباره (mode=swing): بعد از خروج، FIRE هم‌جهت بعدی روی M1، تا وقتی جهت دیلی عوض نشده
+        elif mode == "swing" and not open_tr and any(e["kind"] == "FIRE" and e["s"] == bias for e in evs):
+            enter("RE-ENTRY (M1 FIRE)", t, c)
+
+        # ورودهای بعدی (mode=v0)
+        if mode == "v0" and m5_peak == bias and len(h4_hist) == 2:
             p, q = h4_hist
             trend = (q * bias > 0) and abs(q) > abs(p)
             if trend:
@@ -220,8 +235,10 @@ def main():
     ap.add_argument("--warm", type=int, default=150, help="روزهای گرم‌کردن اندیکاتورها قبل از --from")
     ap.add_argument("--zero", default="trend", choices=["trend", "strict", "none"],
                     help="شرط صفر برای سقف/کف (3,6,2) دیلی")
+    ap.add_argument("--mode", default="swing", choices=["swing", "v0"],
+                    help="swing: خروج با واگرایی مخالف M1 و ورود دوباره؛ v0: نگه داشتن تا برگشت دیلی + ADDها")
     a = ap.parse_args()
-    trades, log = run(a.symbol, a.start, a.end, a.warm, a.zero)
+    trades, log = run(a.symbol, a.start, a.end, a.warm, a.zero, a.mode)
     teh = "Asia/Tehran"
     print(f"{a.symbol}  {a.start} → {a.end}\n")
     print("Daily direction changes (UTC):")
