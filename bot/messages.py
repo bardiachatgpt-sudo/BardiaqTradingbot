@@ -4,8 +4,8 @@
 """
 import pytz
 
-from .config import decimals, label
-from .timefmt import session_at, to_tehran
+from .config import TEHRAN, decimals, label
+from .timefmt import session_at
 
 LONDON = pytz.timezone("Europe/London")
 LINE = "━" * 16
@@ -15,8 +15,9 @@ def fmt_price(sym, x):
     return f"{x:.{decimals(sym)}f}"
 
 
-def to_london(ts):
-    return ts.tz_convert(LONDON).strftime("%Y-%m-%d %H:%M")
+def fmt_time(ts, tz):
+    """مثلاً: Saturday 2026-11-14 04:37 (روز هفته به وقت همان شهر)"""
+    return ts.tz_convert(tz).strftime("%A %Y-%m-%d %H:%M")
 
 
 def build_msg(ev):
@@ -34,8 +35,8 @@ def build_msg(ev):
     txt = (f"{head}\n"
            f"<b>{label(sym)}</b>  ·  M1\n{LINE}\n"
            f"💰 Price: <b>{fmt_price(sym, ev['price'])}</b>\n"
-           f"🕒 <b>{to_tehran(t)}</b> Tehran\n"
-           f"🕒 <b>{to_london(t)}</b> London (for Kamyar)\n"
+           f"🕒 <b>{fmt_time(t, TEHRAN)}</b> Tehran\n"
+           f"🕒 <b>{fmt_time(t, LONDON)}</b> London (for Kamyar)\n"
            f"🌍 {session_at(t)}")
 
     if ev["kind"] == "INVALID":

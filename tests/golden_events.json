@@ -2,919 +2,919 @@
  "BTCUSD": {
   "events": [
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>66765</b>\n🕒 <b>2026-11-12 22:47</b> Tehran\n🕒 <b>2026-11-12 19:17</b> London (for Kamyar)\n🌍 New York"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>66765</b>\n🕒 <b>Thursday 2026-11-12 22:47</b> Tehran\n🕒 <b>Thursday 2026-11-12 19:17</b> London (for Kamyar)\n🌍 New York"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>61303</b>\n🕒 <b>2026-11-13 00:21</b> Tehran\n🕒 <b>2026-11-12 20:51</b> London (for Kamyar)\n🌍 Sydney · New York (overlap)"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>61303</b>\n🕒 <b>Friday 2026-11-13 00:21</b> Tehran\n🕒 <b>Thursday 2026-11-12 20:51</b> London (for Kamyar)\n🌍 Sydney · New York (overlap)"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>60843</b>\n🕒 <b>2026-11-13 07:05</b> Tehran\n🕒 <b>2026-11-13 03:35</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>60843</b>\n🕒 <b>Friday 2026-11-13 07:05</b> Tehran\n🕒 <b>Friday 2026-11-13 03:35</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>65413</b>\n🕒 <b>2026-11-13 08:22</b> Tehran\n🕒 <b>2026-11-13 04:52</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>65413</b>\n🕒 <b>Friday 2026-11-13 08:22</b> Tehran\n🕒 <b>Friday 2026-11-13 04:52</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>65632</b>\n🕒 <b>2026-11-13 09:14</b> Tehran\n🕒 <b>2026-11-13 05:44</b> London (for Kamyar)\n🌍 Tokyo"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>65632</b>\n🕒 <b>Friday 2026-11-13 09:14</b> Tehran\n🕒 <b>Friday 2026-11-13 05:44</b> London (for Kamyar)\n🌍 Tokyo"
    },
    {
-    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>65584</b>\n🕒 <b>2026-11-13 09:15</b> Tehran\n🕒 <b>2026-11-13 05:45</b> London (for Kamyar)\n🌍 Tokyo\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
+    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>65584</b>\n🕒 <b>Friday 2026-11-13 09:15</b> Tehran\n🕒 <b>Friday 2026-11-13 05:45</b> London (for Kamyar)\n🌍 Tokyo\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>68158</b>\n🕒 <b>2026-11-13 15:27</b> Tehran\n🕒 <b>2026-11-13 11:57</b> London (for Kamyar)\n🌍 London"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>68158</b>\n🕒 <b>Friday 2026-11-13 15:27</b> Tehran\n🕒 <b>Friday 2026-11-13 11:57</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>65667</b>\n🕒 <b>2026-11-13 16:18</b> Tehran\n🕒 <b>2026-11-13 12:48</b> London (for Kamyar)\n🌍 London"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>65667</b>\n🕒 <b>Friday 2026-11-13 16:18</b> Tehran\n🕒 <b>Friday 2026-11-13 12:48</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>65717</b>\n🕒 <b>2026-11-13 19:20</b> Tehran\n🕒 <b>2026-11-13 15:50</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>65717</b>\n🕒 <b>Friday 2026-11-13 19:20</b> Tehran\n🕒 <b>Friday 2026-11-13 15:50</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>65776</b>\n🕒 <b>2026-11-13 19:25</b> Tehran\n🕒 <b>2026-11-13 15:55</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>65776</b>\n🕒 <b>Friday 2026-11-13 19:25</b> Tehran\n🕒 <b>Friday 2026-11-13 15:55</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>64787</b>\n🕒 <b>2026-11-13 23:58</b> Tehran\n🕒 <b>2026-11-13 20:28</b> London (for Kamyar)\n🌍 Sydney · New York (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>64787</b>\n🕒 <b>Friday 2026-11-13 23:58</b> Tehran\n🕒 <b>Friday 2026-11-13 20:28</b> London (for Kamyar)\n🌍 Sydney · New York (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>66963</b>\n🕒 <b>2026-11-14 00:57</b> Tehran\n🕒 <b>2026-11-13 21:27</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>66963</b>\n🕒 <b>Saturday 2026-11-14 00:57</b> Tehran\n🕒 <b>Friday 2026-11-13 21:27</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>69778</b>\n🕒 <b>2026-11-14 03:37</b> Tehran\n🕒 <b>2026-11-14 00:07</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>69778</b>\n🕒 <b>Saturday 2026-11-14 03:37</b> Tehran\n🕒 <b>Saturday 2026-11-14 00:07</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>69882</b>\n🕒 <b>2026-11-14 03:38</b> Tehran\n🕒 <b>2026-11-14 00:08</b> London (for Kamyar)\n🌍 Weekend\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
+    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>69882</b>\n🕒 <b>Saturday 2026-11-14 03:38</b> Tehran\n🕒 <b>Saturday 2026-11-14 00:08</b> London (for Kamyar)\n🌍 Weekend\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>64359</b>\n🕒 <b>2026-11-14 06:03</b> Tehran\n🕒 <b>2026-11-14 02:33</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>64359</b>\n🕒 <b>Saturday 2026-11-14 06:03</b> Tehran\n🕒 <b>Saturday 2026-11-14 02:33</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>64567</b>\n🕒 <b>2026-11-14 06:22</b> Tehran\n🕒 <b>2026-11-14 02:52</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>64567</b>\n🕒 <b>Saturday 2026-11-14 06:22</b> Tehran\n🕒 <b>Saturday 2026-11-14 02:52</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>63062</b>\n🕒 <b>2026-11-14 12:24</b> Tehran\n🕒 <b>2026-11-14 08:54</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>63062</b>\n🕒 <b>Saturday 2026-11-14 12:24</b> Tehran\n🕒 <b>Saturday 2026-11-14 08:54</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "✖️ <b>CANCELLED · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>62955</b>\n🕒 <b>2026-11-14 12:25</b> Tehran\n🕒 <b>2026-11-14 08:55</b> London (for Kamyar)\n🌍 Weekend\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
+    "msg": "✖️ <b>CANCELLED · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>62955</b>\n🕒 <b>Saturday 2026-11-14 12:25</b> Tehran\n🕒 <b>Saturday 2026-11-14 08:55</b> London (for Kamyar)\n🌍 Weekend\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>62150</b>\n🕒 <b>2026-11-14 18:43</b> Tehran\n🕒 <b>2026-11-14 15:13</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>62150</b>\n🕒 <b>Saturday 2026-11-14 18:43</b> Tehran\n🕒 <b>Saturday 2026-11-14 15:13</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>62472</b>\n🕒 <b>2026-11-14 19:00</b> Tehran\n🕒 <b>2026-11-14 15:30</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>62472</b>\n🕒 <b>Saturday 2026-11-14 19:00</b> Tehran\n🕒 <b>Saturday 2026-11-14 15:30</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>65127</b>\n🕒 <b>2026-11-14 20:45</b> Tehran\n🕒 <b>2026-11-14 17:15</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>65127</b>\n🕒 <b>Saturday 2026-11-14 20:45</b> Tehran\n🕒 <b>Saturday 2026-11-14 17:15</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>59737</b>\n🕒 <b>2026-11-14 22:20</b> Tehran\n🕒 <b>2026-11-14 18:50</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>59737</b>\n🕒 <b>Saturday 2026-11-14 22:20</b> Tehran\n🕒 <b>Saturday 2026-11-14 18:50</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>64467</b>\n🕒 <b>2026-11-15 03:06</b> Tehran\n🕒 <b>2026-11-14 23:36</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>64467</b>\n🕒 <b>Sunday 2026-11-15 03:06</b> Tehran\n🕒 <b>Saturday 2026-11-14 23:36</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>64417</b>\n🕒 <b>2026-11-15 03:07</b> Tehran\n🕒 <b>2026-11-14 23:37</b> London (for Kamyar)\n🌍 Weekend\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
+    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>64417</b>\n🕒 <b>Sunday 2026-11-15 03:07</b> Tehran\n🕒 <b>Saturday 2026-11-14 23:37</b> London (for Kamyar)\n🌍 Weekend\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>64258</b>\n🕒 <b>2026-11-16 06:24</b> Tehran\n🕒 <b>2026-11-16 02:54</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>64258</b>\n🕒 <b>Monday 2026-11-16 06:24</b> Tehran\n🕒 <b>Monday 2026-11-16 02:54</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>64392</b>\n🕒 <b>2026-11-16 06:30</b> Tehran\n🕒 <b>2026-11-16 03:00</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>64392</b>\n🕒 <b>Monday 2026-11-16 06:30</b> Tehran\n🕒 <b>Monday 2026-11-16 03:00</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>62542</b>\n🕒 <b>2026-11-16 08:16</b> Tehran\n🕒 <b>2026-11-16 04:46</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>62542</b>\n🕒 <b>Monday 2026-11-16 08:16</b> Tehran\n🕒 <b>Monday 2026-11-16 04:46</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>62354</b>\n🕒 <b>2026-11-16 08:25</b> Tehran\n🕒 <b>2026-11-16 04:55</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>62354</b>\n🕒 <b>Monday 2026-11-16 08:25</b> Tehran\n🕒 <b>Monday 2026-11-16 04:55</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>61741</b>\n🕒 <b>2026-11-16 14:28</b> Tehran\n🕒 <b>2026-11-16 10:58</b> London (for Kamyar)\n🌍 London"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>61741</b>\n🕒 <b>Monday 2026-11-16 14:28</b> Tehran\n🕒 <b>Monday 2026-11-16 10:58</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "✖️ <b>CANCELLED · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>61574</b>\n🕒 <b>2026-11-16 14:30</b> Tehran\n🕒 <b>2026-11-16 11:00</b> London (for Kamyar)\n🌍 London\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
+    "msg": "✖️ <b>CANCELLED · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>61574</b>\n🕒 <b>Monday 2026-11-16 14:30</b> Tehran\n🕒 <b>Monday 2026-11-16 11:00</b> London (for Kamyar)\n🌍 London\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>67915</b>\n🕒 <b>2026-11-16 18:55</b> Tehran\n🕒 <b>2026-11-16 15:25</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>67915</b>\n🕒 <b>Monday 2026-11-16 18:55</b> Tehran\n🕒 <b>Monday 2026-11-16 15:25</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>62716</b>\n🕒 <b>2026-11-16 20:29</b> Tehran\n🕒 <b>2026-11-16 16:59</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>62716</b>\n🕒 <b>Monday 2026-11-16 20:29</b> Tehran\n🕒 <b>Monday 2026-11-16 16:59</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>68503</b>\n🕒 <b>2026-11-17 11:43</b> Tehran\n🕒 <b>2026-11-17 08:13</b> London (for Kamyar)\n🌍 Tokyo · London (overlap)"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>68503</b>\n🕒 <b>Tuesday 2026-11-17 11:43</b> Tehran\n🕒 <b>Tuesday 2026-11-17 08:13</b> London (for Kamyar)\n🌍 Tokyo · London (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>63744</b>\n🕒 <b>2026-11-17 13:16</b> Tehran\n🕒 <b>2026-11-17 09:46</b> London (for Kamyar)\n🌍 London"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>63744</b>\n🕒 <b>Tuesday 2026-11-17 13:16</b> Tehran\n🕒 <b>Tuesday 2026-11-17 09:46</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>69274</b>\n🕒 <b>2026-11-17 17:58</b> Tehran\n🕒 <b>2026-11-17 14:28</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>69274</b>\n🕒 <b>Tuesday 2026-11-17 17:58</b> Tehran\n🕒 <b>Tuesday 2026-11-17 14:28</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>69176</b>\n🕒 <b>2026-11-17 17:59</b> Tehran\n🕒 <b>2026-11-17 14:29</b> London (for Kamyar)\n🌍 London · New York (overlap)\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
+    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>69176</b>\n🕒 <b>Tuesday 2026-11-17 17:59</b> Tehran\n🕒 <b>Tuesday 2026-11-17 14:29</b> London (for Kamyar)\n🌍 London · New York (overlap)\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>70217</b>\n🕒 <b>2026-11-17 23:50</b> Tehran\n🕒 <b>2026-11-17 20:20</b> London (for Kamyar)\n🌍 Sydney · New York (overlap)"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>70217</b>\n🕒 <b>Tuesday 2026-11-17 23:50</b> Tehran\n🕒 <b>Tuesday 2026-11-17 20:20</b> London (for Kamyar)\n🌍 Sydney · New York (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>70249</b>\n🕒 <b>2026-11-17 23:53</b> Tehran\n🕒 <b>2026-11-17 20:23</b> London (for Kamyar)\n🌍 Sydney · New York (overlap)"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>70249</b>\n🕒 <b>Tuesday 2026-11-17 23:53</b> Tehran\n🕒 <b>Tuesday 2026-11-17 20:23</b> London (for Kamyar)\n🌍 Sydney · New York (overlap)"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>67246</b>\n🕒 <b>2026-11-18 02:19</b> Tehran\n🕒 <b>2026-11-17 22:49</b> London (for Kamyar)\n🌍 Sydney"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>67246</b>\n🕒 <b>Wednesday 2026-11-18 02:19</b> Tehran\n🕒 <b>Tuesday 2026-11-17 22:49</b> London (for Kamyar)\n🌍 Sydney"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>75480</b>\n🕒 <b>2026-11-18 04:14</b> Tehran\n🕒 <b>2026-11-18 00:44</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>75480</b>\n🕒 <b>Wednesday 2026-11-18 04:14</b> Tehran\n🕒 <b>Wednesday 2026-11-18 00:44</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>75946</b>\n🕒 <b>2026-11-18 10:32</b> Tehran\n🕒 <b>2026-11-18 07:02</b> London (for Kamyar)\n🌍 Tokyo"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>75946</b>\n🕒 <b>Wednesday 2026-11-18 10:32</b> Tehran\n🕒 <b>Wednesday 2026-11-18 07:02</b> London (for Kamyar)\n🌍 Tokyo"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>  ⭐ <b>STRONG</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>68689</b>\n🕒 <b>2026-11-18 12:16</b> Tehran\n🕒 <b>2026-11-18 08:46</b> London (for Kamyar)\n🌍 Tokyo · London (overlap)"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>  ⭐ <b>STRONG</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>68689</b>\n🕒 <b>Wednesday 2026-11-18 12:16</b> Tehran\n🕒 <b>Wednesday 2026-11-18 08:46</b> London (for Kamyar)\n🌍 Tokyo · London (overlap)"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>65703</b>\n🕒 <b>2026-11-18 19:00</b> Tehran\n🕒 <b>2026-11-18 15:30</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>65703</b>\n🕒 <b>Wednesday 2026-11-18 19:00</b> Tehran\n🕒 <b>Wednesday 2026-11-18 15:30</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>71188</b>\n🕒 <b>2026-11-18 20:37</b> Tehran\n🕒 <b>2026-11-18 17:07</b> London (for Kamyar)\n🌍 New York"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>71188</b>\n🕒 <b>Wednesday 2026-11-18 20:37</b> Tehran\n🕒 <b>Wednesday 2026-11-18 17:07</b> London (for Kamyar)\n🌍 New York"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>67472</b>\n🕒 <b>2026-11-19 07:39</b> Tehran\n🕒 <b>2026-11-19 04:09</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>67472</b>\n🕒 <b>Thursday 2026-11-19 07:39</b> Tehran\n🕒 <b>Thursday 2026-11-19 04:09</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>73243</b>\n🕒 <b>2026-11-19 09:06</b> Tehran\n🕒 <b>2026-11-19 05:36</b> London (for Kamyar)\n🌍 Tokyo"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>73243</b>\n🕒 <b>Thursday 2026-11-19 09:06</b> Tehran\n🕒 <b>Thursday 2026-11-19 05:36</b> London (for Kamyar)\n🌍 Tokyo"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>69881</b>\n🕒 <b>2026-11-19 18:02</b> Tehran\n🕒 <b>2026-11-19 14:32</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>69881</b>\n🕒 <b>Thursday 2026-11-19 18:02</b> Tehran\n🕒 <b>Thursday 2026-11-19 14:32</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>69817</b>\n🕒 <b>2026-11-19 18:12</b> Tehran\n🕒 <b>2026-11-19 14:42</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>69817</b>\n🕒 <b>Thursday 2026-11-19 18:12</b> Tehran\n🕒 <b>Thursday 2026-11-19 14:42</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>66987</b>\n🕒 <b>2026-11-20 06:24</b> Tehran\n🕒 <b>2026-11-20 02:54</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>66987</b>\n🕒 <b>Friday 2026-11-20 06:24</b> Tehran\n🕒 <b>Friday 2026-11-20 02:54</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "✖️ <b>CANCELLED · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>66890</b>\n🕒 <b>2026-11-20 06:25</b> Tehran\n🕒 <b>2026-11-20 02:55</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
+    "msg": "✖️ <b>CANCELLED · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>66890</b>\n🕒 <b>Friday 2026-11-20 06:25</b> Tehran\n🕒 <b>Friday 2026-11-20 02:55</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>69617</b>\n🕒 <b>2026-11-20 14:54</b> Tehran\n🕒 <b>2026-11-20 11:24</b> London (for Kamyar)\n🌍 London"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>69617</b>\n🕒 <b>Friday 2026-11-20 14:54</b> Tehran\n🕒 <b>Friday 2026-11-20 11:24</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>64286</b>\n🕒 <b>2026-11-20 16:49</b> Tehran\n🕒 <b>2026-11-20 13:19</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>64286</b>\n🕒 <b>Friday 2026-11-20 16:49</b> Tehran\n🕒 <b>Friday 2026-11-20 13:19</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>69607</b>\n🕒 <b>2026-11-20 19:09</b> Tehran\n🕒 <b>2026-11-20 15:39</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>69607</b>\n🕒 <b>Friday 2026-11-20 19:09</b> Tehran\n🕒 <b>Friday 2026-11-20 15:39</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>69629</b>\n🕒 <b>2026-11-20 19:28</b> Tehran\n🕒 <b>2026-11-20 15:58</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>69629</b>\n🕒 <b>Friday 2026-11-20 19:28</b> Tehran\n🕒 <b>Friday 2026-11-20 15:58</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>66766</b>\n🕒 <b>2026-11-21 04:01</b> Tehran\n🕒 <b>2026-11-21 00:31</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>66766</b>\n🕒 <b>Saturday 2026-11-21 04:01</b> Tehran\n🕒 <b>Saturday 2026-11-21 00:31</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>66771</b>\n🕒 <b>2026-11-21 04:04</b> Tehran\n🕒 <b>2026-11-21 00:34</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>66771</b>\n🕒 <b>Saturday 2026-11-21 04:04</b> Tehran\n🕒 <b>Saturday 2026-11-21 00:34</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>65729</b>\n🕒 <b>2026-11-21 09:56</b> Tehran\n🕒 <b>2026-11-21 06:26</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>65729</b>\n🕒 <b>Saturday 2026-11-21 09:56</b> Tehran\n🕒 <b>Saturday 2026-11-21 06:26</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>65753</b>\n🕒 <b>2026-11-21 10:03</b> Tehran\n🕒 <b>2026-11-21 06:33</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>65753</b>\n🕒 <b>Saturday 2026-11-21 10:03</b> Tehran\n🕒 <b>Saturday 2026-11-21 06:33</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>63662</b>\n🕒 <b>2026-11-21 16:11</b> Tehran\n🕒 <b>2026-11-21 12:41</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>63662</b>\n🕒 <b>Saturday 2026-11-21 16:11</b> Tehran\n🕒 <b>Saturday 2026-11-21 12:41</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>68988</b>\n🕒 <b>2026-11-21 17:51</b> Tehran\n🕒 <b>2026-11-21 14:21</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>68988</b>\n🕒 <b>Saturday 2026-11-21 17:51</b> Tehran\n🕒 <b>Saturday 2026-11-21 14:21</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>66684</b>\n🕒 <b>2026-11-22 04:31</b> Tehran\n🕒 <b>2026-11-22 01:01</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>66684</b>\n🕒 <b>Sunday 2026-11-22 04:31</b> Tehran\n🕒 <b>Sunday 2026-11-22 01:01</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>66639</b>\n🕒 <b>2026-11-22 04:50</b> Tehran\n🕒 <b>2026-11-22 01:20</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>66639</b>\n🕒 <b>Sunday 2026-11-22 04:50</b> Tehran\n🕒 <b>Sunday 2026-11-22 01:20</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>64175</b>\n🕒 <b>2026-11-22 08:55</b> Tehran\n🕒 <b>2026-11-22 05:25</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>64175</b>\n🕒 <b>Sunday 2026-11-22 08:55</b> Tehran\n🕒 <b>Sunday 2026-11-22 05:25</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>68443</b>\n🕒 <b>2026-11-22 10:12</b> Tehran\n🕒 <b>2026-11-22 06:42</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>68443</b>\n🕒 <b>Sunday 2026-11-22 10:12</b> Tehran\n🕒 <b>Sunday 2026-11-22 06:42</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>68349</b>\n🕒 <b>2026-11-22 10:44</b> Tehran\n🕒 <b>2026-11-22 07:14</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>68349</b>\n🕒 <b>Sunday 2026-11-22 10:44</b> Tehran\n🕒 <b>Sunday 2026-11-22 07:14</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>68260</b>\n🕒 <b>2026-11-22 10:52</b> Tehran\n🕒 <b>2026-11-22 07:22</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>68260</b>\n🕒 <b>Sunday 2026-11-22 10:52</b> Tehran\n🕒 <b>Sunday 2026-11-22 07:22</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>65674</b>\n🕒 <b>2026-11-22 21:31</b> Tehran\n🕒 <b>2026-11-22 18:01</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>65674</b>\n🕒 <b>Sunday 2026-11-22 21:31</b> Tehran\n🕒 <b>Sunday 2026-11-22 18:01</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>67777</b>\n🕒 <b>2026-11-22 22:15</b> Tehran\n🕒 <b>2026-11-22 18:45</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>67777</b>\n🕒 <b>Sunday 2026-11-22 22:15</b> Tehran\n🕒 <b>Sunday 2026-11-22 18:45</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>70296</b>\n🕒 <b>2026-11-22 23:34</b> Tehran\n🕒 <b>2026-11-22 20:04</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>70296</b>\n🕒 <b>Sunday 2026-11-22 23:34</b> Tehran\n🕒 <b>Sunday 2026-11-22 20:04</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>70068</b>\n🕒 <b>2026-11-22 23:45</b> Tehran\n🕒 <b>2026-11-22 20:15</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>70068</b>\n🕒 <b>Sunday 2026-11-22 23:45</b> Tehran\n🕒 <b>Sunday 2026-11-22 20:15</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>65330</b>\n🕒 <b>2026-11-23 01:44</b> Tehran\n🕒 <b>2026-11-22 22:14</b> London (for Kamyar)\n🌍 Sydney"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>65330</b>\n🕒 <b>Monday 2026-11-23 01:44</b> Tehran\n🕒 <b>Sunday 2026-11-22 22:14</b> London (for Kamyar)\n🌍 Sydney"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>65636</b>\n🕒 <b>2026-11-23 01:59</b> Tehran\n🕒 <b>2026-11-22 22:29</b> London (for Kamyar)\n🌍 Sydney"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>65636</b>\n🕒 <b>Monday 2026-11-23 01:59</b> Tehran\n🕒 <b>Sunday 2026-11-22 22:29</b> London (for Kamyar)\n🌍 Sydney"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>70782</b>\n🕒 <b>2026-11-23 10:37</b> Tehran\n🕒 <b>2026-11-23 07:07</b> London (for Kamyar)\n🌍 Tokyo"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>70782</b>\n🕒 <b>Monday 2026-11-23 10:37</b> Tehran\n🕒 <b>Monday 2026-11-23 07:07</b> London (for Kamyar)\n🌍 Tokyo"
    },
    {
-    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>70982</b>\n🕒 <b>2026-11-23 10:54</b> Tehran\n🕒 <b>2026-11-23 07:24</b> London (for Kamyar)\n🌍 Tokyo\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
+    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>70982</b>\n🕒 <b>Monday 2026-11-23 10:54</b> Tehran\n🕒 <b>Monday 2026-11-23 07:24</b> London (for Kamyar)\n🌍 Tokyo\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>66652</b>\n🕒 <b>2026-11-23 14:04</b> Tehran\n🕒 <b>2026-11-23 10:34</b> London (for Kamyar)\n🌍 London"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>66652</b>\n🕒 <b>Monday 2026-11-23 14:04</b> Tehran\n🕒 <b>Monday 2026-11-23 10:34</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>72247</b>\n🕒 <b>2026-11-23 15:43</b> Tehran\n🕒 <b>2026-11-23 12:13</b> London (for Kamyar)\n🌍 London"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>72247</b>\n🕒 <b>Monday 2026-11-23 15:43</b> Tehran\n🕒 <b>Monday 2026-11-23 12:13</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>69992</b>\n🕒 <b>2026-11-23 18:21</b> Tehran\n🕒 <b>2026-11-23 14:51</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>69992</b>\n🕒 <b>Monday 2026-11-23 18:21</b> Tehran\n🕒 <b>Monday 2026-11-23 14:51</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>69814</b>\n🕒 <b>2026-11-23 18:32</b> Tehran\n🕒 <b>2026-11-23 15:02</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>69814</b>\n🕒 <b>Monday 2026-11-23 18:32</b> Tehran\n🕒 <b>Monday 2026-11-23 15:02</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>67992</b>\n🕒 <b>2026-11-24 00:39</b> Tehran\n🕒 <b>2026-11-23 21:09</b> London (for Kamyar)\n🌍 Sydney · New York (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>67992</b>\n🕒 <b>Tuesday 2026-11-24 00:39</b> Tehran\n🕒 <b>Monday 2026-11-23 21:09</b> London (for Kamyar)\n🌍 Sydney · New York (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>67956</b>\n🕒 <b>2026-11-24 00:49</b> Tehran\n🕒 <b>2026-11-23 21:19</b> London (for Kamyar)\n🌍 Sydney · New York (overlap)"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>67956</b>\n🕒 <b>Tuesday 2026-11-24 00:49</b> Tehran\n🕒 <b>Monday 2026-11-23 21:19</b> London (for Kamyar)\n🌍 Sydney · New York (overlap)"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>69543</b>\n🕒 <b>2026-11-24 19:13</b> Tehran\n🕒 <b>2026-11-24 15:43</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>69543</b>\n🕒 <b>Tuesday 2026-11-24 19:13</b> Tehran\n🕒 <b>Tuesday 2026-11-24 15:43</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>69430</b>\n🕒 <b>2026-11-24 19:17</b> Tehran\n🕒 <b>2026-11-24 15:47</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>69430</b>\n🕒 <b>Tuesday 2026-11-24 19:17</b> Tehran\n🕒 <b>Tuesday 2026-11-24 15:47</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>68829</b>\n🕒 <b>2026-11-25 18:45</b> Tehran\n🕒 <b>2026-11-25 15:15</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>68829</b>\n🕒 <b>Wednesday 2026-11-25 18:45</b> Tehran\n🕒 <b>Wednesday 2026-11-25 15:15</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>75098</b>\n🕒 <b>2026-11-25 20:15</b> Tehran\n🕒 <b>2026-11-25 16:45</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>75098</b>\n🕒 <b>Wednesday 2026-11-25 20:15</b> Tehran\n🕒 <b>Wednesday 2026-11-25 16:45</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>70269</b>\n🕒 <b>2026-11-25 22:38</b> Tehran\n🕒 <b>2026-11-25 19:08</b> London (for Kamyar)\n🌍 New York"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>70269</b>\n🕒 <b>Wednesday 2026-11-25 22:38</b> Tehran\n🕒 <b>Wednesday 2026-11-25 19:08</b> London (for Kamyar)\n🌍 New York"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>70365</b>\n🕒 <b>2026-11-25 22:44</b> Tehran\n🕒 <b>2026-11-25 19:14</b> London (for Kamyar)\n🌍 New York"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>70365</b>\n🕒 <b>Wednesday 2026-11-25 22:44</b> Tehran\n🕒 <b>Wednesday 2026-11-25 19:14</b> London (for Kamyar)\n🌍 New York"
    }
   ],
   "last_fire": {
    "t": "2026-11-25T19:14:00+00:00",
    "d": 1,
-   "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>70365</b>\n🕒 <b>2026-11-25 22:44</b> Tehran\n🕒 <b>2026-11-25 19:14</b> London (for Kamyar)\n🌍 New York"
+   "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>70365</b>\n🕒 <b>Wednesday 2026-11-25 22:44</b> Tehran\n🕒 <b>Wednesday 2026-11-25 19:14</b> London (for Kamyar)\n🌍 New York"
   }
  },
  "XAUUSD": {
   "events": [
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2707.65</b>\n🕒 <b>2026-11-13 09:13</b> Tehran\n🕒 <b>2026-11-13 05:43</b> London (for Kamyar)\n🌍 Tokyo"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2707.65</b>\n🕒 <b>Friday 2026-11-13 09:13</b> Tehran\n🕒 <b>Friday 2026-11-13 05:43</b> London (for Kamyar)\n🌍 Tokyo"
    },
    {
-    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2708.89</b>\n🕒 <b>2026-11-13 09:15</b> Tehran\n🕒 <b>2026-11-13 05:45</b> London (for Kamyar)\n🌍 Tokyo\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
+    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2708.89</b>\n🕒 <b>Friday 2026-11-13 09:15</b> Tehran\n🕒 <b>Friday 2026-11-13 05:45</b> London (for Kamyar)\n🌍 Tokyo\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2700.06</b>\n🕒 <b>2026-11-13 17:15</b> Tehran\n🕒 <b>2026-11-13 13:45</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2700.06</b>\n🕒 <b>Friday 2026-11-13 17:15</b> Tehran\n🕒 <b>Friday 2026-11-13 13:45</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2702.34</b>\n🕒 <b>2026-11-13 17:20</b> Tehran\n🕒 <b>2026-11-13 13:50</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2702.34</b>\n🕒 <b>Friday 2026-11-13 17:20</b> Tehran\n🕒 <b>Friday 2026-11-13 13:50</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2798.12</b>\n🕒 <b>2026-11-14 03:55</b> Tehran\n🕒 <b>2026-11-14 00:25</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2798.12</b>\n🕒 <b>Saturday 2026-11-14 03:55</b> Tehran\n🕒 <b>Saturday 2026-11-14 00:25</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2796.40</b>\n🕒 <b>2026-11-14 03:56</b> Tehran\n🕒 <b>2026-11-14 00:26</b> London (for Kamyar)\n🌍 Weekend\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
+    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2796.40</b>\n🕒 <b>Saturday 2026-11-14 03:56</b> Tehran\n🕒 <b>Saturday 2026-11-14 00:26</b> London (for Kamyar)\n🌍 Weekend\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2678.52</b>\n🕒 <b>2026-11-14 12:39</b> Tehran\n🕒 <b>2026-11-14 09:09</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2678.52</b>\n🕒 <b>Saturday 2026-11-14 12:39</b> Tehran\n🕒 <b>Saturday 2026-11-14 09:09</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2754.98</b>\n🕒 <b>2026-11-14 13:49</b> Tehran\n🕒 <b>2026-11-14 10:19</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2754.98</b>\n🕒 <b>Saturday 2026-11-14 13:49</b> Tehran\n🕒 <b>Saturday 2026-11-14 10:19</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2699.80</b>\n🕒 <b>2026-11-15 07:22</b> Tehran\n🕒 <b>2026-11-15 03:52</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2699.80</b>\n🕒 <b>Sunday 2026-11-15 07:22</b> Tehran\n🕒 <b>Sunday 2026-11-15 03:52</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2698.27</b>\n🕒 <b>2026-11-15 07:31</b> Tehran\n🕒 <b>2026-11-15 04:01</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2698.27</b>\n🕒 <b>Sunday 2026-11-15 07:31</b> Tehran\n🕒 <b>Sunday 2026-11-15 04:01</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2678.94</b>\n🕒 <b>2026-11-15 09:28</b> Tehran\n🕒 <b>2026-11-15 05:58</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2678.94</b>\n🕒 <b>Sunday 2026-11-15 09:28</b> Tehran\n🕒 <b>Sunday 2026-11-15 05:58</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2677.45</b>\n🕒 <b>2026-11-15 09:39</b> Tehran\n🕒 <b>2026-11-15 06:09</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2677.45</b>\n🕒 <b>Sunday 2026-11-15 09:39</b> Tehran\n🕒 <b>Sunday 2026-11-15 06:09</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2766.30</b>\n🕒 <b>2026-11-15 13:34</b> Tehran\n🕒 <b>2026-11-15 10:04</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2766.30</b>\n🕒 <b>Sunday 2026-11-15 13:34</b> Tehran\n🕒 <b>Sunday 2026-11-15 10:04</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2767.59</b>\n🕒 <b>2026-11-15 13:37</b> Tehran\n🕒 <b>2026-11-15 10:07</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2767.59</b>\n🕒 <b>Sunday 2026-11-15 13:37</b> Tehran\n🕒 <b>Sunday 2026-11-15 10:07</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2558.81</b>\n🕒 <b>2026-11-15 22:12</b> Tehran\n🕒 <b>2026-11-15 18:42</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2558.81</b>\n🕒 <b>Sunday 2026-11-15 22:12</b> Tehran\n🕒 <b>Sunday 2026-11-15 18:42</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2600.64</b>\n🕒 <b>2026-11-15 22:54</b> Tehran\n🕒 <b>2026-11-15 19:24</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2600.64</b>\n🕒 <b>Sunday 2026-11-15 22:54</b> Tehran\n🕒 <b>Sunday 2026-11-15 19:24</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2621.58</b>\n🕒 <b>2026-11-16 01:45</b> Tehran\n🕒 <b>2026-11-15 22:15</b> London (for Kamyar)\n🌍 Sydney"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2621.58</b>\n🕒 <b>Monday 2026-11-16 01:45</b> Tehran\n🕒 <b>Sunday 2026-11-15 22:15</b> London (for Kamyar)\n🌍 Sydney"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2608.21</b>\n🕒 <b>2026-11-16 02:08</b> Tehran\n🕒 <b>2026-11-15 22:38</b> London (for Kamyar)\n🌍 Sydney"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2608.21</b>\n🕒 <b>Monday 2026-11-16 02:08</b> Tehran\n🕒 <b>Sunday 2026-11-15 22:38</b> London (for Kamyar)\n🌍 Sydney"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2605.04</b>\n🕒 <b>2026-11-16 22:47</b> Tehran\n🕒 <b>2026-11-16 19:17</b> London (for Kamyar)\n🌍 New York"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2605.04</b>\n🕒 <b>Monday 2026-11-16 22:47</b> Tehran\n🕒 <b>Monday 2026-11-16 19:17</b> London (for Kamyar)\n🌍 New York"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2606.31</b>\n🕒 <b>2026-11-16 22:52</b> Tehran\n🕒 <b>2026-11-16 19:22</b> London (for Kamyar)\n🌍 New York"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2606.31</b>\n🕒 <b>Monday 2026-11-16 22:52</b> Tehran\n🕒 <b>Monday 2026-11-16 19:22</b> London (for Kamyar)\n🌍 New York"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2530.39</b>\n🕒 <b>2026-11-17 03:09</b> Tehran\n🕒 <b>2026-11-16 23:39</b> London (for Kamyar)\n🌍 Sydney"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2530.39</b>\n🕒 <b>Tuesday 2026-11-17 03:09</b> Tehran\n🕒 <b>Monday 2026-11-16 23:39</b> London (for Kamyar)\n🌍 Sydney"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2652.97</b>\n🕒 <b>2026-11-17 04:41</b> Tehran\n🕒 <b>2026-11-17 01:11</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2652.97</b>\n🕒 <b>Tuesday 2026-11-17 04:41</b> Tehran\n🕒 <b>Tuesday 2026-11-17 01:11</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2700.15</b>\n🕒 <b>2026-11-17 11:43</b> Tehran\n🕒 <b>2026-11-17 08:13</b> London (for Kamyar)\n🌍 Tokyo · London (overlap)"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2700.15</b>\n🕒 <b>Tuesday 2026-11-17 11:43</b> Tehran\n🕒 <b>Tuesday 2026-11-17 08:13</b> London (for Kamyar)\n🌍 Tokyo · London (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2611.65</b>\n🕒 <b>2026-11-17 13:21</b> Tehran\n🕒 <b>2026-11-17 09:51</b> London (for Kamyar)\n🌍 London"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2611.65</b>\n🕒 <b>Tuesday 2026-11-17 13:21</b> Tehran\n🕒 <b>Tuesday 2026-11-17 09:51</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2672.47</b>\n🕒 <b>2026-11-17 15:45</b> Tehran\n🕒 <b>2026-11-17 12:15</b> London (for Kamyar)\n🌍 London"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2672.47</b>\n🕒 <b>Tuesday 2026-11-17 15:45</b> Tehran\n🕒 <b>Tuesday 2026-11-17 12:15</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2673.90</b>\n🕒 <b>2026-11-17 15:46</b> Tehran\n🕒 <b>2026-11-17 12:16</b> London (for Kamyar)\n🌍 London\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
+    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2673.90</b>\n🕒 <b>Tuesday 2026-11-17 15:46</b> Tehran\n🕒 <b>Tuesday 2026-11-17 12:16</b> London (for Kamyar)\n🌍 London\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2690.04</b>\n🕒 <b>2026-11-18 04:23</b> Tehran\n🕒 <b>2026-11-18 00:53</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2690.04</b>\n🕒 <b>Wednesday 2026-11-18 04:23</b> Tehran\n🕒 <b>Wednesday 2026-11-18 00:53</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2651.29</b>\n🕒 <b>2026-11-18 04:58</b> Tehran\n🕒 <b>2026-11-18 01:28</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2651.29</b>\n🕒 <b>Wednesday 2026-11-18 04:58</b> Tehran\n🕒 <b>Wednesday 2026-11-18 01:28</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2605.63</b>\n🕒 <b>2026-11-18 08:26</b> Tehran\n🕒 <b>2026-11-18 04:56</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2605.63</b>\n🕒 <b>Wednesday 2026-11-18 08:26</b> Tehran\n🕒 <b>Wednesday 2026-11-18 04:56</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "✖️ <b>CANCELLED · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2605.40</b>\n🕒 <b>2026-11-18 08:27</b> Tehran\n🕒 <b>2026-11-18 04:57</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
+    "msg": "✖️ <b>CANCELLED · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2605.40</b>\n🕒 <b>Wednesday 2026-11-18 08:27</b> Tehran\n🕒 <b>Wednesday 2026-11-18 04:57</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2714.33</b>\n🕒 <b>2026-11-18 10:40</b> Tehran\n🕒 <b>2026-11-18 07:10</b> London (for Kamyar)\n🌍 Tokyo"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2714.33</b>\n🕒 <b>Wednesday 2026-11-18 10:40</b> Tehran\n🕒 <b>Wednesday 2026-11-18 07:10</b> London (for Kamyar)\n🌍 Tokyo"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2618.91</b>\n🕒 <b>2026-11-18 11:46</b> Tehran\n🕒 <b>2026-11-18 08:16</b> London (for Kamyar)\n🌍 Tokyo · London (overlap)"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2618.91</b>\n🕒 <b>Wednesday 2026-11-18 11:46</b> Tehran\n🕒 <b>Wednesday 2026-11-18 08:16</b> London (for Kamyar)\n🌍 Tokyo · London (overlap)"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2715.41</b>\n🕒 <b>2026-11-19 03:30</b> Tehran\n🕒 <b>2026-11-19 00:00</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2715.41</b>\n🕒 <b>Thursday 2026-11-19 03:30</b> Tehran\n🕒 <b>Thursday 2026-11-19 00:00</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2638.94</b>\n🕒 <b>2026-11-19 04:58</b> Tehran\n🕒 <b>2026-11-19 01:28</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2638.94</b>\n🕒 <b>Thursday 2026-11-19 04:58</b> Tehran\n🕒 <b>Thursday 2026-11-19 01:28</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2672.25</b>\n🕒 <b>2026-11-19 07:24</b> Tehran\n🕒 <b>2026-11-19 03:54</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2672.25</b>\n🕒 <b>Thursday 2026-11-19 07:24</b> Tehran\n🕒 <b>Thursday 2026-11-19 03:54</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2673.37</b>\n🕒 <b>2026-11-19 07:29</b> Tehran\n🕒 <b>2026-11-19 03:59</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2673.37</b>\n🕒 <b>Thursday 2026-11-19 07:29</b> Tehran\n🕒 <b>Thursday 2026-11-19 03:59</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2722.04</b>\n🕒 <b>2026-11-20 04:52</b> Tehran\n🕒 <b>2026-11-20 01:22</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2722.04</b>\n🕒 <b>Friday 2026-11-20 04:52</b> Tehran\n🕒 <b>Friday 2026-11-20 01:22</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2722.89</b>\n🕒 <b>2026-11-20 05:09</b> Tehran\n🕒 <b>2026-11-20 01:39</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2722.89</b>\n🕒 <b>Friday 2026-11-20 05:09</b> Tehran\n🕒 <b>Friday 2026-11-20 01:39</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2772.54</b>\n🕒 <b>2026-11-20 13:37</b> Tehran\n🕒 <b>2026-11-20 10:07</b> London (for Kamyar)\n🌍 London"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2772.54</b>\n🕒 <b>Friday 2026-11-20 13:37</b> Tehran\n🕒 <b>Friday 2026-11-20 10:07</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2776.65</b>\n🕒 <b>2026-11-20 13:42</b> Tehran\n🕒 <b>2026-11-20 10:12</b> London (for Kamyar)\n🌍 London\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
+    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2776.65</b>\n🕒 <b>Friday 2026-11-20 13:42</b> Tehran\n🕒 <b>Friday 2026-11-20 10:12</b> London (for Kamyar)\n🌍 London\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2688.04</b>\n🕒 <b>2026-11-21 10:07</b> Tehran\n🕒 <b>2026-11-21 06:37</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2688.04</b>\n🕒 <b>Saturday 2026-11-21 10:07</b> Tehran\n🕒 <b>Saturday 2026-11-21 06:37</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2745.78</b>\n🕒 <b>2026-11-21 10:56</b> Tehran\n🕒 <b>2026-11-21 07:26</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2745.78</b>\n🕒 <b>Saturday 2026-11-21 10:56</b> Tehran\n🕒 <b>Saturday 2026-11-21 07:26</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2693.75</b>\n🕒 <b>2026-11-21 16:14</b> Tehran\n🕒 <b>2026-11-21 12:44</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2693.75</b>\n🕒 <b>Saturday 2026-11-21 16:14</b> Tehran\n🕒 <b>Saturday 2026-11-21 12:44</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2818.32</b>\n🕒 <b>2026-11-21 17:48</b> Tehran\n🕒 <b>2026-11-21 14:18</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2818.32</b>\n🕒 <b>Saturday 2026-11-21 17:48</b> Tehran\n🕒 <b>Saturday 2026-11-21 14:18</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2821.72</b>\n🕒 <b>2026-11-22 11:18</b> Tehran\n🕒 <b>2026-11-22 07:48</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2821.72</b>\n🕒 <b>Sunday 2026-11-22 11:18</b> Tehran\n🕒 <b>Sunday 2026-11-22 07:48</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2821.48</b>\n🕒 <b>2026-11-22 11:23</b> Tehran\n🕒 <b>2026-11-22 07:53</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2821.48</b>\n🕒 <b>Sunday 2026-11-22 11:23</b> Tehran\n🕒 <b>Sunday 2026-11-22 07:53</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2781.02</b>\n🕒 <b>2026-11-22 21:15</b> Tehran\n🕒 <b>2026-11-22 17:45</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2781.02</b>\n🕒 <b>Sunday 2026-11-22 21:15</b> Tehran\n🕒 <b>Sunday 2026-11-22 17:45</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "✖️ <b>CANCELLED · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2781.01</b>\n🕒 <b>2026-11-22 21:16</b> Tehran\n🕒 <b>2026-11-22 17:46</b> London (for Kamyar)\n🌍 Weekend\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
+    "msg": "✖️ <b>CANCELLED · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2781.01</b>\n🕒 <b>Sunday 2026-11-22 21:16</b> Tehran\n🕒 <b>Sunday 2026-11-22 17:46</b> London (for Kamyar)\n🌍 Weekend\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2850.25</b>\n🕒 <b>2026-11-23 16:24</b> Tehran\n🕒 <b>2026-11-23 12:54</b> London (for Kamyar)\n🌍 London"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2850.25</b>\n🕒 <b>Monday 2026-11-23 16:24</b> Tehran\n🕒 <b>Monday 2026-11-23 12:54</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2805.68</b>\n🕒 <b>2026-11-23 17:13</b> Tehran\n🕒 <b>2026-11-23 13:43</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2805.68</b>\n🕒 <b>Monday 2026-11-23 17:13</b> Tehran\n🕒 <b>Monday 2026-11-23 13:43</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2798.90</b>\n🕒 <b>2026-11-23 18:33</b> Tehran\n🕒 <b>2026-11-23 15:03</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2798.90</b>\n🕒 <b>Monday 2026-11-23 18:33</b> Tehran\n🕒 <b>Monday 2026-11-23 15:03</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2796.37</b>\n🕒 <b>2026-11-23 18:38</b> Tehran\n🕒 <b>2026-11-23 15:08</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2796.37</b>\n🕒 <b>Monday 2026-11-23 18:38</b> Tehran\n🕒 <b>Monday 2026-11-23 15:08</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2863.61</b>\n🕒 <b>2026-11-24 11:31</b> Tehran\n🕒 <b>2026-11-24 08:01</b> London (for Kamyar)\n🌍 Tokyo · London (overlap)"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2863.61</b>\n🕒 <b>Tuesday 2026-11-24 11:31</b> Tehran\n🕒 <b>Tuesday 2026-11-24 08:01</b> London (for Kamyar)\n🌍 Tokyo · London (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2779.00</b>\n🕒 <b>2026-11-24 12:49</b> Tehran\n🕒 <b>2026-11-24 09:19</b> London (for Kamyar)\n🌍 London"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2779.00</b>\n🕒 <b>Tuesday 2026-11-24 12:49</b> Tehran\n🕒 <b>Tuesday 2026-11-24 09:19</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2887.91</b>\n🕒 <b>2026-11-25 06:04</b> Tehran\n🕒 <b>2026-11-25 02:34</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2887.91</b>\n🕒 <b>Wednesday 2026-11-25 06:04</b> Tehran\n🕒 <b>Wednesday 2026-11-25 02:34</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2954.53</b>\n🕒 <b>2026-11-25 07:09</b> Tehran\n🕒 <b>2026-11-25 03:39</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2954.53</b>\n🕒 <b>Wednesday 2026-11-25 07:09</b> Tehran\n🕒 <b>Wednesday 2026-11-25 03:39</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2962.90</b>\n🕒 <b>2026-11-25 07:58</b> Tehran\n🕒 <b>2026-11-25 04:28</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2962.90</b>\n🕒 <b>Wednesday 2026-11-25 07:58</b> Tehran\n🕒 <b>Wednesday 2026-11-25 04:28</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2962.43</b>\n🕒 <b>2026-11-25 08:04</b> Tehran\n🕒 <b>2026-11-25 04:34</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2962.43</b>\n🕒 <b>Wednesday 2026-11-25 08:04</b> Tehran\n🕒 <b>Wednesday 2026-11-25 04:34</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    }
   ],
   "last_fire": {
    "t": "2026-11-25T04:34:00+00:00",
    "d": -1,
-   "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2962.43</b>\n🕒 <b>2026-11-25 08:04</b> Tehran\n🕒 <b>2026-11-25 04:34</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+   "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2962.43</b>\n🕒 <b>Wednesday 2026-11-25 08:04</b> Tehran\n🕒 <b>Wednesday 2026-11-25 04:34</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
   }
  },
  "EURUSD": {
   "events": [
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07612</b>\n🕒 <b>2026-11-13 19:46</b> Tehran\n🕒 <b>2026-11-13 16:16</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07612</b>\n🕒 <b>Friday 2026-11-13 19:46</b> Tehran\n🕒 <b>Friday 2026-11-13 16:16</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08035</b>\n🕒 <b>2026-11-13 20:14</b> Tehran\n🕒 <b>2026-11-13 16:44</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08035</b>\n🕒 <b>Friday 2026-11-13 20:14</b> Tehran\n🕒 <b>Friday 2026-11-13 16:44</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.09002</b>\n🕒 <b>2026-11-14 10:31</b> Tehran\n🕒 <b>2026-11-14 07:01</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.09002</b>\n🕒 <b>Saturday 2026-11-14 10:31</b> Tehran\n🕒 <b>Saturday 2026-11-14 07:01</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08440</b>\n🕒 <b>2026-11-14 11:08</b> Tehran\n🕒 <b>2026-11-14 07:38</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08440</b>\n🕒 <b>Saturday 2026-11-14 11:08</b> Tehran\n🕒 <b>Saturday 2026-11-14 07:38</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.09430</b>\n🕒 <b>2026-11-15 00:42</b> Tehran\n🕒 <b>2026-11-14 21:12</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.09430</b>\n🕒 <b>Sunday 2026-11-15 00:42</b> Tehran\n🕒 <b>Saturday 2026-11-14 21:12</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.09550</b>\n🕒 <b>2026-11-15 00:47</b> Tehran\n🕒 <b>2026-11-14 21:17</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.09550</b>\n🕒 <b>Sunday 2026-11-15 00:47</b> Tehran\n🕒 <b>Saturday 2026-11-14 21:17</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08692</b>\n🕒 <b>2026-11-15 11:30</b> Tehran\n🕒 <b>2026-11-15 08:00</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08692</b>\n🕒 <b>Sunday 2026-11-15 11:30</b> Tehran\n🕒 <b>Sunday 2026-11-15 08:00</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.10582</b>\n🕒 <b>2026-11-15 12:55</b> Tehran\n🕒 <b>2026-11-15 09:25</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.10582</b>\n🕒 <b>Sunday 2026-11-15 12:55</b> Tehran\n🕒 <b>Sunday 2026-11-15 09:25</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.10614</b>\n🕒 <b>2026-11-15 13:30</b> Tehran\n🕒 <b>2026-11-15 10:00</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.10614</b>\n🕒 <b>Sunday 2026-11-15 13:30</b> Tehran\n🕒 <b>Sunday 2026-11-15 10:00</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.10604</b>\n🕒 <b>2026-11-15 13:36</b> Tehran\n🕒 <b>2026-11-15 10:06</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.10604</b>\n🕒 <b>Sunday 2026-11-15 13:36</b> Tehran\n🕒 <b>Sunday 2026-11-15 10:06</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08235</b>\n🕒 <b>2026-11-15 15:52</b> Tehran\n🕒 <b>2026-11-15 12:22</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08235</b>\n🕒 <b>Sunday 2026-11-15 15:52</b> Tehran\n🕒 <b>Sunday 2026-11-15 12:22</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08166</b>\n🕒 <b>2026-11-15 15:58</b> Tehran\n🕒 <b>2026-11-15 12:28</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08166</b>\n🕒 <b>Sunday 2026-11-15 15:58</b> Tehran\n🕒 <b>Sunday 2026-11-15 12:28</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08232</b>\n🕒 <b>2026-11-15 23:55</b> Tehran\n🕒 <b>2026-11-15 20:25</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08232</b>\n🕒 <b>Sunday 2026-11-15 23:55</b> Tehran\n🕒 <b>Sunday 2026-11-15 20:25</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08189</b>\n🕒 <b>2026-11-16 00:18</b> Tehran\n🕒 <b>2026-11-15 20:48</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08189</b>\n🕒 <b>Monday 2026-11-16 00:18</b> Tehran\n🕒 <b>Sunday 2026-11-15 20:48</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.05922</b>\n🕒 <b>2026-11-16 10:20</b> Tehran\n🕒 <b>2026-11-16 06:50</b> London (for Kamyar)\n🌍 Tokyo"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.05922</b>\n🕒 <b>Monday 2026-11-16 10:20</b> Tehran\n🕒 <b>Monday 2026-11-16 06:50</b> London (for Kamyar)\n🌍 Tokyo"
    },
    {
-    "msg": "✖️ <b>CANCELLED · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.05911</b>\n🕒 <b>2026-11-16 10:21</b> Tehran\n🕒 <b>2026-11-16 06:51</b> London (for Kamyar)\n🌍 Tokyo\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
+    "msg": "✖️ <b>CANCELLED · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.05911</b>\n🕒 <b>Monday 2026-11-16 10:21</b> Tehran\n🕒 <b>Monday 2026-11-16 06:51</b> London (for Kamyar)\n🌍 Tokyo\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08739</b>\n🕒 <b>2026-11-16 22:54</b> Tehran\n🕒 <b>2026-11-16 19:24</b> London (for Kamyar)\n🌍 New York"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08739</b>\n🕒 <b>Monday 2026-11-16 22:54</b> Tehran\n🕒 <b>Monday 2026-11-16 19:24</b> London (for Kamyar)\n🌍 New York"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08650</b>\n🕒 <b>2026-11-16 22:57</b> Tehran\n🕒 <b>2026-11-16 19:27</b> London (for Kamyar)\n🌍 New York"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08650</b>\n🕒 <b>Monday 2026-11-16 22:57</b> Tehran\n🕒 <b>Monday 2026-11-16 19:27</b> London (for Kamyar)\n🌍 New York"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.09132</b>\n🕒 <b>2026-11-17 05:37</b> Tehran\n🕒 <b>2026-11-17 02:07</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.09132</b>\n🕒 <b>Tuesday 2026-11-17 05:37</b> Tehran\n🕒 <b>Tuesday 2026-11-17 02:07</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07873</b>\n🕒 <b>2026-11-17 06:42</b> Tehran\n🕒 <b>2026-11-17 03:12</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07873</b>\n🕒 <b>Tuesday 2026-11-17 06:42</b> Tehran\n🕒 <b>Tuesday 2026-11-17 03:12</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07288</b>\n🕒 <b>2026-11-17 09:34</b> Tehran\n🕒 <b>2026-11-17 06:04</b> London (for Kamyar)\n🌍 Tokyo"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07288</b>\n🕒 <b>Tuesday 2026-11-17 09:34</b> Tehran\n🕒 <b>Tuesday 2026-11-17 06:04</b> London (for Kamyar)\n🌍 Tokyo"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07341</b>\n🕒 <b>2026-11-17 09:48</b> Tehran\n🕒 <b>2026-11-17 06:18</b> London (for Kamyar)\n🌍 Tokyo"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07341</b>\n🕒 <b>Tuesday 2026-11-17 09:48</b> Tehran\n🕒 <b>Tuesday 2026-11-17 06:18</b> London (for Kamyar)\n🌍 Tokyo"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07780</b>\n🕒 <b>2026-11-18 08:20</b> Tehran\n🕒 <b>2026-11-18 04:50</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07780</b>\n🕒 <b>Wednesday 2026-11-18 08:20</b> Tehran\n🕒 <b>Wednesday 2026-11-18 04:50</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07792</b>\n🕒 <b>2026-11-18 08:22</b> Tehran\n🕒 <b>2026-11-18 04:52</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07792</b>\n🕒 <b>Wednesday 2026-11-18 08:22</b> Tehran\n🕒 <b>Wednesday 2026-11-18 04:52</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08172</b>\n🕒 <b>2026-11-18 14:59</b> Tehran\n🕒 <b>2026-11-18 11:29</b> London (for Kamyar)\n🌍 London"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08172</b>\n🕒 <b>Wednesday 2026-11-18 14:59</b> Tehran\n🕒 <b>Wednesday 2026-11-18 11:29</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08332</b>\n🕒 <b>2026-11-18 15:10</b> Tehran\n🕒 <b>2026-11-18 11:40</b> London (for Kamyar)\n🌍 London\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
+    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08332</b>\n🕒 <b>Wednesday 2026-11-18 15:10</b> Tehran\n🕒 <b>Wednesday 2026-11-18 11:40</b> London (for Kamyar)\n🌍 London\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.09131</b>\n🕒 <b>2026-11-19 03:31</b> Tehran\n🕒 <b>2026-11-19 00:01</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.09131</b>\n🕒 <b>Thursday 2026-11-19 03:31</b> Tehran\n🕒 <b>Thursday 2026-11-19 00:01</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08849</b>\n🕒 <b>2026-11-19 03:55</b> Tehran\n🕒 <b>2026-11-19 00:25</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08849</b>\n🕒 <b>Thursday 2026-11-19 03:55</b> Tehran\n🕒 <b>Thursday 2026-11-19 00:25</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07589</b>\n🕒 <b>2026-11-19 05:50</b> Tehran\n🕒 <b>2026-11-19 02:20</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07589</b>\n🕒 <b>Thursday 2026-11-19 05:50</b> Tehran\n🕒 <b>Thursday 2026-11-19 02:20</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "✖️ <b>CANCELLED · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07532</b>\n🕒 <b>2026-11-19 05:52</b> Tehran\n🕒 <b>2026-11-19 02:22</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
+    "msg": "✖️ <b>CANCELLED · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07532</b>\n🕒 <b>Thursday 2026-11-19 05:52</b> Tehran\n🕒 <b>Thursday 2026-11-19 02:22</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08819</b>\n🕒 <b>2026-11-19 09:43</b> Tehran\n🕒 <b>2026-11-19 06:13</b> London (for Kamyar)\n🌍 Tokyo"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08819</b>\n🕒 <b>Thursday 2026-11-19 09:43</b> Tehran\n🕒 <b>Thursday 2026-11-19 06:13</b> London (for Kamyar)\n🌍 Tokyo"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.06487</b>\n🕒 <b>2026-11-19 11:24</b> Tehran\n🕒 <b>2026-11-19 07:54</b> London (for Kamyar)\n🌍 Tokyo"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.06487</b>\n🕒 <b>Thursday 2026-11-19 11:24</b> Tehran\n🕒 <b>Thursday 2026-11-19 07:54</b> London (for Kamyar)\n🌍 Tokyo"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08001</b>\n🕒 <b>2026-11-19 13:58</b> Tehran\n🕒 <b>2026-11-19 10:28</b> London (for Kamyar)\n🌍 London"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08001</b>\n🕒 <b>Thursday 2026-11-19 13:58</b> Tehran\n🕒 <b>Thursday 2026-11-19 10:28</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08214</b>\n🕒 <b>2026-11-19 14:06</b> Tehran\n🕒 <b>2026-11-19 10:36</b> London (for Kamyar)\n🌍 London\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
+    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08214</b>\n🕒 <b>Thursday 2026-11-19 14:06</b> Tehran\n🕒 <b>Thursday 2026-11-19 10:36</b> London (for Kamyar)\n🌍 London\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08990</b>\n🕒 <b>2026-11-19 20:09</b> Tehran\n🕒 <b>2026-11-19 16:39</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08990</b>\n🕒 <b>Thursday 2026-11-19 20:09</b> Tehran\n🕒 <b>Thursday 2026-11-19 16:39</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08579</b>\n🕒 <b>2026-11-19 20:38</b> Tehran\n🕒 <b>2026-11-19 17:08</b> London (for Kamyar)\n🌍 New York"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08579</b>\n🕒 <b>Thursday 2026-11-19 20:38</b> Tehran\n🕒 <b>Thursday 2026-11-19 17:08</b> London (for Kamyar)\n🌍 New York"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08972</b>\n🕒 <b>2026-11-20 02:37</b> Tehran\n🕒 <b>2026-11-19 23:07</b> London (for Kamyar)\n🌍 Sydney"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08972</b>\n🕒 <b>Friday 2026-11-20 02:37</b> Tehran\n🕒 <b>Thursday 2026-11-19 23:07</b> London (for Kamyar)\n🌍 Sydney"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07128</b>\n🕒 <b>2026-11-20 04:05</b> Tehran\n🕒 <b>2026-11-20 00:35</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07128</b>\n🕒 <b>Friday 2026-11-20 04:05</b> Tehran\n🕒 <b>Friday 2026-11-20 00:35</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07049</b>\n🕒 <b>2026-11-20 04:47</b> Tehran\n🕒 <b>2026-11-20 01:17</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07049</b>\n🕒 <b>Friday 2026-11-20 04:47</b> Tehran\n🕒 <b>Friday 2026-11-20 01:17</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07174</b>\n🕒 <b>2026-11-20 04:58</b> Tehran\n🕒 <b>2026-11-20 01:28</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07174</b>\n🕒 <b>Friday 2026-11-20 04:58</b> Tehran\n🕒 <b>Friday 2026-11-20 01:28</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08681</b>\n🕒 <b>2026-11-20 15:22</b> Tehran\n🕒 <b>2026-11-20 11:52</b> London (for Kamyar)\n🌍 London"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08681</b>\n🕒 <b>Friday 2026-11-20 15:22</b> Tehran\n🕒 <b>Friday 2026-11-20 11:52</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.06729</b>\n🕒 <b>2026-11-20 17:03</b> Tehran\n🕒 <b>2026-11-20 13:33</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.06729</b>\n🕒 <b>Friday 2026-11-20 17:03</b> Tehran\n🕒 <b>Friday 2026-11-20 13:33</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.06833</b>\n🕒 <b>2026-11-21 03:30</b> Tehran\n🕒 <b>2026-11-21 00:00</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.06833</b>\n🕒 <b>Saturday 2026-11-21 03:30</b> Tehran\n🕒 <b>Saturday 2026-11-21 00:00</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07092</b>\n🕒 <b>2026-11-21 03:56</b> Tehran\n🕒 <b>2026-11-21 00:26</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07092</b>\n🕒 <b>Saturday 2026-11-21 03:56</b> Tehran\n🕒 <b>Saturday 2026-11-21 00:26</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08202</b>\n🕒 <b>2026-11-21 07:38</b> Tehran\n🕒 <b>2026-11-21 04:08</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08202</b>\n🕒 <b>Saturday 2026-11-21 07:38</b> Tehran\n🕒 <b>Saturday 2026-11-21 04:08</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08131</b>\n🕒 <b>2026-11-21 07:45</b> Tehran\n🕒 <b>2026-11-21 04:15</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08131</b>\n🕒 <b>Saturday 2026-11-21 07:45</b> Tehran\n🕒 <b>Saturday 2026-11-21 04:15</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07676</b>\n🕒 <b>2026-11-21 12:06</b> Tehran\n🕒 <b>2026-11-21 08:36</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07676</b>\n🕒 <b>Saturday 2026-11-21 12:06</b> Tehran\n🕒 <b>Saturday 2026-11-21 08:36</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07582</b>\n🕒 <b>2026-11-21 12:16</b> Tehran\n🕒 <b>2026-11-21 08:46</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07582</b>\n🕒 <b>Saturday 2026-11-21 12:16</b> Tehran\n🕒 <b>Saturday 2026-11-21 08:46</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.06809</b>\n🕒 <b>2026-11-22 04:36</b> Tehran\n🕒 <b>2026-11-22 01:06</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.06809</b>\n🕒 <b>Sunday 2026-11-22 04:36</b> Tehran\n🕒 <b>Sunday 2026-11-22 01:06</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.06774</b>\n🕒 <b>2026-11-22 04:44</b> Tehran\n🕒 <b>2026-11-22 01:14</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.06774</b>\n🕒 <b>Sunday 2026-11-22 04:44</b> Tehran\n🕒 <b>Sunday 2026-11-22 01:14</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08340</b>\n🕒 <b>2026-11-22 12:58</b> Tehran\n🕒 <b>2026-11-22 09:28</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08340</b>\n🕒 <b>Sunday 2026-11-22 12:58</b> Tehran\n🕒 <b>Sunday 2026-11-22 09:28</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08307</b>\n🕒 <b>2026-11-22 12:59</b> Tehran\n🕒 <b>2026-11-22 09:29</b> London (for Kamyar)\n🌍 Weekend\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
+    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08307</b>\n🕒 <b>Sunday 2026-11-22 12:59</b> Tehran\n🕒 <b>Sunday 2026-11-22 09:29</b> London (for Kamyar)\n🌍 Weekend\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07578</b>\n🕒 <b>2026-11-23 05:40</b> Tehran\n🕒 <b>2026-11-23 02:10</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07578</b>\n🕒 <b>Monday 2026-11-23 05:40</b> Tehran\n🕒 <b>Monday 2026-11-23 02:10</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.04432</b>\n🕒 <b>2026-11-23 07:38</b> Tehran\n🕒 <b>2026-11-23 04:08</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.04432</b>\n🕒 <b>Monday 2026-11-23 07:38</b> Tehran\n🕒 <b>Monday 2026-11-23 04:08</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.06359</b>\n🕒 <b>2026-11-23 10:27</b> Tehran\n🕒 <b>2026-11-23 06:57</b> London (for Kamyar)\n🌍 Tokyo"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.06359</b>\n🕒 <b>Monday 2026-11-23 10:27</b> Tehran\n🕒 <b>Monday 2026-11-23 06:57</b> London (for Kamyar)\n🌍 Tokyo"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.06288</b>\n🕒 <b>2026-11-23 10:43</b> Tehran\n🕒 <b>2026-11-23 07:13</b> London (for Kamyar)\n🌍 Tokyo"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.06288</b>\n🕒 <b>Monday 2026-11-23 10:43</b> Tehran\n🕒 <b>Monday 2026-11-23 07:13</b> London (for Kamyar)\n🌍 Tokyo"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.06019</b>\n🕒 <b>2026-11-23 18:42</b> Tehran\n🕒 <b>2026-11-23 15:12</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.06019</b>\n🕒 <b>Monday 2026-11-23 18:42</b> Tehran\n🕒 <b>Monday 2026-11-23 15:12</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.05903</b>\n🕒 <b>2026-11-23 18:50</b> Tehran\n🕒 <b>2026-11-23 15:20</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.05903</b>\n🕒 <b>Monday 2026-11-23 18:50</b> Tehran\n🕒 <b>Monday 2026-11-23 15:20</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07645</b>\n🕒 <b>2026-11-24 08:50</b> Tehran\n🕒 <b>2026-11-24 05:20</b> London (for Kamyar)\n🌍 Tokyo"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07645</b>\n🕒 <b>Tuesday 2026-11-24 08:50</b> Tehran\n🕒 <b>Tuesday 2026-11-24 05:20</b> London (for Kamyar)\n🌍 Tokyo"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07629</b>\n🕒 <b>2026-11-24 08:55</b> Tehran\n🕒 <b>2026-11-24 05:25</b> London (for Kamyar)\n🌍 Tokyo"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07629</b>\n🕒 <b>Tuesday 2026-11-24 08:55</b> Tehran\n🕒 <b>Tuesday 2026-11-24 05:25</b> London (for Kamyar)\n🌍 Tokyo"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08382</b>\n🕒 <b>2026-11-24 15:24</b> Tehran\n🕒 <b>2026-11-24 11:54</b> London (for Kamyar)\n🌍 London"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.08382</b>\n🕒 <b>Tuesday 2026-11-24 15:24</b> Tehran\n🕒 <b>Tuesday 2026-11-24 11:54</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07963</b>\n🕒 <b>2026-11-24 15:53</b> Tehran\n🕒 <b>2026-11-24 12:23</b> London (for Kamyar)\n🌍 London"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07963</b>\n🕒 <b>Tuesday 2026-11-24 15:53</b> Tehran\n🕒 <b>Tuesday 2026-11-24 12:23</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.06278</b>\n🕒 <b>2026-11-24 19:22</b> Tehran\n🕒 <b>2026-11-24 15:52</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.06278</b>\n🕒 <b>Tuesday 2026-11-24 19:22</b> Tehran\n🕒 <b>Tuesday 2026-11-24 15:52</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "✖️ <b>CANCELLED · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.06219</b>\n🕒 <b>2026-11-24 19:23</b> Tehran\n🕒 <b>2026-11-24 15:53</b> London (for Kamyar)\n🌍 London · New York (overlap)\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
+    "msg": "✖️ <b>CANCELLED · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.06219</b>\n🕒 <b>Tuesday 2026-11-24 19:23</b> Tehran\n🕒 <b>Tuesday 2026-11-24 15:53</b> London (for Kamyar)\n🌍 London · New York (overlap)\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.06316</b>\n🕒 <b>2026-11-24 23:50</b> Tehran\n🕒 <b>2026-11-24 20:20</b> London (for Kamyar)\n🌍 Sydney · New York (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.06316</b>\n🕒 <b>Tuesday 2026-11-24 23:50</b> Tehran\n🕒 <b>Tuesday 2026-11-24 20:20</b> London (for Kamyar)\n🌍 Sydney · New York (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.06572</b>\n🕒 <b>2026-11-25 00:11</b> Tehran\n🕒 <b>2026-11-24 20:41</b> London (for Kamyar)\n🌍 Sydney · New York (overlap)"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.06572</b>\n🕒 <b>Wednesday 2026-11-25 00:11</b> Tehran\n🕒 <b>Tuesday 2026-11-24 20:41</b> London (for Kamyar)\n🌍 Sydney · New York (overlap)"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07332</b>\n🕒 <b>2026-11-25 03:41</b> Tehran\n🕒 <b>2026-11-25 00:11</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07332</b>\n🕒 <b>Wednesday 2026-11-25 03:41</b> Tehran\n🕒 <b>Wednesday 2026-11-25 00:11</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07334</b>\n🕒 <b>2026-11-25 03:53</b> Tehran\n🕒 <b>2026-11-25 00:23</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.07334</b>\n🕒 <b>Wednesday 2026-11-25 03:53</b> Tehran\n🕒 <b>Wednesday 2026-11-25 00:23</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.04870</b>\n🕒 <b>2026-11-25 06:02</b> Tehran\n🕒 <b>2026-11-25 02:32</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.04870</b>\n🕒 <b>Wednesday 2026-11-25 06:02</b> Tehran\n🕒 <b>Wednesday 2026-11-25 02:32</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.06939</b>\n🕒 <b>2026-11-25 07:30</b> Tehran\n🕒 <b>2026-11-25 04:00</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.06939</b>\n🕒 <b>Wednesday 2026-11-25 07:30</b> Tehran\n🕒 <b>Wednesday 2026-11-25 04:00</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.04845</b>\n🕒 <b>2026-11-25 16:38</b> Tehran\n🕒 <b>2026-11-25 13:08</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.04845</b>\n🕒 <b>Wednesday 2026-11-25 16:38</b> Tehran\n🕒 <b>Wednesday 2026-11-25 13:08</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.04885</b>\n🕒 <b>2026-11-25 16:42</b> Tehran\n🕒 <b>2026-11-25 13:12</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.04885</b>\n🕒 <b>Wednesday 2026-11-25 16:42</b> Tehran\n🕒 <b>Wednesday 2026-11-25 13:12</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.06271</b>\n🕒 <b>2026-11-25 20:48</b> Tehran\n🕒 <b>2026-11-25 17:18</b> London (for Kamyar)\n🌍 New York"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.06271</b>\n🕒 <b>Wednesday 2026-11-25 20:48</b> Tehran\n🕒 <b>Wednesday 2026-11-25 17:18</b> London (for Kamyar)\n🌍 New York"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.04344</b>\n🕒 <b>2026-11-25 22:02</b> Tehran\n🕒 <b>2026-11-25 18:32</b> London (for Kamyar)\n🌍 New York"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.04344</b>\n🕒 <b>Wednesday 2026-11-25 22:02</b> Tehran\n🕒 <b>Wednesday 2026-11-25 18:32</b> London (for Kamyar)\n🌍 New York"
    }
   ],
   "last_fire": {
    "t": "2026-11-25T18:32:00+00:00",
    "d": -1,
-   "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.04344</b>\n🕒 <b>2026-11-25 22:02</b> Tehran\n🕒 <b>2026-11-25 18:32</b> London (for Kamyar)\n🌍 New York"
+   "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.04344</b>\n🕒 <b>Wednesday 2026-11-25 22:02</b> Tehran\n🕒 <b>Wednesday 2026-11-25 18:32</b> London (for Kamyar)\n🌍 New York"
   }
  },
  "USDJPY": {
   "events": [
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.566</b>\n🕒 <b>2026-11-13 07:13</b> Tehran\n🕒 <b>2026-11-13 03:43</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.566</b>\n🕒 <b>Friday 2026-11-13 07:13</b> Tehran\n🕒 <b>Friday 2026-11-13 03:43</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>155.307</b>\n🕒 <b>2026-11-13 08:47</b> Tehran\n🕒 <b>2026-11-13 05:17</b> London (for Kamyar)\n🌍 Tokyo"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>155.307</b>\n🕒 <b>Friday 2026-11-13 08:47</b> Tehran\n🕒 <b>Friday 2026-11-13 05:17</b> London (for Kamyar)\n🌍 Tokyo"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.514</b>\n🕒 <b>2026-11-13 13:22</b> Tehran\n🕒 <b>2026-11-13 09:52</b> London (for Kamyar)\n🌍 London"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.514</b>\n🕒 <b>Friday 2026-11-13 13:22</b> Tehran\n🕒 <b>Friday 2026-11-13 09:52</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>156.093</b>\n🕒 <b>2026-11-13 15:17</b> Tehran\n🕒 <b>2026-11-13 11:47</b> London (for Kamyar)\n🌍 London"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>156.093</b>\n🕒 <b>Friday 2026-11-13 15:17</b> Tehran\n🕒 <b>Friday 2026-11-13 11:47</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>155.741</b>\n🕒 <b>2026-11-13 15:29</b> Tehran\n🕒 <b>2026-11-13 11:59</b> London (for Kamyar)\n🌍 London"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>155.741</b>\n🕒 <b>Friday 2026-11-13 15:29</b> Tehran\n🕒 <b>Friday 2026-11-13 11:59</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>155.585</b>\n🕒 <b>2026-11-13 15:42</b> Tehran\n🕒 <b>2026-11-13 12:12</b> London (for Kamyar)\n🌍 London"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>155.585</b>\n🕒 <b>Friday 2026-11-13 15:42</b> Tehran\n🕒 <b>Friday 2026-11-13 12:12</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>155.453</b>\n🕒 <b>2026-11-14 02:13</b> Tehran\n🕒 <b>2026-11-13 22:43</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>155.453</b>\n🕒 <b>Saturday 2026-11-14 02:13</b> Tehran\n🕒 <b>Friday 2026-11-13 22:43</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>155.402</b>\n🕒 <b>2026-11-14 02:23</b> Tehran\n🕒 <b>2026-11-13 22:53</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>155.402</b>\n🕒 <b>Saturday 2026-11-14 02:23</b> Tehran\n🕒 <b>Friday 2026-11-13 22:53</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.104</b>\n🕒 <b>2026-11-15 00:48</b> Tehran\n🕒 <b>2026-11-14 21:18</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.104</b>\n🕒 <b>Sunday 2026-11-15 00:48</b> Tehran\n🕒 <b>Saturday 2026-11-14 21:18</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.069</b>\n🕒 <b>2026-11-15 00:51</b> Tehran\n🕒 <b>2026-11-14 21:21</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.069</b>\n🕒 <b>Sunday 2026-11-15 00:51</b> Tehran\n🕒 <b>Saturday 2026-11-14 21:21</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.363</b>\n🕒 <b>2026-11-15 11:25</b> Tehran\n🕒 <b>2026-11-15 07:55</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.363</b>\n🕒 <b>Sunday 2026-11-15 11:25</b> Tehran\n🕒 <b>Sunday 2026-11-15 07:55</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>153.464</b>\n🕒 <b>2026-11-15 12:05</b> Tehran\n🕒 <b>2026-11-15 08:35</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>153.464</b>\n🕒 <b>Sunday 2026-11-15 12:05</b> Tehran\n🕒 <b>Sunday 2026-11-15 08:35</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>153.161</b>\n🕒 <b>2026-11-15 15:36</b> Tehran\n🕒 <b>2026-11-15 12:06</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>153.161</b>\n🕒 <b>Sunday 2026-11-15 15:36</b> Tehran\n🕒 <b>Sunday 2026-11-15 12:06</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>153.312</b>\n🕒 <b>2026-11-15 15:57</b> Tehran\n🕒 <b>2026-11-15 12:27</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>153.312</b>\n🕒 <b>Sunday 2026-11-15 15:57</b> Tehran\n🕒 <b>Sunday 2026-11-15 12:27</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.453</b>\n🕒 <b>2026-11-16 00:04</b> Tehran\n🕒 <b>2026-11-15 20:34</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.453</b>\n🕒 <b>Monday 2026-11-16 00:04</b> Tehran\n🕒 <b>Sunday 2026-11-15 20:34</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.655</b>\n🕒 <b>2026-11-16 00:15</b> Tehran\n🕒 <b>2026-11-15 20:45</b> London (for Kamyar)\n🌍 Weekend\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
+    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.655</b>\n🕒 <b>Monday 2026-11-16 00:15</b> Tehran\n🕒 <b>Sunday 2026-11-15 20:45</b> London (for Kamyar)\n🌍 Weekend\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.374</b>\n🕒 <b>2026-11-16 08:05</b> Tehran\n🕒 <b>2026-11-16 04:35</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.374</b>\n🕒 <b>Monday 2026-11-16 08:05</b> Tehran\n🕒 <b>Monday 2026-11-16 04:35</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.234</b>\n🕒 <b>2026-11-16 08:12</b> Tehran\n🕒 <b>2026-11-16 04:42</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.234</b>\n🕒 <b>Monday 2026-11-16 08:12</b> Tehran\n🕒 <b>Monday 2026-11-16 04:42</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>151.194</b>\n🕒 <b>2026-11-17 13:51</b> Tehran\n🕒 <b>2026-11-17 10:21</b> London (for Kamyar)\n🌍 London"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>151.194</b>\n🕒 <b>Tuesday 2026-11-17 13:51</b> Tehran\n🕒 <b>Tuesday 2026-11-17 10:21</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>151.834</b>\n🕒 <b>2026-11-17 14:25</b> Tehran\n🕒 <b>2026-11-17 10:55</b> London (for Kamyar)\n🌍 London"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>151.834</b>\n🕒 <b>Tuesday 2026-11-17 14:25</b> Tehran\n🕒 <b>Tuesday 2026-11-17 10:55</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>153.401</b>\n🕒 <b>2026-11-17 22:11</b> Tehran\n🕒 <b>2026-11-17 18:41</b> London (for Kamyar)\n🌍 New York"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>153.401</b>\n🕒 <b>Tuesday 2026-11-17 22:11</b> Tehran\n🕒 <b>Tuesday 2026-11-17 18:41</b> London (for Kamyar)\n🌍 New York"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>153.447</b>\n🕒 <b>2026-11-17 22:19</b> Tehran\n🕒 <b>2026-11-17 18:49</b> London (for Kamyar)\n🌍 New York"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>153.447</b>\n🕒 <b>Tuesday 2026-11-17 22:19</b> Tehran\n🕒 <b>Tuesday 2026-11-17 18:49</b> London (for Kamyar)\n🌍 New York"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.538</b>\n🕒 <b>2026-11-18 04:19</b> Tehran\n🕒 <b>2026-11-18 00:49</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.538</b>\n🕒 <b>Wednesday 2026-11-18 04:19</b> Tehran\n🕒 <b>Wednesday 2026-11-18 00:49</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.529</b>\n🕒 <b>2026-11-18 05:31</b> Tehran\n🕒 <b>2026-11-18 02:01</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.529</b>\n🕒 <b>Wednesday 2026-11-18 05:31</b> Tehran\n🕒 <b>Wednesday 2026-11-18 02:01</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.762</b>\n🕒 <b>2026-11-18 06:05</b> Tehran\n🕒 <b>2026-11-18 02:35</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.762</b>\n🕒 <b>Wednesday 2026-11-18 06:05</b> Tehran\n🕒 <b>Wednesday 2026-11-18 02:35</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.742</b>\n🕒 <b>2026-11-18 06:12</b> Tehran\n🕒 <b>2026-11-18 02:42</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.742</b>\n🕒 <b>Wednesday 2026-11-18 06:12</b> Tehran\n🕒 <b>Wednesday 2026-11-18 02:42</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.332</b>\n🕒 <b>2026-11-18 10:46</b> Tehran\n🕒 <b>2026-11-18 07:16</b> London (for Kamyar)\n🌍 Tokyo"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.332</b>\n🕒 <b>Wednesday 2026-11-18 10:46</b> Tehran\n🕒 <b>Wednesday 2026-11-18 07:16</b> London (for Kamyar)\n🌍 Tokyo"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.337</b>\n🕒 <b>2026-11-18 10:49</b> Tehran\n🕒 <b>2026-11-18 07:19</b> London (for Kamyar)\n🌍 Tokyo"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.337</b>\n🕒 <b>Wednesday 2026-11-18 10:49</b> Tehran\n🕒 <b>Wednesday 2026-11-18 07:19</b> London (for Kamyar)\n🌍 Tokyo"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.993</b>\n🕒 <b>2026-11-18 14:35</b> Tehran\n🕒 <b>2026-11-18 11:05</b> London (for Kamyar)\n🌍 London"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.993</b>\n🕒 <b>Wednesday 2026-11-18 14:35</b> Tehran\n🕒 <b>Wednesday 2026-11-18 11:05</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>153.093</b>\n🕒 <b>2026-11-18 14:42</b> Tehran\n🕒 <b>2026-11-18 11:12</b> London (for Kamyar)\n🌍 London"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>153.093</b>\n🕒 <b>Wednesday 2026-11-18 14:42</b> Tehran\n🕒 <b>Wednesday 2026-11-18 11:12</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>150.958</b>\n🕒 <b>2026-11-18 19:12</b> Tehran\n🕒 <b>2026-11-18 15:42</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>150.958</b>\n🕒 <b>Wednesday 2026-11-18 19:12</b> Tehran\n🕒 <b>Wednesday 2026-11-18 15:42</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.601</b>\n🕒 <b>2026-11-18 20:33</b> Tehran\n🕒 <b>2026-11-18 17:03</b> London (for Kamyar)\n🌍 New York"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.601</b>\n🕒 <b>Wednesday 2026-11-18 20:33</b> Tehran\n🕒 <b>Wednesday 2026-11-18 17:03</b> London (for Kamyar)\n🌍 New York"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.924</b>\n🕒 <b>2026-11-19 03:17</b> Tehran\n🕒 <b>2026-11-18 23:47</b> London (for Kamyar)\n🌍 Sydney"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.924</b>\n🕒 <b>Thursday 2026-11-19 03:17</b> Tehran\n🕒 <b>Wednesday 2026-11-18 23:47</b> London (for Kamyar)\n🌍 Sydney"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.964</b>\n🕒 <b>2026-11-19 03:23</b> Tehran\n🕒 <b>2026-11-18 23:53</b> London (for Kamyar)\n🌍 Sydney"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.964</b>\n🕒 <b>Thursday 2026-11-19 03:23</b> Tehran\n🕒 <b>Wednesday 2026-11-18 23:53</b> London (for Kamyar)\n🌍 Sydney"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>151.051</b>\n🕒 <b>2026-11-19 05:40</b> Tehran\n🕒 <b>2026-11-19 02:10</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>151.051</b>\n🕒 <b>Thursday 2026-11-19 05:40</b> Tehran\n🕒 <b>Thursday 2026-11-19 02:10</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>151.225</b>\n🕒 <b>2026-11-19 06:10</b> Tehran\n🕒 <b>2026-11-19 02:40</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>151.225</b>\n🕒 <b>Thursday 2026-11-19 06:10</b> Tehran\n🕒 <b>Thursday 2026-11-19 02:40</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>153.123</b>\n🕒 <b>2026-11-19 14:04</b> Tehran\n🕒 <b>2026-11-19 10:34</b> London (for Kamyar)\n🌍 London"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>153.123</b>\n🕒 <b>Thursday 2026-11-19 14:04</b> Tehran\n🕒 <b>Thursday 2026-11-19 10:34</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>153.241</b>\n🕒 <b>2026-11-19 14:07</b> Tehran\n🕒 <b>2026-11-19 10:37</b> London (for Kamyar)\n🌍 London\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
+    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>153.241</b>\n🕒 <b>Thursday 2026-11-19 14:07</b> Tehran\n🕒 <b>Thursday 2026-11-19 10:37</b> London (for Kamyar)\n🌍 London\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>151.245</b>\n🕒 <b>2026-11-19 18:05</b> Tehran\n🕒 <b>2026-11-19 14:35</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>151.245</b>\n🕒 <b>Thursday 2026-11-19 18:05</b> Tehran\n🕒 <b>Thursday 2026-11-19 14:35</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>153.772</b>\n🕒 <b>2026-11-19 19:27</b> Tehran\n🕒 <b>2026-11-19 15:57</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>153.772</b>\n🕒 <b>Thursday 2026-11-19 19:27</b> Tehran\n🕒 <b>Thursday 2026-11-19 15:57</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>153.894</b>\n🕒 <b>2026-11-19 20:20</b> Tehran\n🕒 <b>2026-11-19 16:50</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>153.894</b>\n🕒 <b>Thursday 2026-11-19 20:20</b> Tehran\n🕒 <b>Thursday 2026-11-19 16:50</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>153.585</b>\n🕒 <b>2026-11-19 20:42</b> Tehran\n🕒 <b>2026-11-19 17:12</b> London (for Kamyar)\n🌍 New York"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>153.585</b>\n🕒 <b>Thursday 2026-11-19 20:42</b> Tehran\n🕒 <b>Thursday 2026-11-19 17:12</b> London (for Kamyar)\n🌍 New York"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.039</b>\n🕒 <b>2026-11-20 06:36</b> Tehran\n🕒 <b>2026-11-20 03:06</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.039</b>\n🕒 <b>Friday 2026-11-20 06:36</b> Tehran\n🕒 <b>Friday 2026-11-20 03:06</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "✖️ <b>CANCELLED · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>151.938</b>\n🕒 <b>2026-11-20 06:42</b> Tehran\n🕒 <b>2026-11-20 03:12</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
+    "msg": "✖️ <b>CANCELLED · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>151.938</b>\n🕒 <b>Friday 2026-11-20 06:42</b> Tehran\n🕒 <b>Friday 2026-11-20 03:12</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.147</b>\n🕒 <b>2026-11-20 12:52</b> Tehran\n🕒 <b>2026-11-20 09:22</b> London (for Kamyar)\n🌍 London"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.147</b>\n🕒 <b>Friday 2026-11-20 12:52</b> Tehran\n🕒 <b>Friday 2026-11-20 09:22</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.161</b>\n🕒 <b>2026-11-20 13:02</b> Tehran\n🕒 <b>2026-11-20 09:32</b> London (for Kamyar)\n🌍 London"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>152.161</b>\n🕒 <b>Friday 2026-11-20 13:02</b> Tehran\n🕒 <b>Friday 2026-11-20 09:32</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.578</b>\n🕒 <b>2026-11-21 04:22</b> Tehran\n🕒 <b>2026-11-21 00:52</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.578</b>\n🕒 <b>Saturday 2026-11-21 04:22</b> Tehran\n🕒 <b>Saturday 2026-11-21 00:52</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.770</b>\n🕒 <b>2026-11-21 04:41</b> Tehran\n🕒 <b>2026-11-21 01:11</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.770</b>\n🕒 <b>Saturday 2026-11-21 04:41</b> Tehran\n🕒 <b>Saturday 2026-11-21 01:11</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>159.012</b>\n🕒 <b>2026-11-21 13:54</b> Tehran\n🕒 <b>2026-11-21 10:24</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>159.012</b>\n🕒 <b>Saturday 2026-11-21 13:54</b> Tehran\n🕒 <b>Saturday 2026-11-21 10:24</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>  ⭐ <b>STRONG</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>158.507</b>\n🕒 <b>2026-11-21 14:17</b> Tehran\n🕒 <b>2026-11-21 10:47</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>  ⭐ <b>STRONG</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>158.507</b>\n🕒 <b>Saturday 2026-11-21 14:17</b> Tehran\n🕒 <b>Saturday 2026-11-21 10:47</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>159.148</b>\n🕒 <b>2026-11-22 06:46</b> Tehran\n🕒 <b>2026-11-22 03:16</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>159.148</b>\n🕒 <b>Sunday 2026-11-22 06:46</b> Tehran\n🕒 <b>Sunday 2026-11-22 03:16</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>155.641</b>\n🕒 <b>2026-11-22 08:23</b> Tehran\n🕒 <b>2026-11-22 04:53</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>155.641</b>\n🕒 <b>Sunday 2026-11-22 08:23</b> Tehran\n🕒 <b>Sunday 2026-11-22 04:53</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>157.695</b>\n🕒 <b>2026-11-22 13:22</b> Tehran\n🕒 <b>2026-11-22 09:52</b> London (for Kamyar)\n🌍 Weekend"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>157.695</b>\n🕒 <b>Sunday 2026-11-22 13:22</b> Tehran\n🕒 <b>Sunday 2026-11-22 09:52</b> London (for Kamyar)\n🌍 Weekend"
    },
    {
-    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>157.729</b>\n🕒 <b>2026-11-22 13:23</b> Tehran\n🕒 <b>2026-11-22 09:53</b> London (for Kamyar)\n🌍 Weekend\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
+    "msg": "✖️ <b>CANCELLED · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>157.729</b>\n🕒 <b>Sunday 2026-11-22 13:23</b> Tehran\n🕒 <b>Sunday 2026-11-22 09:53</b> London (for Kamyar)\n🌍 Weekend\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>156.809</b>\n🕒 <b>2026-11-23 01:56</b> Tehran\n🕒 <b>2026-11-22 22:26</b> London (for Kamyar)\n🌍 Sydney"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>156.809</b>\n🕒 <b>Monday 2026-11-23 01:56</b> Tehran\n🕒 <b>Sunday 2026-11-22 22:26</b> London (for Kamyar)\n🌍 Sydney"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>156.832</b>\n🕒 <b>2026-11-23 02:06</b> Tehran\n🕒 <b>2026-11-22 22:36</b> London (for Kamyar)\n🌍 Sydney"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>156.832</b>\n🕒 <b>Monday 2026-11-23 02:06</b> Tehran\n🕒 <b>Sunday 2026-11-22 22:36</b> London (for Kamyar)\n🌍 Sydney"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>156.440</b>\n🕒 <b>2026-11-23 07:50</b> Tehran\n🕒 <b>2026-11-23 04:20</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>156.440</b>\n🕒 <b>Monday 2026-11-23 07:50</b> Tehran\n🕒 <b>Monday 2026-11-23 04:20</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>156.892</b>\n🕒 <b>2026-11-23 08:05</b> Tehran\n🕒 <b>2026-11-23 04:35</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>156.892</b>\n🕒 <b>Monday 2026-11-23 08:05</b> Tehran\n🕒 <b>Monday 2026-11-23 04:35</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>155.384</b>\n🕒 <b>2026-11-23 14:17</b> Tehran\n🕒 <b>2026-11-23 10:47</b> London (for Kamyar)\n🌍 London"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>155.384</b>\n🕒 <b>Monday 2026-11-23 14:17</b> Tehran\n🕒 <b>Monday 2026-11-23 10:47</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>158.713</b>\n🕒 <b>2026-11-23 15:54</b> Tehran\n🕒 <b>2026-11-23 12:24</b> London (for Kamyar)\n🌍 London"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>158.713</b>\n🕒 <b>Monday 2026-11-23 15:54</b> Tehran\n🕒 <b>Monday 2026-11-23 12:24</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>158.376</b>\n🕒 <b>2026-11-23 16:12</b> Tehran\n🕒 <b>2026-11-23 12:42</b> London (for Kamyar)\n🌍 London"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>158.376</b>\n🕒 <b>Monday 2026-11-23 16:12</b> Tehran\n🕒 <b>Monday 2026-11-23 12:42</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>156.763</b>\n🕒 <b>2026-11-23 17:25</b> Tehran\n🕒 <b>2026-11-23 13:55</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>156.763</b>\n🕒 <b>Monday 2026-11-23 17:25</b> Tehran\n🕒 <b>Monday 2026-11-23 13:55</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>156.641</b>\n🕒 <b>2026-11-23 20:32</b> Tehran\n🕒 <b>2026-11-23 17:02</b> London (for Kamyar)\n🌍 New York"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>156.641</b>\n🕒 <b>Monday 2026-11-23 20:32</b> Tehran\n🕒 <b>Monday 2026-11-23 17:02</b> London (for Kamyar)\n🌍 New York"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>159.591</b>\n🕒 <b>2026-11-23 22:32</b> Tehran\n🕒 <b>2026-11-23 19:02</b> London (for Kamyar)\n🌍 New York"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>159.591</b>\n🕒 <b>Monday 2026-11-23 22:32</b> Tehran\n🕒 <b>Monday 2026-11-23 19:02</b> London (for Kamyar)\n🌍 New York"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>159.183</b>\n🕒 <b>2026-11-24 09:02</b> Tehran\n🕒 <b>2026-11-24 05:32</b> London (for Kamyar)\n🌍 Tokyo"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>159.183</b>\n🕒 <b>Tuesday 2026-11-24 09:02</b> Tehran\n🕒 <b>Tuesday 2026-11-24 05:32</b> London (for Kamyar)\n🌍 Tokyo"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>159.110</b>\n🕒 <b>2026-11-24 09:10</b> Tehran\n🕒 <b>2026-11-24 05:40</b> London (for Kamyar)\n🌍 Tokyo"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>159.110</b>\n🕒 <b>Tuesday 2026-11-24 09:10</b> Tehran\n🕒 <b>Tuesday 2026-11-24 05:40</b> London (for Kamyar)\n🌍 Tokyo"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>155.533</b>\n🕒 <b>2026-11-24 19:35</b> Tehran\n🕒 <b>2026-11-24 16:05</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>155.533</b>\n🕒 <b>Tuesday 2026-11-24 19:35</b> Tehran\n🕒 <b>Tuesday 2026-11-24 16:05</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "✖️ <b>CANCELLED · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>155.543</b>\n🕒 <b>2026-11-24 19:36</b> Tehran\n🕒 <b>2026-11-24 16:06</b> London (for Kamyar)\n🌍 London · New York (overlap)\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
+    "msg": "✖️ <b>CANCELLED · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>155.543</b>\n🕒 <b>Tuesday 2026-11-24 19:36</b> Tehran\n🕒 <b>Tuesday 2026-11-24 16:06</b> London (for Kamyar)\n🌍 London · New York (overlap)\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.682</b>\n🕒 <b>2026-11-24 23:51</b> Tehran\n🕒 <b>2026-11-24 20:21</b> London (for Kamyar)\n🌍 Sydney · New York (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.682</b>\n🕒 <b>Tuesday 2026-11-24 23:51</b> Tehran\n🕒 <b>Tuesday 2026-11-24 20:21</b> London (for Kamyar)\n🌍 Sydney · New York (overlap)"
    },
    {
-    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.646</b>\n🕒 <b>2026-11-24 23:54</b> Tehran\n🕒 <b>2026-11-24 20:24</b> London (for Kamyar)\n🌍 Sydney · New York (overlap)"
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.646</b>\n🕒 <b>Tuesday 2026-11-24 23:54</b> Tehran\n🕒 <b>Tuesday 2026-11-24 20:24</b> London (for Kamyar)\n🌍 Sydney · New York (overlap)"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>156.483</b>\n🕒 <b>2026-11-25 10:18</b> Tehran\n🕒 <b>2026-11-25 06:48</b> London (for Kamyar)\n🌍 Tokyo"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>156.483</b>\n🕒 <b>Wednesday 2026-11-25 10:18</b> Tehran\n🕒 <b>Wednesday 2026-11-25 06:48</b> London (for Kamyar)\n🌍 Tokyo"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>156.202</b>\n🕒 <b>2026-11-25 10:38</b> Tehran\n🕒 <b>2026-11-25 07:08</b> London (for Kamyar)\n🌍 Tokyo"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>156.202</b>\n🕒 <b>Wednesday 2026-11-25 10:38</b> Tehran\n🕒 <b>Wednesday 2026-11-25 07:08</b> London (for Kamyar)\n🌍 Tokyo"
    },
    {
-    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>157.696</b>\n🕒 <b>2026-11-25 14:25</b> Tehran\n🕒 <b>2026-11-25 10:55</b> London (for Kamyar)\n🌍 London"
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>157.696</b>\n🕒 <b>Wednesday 2026-11-25 14:25</b> Tehran\n🕒 <b>Wednesday 2026-11-25 10:55</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.604</b>\n🕒 <b>2026-11-25 16:06</b> Tehran\n🕒 <b>2026-11-25 12:36</b> London (for Kamyar)\n🌍 London"
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.604</b>\n🕒 <b>Wednesday 2026-11-25 16:06</b> Tehran\n🕒 <b>Wednesday 2026-11-25 12:36</b> London (for Kamyar)\n🌍 London"
    },
    {
-    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.787</b>\n🕒 <b>2026-11-25 17:41</b> Tehran\n🕒 <b>2026-11-25 14:11</b> London (for Kamyar)\n🌍 London · New York (overlap)"
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.787</b>\n🕒 <b>Wednesday 2026-11-25 17:41</b> Tehran\n🕒 <b>Wednesday 2026-11-25 14:11</b> London (for Kamyar)\n🌍 London · New York (overlap)"
    },
    {
-    "msg": "✖️ <b>CANCELLED · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.637</b>\n🕒 <b>2026-11-25 17:44</b> Tehran\n🕒 <b>2026-11-25 14:14</b> London (for Kamyar)\n🌍 London · New York (overlap)\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
+    "msg": "✖️ <b>CANCELLED · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.637</b>\n🕒 <b>Wednesday 2026-11-25 17:44</b> Tehran\n🕒 <b>Wednesday 2026-11-25 14:14</b> London (for Kamyar)\n🌍 London · New York (overlap)\n━━━━━━━━━━━━━━━━\n<i>Setup cancelled · no trade</i>"
    }
   ],
   "last_fire": {
    "t": "2026-11-25T12:36:00+00:00",
    "d": -1,
-   "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.604</b>\n🕒 <b>2026-11-25 16:06</b> Tehran\n🕒 <b>2026-11-25 12:36</b> London (for Kamyar)\n🌍 London"
+   "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.604</b>\n🕒 <b>Wednesday 2026-11-25 16:06</b> Tehran\n🕒 <b>Wednesday 2026-11-25 12:36</b> London (for Kamyar)\n🌍 London"
   }
  }
 }
