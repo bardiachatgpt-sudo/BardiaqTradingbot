@@ -29,7 +29,7 @@ def build_msg(ev):
     elif ev["kind"] == "FIRE":
         head = f"🔥 <b>FIRE · {side}</b>" + ("  ⭐ <b>STRONG</b>" if ev["strong"] else "")
     else:
-        head = f"⚪ <b>CANCELLED · {side}</b>"
+        head = f"✖️ <b>CANCELLED · {side}</b>"
 
     txt = (f"{head}\n"
            f"<b>{label(sym)}</b>  ·  M1\n{LINE}\n"
@@ -39,12 +39,5 @@ def build_msg(ev):
            f"🌍 {session_at(t)}")
 
     if ev["kind"] == "INVALID":
-        if ev["reason"] == "price":
-            level = fmt_price(sym, ev["detail"]["second"][1])
-            why = f"Price broke {'below' if s > 0 else 'above'} {level}"
-        elif ev["reason"] == "deeper":
-            why = "Setup invalidated by a new extreme"
-        else:
-            why = f"MACD (12,26,9) crossed {'below' if s > 0 else 'above'} zero"
-        txt += f"\n❌ {why}"
+        txt += f"\n{LINE}\n<i>Setup cancelled · no trade</i>"
     return txt
