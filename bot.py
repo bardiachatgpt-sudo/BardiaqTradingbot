@@ -38,6 +38,7 @@ SYMBOLS = {
     "USDCAD": _chain("USDCAD"),
     "AUDUSD": _chain("AUDUSD"),
     "NZDUSD": _chain("NZDUSD"),
+    "BTCUSD": ["BINANCE:BTCUSDT", "COINBASE:BTCUSD"],
 }
 
 FLAGS = {
@@ -49,6 +50,7 @@ FLAGS = {
     "USDCAD": "🇺🇸🇨🇦",
     "AUDUSD": "🇦🇺🇺🇸",
     "NZDUSD": "🇳🇿🇺🇸",
+    "BTCUSD": "₿🇺🇸",
 }
 
 
@@ -67,6 +69,11 @@ _SESS_TZ = {n: pytz.timezone(tz) for n, tz, a, b in SESSIONS}
 
 
 def session_at(ts):
+    # آخر هفته‌ی فارکس: جمعه 21:00 تا یکشنبه 21:00 به وقت UTC (فقط BTC در این بازه داده دارد)
+    u = ts.tz_convert("UTC")
+    wd, hr = u.weekday(), u.hour
+    if (wd == 4 and hr >= 21) or wd == 5 or (wd == 6 and hr < 21):
+        return "Weekend"
     act = []
     for n, tz, a, b in SESSIONS:
         if a <= ts.tz_convert(_SESS_TZ[n]).hour < b:
@@ -127,7 +134,12 @@ def fmt_gap(td):
 
 
 def fmt_price(sym, x):
-    d = 2 if sym == "XAUUSD" else (3 if "JPY" in sym else 5)
+    if sym == "BTCUSD":
+        d = 0
+    elif sym == "XAUUSD":
+        d = 2
+    else:
+        d = 3 if "JPY" in sym else 5
     return f"{x:.{d}f}"
 
 
@@ -579,7 +591,7 @@ def feed(eng, df, silent):
 
 def run_scanner():
     engines = {n: SymbolEngine(n) for n in SYMBOLS}
-    pool = ThreadPoolExecutor(max_workers=4)
+    pool = ThreadPoolExecutor(max_workers=5)
 
     def poll(name):
         eng = engines[name]
