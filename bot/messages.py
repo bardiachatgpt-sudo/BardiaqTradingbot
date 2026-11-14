@@ -2,6 +2,7 @@
 
 جزئیات واگرایی پشت صحنه می‌ماند؛ پیام فقط جهت، قیمت لحظه و زمان را نشان می‌دهد.
 """
+import pandas as pd
 import pytz
 
 from .config import TEHRAN, decimals, label
@@ -42,3 +43,9 @@ def build_msg(ev):
     if ev["kind"] == "INVALID":
         txt += f"\n{LINE}\n<i>Setup cancelled · no trade</i>"
     return txt
+
+
+def fire_from_record(name, r):
+    """پیام FIRE از داده‌ی ذخیره‌شده (دکمه‌ی آخرین FIRE) با قالب فعلی."""
+    return build_msg({"kind": "FIRE", "sym": name, "s": r["d"], "time": pd.Timestamp(r["t"]),
+                      "price": r["price"], "strong": bool(r.get("strong"))})

@@ -18,7 +18,8 @@ def feed(eng, df, state, send, silent):
         for ev in eng.on_bar(ts, row["Open"], row["High"], row["Low"], row["Close"]):
             msg = build_msg(ev)
             if ev["kind"] == "FIRE":
-                state.record_fire(ev["sym"], ev["s"], ev["time"], msg)
+                state.record_fire(ev["sym"], ev["s"], ev["time"], msg,
+                                  float(ev["price"]), bool(ev["strong"]))
             if not silent:
                 send(msg)
 

@@ -55,10 +55,12 @@ class State:
         self.users.add(chat_id)
         self._store_user(chat_id)
 
-    def record_fire(self, name, s, ts, msg=None):
+    def record_fire(self, name, s, ts, msg=None, price=None, strong=None):
+        """آخرین FIRE هر نماد. داده‌ها (قیمت، STRONG) ذخیره می‌شوند تا متن پیام همیشه با قالب فعلی ساخته شود."""
         cur = self.last_fire.get(name)
-        if cur is None or ts >= pd.Timestamp(cur["t"]):   # >= : همان FIRE پس از ری‌استارت، متنش به‌روز می‌شود
-            self.last_fire[name] = {"t": ts.isoformat(), "d": s, "msg": msg}
+        if cur is None or ts >= pd.Timestamp(cur["t"]):   # >= : همان FIRE پس از ری‌استارت به‌روز می‌شود
+            self.last_fire[name] = {"t": ts.isoformat(), "d": s, "msg": msg,
+                                    "price": price, "strong": strong}
             self._store_fire(name)
 
 
@@ -73,6 +75,8 @@ CREATE TABLE IF NOT EXISTS last_fire (
     d      SMALLINT    NOT NULL,
     msg    TEXT
 );
+ALTER TABLE last_fire ADD COLUMN IF NOT EXISTS price  DOUBLE PRECISION;
+ALTER TABLE last_fire ADD COLUMN IF NOT EXISTS strong BOOLEAN;
 """
 
 
@@ -99,8 +103,10 @@ class PgState(State):
             con.execute(SCHEMA)
             self.users = {r[0] for r in con.execute("SELECT chat_id FROM users")}
             self.last_fire = {
-                sym: {"t": pd.Timestamp(t).tz_convert("UTC").isoformat(), "d": d, "msg": msg}
-                for sym, t, d, msg in con.execute("SELECT symbol, t, d, msg FROM last_fire")
+                sym: {"t": pd.Timestamp(t).tz_convert("UTC").isoformat(), "d": d, "msg": msg,
+                      "price": price, "strong": strong}
+                for sym, t, d, msg, price, strong in con.execute(
+                    "SELECT symbol, t, d, msg, price, strong FROM last_fire")
             }
         self._import_json()
         return self
@@ -113,7 +119,8 @@ class PgState(State):
         for chat_id in old.users - self.users:
             self.add_user(chat_id)
         for sym, r in old.last_fire.items():
-            self.record_fire(sym, r["d"], pd.Timestamp(r["t"]), r.get("msg"))
+            self.record_fire(sym, r["d"], pd.Timestamp(r["t"]), r.get("msg"),
+                             r.get("price"), r.get("strong"))
 
     def save(self):
         pass   # هر تغییر همان لحظه نوشته می‌شود
@@ -131,10 +138,13 @@ class PgState(State):
         try:
             with self.lock, self._connect() as con:
                 con.execute(
-                    "INSERT INTO last_fire (symbol, t, d, msg) VALUES (%s, %s, %s, %s) "
-                    "ON CONFLICT (symbol) DO UPDATE SET t = EXCLUDED.t, d = EXCLUDED.d, msg = EXCLUDED.msg "
+                    "INSERT INTO last_fire (symbol, t, d, msg, price, strong) "
+                    "VALUES (%s, %s, %s, %s, %s, %s) "
+                    "ON CONFLICT (symbol) DO UPDATE SET t = EXCLUDED.t, d = EXCLUDED.d, msg = EXCLUDED.msg, "
+                    "price = EXCLUDED.price, strong = EXCLUDED.strong "
                     "WHERE last_fire.t <= EXCLUDED.t",
-                    (name, pd.Timestamp(r["t"]).to_pydatetime(), r["d"], r["msg"]))
+                    (name, pd.Timestamp(r["t"]).to_pydatetime(), r["d"], r["msg"],
+                     r["price"], r["strong"]))
         except Exception as e:
             print("db record_fire error:", e)
 

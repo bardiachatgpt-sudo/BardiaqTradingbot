@@ -5,7 +5,9 @@ import pandas as pd
 import telebot
 from telebot import types
 
-from .config import SYMBOLS, label
+from .config import INIT_BARS, SYMBOLS, label
+from .data import get_closed_candles
+from .messages import fire_from_record
 from .timefmt import to_tehran
 
 
@@ -35,10 +37,29 @@ class Telegram:
         r = self.state.last_fire.get(name)
         if not r:
             return f"{label(name)}: no FIRE recorded yet"
+        if r.get("price") is None:
+            r = self._backfill(name, r) or r
+        if r.get("price") is not None:
+            return fire_from_record(name, r)
         if r.get("msg"):
             return r["msg"]
         side = "bullish" if r["d"] > 0 else "bearish"
         return f"{label(name)}: {to_tehran(pd.Timestamp(r['t']))} Tehran ({side})"
+
+    def _backfill(self, name, r):
+        """FIREهای قدیمی که قیمتشان ذخیره نشده: قیمت Close همان دقیقه را از کندل‌ها پیدا و ذخیره کن."""
+        try:
+            t = pd.Timestamp(r["t"])
+            df = get_closed_candles(name, INIT_BARS, 0)
+            bar = t - pd.Timedelta(minutes=1)          # زمان FIRE = بسته‌شدن کندل
+            if df is None or bar not in df.index:
+                return None
+            strong = "STRONG" in (r.get("msg") or "")
+            self.state.record_fire(name, r["d"], t, r.get("msg"), float(df.loc[bar, "Close"]), strong)
+            return self.state.last_fire.get(name)
+        except Exception as e:
+            print(f"[{name}] backfill error:", e)
+            return None
 
     def _register_handlers(self):
         bot = self.bot

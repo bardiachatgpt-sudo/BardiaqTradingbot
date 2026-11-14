@@ -263,7 +263,9 @@
   "last_fire": {
    "t": "2026-11-25T19:14:00+00:00",
    "d": 1,
-   "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>70365</b>\n🕒 <b>Wednesday 2026-11-25 22:44</b> Tehran\n🕒 <b>Wednesday 2026-11-25 19:14</b> London (for Kamyar)\n🌍 New York"
+   "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>70365</b>\n🕒 <b>Wednesday 2026-11-25 22:44</b> Tehran\n🕒 <b>Wednesday 2026-11-25 19:14</b> London (for Kamyar)\n🌍 New York",
+   "price": 70365.1419905761,
+   "strong": false
   }
  },
  "XAUUSD": {
@@ -446,7 +448,9 @@
   "last_fire": {
    "t": "2026-11-25T04:34:00+00:00",
    "d": -1,
-   "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2962.43</b>\n🕒 <b>Wednesday 2026-11-25 08:04</b> Tehran\n🕒 <b>Wednesday 2026-11-25 04:34</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)"
+   "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>2962.43</b>\n🕒 <b>Wednesday 2026-11-25 08:04</b> Tehran\n🕒 <b>Wednesday 2026-11-25 04:34</b> London (for Kamyar)\n🌍 Sydney · Tokyo (overlap)",
+   "price": 2962.426438849656,
+   "strong": false
   }
  },
  "EURUSD": {
@@ -677,7 +681,9 @@
   "last_fire": {
    "t": "2026-11-25T18:32:00+00:00",
    "d": -1,
-   "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.04344</b>\n🕒 <b>Wednesday 2026-11-25 22:02</b> Tehran\n🕒 <b>Wednesday 2026-11-25 18:32</b> London (for Kamyar)\n🌍 New York"
+   "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>1.04344</b>\n🕒 <b>Wednesday 2026-11-25 22:02</b> Tehran\n🕒 <b>Wednesday 2026-11-25 18:32</b> London (for Kamyar)\n🌍 New York",
+   "price": 1.043444104217375,
+   "strong": false
   }
  },
  "USDJPY": {
@@ -914,7 +920,9 @@
   "last_fire": {
    "t": "2026-11-25T12:36:00+00:00",
    "d": -1,
-   "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.604</b>\n🕒 <b>Wednesday 2026-11-25 16:06</b> Tehran\n🕒 <b>Wednesday 2026-11-25 12:36</b> London (for Kamyar)\n🌍 London"
+   "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n💰 Price: <b>154.604</b>\n🕒 <b>Wednesday 2026-11-25 16:06</b> Tehran\n🕒 <b>Wednesday 2026-11-25 12:36</b> London (for Kamyar)\n🌍 London",
+   "price": 154.6040176397955,
+   "strong": false
   }
  }
 }
