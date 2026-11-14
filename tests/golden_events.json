@@ -1,0 +1,1802 @@
+{
+ "BTCUSD": {
+  "events": [
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-12T19:17:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-12 22:47</b> Tehran\n🌍 New York\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 12 Nov 22:16\n🔺 <b>1st high</b>  ·  67095  ·  12 Nov 22:07\n🔺 <b>2nd high</b>  ·  67102  ·  12 Nov 22:14\n▫️ Mid low  ·  66702  ·  12 Nov 22:11\n📊 Hist: 1st 687.6 | mid 683.7 | 2nd 686.3"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-12T20:51:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-13 00:21</b> Tehran\n🌍 Sydney · New York (overlap)\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 2h 5m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 12 Nov 22:16\n🔺 <b>1st high</b>  ·  67095  ·  12 Nov 22:07\n🔺 <b>2nd high</b>  ·  67102  ·  12 Nov 22:14\n▫️ Mid low  ·  66702  ·  12 Nov 22:11\n📊 Hist: 1st 687.6 | mid 683.7 | 2nd 686.3"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-13T03:35:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-13 07:05</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 13 Nov 06:40\n🔻 <b>1st low</b>  ·  60894  ·  13 Nov 06:24\n🔻 <b>2nd low</b>  ·  60570  ·  13 Nov 06:38\n▫️ Mid high  ·  61093  ·  13 Nov 06:36\n📊 Hist: 1st -955.9 | mid -918.3 | 2nd -919.1"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-13T04:52:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-13 08:22</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n⚡ Trigger: path 2 — back above zero\n⏱ Divergence → FIRE: 1h 42m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 13 Nov 06:40\n🔻 <b>1st low</b>  ·  60894  ·  13 Nov 06:24\n🔻 <b>2nd low</b>  ·  60570  ·  13 Nov 06:38\n▫️ Mid high  ·  61093  ·  13 Nov 06:36\n📊 Hist: 1st -955.9 | mid -918.3 | 2nd -919.1"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-13T05:44:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-13 09:14</b> Tehran\n🌍 Tokyo\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 13 Nov 08:36\n🔺 <b>1st high</b>  ·  65538  ·  13 Nov 08:23\n🔺 <b>2nd high</b>  ·  65593  ·  13 Nov 08:34\n▫️ Mid low  ·  65019  ·  13 Nov 08:32\n📊 Hist: 1st 939.7 | mid 909.6 | 2nd 911.3"
+   },
+   {
+    "kind": "INVALID",
+    "s": -1,
+    "time": "2026-11-13T05:45:00+00:00",
+    "msg": "⚪ <b>CANCELLED · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-13 09:15</b> Tehran\n🌍 Tokyo\n❌ Price broke above the 2nd high (65593)\nREADY was at 13 Nov 09:14\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 13 Nov 08:36\n🔺 <b>1st high</b>  ·  65538  ·  13 Nov 08:23\n🔺 <b>2nd high</b>  ·  65593  ·  13 Nov 08:34\n▫️ Mid low  ·  65019  ·  13 Nov 08:32\n📊 Hist: 1st 939.7 | mid 909.6 | 2nd 911.3"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-13T11:57:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-13 15:27</b> Tehran\n🌍 London\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 13 Nov 15:01\n🔺 <b>1st high</b>  ·  68336  ·  13 Nov 14:51\n🔺 <b>2nd high</b>  ·  68623  ·  13 Nov 14:59\n▫️ Mid low  ·  68037  ·  13 Nov 14:57\n📊 Hist: 1st 1124 | mid 1106 | 2nd 1107"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-13T12:48:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-13 16:18</b> Tehran\n🌍 London\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 1h 17m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 13 Nov 15:01\n🔺 <b>1st high</b>  ·  68336  ·  13 Nov 14:51\n🔺 <b>2nd high</b>  ·  68623  ·  13 Nov 14:59\n▫️ Mid low  ·  68037  ·  13 Nov 14:57\n📊 Hist: 1st 1124 | mid 1106 | 2nd 1107"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-13T15:50:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-13 19:20</b> Tehran\n🌍 London · New York (overlap)\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 13 Nov 19:17\n🔺 <b>1st high</b>  ·  66062  ·  13 Nov 19:07\n🔺 <b>2nd high</b>  ·  66078  ·  13 Nov 19:15\n▫️ Mid low  ·  65827  ·  13 Nov 19:14\n📊 Hist: 1st 125.2 | mid 117.5 | 2nd 118.4"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-13T15:55:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-13 19:25</b> Tehran\n🌍 London · New York (overlap)\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 8m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 13 Nov 19:17\n🔺 <b>1st high</b>  ·  66062  ·  13 Nov 19:07\n🔺 <b>2nd high</b>  ·  66078  ·  13 Nov 19:15\n▫️ Mid low  ·  65827  ·  13 Nov 19:14\n📊 Hist: 1st 125.2 | mid 117.5 | 2nd 118.4"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-13T20:28:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-13 23:58</b> Tehran\n🌍 Sydney · New York (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 13 Nov 23:35\n🔻 <b>1st low</b>  ·  64574  ·  13 Nov 23:26\n🔻 <b>2nd low</b>  ·  64189  ·  13 Nov 23:33\n▫️ Mid high  ·  64765  ·  13 Nov 23:31\n📊 Hist: 1st -1402 | mid -1394 | 2nd -1397"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-13T21:27:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-14 00:57</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 1h 22m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 13 Nov 23:35\n🔻 <b>1st low</b>  ·  64574  ·  13 Nov 23:26\n🔻 <b>2nd low</b>  ·  64189  ·  13 Nov 23:33\n▫️ Mid high  ·  64765  ·  13 Nov 23:31\n📊 Hist: 1st -1402 | mid -1394 | 2nd -1397"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-14T00:07:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-14 03:37</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 14 Nov 02:26\n🔺 <b>1st high</b>  ·  68935  ·  14 Nov 01:56\n🔺 <b>2nd high</b>  ·  69204  ·  14 Nov 02:24\n▫️ Mid low  ·  68338  ·  14 Nov 02:18\n📊 Hist: 1st 639.4 | mid 527 | 2nd 541.6"
+   },
+   {
+    "kind": "INVALID",
+    "s": -1,
+    "time": "2026-11-14T00:08:00+00:00",
+    "msg": "⚪ <b>CANCELLED · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-14 03:38</b> Tehran\n🌍 Weekend\n❌ Price broke above the 2nd high (69204)\nREADY was at 14 Nov 03:37\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 14 Nov 02:26\n🔺 <b>1st high</b>  ·  68935  ·  14 Nov 01:56\n🔺 <b>2nd high</b>  ·  69204  ·  14 Nov 02:24\n▫️ Mid low  ·  68338  ·  14 Nov 02:18\n📊 Hist: 1st 639.4 | mid 527 | 2nd 541.6"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-14T02:33:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-14 06:03</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 14 Nov 05:35\n🔻 <b>1st low</b>  ·  63953  ·  14 Nov 05:31\n🔻 <b>2nd low</b>  ·  63882  ·  14 Nov 05:33\n▫️ Mid high  ·  64130  ·  14 Nov 05:32\n📊 Hist: 1st -1247 | mid -1246 | 2nd -1246"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-14T02:52:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-14 06:22</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 2 — back above zero\n⏱ Divergence → FIRE: 47m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 14 Nov 05:35\n🔻 <b>1st low</b>  ·  63953  ·  14 Nov 05:31\n🔻 <b>2nd low</b>  ·  63882  ·  14 Nov 05:33\n▫️ Mid high  ·  64130  ·  14 Nov 05:32\n📊 Hist: 1st -1247 | mid -1246 | 2nd -1246"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-14T08:54:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-14 12:24</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 14 Nov 11:55\n🔻 <b>1st low</b>  ·  63104  ·  14 Nov 11:39\n🔻 <b>2nd low</b>  ·  62645  ·  14 Nov 11:53\n▫️ Mid high  ·  63311  ·  14 Nov 11:49\n📊 Hist: 1st -875.7 | mid -862.9 | 2nd -869.6"
+   },
+   {
+    "kind": "INVALID",
+    "s": 1,
+    "time": "2026-11-14T08:55:00+00:00",
+    "msg": "⚪ <b>CANCELLED · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-14 12:25</b> Tehran\n🌍 Weekend\n❌ MACD (12,26,9) crossed below zero\nREADY was at 14 Nov 12:24\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 14 Nov 11:55\n🔻 <b>1st low</b>  ·  63104  ·  14 Nov 11:39\n🔻 <b>2nd low</b>  ·  62645  ·  14 Nov 11:53\n▫️ Mid high  ·  63311  ·  14 Nov 11:49\n📊 Hist: 1st -875.7 | mid -862.9 | 2nd -869.6"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-14T15:13:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-14 18:43</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 14 Nov 18:19\n🔻 <b>1st low</b>  ·  61867  ·  14 Nov 16:02\n🔻 <b>2nd low</b>  ·  61687  ·  14 Nov 18:17\n▫️ Mid high  ·  62396  ·  14 Nov 17:54\n📊 Hist: 1st -1114 | mid -141.9 | 2nd -194.4"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-14T15:30:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-14 19:00</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 2 — back above zero\n⏱ Divergence → FIRE: 41m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 14 Nov 18:19\n🔻 <b>1st low</b>  ·  61867  ·  14 Nov 16:02\n🔻 <b>2nd low</b>  ·  61687  ·  14 Nov 18:17\n▫️ Mid high  ·  62396  ·  14 Nov 17:54\n📊 Hist: 1st -1114 | mid -141.9 | 2nd -194.4"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-14T17:15:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-14 20:45</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 14 Nov 20:17\n🔺 <b>1st high</b>  ·  65388  ·  14 Nov 20:08\n🔺 <b>2nd high</b>  ·  65437  ·  14 Nov 20:15\n▫️ Mid low  ·  64964  ·  14 Nov 20:12\n📊 Hist: 1st 731 | mid 718 | 2nd 722.1"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-14T18:50:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-14 22:20</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 2h 3m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 14 Nov 20:17\n🔺 <b>1st high</b>  ·  65388  ·  14 Nov 20:08\n🔺 <b>2nd high</b>  ·  65437  ·  14 Nov 20:15\n▫️ Mid low  ·  64964  ·  14 Nov 20:12\n📊 Hist: 1st 731 | mid 718 | 2nd 722.1"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-14T23:36:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-15 03:06</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 15 Nov 01:39\n🔺 <b>1st high</b>  ·  63460  ·  15 Nov 00:52\n🔺 <b>2nd high</b>  ·  63524  ·  15 Nov 01:37\n▫️ Mid low  ·  63171  ·  15 Nov 01:35\n📊 Hist: 1st 531.6 | mid 325 | 2nd 325.6"
+   },
+   {
+    "kind": "INVALID",
+    "s": -1,
+    "time": "2026-11-14T23:37:00+00:00",
+    "msg": "⚪ <b>CANCELLED · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-15 03:07</b> Tehran\n🌍 Weekend\n❌ Price broke above the 2nd high (63524)\nREADY was at 15 Nov 03:06\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 15 Nov 01:39\n🔺 <b>1st high</b>  ·  63460  ·  15 Nov 00:52\n🔺 <b>2nd high</b>  ·  63524  ·  15 Nov 01:37\n▫️ Mid low  ·  63171  ·  15 Nov 01:35\n📊 Hist: 1st 531.6 | mid 325 | 2nd 325.6"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-16T02:54:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-16 06:24</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 16 Nov 06:11\n🔺 <b>1st high</b>  ·  64992  ·  16 Nov 06:05\n🔺 <b>2nd high</b>  ·  65086  ·  16 Nov 06:09\n▫️ Mid low  ·  64710  ·  16 Nov 06:08\n📊 Hist: 1st 1229 | mid 1225 | 2nd 1226"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-16T03:00:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-16 06:30</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 19m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 16 Nov 06:11\n🔺 <b>1st high</b>  ·  64992  ·  16 Nov 06:05\n🔺 <b>2nd high</b>  ·  65086  ·  16 Nov 06:09\n▫️ Mid low  ·  64710  ·  16 Nov 06:08\n📊 Hist: 1st 1229 | mid 1225 | 2nd 1226"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-16T04:46:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-16 08:16</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 16 Nov 08:10\n🔻 <b>1st low</b>  ·  61994  ·  16 Nov 07:36\n🔻 <b>2nd low</b>  ·  61961  ·  16 Nov 08:08\n▫️ Mid high  ·  62761  ·  16 Nov 07:54\n📊 Hist: 1st -256.5 | mid -175.7 | 2nd -232.5"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-16T04:55:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-16 08:25</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 15m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 16 Nov 08:10\n🔻 <b>1st low</b>  ·  61994  ·  16 Nov 07:36\n🔻 <b>2nd low</b>  ·  61961  ·  16 Nov 08:08\n▫️ Mid high  ·  62761  ·  16 Nov 07:54\n📊 Hist: 1st -256.5 | mid -175.7 | 2nd -232.5"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-16T10:58:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-16 14:28</b> Tehran\n🌍 London\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 16 Nov 14:14\n🔻 <b>1st low</b>  ·  61348  ·  16 Nov 14:10\n🔻 <b>2nd low</b>  ·  61330  ·  16 Nov 14:12\n▫️ Mid high  ·  61598  ·  16 Nov 14:11\n📊 Hist: 1st -682.5 | mid -682.3 | 2nd -682.4"
+   },
+   {
+    "kind": "INVALID",
+    "s": 1,
+    "time": "2026-11-16T11:00:00+00:00",
+    "msg": "⚪ <b>CANCELLED · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-16 14:30</b> Tehran\n🌍 London\n❌ MACD (12,26,9) crossed below zero\nREADY was at 16 Nov 14:28\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 16 Nov 14:14\n🔻 <b>1st low</b>  ·  61348  ·  16 Nov 14:10\n🔻 <b>2nd low</b>  ·  61330  ·  16 Nov 14:12\n▫️ Mid high  ·  61598  ·  16 Nov 14:11\n📊 Hist: 1st -682.5 | mid -682.3 | 2nd -682.4"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-16T15:25:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-16 18:55</b> Tehran\n🌍 London · New York (overlap)\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 16 Nov 18:36\n🔺 <b>1st high</b>  ·  68334  ·  16 Nov 18:24\n🔺 <b>2nd high</b>  ·  68721  ·  16 Nov 18:34\n▫️ Mid low  ·  68133  ·  16 Nov 18:33\n📊 Hist: 1st 1155 | mid 1134 | 2nd 1135"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-16T16:59:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-16 20:29</b> Tehran\n🌍 London · New York (overlap)\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 1h 53m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 16 Nov 18:36\n🔺 <b>1st high</b>  ·  68334  ·  16 Nov 18:24\n🔺 <b>2nd high</b>  ·  68721  ·  16 Nov 18:34\n▫️ Mid low  ·  68133  ·  16 Nov 18:33\n📊 Hist: 1st 1155 | mid 1134 | 2nd 1135"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-17T08:13:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-17 11:43</b> Tehran\n🌍 Tokyo · London (overlap)\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 17 Nov 11:31\n🔺 <b>1st high</b>  ·  69164  ·  17 Nov 11:07\n🔺 <b>2nd high</b>  ·  69466  ·  17 Nov 11:29\n▫️ Mid low  ·  68807  ·  17 Nov 11:28\n📊 Hist: 1st 867.3 | mid 795 | 2nd 796.5"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-17T09:46:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-17 13:16</b> Tehran\n🌍 London\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 1h 45m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 17 Nov 11:31\n🔺 <b>1st high</b>  ·  69164  ·  17 Nov 11:07\n🔺 <b>2nd high</b>  ·  69466  ·  17 Nov 11:29\n▫️ Mid low  ·  68807  ·  17 Nov 11:28\n📊 Hist: 1st 867.3 | mid 795 | 2nd 796.5"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-17T14:28:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-17 17:58</b> Tehran\n🌍 London · New York (overlap)\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 17 Nov 17:05\n🔺 <b>1st high</b>  ·  69106  ·  17 Nov 16:52\n🔺 <b>2nd high</b>  ·  69220  ·  17 Nov 17:03\n▫️ Mid low  ·  68687  ·  17 Nov 16:59\n📊 Hist: 1st 862 | mid 851.9 | 2nd 860.8"
+   },
+   {
+    "kind": "INVALID",
+    "s": -1,
+    "time": "2026-11-17T14:29:00+00:00",
+    "msg": "⚪ <b>CANCELLED · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-17 17:59</b> Tehran\n🌍 London · New York (overlap)\n❌ Price broke above the 2nd high (69220)\nREADY was at 17 Nov 17:58\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 17 Nov 17:05\n🔺 <b>1st high</b>  ·  69106  ·  17 Nov 16:52\n🔺 <b>2nd high</b>  ·  69220  ·  17 Nov 17:03\n▫️ Mid low  ·  68687  ·  17 Nov 16:59\n📊 Hist: 1st 862 | mid 851.9 | 2nd 860.8"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-17T20:20:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-17 23:50</b> Tehran\n🌍 Sydney · New York (overlap)\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 17 Nov 23:42\n🔺 <b>1st high</b>  ·  70353  ·  17 Nov 21:39\n🔺 <b>2nd high</b>  ·  70725  ·  17 Nov 23:40\n▫️ Mid low  ·  69933  ·  17 Nov 23:27\n📊 Hist: 1st 1157 | mid 260.1 | 2nd 282.1"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-17T20:23:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-17 23:53</b> Tehran\n🌍 Sydney · New York (overlap)\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 11m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 17 Nov 23:42\n🔺 <b>1st high</b>  ·  70353  ·  17 Nov 21:39\n🔺 <b>2nd high</b>  ·  70725  ·  17 Nov 23:40\n▫️ Mid low  ·  69933  ·  17 Nov 23:27\n📊 Hist: 1st 1157 | mid 260.1 | 2nd 282.1"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-17T22:49:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-18 02:19</b> Tehran\n🌍 Sydney\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 18 Nov 02:02\n🔻 <b>1st low</b>  ·  66685  ·  18 Nov 01:45\n🔻 <b>2nd low</b>  ·  66405  ·  18 Nov 02:00\n▫️ Mid high  ·  67046  ·  18 Nov 01:57\n📊 Hist: 1st -816 | mid -771.9 | 2nd -774.8"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-18T00:44:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-18 04:14</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 2h 12m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 18 Nov 02:02\n🔻 <b>1st low</b>  ·  66685  ·  18 Nov 01:45\n🔻 <b>2nd low</b>  ·  66405  ·  18 Nov 02:00\n▫️ Mid high  ·  67046  ·  18 Nov 01:57\n📊 Hist: 1st -816 | mid -771.9 | 2nd -774.8"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-18T07:02:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-18 10:32</b> Tehran\n🌍 Tokyo\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 18 Nov 10:11\n🔺 <b>1st high</b>  ·  76357  ·  18 Nov 09:59\n🔺 <b>2nd high</b>  ·  76578  ·  18 Nov 10:09\n▫️ Mid low  ·  76037  ·  18 Nov 10:07\n📊 Hist: 1st 1280 | mid 1274 | 2nd 1276"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-18T08:46:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>  ⭐ <b>STRONG</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-18 12:16</b> Tehran\n🌍 Tokyo · London (overlap)\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 2h 5m\n📈 M5 divergence confirmed: 18 Nov 10:55\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 18 Nov 10:11\n🔺 <b>1st high</b>  ·  76357  ·  18 Nov 09:59\n🔺 <b>2nd high</b>  ·  76578  ·  18 Nov 10:09\n▫️ Mid low  ·  76037  ·  18 Nov 10:07\n📊 Hist: 1st 1280 | mid 1274 | 2nd 1276"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-18T15:30:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-18 19:00</b> Tehran\n🌍 London · New York (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 18 Nov 18:32\n🔻 <b>1st low</b>  ·  65339  ·  18 Nov 18:25\n🔻 <b>2nd low</b>  ·  65264  ·  18 Nov 18:30\n▫️ Mid high  ·  65629  ·  18 Nov 18:29\n📊 Hist: 1st -1402 | mid -1394 | 2nd -1394"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-18T17:07:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-18 20:37</b> Tehran\n🌍 New York\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 2h 5m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 18 Nov 18:32\n🔻 <b>1st low</b>  ·  65339  ·  18 Nov 18:25\n🔻 <b>2nd low</b>  ·  65264  ·  18 Nov 18:30\n▫️ Mid high  ·  65629  ·  18 Nov 18:29\n📊 Hist: 1st -1402 | mid -1394 | 2nd -1394"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-19T04:09:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-19 07:39</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 19 Nov 06:55\n🔻 <b>1st low</b>  ·  67098  ·  19 Nov 05:02\n🔻 <b>2nd low</b>  ·  67018  ·  19 Nov 06:53\n▫️ Mid high  ·  68237  ·  19 Nov 06:28\n📊 Hist: 1st -699.1 | mid -73.21 | 2nd -200.9"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-19T05:36:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-19 09:06</b> Tehran\n🌍 Tokyo\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 2h 11m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 19 Nov 06:55\n🔻 <b>1st low</b>  ·  67098  ·  19 Nov 05:02\n🔻 <b>2nd low</b>  ·  67018  ·  19 Nov 06:53\n▫️ Mid high  ·  68237  ·  19 Nov 06:28\n📊 Hist: 1st -699.1 | mid -73.21 | 2nd -200.9"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-19T14:32:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-19 18:02</b> Tehran\n🌍 London · New York (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 19 Nov 17:47\n🔻 <b>1st low</b>  ·  69297  ·  19 Nov 17:35\n🔻 <b>2nd low</b>  ·  69107  ·  19 Nov 17:45\n▫️ Mid high  ·  69688  ·  19 Nov 17:44\n📊 Hist: 1st -1086 | mid -1068 | 2nd -1069"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-19T14:42:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-19 18:12</b> Tehran\n🌍 London · New York (overlap)\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 25m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 19 Nov 17:47\n🔻 <b>1st low</b>  ·  69297  ·  19 Nov 17:35\n🔻 <b>2nd low</b>  ·  69107  ·  19 Nov 17:45\n▫️ Mid high  ·  69688  ·  19 Nov 17:44\n📊 Hist: 1st -1086 | mid -1068 | 2nd -1069"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-20T02:54:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-20 06:24</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 20 Nov 05:15\n🔻 <b>1st low</b>  ·  68021  ·  20 Nov 04:02\n🔻 <b>2nd low</b>  ·  67312  ·  20 Nov 05:13\n▫️ Mid high  ·  68691  ·  20 Nov 04:57\n📊 Hist: 1st -1023 | mid -514.7 | 2nd -588.6"
+   },
+   {
+    "kind": "INVALID",
+    "s": 1,
+    "time": "2026-11-20T02:55:00+00:00",
+    "msg": "⚪ <b>CANCELLED · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-20 06:25</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n❌ Price broke below the 2nd low (67312)\nREADY was at 20 Nov 06:24\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 20 Nov 05:15\n🔻 <b>1st low</b>  ·  68021  ·  20 Nov 04:02\n🔻 <b>2nd low</b>  ·  67312  ·  20 Nov 05:13\n▫️ Mid high  ·  68691  ·  20 Nov 04:57\n📊 Hist: 1st -1023 | mid -514.7 | 2nd -588.6"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-20T11:24:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-20 14:54</b> Tehran\n🌍 London\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 20 Nov 14:23\n🔺 <b>1st high</b>  ·  69171  ·  20 Nov 12:33\n🔺 <b>2nd high</b>  ·  70103  ·  20 Nov 14:21\n▫️ Mid low  ·  68363  ·  20 Nov 13:33\n📊 Hist: 1st 442.4 | mid 112.4 | 2nd 390.6"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-20T13:19:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-20 16:49</b> Tehran\n🌍 London · New York (overlap)\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 2h 26m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 20 Nov 14:23\n🔺 <b>1st high</b>  ·  69171  ·  20 Nov 12:33\n🔺 <b>2nd high</b>  ·  70103  ·  20 Nov 14:21\n▫️ Mid low  ·  68363  ·  20 Nov 13:33\n📊 Hist: 1st 442.4 | mid 112.4 | 2nd 390.6"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-20T15:39:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-20 19:09</b> Tehran\n🌍 London · New York (overlap)\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 20 Nov 18:47\n🔺 <b>1st high</b>  ·  70096  ·  20 Nov 18:39\n🔺 <b>2nd high</b>  ·  70124  ·  20 Nov 18:45\n▫️ Mid low  ·  69637  ·  20 Nov 18:43\n📊 Hist: 1st 974.5 | mid 970.3 | 2nd 973.1"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-20T15:58:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-20 19:28</b> Tehran\n🌍 London · New York (overlap)\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 41m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 20 Nov 18:47\n🔺 <b>1st high</b>  ·  70096  ·  20 Nov 18:39\n🔺 <b>2nd high</b>  ·  70124  ·  20 Nov 18:45\n▫️ Mid low  ·  69637  ·  20 Nov 18:43\n📊 Hist: 1st 974.5 | mid 970.3 | 2nd 973.1"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-21T00:31:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-21 04:01</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 21 Nov 03:50\n🔻 <b>1st low</b>  ·  66409  ·  21 Nov 03:06\n🔻 <b>2nd low</b>  ·  66255  ·  21 Nov 03:48\n▫️ Mid high  ·  66611  ·  21 Nov 03:47\n📊 Hist: 1st -891.3 | mid -574.7 | 2nd -576.2"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-21T00:34:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-21 04:04</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 2 — back above zero\n⏱ Divergence → FIRE: 14m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 21 Nov 03:50\n🔻 <b>1st low</b>  ·  66409  ·  21 Nov 03:06\n🔻 <b>2nd low</b>  ·  66255  ·  21 Nov 03:48\n▫️ Mid high  ·  66611  ·  21 Nov 03:47\n📊 Hist: 1st -891.3 | mid -574.7 | 2nd -576.2"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-21T06:26:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-21 09:56</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 21 Nov 09:23\n🔻 <b>1st low</b>  ·  65468  ·  21 Nov 09:17\n🔻 <b>2nd low</b>  ·  65392  ·  21 Nov 09:21\n▫️ Mid high  ·  65882  ·  21 Nov 09:20\n📊 Hist: 1st -1098 | mid -1097 | 2nd -1097"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-21T06:33:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-21 10:03</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 2 — back above zero\n⏱ Divergence → FIRE: 40m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 21 Nov 09:23\n🔻 <b>1st low</b>  ·  65468  ·  21 Nov 09:17\n🔻 <b>2nd low</b>  ·  65392  ·  21 Nov 09:21\n▫️ Mid high  ·  65882  ·  21 Nov 09:20\n📊 Hist: 1st -1098 | mid -1097 | 2nd -1097"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-21T12:41:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-21 16:11</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 21 Nov 15:51\n🔻 <b>1st low</b>  ·  63101  ·  21 Nov 15:42\n🔻 <b>2nd low</b>  ·  62902  ·  21 Nov 15:49\n▫️ Mid high  ·  63315  ·  21 Nov 15:47\n📊 Hist: 1st -1206 | mid -1196 | 2nd -1200"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-21T14:21:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-21 17:51</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 2h 0m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 21 Nov 15:51\n🔻 <b>1st low</b>  ·  63101  ·  21 Nov 15:42\n🔻 <b>2nd low</b>  ·  62902  ·  21 Nov 15:49\n▫️ Mid high  ·  63315  ·  21 Nov 15:47\n📊 Hist: 1st -1206 | mid -1196 | 2nd -1200"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-22T01:01:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-22 04:31</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 22 Nov 04:23\n🔺 <b>1st high</b>  ·  67152  ·  22 Nov 04:02\n🔺 <b>2nd high</b>  ·  67287  ·  22 Nov 04:21\n▫️ Mid low  ·  66608  ·  22 Nov 04:12\n📊 Hist: 1st 497.4 | mid 474.6 | 2nd 496.1"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-22T01:20:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-22 04:50</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 27m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 22 Nov 04:23\n🔺 <b>1st high</b>  ·  67152  ·  22 Nov 04:02\n🔺 <b>2nd high</b>  ·  67287  ·  22 Nov 04:21\n▫️ Mid low  ·  66608  ·  22 Nov 04:12\n📊 Hist: 1st 497.4 | mid 474.6 | 2nd 496.1"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-22T05:25:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-22 08:55</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 22 Nov 08:31\n🔻 <b>1st low</b>  ·  63894  ·  22 Nov 08:24\n🔻 <b>2nd low</b>  ·  63702  ·  22 Nov 08:29\n▫️ Mid high  ·  64106  ·  22 Nov 08:28\n📊 Hist: 1st -1226 | mid -1222 | 2nd -1223"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-22T06:42:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-22 10:12</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 1h 41m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 22 Nov 08:31\n🔻 <b>1st low</b>  ·  63894  ·  22 Nov 08:24\n🔻 <b>2nd low</b>  ·  63702  ·  22 Nov 08:29\n▫️ Mid high  ·  64106  ·  22 Nov 08:28\n📊 Hist: 1st -1226 | mid -1222 | 2nd -1223"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-22T07:14:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-22 10:44</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 22 Nov 10:25\n🔺 <b>1st high</b>  ·  68679  ·  22 Nov 10:15\n🔺 <b>2nd high</b>  ·  68756  ·  22 Nov 10:23\n▫️ Mid low  ·  68383  ·  22 Nov 10:21\n📊 Hist: 1st 840.1 | mid 824.7 | 2nd 825.3"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-22T07:22:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-22 10:52</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 27m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 22 Nov 10:25\n🔺 <b>1st high</b>  ·  68679  ·  22 Nov 10:15\n🔺 <b>2nd high</b>  ·  68756  ·  22 Nov 10:23\n▫️ Mid low  ·  68383  ·  22 Nov 10:21\n📊 Hist: 1st 840.1 | mid 824.7 | 2nd 825.3"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-22T18:01:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-22 21:31</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 22 Nov 21:22\n🔻 <b>1st low</b>  ·  65815  ·  22 Nov 19:06\n🔻 <b>2nd low</b>  ·  65168  ·  22 Nov 21:20\n▫️ Mid high  ·  66779  ·  22 Nov 20:02\n📊 Hist: 1st -383.6 | mid -36.32 | 2nd -340.7"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-22T18:45:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-22 22:15</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 2 — back above zero\n⏱ Divergence → FIRE: 53m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 22 Nov 21:22\n🔻 <b>1st low</b>  ·  65815  ·  22 Nov 19:06\n🔻 <b>2nd low</b>  ·  65168  ·  22 Nov 21:20\n▫️ Mid high  ·  66779  ·  22 Nov 20:02\n📊 Hist: 1st -383.6 | mid -36.32 | 2nd -340.7"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-22T20:04:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-22 23:34</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 22 Nov 23:22\n🔺 <b>1st high</b>  ·  70685  ·  22 Nov 23:05\n🔺 <b>2nd high</b>  ·  71088  ·  22 Nov 23:20\n▫️ Mid low  ·  70171  ·  22 Nov 23:17\n📊 Hist: 1st 1047 | mid 994 | 2nd 1003"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-22T20:15:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-22 23:45</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 23m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 22 Nov 23:22\n🔺 <b>1st high</b>  ·  70685  ·  22 Nov 23:05\n🔺 <b>2nd high</b>  ·  71088  ·  22 Nov 23:20\n▫️ Mid low  ·  70171  ·  22 Nov 23:17\n📊 Hist: 1st 1047 | mid 994 | 2nd 1003"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-22T22:14:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-23 01:44</b> Tehran\n🌍 Sydney\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 23 Nov 01:12\n🔻 <b>1st low</b>  ·  65321  ·  23 Nov 01:02\n🔻 <b>2nd low</b>  ·  64992  ·  23 Nov 01:10\n▫️ Mid high  ·  65430  ·  23 Nov 01:09\n📊 Hist: 1st -1003 | mid -994.1 | 2nd -994.7"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-22T22:29:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-23 01:59</b> Tehran\n🌍 Sydney\n⚡ Trigger: path 2 — back above zero\n⏱ Divergence → FIRE: 47m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 23 Nov 01:12\n🔻 <b>1st low</b>  ·  65321  ·  23 Nov 01:02\n🔻 <b>2nd low</b>  ·  64992  ·  23 Nov 01:10\n▫️ Mid high  ·  65430  ·  23 Nov 01:09\n📊 Hist: 1st -1003 | mid -994.1 | 2nd -994.7"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-23T07:07:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-23 10:37</b> Tehran\n🌍 Tokyo\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 23 Nov 10:03\n🔺 <b>1st high</b>  ·  70827  ·  23 Nov 09:45\n🔺 <b>2nd high</b>  ·  71115  ·  23 Nov 10:01\n▫️ Mid low  ·  70462  ·  23 Nov 09:58\n📊 Hist: 1st 1023 | mid 974.8 | 2nd 976"
+   },
+   {
+    "kind": "INVALID",
+    "s": -1,
+    "time": "2026-11-23T07:24:00+00:00",
+    "msg": "⚪ <b>CANCELLED · BEARISH📉</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-23 10:54</b> Tehran\n🌍 Tokyo\n❌ MACD (12,26,9) crossed above zero\nREADY was at 23 Nov 10:37\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 23 Nov 10:03\n🔺 <b>1st high</b>  ·  70827  ·  23 Nov 09:45\n🔺 <b>2nd high</b>  ·  71115  ·  23 Nov 10:01\n▫️ Mid low  ·  70462  ·  23 Nov 09:58\n📊 Hist: 1st 1023 | mid 974.8 | 2nd 976"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-23T10:34:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-23 14:04</b> Tehran\n🌍 London\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 23 Nov 13:51\n🔻 <b>1st low</b>  ·  66034  ·  23 Nov 13:42\n🔻 <b>2nd low</b>  ·  65837  ·  23 Nov 13:49\n▫️ Mid high  ·  66262  ·  23 Nov 13:48\n📊 Hist: 1st -1095 | mid -1092 | 2nd -1094"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-23T12:13:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-23 15:43</b> Tehran\n🌍 London\n⚡ Trigger: path 2 — back above zero\n⏱ Divergence → FIRE: 1h 52m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 23 Nov 13:51\n🔻 <b>1st low</b>  ·  66034  ·  23 Nov 13:42\n🔻 <b>2nd low</b>  ·  65837  ·  23 Nov 13:49\n▫️ Mid high  ·  66262  ·  23 Nov 13:48\n📊 Hist: 1st -1095 | mid -1092 | 2nd -1094"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-23T14:51:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-23 18:21</b> Tehran\n🌍 London · New York (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 23 Nov 18:10\n🔻 <b>1st low</b>  ·  69287  ·  23 Nov 18:00\n🔻 <b>2nd low</b>  ·  69248  ·  23 Nov 18:08\n▫️ Mid high  ·  69715  ·  23 Nov 18:06\n📊 Hist: 1st -480.6 | mid -474.7 | 2nd -478"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-23T15:02:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-23 18:32</b> Tehran\n🌍 London · New York (overlap)\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 22m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 23 Nov 18:10\n🔻 <b>1st low</b>  ·  69287  ·  23 Nov 18:00\n🔻 <b>2nd low</b>  ·  69248  ·  23 Nov 18:08\n▫️ Mid high  ·  69715  ·  23 Nov 18:06\n📊 Hist: 1st -480.6 | mid -474.7 | 2nd -478"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-23T21:09:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-24 00:39</b> Tehran\n🌍 Sydney · New York (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 24 Nov 00:20\n🔻 <b>1st low</b>  ·  67465  ·  24 Nov 00:11\n🔻 <b>2nd low</b>  ·  67458  ·  24 Nov 00:18\n▫️ Mid high  ·  67943  ·  24 Nov 00:17\n📊 Hist: 1st -1204 | mid -1180 | 2nd -1180"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-23T21:19:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-24 00:49</b> Tehran\n🌍 Sydney · New York (overlap)\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 29m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 24 Nov 00:20\n🔻 <b>1st low</b>  ·  67465  ·  24 Nov 00:11\n🔻 <b>2nd low</b>  ·  67458  ·  24 Nov 00:18\n▫️ Mid high  ·  67943  ·  24 Nov 00:17\n📊 Hist: 1st -1204 | mid -1180 | 2nd -1180"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-24T15:43:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-24 19:13</b> Tehran\n🌍 London · New York (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 24 Nov 19:03\n🔻 <b>1st low</b>  ·  69477  ·  24 Nov 16:45\n🔻 <b>2nd low</b>  ·  69092  ·  24 Nov 19:01\n▫️ Mid high  ·  70715  ·  24 Nov 18:03\n📊 Hist: 1st -936.3 | mid -131.8 | 2nd -333.1"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-24T15:47:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-24 19:17</b> Tehran\n🌍 London · New York (overlap)\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 14m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 24 Nov 19:03\n🔻 <b>1st low</b>  ·  69477  ·  24 Nov 16:45\n🔻 <b>2nd low</b>  ·  69092  ·  24 Nov 19:01\n▫️ Mid high  ·  70715  ·  24 Nov 18:03\n📊 Hist: 1st -936.3 | mid -131.8 | 2nd -333.1"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-25T15:15:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-25 18:45</b> Tehran\n🌍 London · New York (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 25 Nov 18:11\n🔻 <b>1st low</b>  ·  68739  ·  25 Nov 15:59\n🔻 <b>2nd low</b>  ·  68554  ·  25 Nov 18:09\n▫️ Mid high  ·  69723  ·  25 Nov 17:46\n📊 Hist: 1st -992.6 | mid -153.5 | 2nd -274"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-25T16:45:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-25 20:15</b> Tehran\n🌍 London · New York (overlap)\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 2h 4m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 25 Nov 18:11\n🔻 <b>1st low</b>  ·  68739  ·  25 Nov 15:59\n🔻 <b>2nd low</b>  ·  68554  ·  25 Nov 18:09\n▫️ Mid high  ·  69723  ·  25 Nov 17:46\n📊 Hist: 1st -992.6 | mid -153.5 | 2nd -274"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-25T19:08:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-25 22:38</b> Tehran\n🌍 New York\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 25 Nov 22:22\n🔻 <b>1st low</b>  ·  69731  ·  25 Nov 22:14\n🔻 <b>2nd low</b>  ·  69657  ·  25 Nov 22:20\n▫️ Mid high  ·  70102  ·  25 Nov 22:19\n📊 Hist: 1st -943.9 | mid -926.9 | 2nd -926.9"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-25T19:14:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-25 22:44</b> Tehran\n🌍 New York\n⚡ Trigger: path 2 — back above zero\n⏱ Divergence → FIRE: 22m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 25 Nov 22:22\n🔻 <b>1st low</b>  ·  69731  ·  25 Nov 22:14\n🔻 <b>2nd low</b>  ·  69657  ·  25 Nov 22:20\n▫️ Mid high  ·  70102  ·  25 Nov 22:19\n📊 Hist: 1st -943.9 | mid -926.9 | 2nd -926.9"
+   }
+  ],
+  "last_fire": {
+   "t": "2026-11-25T19:14:00+00:00",
+   "d": 1,
+   "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>₿🇺🇸 BTCUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-25 22:44</b> Tehran\n🌍 New York\n⚡ Trigger: path 2 — back above zero\n⏱ Divergence → FIRE: 22m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 25 Nov 22:22\n🔻 <b>1st low</b>  ·  69731  ·  25 Nov 22:14\n🔻 <b>2nd low</b>  ·  69657  ·  25 Nov 22:20\n▫️ Mid high  ·  70102  ·  25 Nov 22:19\n📊 Hist: 1st -943.9 | mid -926.9 | 2nd -926.9"
+  }
+ },
+ "XAUUSD": {
+  "events": [
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-13T05:43:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-13 09:13</b> Tehran\n🌍 Tokyo\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 13 Nov 08:42\n🔺 <b>1st high</b>  ·  2708.93  ·  13 Nov 08:34\n🔺 <b>2nd high</b>  ·  2710.65  ·  13 Nov 08:40\n▫️ Mid low  ·  2705.57  ·  13 Nov 08:39\n📊 Hist: 1st 19.87 | mid 19.77 | 2nd 19.77"
+   },
+   {
+    "kind": "INVALID",
+    "s": -1,
+    "time": "2026-11-13T05:45:00+00:00",
+    "msg": "⚪ <b>CANCELLED · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-13 09:15</b> Tehran\n🌍 Tokyo\n❌ MACD (12,26,9) crossed above zero\nREADY was at 13 Nov 09:13\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 13 Nov 08:42\n🔺 <b>1st high</b>  ·  2708.93  ·  13 Nov 08:34\n🔺 <b>2nd high</b>  ·  2710.65  ·  13 Nov 08:40\n▫️ Mid low  ·  2705.57  ·  13 Nov 08:39\n📊 Hist: 1st 19.87 | mid 19.77 | 2nd 19.77"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-13T13:45:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-13 17:15</b> Tehran\n🌍 London · New York (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 13 Nov 17:09\n🔻 <b>1st low</b>  ·  2692.28  ·  13 Nov 16:55\n🔻 <b>2nd low</b>  ·  2691.57  ·  13 Nov 17:07\n▫️ Mid high  ·  2701.66  ·  13 Nov 16:59\n📊 Hist: 1st -11.42 | mid -11.17 | 2nd -11.29"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-13T13:50:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-13 17:20</b> Tehran\n🌍 London · New York (overlap)\n⚡ Trigger: path 2 — back above zero\n⏱ Divergence → FIRE: 11m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 13 Nov 17:09\n🔻 <b>1st low</b>  ·  2692.28  ·  13 Nov 16:55\n🔻 <b>2nd low</b>  ·  2691.57  ·  13 Nov 17:07\n▫️ Mid high  ·  2701.66  ·  13 Nov 16:59\n📊 Hist: 1st -11.42 | mid -11.17 | 2nd -11.29"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-14T00:25:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-14 03:55</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 14 Nov 03:03\n🔺 <b>1st high</b>  ·  2769.29  ·  14 Nov 01:37\n🔺 <b>2nd high</b>  ·  2780.63  ·  14 Nov 03:01\n▫️ Mid low  ·  2748.85  ·  14 Nov 02:28\n📊 Hist: 1st 17.95 | mid 6.988 | 2nd 9.638"
+   },
+   {
+    "kind": "INVALID",
+    "s": -1,
+    "time": "2026-11-14T00:26:00+00:00",
+    "msg": "⚪ <b>CANCELLED · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-14 03:56</b> Tehran\n🌍 Weekend\n❌ Price broke above the 2nd high (2780.63)\nREADY was at 14 Nov 03:55\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 14 Nov 03:03\n🔺 <b>1st high</b>  ·  2769.29  ·  14 Nov 01:37\n🔺 <b>2nd high</b>  ·  2780.63  ·  14 Nov 03:01\n▫️ Mid low  ·  2748.85  ·  14 Nov 02:28\n📊 Hist: 1st 17.95 | mid 6.988 | 2nd 9.638"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-14T09:09:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-14 12:39</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 14 Nov 12:22\n🔻 <b>1st low</b>  ·  2667.75  ·  14 Nov 12:16\n🔻 <b>2nd low</b>  ·  2667.11  ·  14 Nov 12:20\n▫️ Mid high  ·  2674.77  ·  14 Nov 12:19\n📊 Hist: 1st -15.39 | mid -15.21 | 2nd -15.21"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-14T10:19:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-14 13:49</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 2 — back above zero\n⏱ Divergence → FIRE: 1h 27m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 14 Nov 12:22\n🔻 <b>1st low</b>  ·  2667.75  ·  14 Nov 12:16\n🔻 <b>2nd low</b>  ·  2667.11  ·  14 Nov 12:20\n▫️ Mid high  ·  2674.77  ·  14 Nov 12:19\n📊 Hist: 1st -15.39 | mid -15.21 | 2nd -15.21"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-15T03:52:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-15 07:22</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 15 Nov 07:04\n🔺 <b>1st high</b>  ·  2705.02  ·  15 Nov 06:34\n🔺 <b>2nd high</b>  ·  2716.16  ·  15 Nov 07:02\n▫️ Mid low  ·  2695.26  ·  15 Nov 06:56\n📊 Hist: 1st 21.69 | mid 19.77 | 2nd 20.04"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-15T04:01:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-15 07:31</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 27m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 15 Nov 07:04\n🔺 <b>1st high</b>  ·  2705.02  ·  15 Nov 06:34\n🔺 <b>2nd high</b>  ·  2716.16  ·  15 Nov 07:02\n▫️ Mid low  ·  2695.26  ·  15 Nov 06:56\n📊 Hist: 1st 21.69 | mid 19.77 | 2nd 20.04"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-15T05:58:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-15 09:28</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 15 Nov 09:10\n🔻 <b>1st low</b>  ·  2670.44  ·  15 Nov 08:44\n🔻 <b>2nd low</b>  ·  2668.76  ·  15 Nov 09:08\n▫️ Mid high  ·  2681.35  ·  15 Nov 09:00\n📊 Hist: 1st -3.617 | mid -2.705 | 2nd -3.197"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-15T06:09:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-15 09:39</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 29m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 15 Nov 09:10\n🔻 <b>1st low</b>  ·  2670.44  ·  15 Nov 08:44\n🔻 <b>2nd low</b>  ·  2668.76  ·  15 Nov 09:08\n▫️ Mid high  ·  2681.35  ·  15 Nov 09:00\n📊 Hist: 1st -3.617 | mid -2.705 | 2nd -3.197"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-15T10:04:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-15 13:34</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 15 Nov 13:00\n🔺 <b>1st high</b>  ·  2765.56  ·  15 Nov 12:51\n🔺 <b>2nd high</b>  ·  2772.72  ·  15 Nov 12:58\n▫️ Mid low  ·  2758.44  ·  15 Nov 12:55\n📊 Hist: 1st 25.78 | mid 25.54 | 2nd 25.64"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-15T10:07:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-15 13:37</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 37m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 15 Nov 13:00\n🔺 <b>1st high</b>  ·  2765.56  ·  15 Nov 12:51\n🔺 <b>2nd high</b>  ·  2772.72  ·  15 Nov 12:58\n▫️ Mid low  ·  2758.44  ·  15 Nov 12:55\n📊 Hist: 1st 25.78 | mid 25.54 | 2nd 25.64"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-15T18:42:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-15 22:12</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 15 Nov 21:43\n🔻 <b>1st low</b>  ·  2561.96  ·  15 Nov 21:24\n🔻 <b>2nd low</b>  ·  2550.41  ·  15 Nov 21:41\n▫️ Mid high  ·  2564.89  ·  15 Nov 21:37\n📊 Hist: 1st -27.06 | mid -26.25 | 2nd -26.36"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-15T19:24:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-15 22:54</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 2 — back above zero\n⏱ Divergence → FIRE: 1h 11m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 15 Nov 21:43\n🔻 <b>1st low</b>  ·  2561.96  ·  15 Nov 21:24\n🔻 <b>2nd low</b>  ·  2550.41  ·  15 Nov 21:41\n▫️ Mid high  ·  2564.89  ·  15 Nov 21:37\n📊 Hist: 1st -27.06 | mid -26.25 | 2nd -26.36"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-15T22:15:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-16 01:45</b> Tehran\n🌍 Sydney\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 16 Nov 01:36\n🔺 <b>1st high</b>  ·  2625.34  ·  15 Nov 23:32\n🔺 <b>2nd high</b>  ·  2637.27  ·  16 Nov 01:34\n▫️ Mid low  ·  2610.53  ·  16 Nov 01:11\n📊 Hist: 1st 10.36 | mid 2.248 | 2nd 6.223"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-15T22:38:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-16 02:08</b> Tehran\n🌍 Sydney\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 32m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 16 Nov 01:36\n🔺 <b>1st high</b>  ·  2625.34  ·  15 Nov 23:32\n🔺 <b>2nd high</b>  ·  2637.27  ·  16 Nov 01:34\n▫️ Mid low  ·  2610.53  ·  16 Nov 01:11\n📊 Hist: 1st 10.36 | mid 2.248 | 2nd 6.223"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-16T19:17:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-16 22:47</b> Tehran\n🌍 New York\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 16 Nov 22:36\n🔺 <b>1st high</b>  ·  2612.76  ·  16 Nov 22:13\n🔺 <b>2nd high</b>  ·  2617.40  ·  16 Nov 22:34\n▫️ Mid low  ·  2606.93  ·  16 Nov 22:25\n📊 Hist: 1st 11.57 | mid 11.18 | 2nd 11.39"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-16T19:22:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-16 22:52</b> Tehran\n🌍 New York\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 16m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 16 Nov 22:36\n🔺 <b>1st high</b>  ·  2612.76  ·  16 Nov 22:13\n🔺 <b>2nd high</b>  ·  2617.40  ·  16 Nov 22:34\n▫️ Mid low  ·  2606.93  ·  16 Nov 22:25\n📊 Hist: 1st 11.57 | mid 11.18 | 2nd 11.39"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-16T23:39:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-17 03:09</b> Tehran\n🌍 Sydney\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 17 Nov 02:53\n🔻 <b>1st low</b>  ·  2520.39  ·  17 Nov 02:37\n🔻 <b>2nd low</b>  ·  2516.13  ·  17 Nov 02:51\n▫️ Mid high  ·  2531.55  ·  17 Nov 02:50\n📊 Hist: 1st -20.58 | mid -19.49 | 2nd -19.49"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-17T01:11:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-17 04:41</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 1h 48m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 17 Nov 02:53\n🔻 <b>1st low</b>  ·  2520.39  ·  17 Nov 02:37\n🔻 <b>2nd low</b>  ·  2516.13  ·  17 Nov 02:51\n▫️ Mid high  ·  2531.55  ·  17 Nov 02:50\n📊 Hist: 1st -20.58 | mid -19.49 | 2nd -19.49"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-17T08:13:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-17 11:43</b> Tehran\n🌍 Tokyo · London (overlap)\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 17 Nov 11:25\n🔺 <b>1st high</b>  ·  2710.74  ·  17 Nov 11:08\n🔺 <b>2nd high</b>  ·  2717.84  ·  17 Nov 11:23\n▫️ Mid low  ·  2705.75  ·  17 Nov 11:22\n📊 Hist: 1st 25.24 | mid 24.55 | 2nd 24.56"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-17T09:51:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-17 13:21</b> Tehran\n🌍 London\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 1h 56m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 17 Nov 11:25\n🔺 <b>1st high</b>  ·  2710.74  ·  17 Nov 11:08\n🔺 <b>2nd high</b>  ·  2717.84  ·  17 Nov 11:23\n▫️ Mid low  ·  2705.75  ·  17 Nov 11:22\n📊 Hist: 1st 25.24 | mid 24.55 | 2nd 24.56"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-17T12:15:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-17 15:45</b> Tehran\n🌍 London\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 17 Nov 15:35\n🔺 <b>1st high</b>  ·  2677.68  ·  17 Nov 15:26\n🔺 <b>2nd high</b>  ·  2678.22  ·  17 Nov 15:33\n▫️ Mid low  ·  2671.33  ·  17 Nov 15:28\n📊 Hist: 1st 10.23 | mid 10.15 | 2nd 10.22"
+   },
+   {
+    "kind": "INVALID",
+    "s": -1,
+    "time": "2026-11-17T12:16:00+00:00",
+    "msg": "⚪ <b>CANCELLED · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-17 15:46</b> Tehran\n🌍 London\n❌ MACD (12,26,9) crossed above zero\nREADY was at 17 Nov 15:45\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 17 Nov 15:35\n🔺 <b>1st high</b>  ·  2677.68  ·  17 Nov 15:26\n🔺 <b>2nd high</b>  ·  2678.22  ·  17 Nov 15:33\n▫️ Mid low  ·  2671.33  ·  17 Nov 15:28\n📊 Hist: 1st 10.23 | mid 10.15 | 2nd 10.22"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-18T00:53:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-18 04:23</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 18 Nov 03:56\n🔺 <b>1st high</b>  ·  2702.24  ·  18 Nov 03:46\n🔺 <b>2nd high</b>  ·  2702.85  ·  18 Nov 03:54\n▫️ Mid low  ·  2695.24  ·  18 Nov 03:53\n📊 Hist: 1st 18.35 | mid 18.09 | 2nd 18.1"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-18T01:28:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-18 04:58</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 1h 2m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 18 Nov 03:56\n🔺 <b>1st high</b>  ·  2702.24  ·  18 Nov 03:46\n🔺 <b>2nd high</b>  ·  2702.85  ·  18 Nov 03:54\n▫️ Mid low  ·  2695.24  ·  18 Nov 03:53\n📊 Hist: 1st 18.35 | mid 18.09 | 2nd 18.1"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-18T04:56:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-18 08:26</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 18 Nov 07:18\n🔻 <b>1st low</b>  ·  2607.14  ·  18 Nov 05:48\n🔻 <b>2nd low</b>  ·  2606.45  ·  18 Nov 07:16\n▫️ Mid high  ·  2616.47  ·  18 Nov 07:15\n📊 Hist: 1st -16.38 | mid -4.815 | 2nd -4.829"
+   },
+   {
+    "kind": "INVALID",
+    "s": 1,
+    "time": "2026-11-18T04:57:00+00:00",
+    "msg": "⚪ <b>CANCELLED · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-18 08:27</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n❌ Price broke below the 2nd low (2606.45)\nREADY was at 18 Nov 08:26\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 18 Nov 07:18\n🔻 <b>1st low</b>  ·  2607.14  ·  18 Nov 05:48\n🔻 <b>2nd low</b>  ·  2606.45  ·  18 Nov 07:16\n▫️ Mid high  ·  2616.47  ·  18 Nov 07:15\n📊 Hist: 1st -16.38 | mid -4.815 | 2nd -4.829"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-18T07:10:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-18 10:40</b> Tehran\n🌍 Tokyo\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 18 Nov 10:08\n🔺 <b>1st high</b>  ·  2717.47  ·  18 Nov 10:00\n🔺 <b>2nd high</b>  ·  2723.37  ·  18 Nov 10:06\n▫️ Mid low  ·  2712.81  ·  18 Nov 10:04\n📊 Hist: 1st 25.74 | mid 25.64 | 2nd 25.67"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-18T08:16:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-18 11:46</b> Tehran\n🌍 Tokyo · London (overlap)\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 1h 38m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 18 Nov 10:08\n🔺 <b>1st high</b>  ·  2717.47  ·  18 Nov 10:00\n🔺 <b>2nd high</b>  ·  2723.37  ·  18 Nov 10:06\n▫️ Mid low  ·  2712.81  ·  18 Nov 10:04\n📊 Hist: 1st 25.74 | mid 25.64 | 2nd 25.67"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-19T00:00:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-19 03:30</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 19 Nov 03:12\n🔺 <b>1st high</b>  ·  2726.71  ·  19 Nov 03:06\n🔺 <b>2nd high</b>  ·  2728.50  ·  19 Nov 03:10\n▫️ Mid low  ·  2721.25  ·  19 Nov 03:09\n📊 Hist: 1st 21.4 | mid 21.36 | 2nd 21.36"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-19T01:28:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-19 04:58</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 1h 46m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 19 Nov 03:12\n🔺 <b>1st high</b>  ·  2726.71  ·  19 Nov 03:06\n🔺 <b>2nd high</b>  ·  2728.50  ·  19 Nov 03:10\n▫️ Mid low  ·  2721.25  ·  19 Nov 03:09\n📊 Hist: 1st 21.4 | mid 21.36 | 2nd 21.36"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-19T03:54:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-19 07:24</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 19 Nov 07:16\n🔺 <b>1st high</b>  ·  2679.93  ·  19 Nov 06:43\n🔺 <b>2nd high</b>  ·  2680.30  ·  19 Nov 07:14\n▫️ Mid low  ·  2672.41  ·  19 Nov 07:08\n📊 Hist: 1st 4.148 | mid 3.6 | 2nd 3.744"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-19T03:59:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-19 07:29</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 13m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 19 Nov 07:16\n🔺 <b>1st high</b>  ·  2679.93  ·  19 Nov 06:43\n🔺 <b>2nd high</b>  ·  2680.30  ·  19 Nov 07:14\n▫️ Mid low  ·  2672.41  ·  19 Nov 07:08\n📊 Hist: 1st 4.148 | mid 3.6 | 2nd 3.744"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-20T01:22:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-20 04:52</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 20 Nov 04:19\n🔻 <b>1st low</b>  ·  2711.04  ·  20 Nov 04:12\n🔻 <b>2nd low</b>  ·  2708.70  ·  20 Nov 04:17\n▫️ Mid high  ·  2716.91  ·  20 Nov 04:16\n📊 Hist: 1st -17.8 | mid -17.73 | 2nd -17.76"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-20T01:39:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-20 05:09</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 50m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 20 Nov 04:19\n🔻 <b>1st low</b>  ·  2711.04  ·  20 Nov 04:12\n🔻 <b>2nd low</b>  ·  2708.70  ·  20 Nov 04:17\n▫️ Mid high  ·  2716.91  ·  20 Nov 04:16\n📊 Hist: 1st -17.8 | mid -17.73 | 2nd -17.76"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-20T10:07:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-20 13:37</b> Tehran\n🌍 London\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 20 Nov 12:46\n🔺 <b>1st high</b>  ·  2774.13  ·  20 Nov 12:37\n🔺 <b>2nd high</b>  ·  2774.90  ·  20 Nov 12:44\n▫️ Mid low  ·  2767.61  ·  20 Nov 12:43\n📊 Hist: 1st 13.61 | mid 13.33 | 2nd 13.34"
+   },
+   {
+    "kind": "INVALID",
+    "s": -1,
+    "time": "2026-11-20T10:12:00+00:00",
+    "msg": "⚪ <b>CANCELLED · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-20 13:42</b> Tehran\n🌍 London\n❌ Price broke above the 2nd high (2774.90)\nREADY was at 20 Nov 13:37\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 20 Nov 12:46\n🔺 <b>1st high</b>  ·  2774.13  ·  20 Nov 12:37\n🔺 <b>2nd high</b>  ·  2774.90  ·  20 Nov 12:44\n▫️ Mid low  ·  2767.61  ·  20 Nov 12:43\n📊 Hist: 1st 13.61 | mid 13.33 | 2nd 13.34"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-21T06:37:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-21 10:07</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 21 Nov 09:34\n🔻 <b>1st low</b>  ·  2688.32  ·  21 Nov 09:20\n🔻 <b>2nd low</b>  ·  2682.18  ·  21 Nov 09:32\n▫️ Mid high  ·  2694.87  ·  21 Nov 09:31\n📊 Hist: 1st -30.05 | mid -29.51 | 2nd -29.52"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-21T07:26:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-21 10:56</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 2 — back above zero\n⏱ Divergence → FIRE: 1h 22m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 21 Nov 09:34\n🔻 <b>1st low</b>  ·  2688.32  ·  21 Nov 09:20\n🔻 <b>2nd low</b>  ·  2682.18  ·  21 Nov 09:32\n▫️ Mid high  ·  2694.87  ·  21 Nov 09:31\n📊 Hist: 1st -30.05 | mid -29.51 | 2nd -29.52"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-21T12:44:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-21 16:14</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 21 Nov 15:39\n🔻 <b>1st low</b>  ·  2684.60  ·  21 Nov 15:34\n🔻 <b>2nd low</b>  ·  2684.57  ·  21 Nov 15:37\n▫️ Mid high  ·  2692.68  ·  21 Nov 15:35\n📊 Hist: 1st -22.12 | mid -22.08 | 2nd -22.11"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-21T14:18:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-21 17:48</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 2h 9m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 21 Nov 15:39\n🔻 <b>1st low</b>  ·  2684.60  ·  21 Nov 15:34\n🔻 <b>2nd low</b>  ·  2684.57  ·  21 Nov 15:37\n▫️ Mid high  ·  2692.68  ·  21 Nov 15:35\n📊 Hist: 1st -22.12 | mid -22.08 | 2nd -22.11"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-22T07:48:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-22 11:18</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 22 Nov 10:53\n🔺 <b>1st high</b>  ·  2825.70  ·  22 Nov 10:34\n🔺 <b>2nd high</b>  ·  2826.59  ·  22 Nov 10:51\n▫️ Mid low  ·  2819.63  ·  22 Nov 10:49\n📊 Hist: 1st 6.976 | mid 6.508 | 2nd 6.536"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-22T07:53:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-22 11:23</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 30m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 22 Nov 10:53\n🔺 <b>1st high</b>  ·  2825.70  ·  22 Nov 10:34\n🔺 <b>2nd high</b>  ·  2826.59  ·  22 Nov 10:51\n▫️ Mid low  ·  2819.63  ·  22 Nov 10:49\n📊 Hist: 1st 6.976 | mid 6.508 | 2nd 6.536"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-22T17:45:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-22 21:15</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 22 Nov 20:10\n🔻 <b>1st low</b>  ·  2798.30  ·  22 Nov 19:13\n🔻 <b>2nd low</b>  ·  2797.47  ·  22 Nov 20:08\n▫️ Mid high  ·  2814.56  ·  22 Nov 19:57\n📊 Hist: 1st -11.5 | mid -5.383 | 2nd -6.118"
+   },
+   {
+    "kind": "INVALID",
+    "s": 1,
+    "time": "2026-11-22T17:46:00+00:00",
+    "msg": "⚪ <b>CANCELLED · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-22 21:16</b> Tehran\n🌍 Weekend\n❌ Price broke below the 2nd low (2797.47)\nREADY was at 22 Nov 21:15\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 22 Nov 20:10\n🔻 <b>1st low</b>  ·  2798.30  ·  22 Nov 19:13\n🔻 <b>2nd low</b>  ·  2797.47  ·  22 Nov 20:08\n▫️ Mid high  ·  2814.56  ·  22 Nov 19:57\n📊 Hist: 1st -11.5 | mid -5.383 | 2nd -6.118"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-23T12:54:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-23 16:24</b> Tehran\n🌍 London\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 23 Nov 16:05\n🔺 <b>1st high</b>  ·  2864.39  ·  23 Nov 15:56\n🔺 <b>2nd high</b>  ·  2867.84  ·  23 Nov 16:03\n▫️ Mid low  ·  2859.19  ·  23 Nov 16:02\n📊 Hist: 1st 23.86 | mid 23.39 | 2nd 23.39"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-23T13:43:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-23 17:13</b> Tehran\n🌍 London · New York (overlap)\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 1h 8m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 23 Nov 16:05\n🔺 <b>1st high</b>  ·  2864.39  ·  23 Nov 15:56\n🔺 <b>2nd high</b>  ·  2867.84  ·  23 Nov 16:03\n▫️ Mid low  ·  2859.19  ·  23 Nov 16:02\n📊 Hist: 1st 23.86 | mid 23.39 | 2nd 23.39"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-23T15:03:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-23 18:33</b> Tehran\n🌍 London · New York (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 23 Nov 18:21\n🔻 <b>1st low</b>  ·  2789.11  ·  23 Nov 18:06\n🔻 <b>2nd low</b>  ·  2787.95  ·  23 Nov 18:19\n▫️ Mid high  ·  2799.37  ·  23 Nov 18:17\n📊 Hist: 1st -8.106 | mid -7.639 | 2nd -7.783"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-23T15:08:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-23 18:38</b> Tehran\n🌍 London · New York (overlap)\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 17m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 23 Nov 18:21\n🔻 <b>1st low</b>  ·  2789.11  ·  23 Nov 18:06\n🔻 <b>2nd low</b>  ·  2787.95  ·  23 Nov 18:19\n▫️ Mid high  ·  2799.37  ·  23 Nov 18:17\n📊 Hist: 1st -8.106 | mid -7.639 | 2nd -7.783"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-24T08:01:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-24 11:31</b> Tehran\n🌍 Tokyo · London (overlap)\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 24 Nov 10:57\n🔺 <b>1st high</b>  ·  2853.75  ·  24 Nov 08:35\n🔺 <b>2nd high</b>  ·  2871.55  ·  24 Nov 10:55\n▫️ Mid low  ·  2832.75  ·  24 Nov 09:58\n📊 Hist: 1st 21.94 | mid 4.013 | 2nd 8.982"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-24T09:19:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-24 12:49</b> Tehran\n🌍 London\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 1h 52m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 24 Nov 10:57\n🔺 <b>1st high</b>  ·  2853.75  ·  24 Nov 08:35\n🔺 <b>2nd high</b>  ·  2871.55  ·  24 Nov 10:55\n▫️ Mid low  ·  2832.75  ·  24 Nov 09:58\n📊 Hist: 1st 21.94 | mid 4.013 | 2nd 8.982"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-25T02:34:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-25 06:04</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 25 Nov 05:49\n🔻 <b>1st low</b>  ·  2865.18  ·  25 Nov 05:43\n🔻 <b>2nd low</b>  ·  2864.56  ·  25 Nov 05:47\n▫️ Mid high  ·  2871.35  ·  25 Nov 05:45\n📊 Hist: 1st -24.25 | mid -24.2 | 2nd -24.2"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-25T03:39:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-25 07:09</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n⚡ Trigger: path 2 — back above zero\n⏱ Divergence → FIRE: 1h 20m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 25 Nov 05:49\n🔻 <b>1st low</b>  ·  2865.18  ·  25 Nov 05:43\n🔻 <b>2nd low</b>  ·  2864.56  ·  25 Nov 05:47\n▫️ Mid high  ·  2871.35  ·  25 Nov 05:45\n📊 Hist: 1st -24.25 | mid -24.2 | 2nd -24.2"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-25T04:28:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-25 07:58</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 25 Nov 07:45\n🔺 <b>1st high</b>  ·  2975.01  ·  25 Nov 07:40\n🔺 <b>2nd high</b>  ·  2976.82  ·  25 Nov 07:43\n▫️ Mid low  ·  2970.15  ·  25 Nov 07:42\n📊 Hist: 1st 16.5 | mid 16.47 | 2nd 16.47"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-25T04:34:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-25 08:04</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 19m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 25 Nov 07:45\n🔺 <b>1st high</b>  ·  2975.01  ·  25 Nov 07:40\n🔺 <b>2nd high</b>  ·  2976.82  ·  25 Nov 07:43\n▫️ Mid low  ·  2970.15  ·  25 Nov 07:42\n📊 Hist: 1st 16.5 | mid 16.47 | 2nd 16.47"
+   }
+  ],
+  "last_fire": {
+   "t": "2026-11-25T04:34:00+00:00",
+   "d": -1,
+   "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🥇🇺🇸 XAUUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-25 08:04</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 19m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 25 Nov 07:45\n🔺 <b>1st high</b>  ·  2975.01  ·  25 Nov 07:40\n🔺 <b>2nd high</b>  ·  2976.82  ·  25 Nov 07:43\n▫️ Mid low  ·  2970.15  ·  25 Nov 07:42\n📊 Hist: 1st 16.5 | mid 16.47 | 2nd 16.47"
+  }
+ },
+ "EURUSD": {
+  "events": [
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-13T16:16:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-13 19:46</b> Tehran\n🌍 London · New York (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 13 Nov 19:39\n🔻 <b>1st low</b>  ·  1.07356  ·  13 Nov 16:51\n🔻 <b>2nd low</b>  ·  1.07322  ·  13 Nov 19:37\n▫️ Mid high  ·  1.07723  ·  13 Nov 19:02\n📊 Hist: 1st -0.003548 | mid -0.0002013 | 2nd -0.0006654"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-13T16:44:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-13 20:14</b> Tehran\n🌍 London · New York (overlap)\n⚡ Trigger: path 2 — back above zero\n⏱ Divergence → FIRE: 35m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 13 Nov 19:39\n🔻 <b>1st low</b>  ·  1.07356  ·  13 Nov 16:51\n🔻 <b>2nd low</b>  ·  1.07322  ·  13 Nov 19:37\n▫️ Mid high  ·  1.07723  ·  13 Nov 19:02\n📊 Hist: 1st -0.003548 | mid -0.0002013 | 2nd -0.0006654"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-14T07:01:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-14 10:31</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 14 Nov 10:13\n🔺 <b>1st high</b>  ·  1.09107  ·  14 Nov 07:43\n🔺 <b>2nd high</b>  ·  1.09196  ·  14 Nov 10:11\n▫️ Mid low  ·  1.08612  ·  14 Nov 09:34\n📊 Hist: 1st 0.00484 | mid 0.0004009 | 2nd 0.001417"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-14T07:38:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-14 11:08</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 55m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 14 Nov 10:13\n🔺 <b>1st high</b>  ·  1.09107  ·  14 Nov 07:43\n🔺 <b>2nd high</b>  ·  1.09196  ·  14 Nov 10:11\n▫️ Mid low  ·  1.08612  ·  14 Nov 09:34\n📊 Hist: 1st 0.00484 | mid 0.0004009 | 2nd 0.001417"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-14T21:12:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-15 00:42</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 15 Nov 00:28\n🔺 <b>1st high</b>  ·  1.09713  ·  15 Nov 00:19\n🔺 <b>2nd high</b>  ·  1.09760  ·  15 Nov 00:26\n▫️ Mid low  ·  1.09543  ·  15 Nov 00:24\n📊 Hist: 1st 0.004199 | mid 0.004171 | 2nd 0.004195"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-14T21:17:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-15 00:47</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 19m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 15 Nov 00:28\n🔺 <b>1st high</b>  ·  1.09713  ·  15 Nov 00:19\n🔺 <b>2nd high</b>  ·  1.09760  ·  15 Nov 00:26\n▫️ Mid low  ·  1.09543  ·  15 Nov 00:24\n📊 Hist: 1st 0.004199 | mid 0.004171 | 2nd 0.004195"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-15T08:00:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-15 11:30</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 15 Nov 11:16\n🔻 <b>1st low</b>  ·  1.08527  ·  15 Nov 10:53\n🔻 <b>2nd low</b>  ·  1.08483  ·  15 Nov 11:14\n▫️ Mid high  ·  1.08729  ·  15 Nov 11:10\n📊 Hist: 1st -0.001545 | mid -0.001383 | 2nd -0.001399"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-15T09:25:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-15 12:55</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 1h 39m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 15 Nov 11:16\n🔻 <b>1st low</b>  ·  1.08527  ·  15 Nov 10:53\n🔻 <b>2nd low</b>  ·  1.08483  ·  15 Nov 11:14\n▫️ Mid high  ·  1.08729  ·  15 Nov 11:10\n📊 Hist: 1st -0.001545 | mid -0.001383 | 2nd -0.001399"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-15T10:00:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-15 13:30</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 15 Nov 13:15\n🔺 <b>1st high</b>  ·  1.10829  ·  15 Nov 13:05\n🔺 <b>2nd high</b>  ·  1.10950  ·  15 Nov 13:13\n▫️ Mid low  ·  1.10750  ·  15 Nov 13:11\n📊 Hist: 1st 0.004613 | mid 0.004587 | 2nd 0.004602"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-15T10:06:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-15 13:36</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 21m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 15 Nov 13:15\n🔺 <b>1st high</b>  ·  1.10829  ·  15 Nov 13:05\n🔺 <b>2nd high</b>  ·  1.10950  ·  15 Nov 13:13\n▫️ Mid low  ·  1.10750  ·  15 Nov 13:11\n📊 Hist: 1st 0.004613 | mid 0.004587 | 2nd 0.004602"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-15T12:22:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-15 15:52</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 15 Nov 15:43\n🔻 <b>1st low</b>  ·  1.07997  ·  15 Nov 15:29\n🔻 <b>2nd low</b>  ·  1.07806  ·  15 Nov 15:41\n▫️ Mid high  ·  1.08078  ·  15 Nov 15:36\n📊 Hist: 1st -0.004936 | mid -0.004865 | 2nd -0.004882"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-15T12:28:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-15 15:58</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 15m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 15 Nov 15:43\n🔻 <b>1st low</b>  ·  1.07997  ·  15 Nov 15:29\n🔻 <b>2nd low</b>  ·  1.07806  ·  15 Nov 15:41\n▫️ Mid high  ·  1.08078  ·  15 Nov 15:36\n📊 Hist: 1st -0.004936 | mid -0.004865 | 2nd -0.004882"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-15T20:25:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-15 23:55</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 15 Nov 23:47\n🔺 <b>1st high</b>  ·  1.08472  ·  15 Nov 23:33\n🔺 <b>2nd high</b>  ·  1.08484  ·  15 Nov 23:45\n▫️ Mid low  ·  1.08298  ·  15 Nov 23:44\n📊 Hist: 1st 0.001449 | mid 0.00136 | 2nd 0.001365"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-15T20:48:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-16 00:18</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 31m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 15 Nov 23:47\n🔺 <b>1st high</b>  ·  1.08472  ·  15 Nov 23:33\n🔺 <b>2nd high</b>  ·  1.08484  ·  15 Nov 23:45\n▫️ Mid low  ·  1.08298  ·  15 Nov 23:44\n📊 Hist: 1st 0.001449 | mid 0.00136 | 2nd 0.001365"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-16T06:50:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-16 10:20</b> Tehran\n🌍 Tokyo\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 16 Nov 09:12\n🔻 <b>1st low</b>  ·  1.06237  ·  16 Nov 08:44\n🔻 <b>2nd low</b>  ·  1.06234  ·  16 Nov 09:10\n▫️ Mid high  ·  1.06465  ·  16 Nov 09:09\n📊 Hist: 1st -0.002474 | mid -0.00185 | 2nd -0.001852"
+   },
+   {
+    "kind": "INVALID",
+    "s": 1,
+    "time": "2026-11-16T06:51:00+00:00",
+    "msg": "⚪ <b>CANCELLED · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-16 10:21</b> Tehran\n🌍 Tokyo\n❌ Price broke below the 2nd low (1.06234)\nREADY was at 16 Nov 10:20\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 16 Nov 09:12\n🔻 <b>1st low</b>  ·  1.06237  ·  16 Nov 08:44\n🔻 <b>2nd low</b>  ·  1.06234  ·  16 Nov 09:10\n▫️ Mid high  ·  1.06465  ·  16 Nov 09:09\n📊 Hist: 1st -0.002474 | mid -0.00185 | 2nd -0.001852"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-16T19:24:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-16 22:54</b> Tehran\n🌍 New York\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 16 Nov 22:39\n🔺 <b>1st high</b>  ·  1.08826  ·  16 Nov 22:29\n🔺 <b>2nd high</b>  ·  1.08950  ·  16 Nov 22:37\n▫️ Mid low  ·  1.08709  ·  16 Nov 22:35\n📊 Hist: 1st 0.004472 | mid 0.004424 | 2nd 0.004426"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-16T19:27:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-16 22:57</b> Tehran\n🌍 New York\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 18m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 16 Nov 22:39\n🔺 <b>1st high</b>  ·  1.08826  ·  16 Nov 22:29\n🔺 <b>2nd high</b>  ·  1.08950  ·  16 Nov 22:37\n▫️ Mid low  ·  1.08709  ·  16 Nov 22:35\n📊 Hist: 1st 0.004472 | mid 0.004424 | 2nd 0.004426"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-17T02:07:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-17 05:37</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 17 Nov 05:02\n🔺 <b>1st high</b>  ·  1.09310  ·  17 Nov 04:56\n🔺 <b>2nd high</b>  ·  1.09348  ·  17 Nov 05:00\n▫️ Mid low  ·  1.09205  ·  17 Nov 04:59\n📊 Hist: 1st 0.00561 | mid 0.005588 | 2nd 0.005591"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-17T03:12:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-17 06:42</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 1h 40m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 17 Nov 05:02\n🔺 <b>1st high</b>  ·  1.09310  ·  17 Nov 04:56\n🔺 <b>2nd high</b>  ·  1.09348  ·  17 Nov 05:00\n▫️ Mid low  ·  1.09205  ·  17 Nov 04:59\n📊 Hist: 1st 0.00561 | mid 0.005588 | 2nd 0.005591"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-17T06:04:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-17 09:34</b> Tehran\n🌍 Tokyo\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 17 Nov 08:47\n🔻 <b>1st low</b>  ·  1.07531  ·  17 Nov 07:08\n🔻 <b>2nd low</b>  ·  1.07198  ·  17 Nov 08:45\n▫️ Mid high  ·  1.07908  ·  17 Nov 08:11\n📊 Hist: 1st -0.002753 | mid -0.0007244 | 2nd -0.001934"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-17T06:18:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-17 09:48</b> Tehran\n🌍 Tokyo\n⚡ Trigger: path 2 — back above zero\n⏱ Divergence → FIRE: 1h 1m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 17 Nov 08:47\n🔻 <b>1st low</b>  ·  1.07531  ·  17 Nov 07:08\n🔻 <b>2nd low</b>  ·  1.07198  ·  17 Nov 08:45\n▫️ Mid high  ·  1.07908  ·  17 Nov 08:11\n📊 Hist: 1st -0.002753 | mid -0.0007244 | 2nd -0.001934"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-18T04:50:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-18 08:20</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 18 Nov 08:04\n🔻 <b>1st low</b>  ·  1.07938  ·  18 Nov 05:46\n🔻 <b>2nd low</b>  ·  1.07568  ·  18 Nov 08:02\n▫️ Mid high  ·  1.08288  ·  18 Nov 07:09\n📊 Hist: 1st -0.001828 | mid -0.0002929 | 2nd -0.001456"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-18T04:52:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-18 08:22</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n⚡ Trigger: path 2 — back above zero\n⏱ Divergence → FIRE: 18m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 18 Nov 08:04\n🔻 <b>1st low</b>  ·  1.07938  ·  18 Nov 05:46\n🔻 <b>2nd low</b>  ·  1.07568  ·  18 Nov 08:02\n▫️ Mid high  ·  1.08288  ·  18 Nov 07:09\n📊 Hist: 1st -0.001828 | mid -0.0002929 | 2nd -0.001456"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-18T11:29:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-18 14:59</b> Tehran\n🌍 London\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 18 Nov 14:51\n🔺 <b>1st high</b>  ·  1.08371  ·  18 Nov 14:09\n🔺 <b>2nd high</b>  ·  1.08477  ·  18 Nov 14:49\n▫️ Mid low  ·  1.08203  ·  18 Nov 14:43\n📊 Hist: 1st 0.001298 | mid 0.000926 | 2nd 0.0009936"
+   },
+   {
+    "kind": "INVALID",
+    "s": -1,
+    "time": "2026-11-18T11:40:00+00:00",
+    "msg": "⚪ <b>CANCELLED · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-18 15:10</b> Tehran\n🌍 London\n❌ MACD (12,26,9) crossed above zero\nREADY was at 18 Nov 14:59\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 18 Nov 14:51\n🔺 <b>1st high</b>  ·  1.08371  ·  18 Nov 14:09\n🔺 <b>2nd high</b>  ·  1.08477  ·  18 Nov 14:49\n▫️ Mid low  ·  1.08203  ·  18 Nov 14:43\n📊 Hist: 1st 0.001298 | mid 0.000926 | 2nd 0.0009936"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-19T00:01:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-19 03:31</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 19 Nov 03:06\n🔺 <b>1st high</b>  ·  1.09324  ·  19 Nov 02:51\n🔺 <b>2nd high</b>  ·  1.09439  ·  19 Nov 03:04\n▫️ Mid low  ·  1.09163  ·  19 Nov 03:02\n📊 Hist: 1st 0.004562 | mid 0.004428 | 2nd 0.00444"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-19T00:25:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-19 03:55</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 49m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 19 Nov 03:06\n🔺 <b>1st high</b>  ·  1.09324  ·  19 Nov 02:51\n🔺 <b>2nd high</b>  ·  1.09439  ·  19 Nov 03:04\n▫️ Mid low  ·  1.09163  ·  19 Nov 03:02\n📊 Hist: 1st 0.004562 | mid 0.004428 | 2nd 0.00444"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-19T02:20:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-19 05:50</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 19 Nov 05:35\n🔻 <b>1st low</b>  ·  1.07506  ·  19 Nov 05:25\n🔻 <b>2nd low</b>  ·  1.07422  ·  19 Nov 05:33\n▫️ Mid high  ·  1.07595  ·  19 Nov 05:31\n📊 Hist: 1st -0.003008 | mid -0.002971 | 2nd -0.002984"
+   },
+   {
+    "kind": "INVALID",
+    "s": 1,
+    "time": "2026-11-19T02:22:00+00:00",
+    "msg": "⚪ <b>CANCELLED · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-19 05:52</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n❌ MACD (12,26,9) crossed below zero\nREADY was at 19 Nov 05:50\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 19 Nov 05:35\n🔻 <b>1st low</b>  ·  1.07506  ·  19 Nov 05:25\n🔻 <b>2nd low</b>  ·  1.07422  ·  19 Nov 05:33\n▫️ Mid high  ·  1.07595  ·  19 Nov 05:31\n📊 Hist: 1st -0.003008 | mid -0.002971 | 2nd -0.002984"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-19T06:13:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-19 09:43</b> Tehran\n🌍 Tokyo\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 19 Nov 09:22\n🔺 <b>1st high</b>  ·  1.09008  ·  19 Nov 09:17\n🔺 <b>2nd high</b>  ·  1.09031  ·  19 Nov 09:20\n▫️ Mid low  ·  1.08831  ·  19 Nov 09:19\n📊 Hist: 1st 0.00387 | mid 0.003862 | 2nd 0.003863"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-19T07:54:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-19 11:24</b> Tehran\n🌍 Tokyo\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 2h 2m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 19 Nov 09:22\n🔺 <b>1st high</b>  ·  1.09008  ·  19 Nov 09:17\n🔺 <b>2nd high</b>  ·  1.09031  ·  19 Nov 09:20\n▫️ Mid low  ·  1.08831  ·  19 Nov 09:19\n📊 Hist: 1st 0.00387 | mid 0.003862 | 2nd 0.003863"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-19T10:28:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-19 13:58</b> Tehran\n🌍 London\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 19 Nov 13:40\n🔺 <b>1st high</b>  ·  1.08159  ·  19 Nov 13:10\n🔺 <b>2nd high</b>  ·  1.08267  ·  19 Nov 13:38\n▫️ Mid low  ·  1.08000  ·  19 Nov 13:34\n📊 Hist: 1st 0.002531 | mid 0.002146 | 2nd 0.002188"
+   },
+   {
+    "kind": "INVALID",
+    "s": -1,
+    "time": "2026-11-19T10:36:00+00:00",
+    "msg": "⚪ <b>CANCELLED · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-19 14:06</b> Tehran\n🌍 London\n❌ MACD (12,26,9) crossed above zero\nREADY was at 19 Nov 13:58\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 19 Nov 13:40\n🔺 <b>1st high</b>  ·  1.08159  ·  19 Nov 13:10\n🔺 <b>2nd high</b>  ·  1.08267  ·  19 Nov 13:38\n▫️ Mid low  ·  1.08000  ·  19 Nov 13:34\n📊 Hist: 1st 0.002531 | mid 0.002146 | 2nd 0.002188"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-19T16:39:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-19 20:09</b> Tehran\n🌍 London · New York (overlap)\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 19 Nov 19:43\n🔺 <b>1st high</b>  ·  1.09138  ·  19 Nov 19:36\n🔺 <b>2nd high</b>  ·  1.09149  ·  19 Nov 19:41\n▫️ Mid low  ·  1.09005  ·  19 Nov 19:39\n📊 Hist: 1st 0.003377 | mid 0.003344 | 2nd 0.003352"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-19T17:08:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-19 20:38</b> Tehran\n🌍 New York\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 55m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 19 Nov 19:43\n🔺 <b>1st high</b>  ·  1.09138  ·  19 Nov 19:36\n🔺 <b>2nd high</b>  ·  1.09149  ·  19 Nov 19:41\n▫️ Mid low  ·  1.09005  ·  19 Nov 19:39\n📊 Hist: 1st 0.003377 | mid 0.003344 | 2nd 0.003352"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-19T23:07:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-20 02:37</b> Tehran\n🌍 Sydney\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 20 Nov 02:07\n🔺 <b>1st high</b>  ·  1.09026  ·  20 Nov 01:57\n🔺 <b>2nd high</b>  ·  1.09097  ·  20 Nov 02:05\n▫️ Mid low  ·  1.08930  ·  20 Nov 02:04\n📊 Hist: 1st 0.005368 | mid 0.005283 | 2nd 0.005285"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-20T00:35:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-20 04:05</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 1h 58m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 20 Nov 02:07\n🔺 <b>1st high</b>  ·  1.09026  ·  20 Nov 01:57\n🔺 <b>2nd high</b>  ·  1.09097  ·  20 Nov 02:05\n▫️ Mid low  ·  1.08930  ·  20 Nov 02:04\n📊 Hist: 1st 0.005368 | mid 0.005283 | 2nd 0.005285"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-20T01:17:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-20 04:47</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 20 Nov 04:21\n🔻 <b>1st low</b>  ·  1.07037  ·  20 Nov 04:04\n🔻 <b>2nd low</b>  ·  1.06938  ·  20 Nov 04:19\n▫️ Mid high  ·  1.07170  ·  20 Nov 04:14\n📊 Hist: 1st -0.003336 | mid -0.003297 | 2nd -0.003317"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-20T01:28:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-20 04:58</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n⚡ Trigger: path 2 — back above zero\n⏱ Divergence → FIRE: 37m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 20 Nov 04:21\n🔻 <b>1st low</b>  ·  1.07037  ·  20 Nov 04:04\n🔻 <b>2nd low</b>  ·  1.06938  ·  20 Nov 04:19\n▫️ Mid high  ·  1.07170  ·  20 Nov 04:14\n📊 Hist: 1st -0.003336 | mid -0.003297 | 2nd -0.003317"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-20T11:52:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-20 15:22</b> Tehran\n🌍 London\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 20 Nov 15:10\n🔺 <b>1st high</b>  ·  1.08892  ·  20 Nov 14:25\n🔺 <b>2nd high</b>  ·  1.08923  ·  20 Nov 15:08\n▫️ Mid low  ·  1.08723  ·  20 Nov 15:06\n📊 Hist: 1st 0.002583 | mid 0.001818 | 2nd 0.001828"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-20T13:33:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-20 17:03</b> Tehran\n🌍 London · New York (overlap)\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 1h 53m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 20 Nov 15:10\n🔺 <b>1st high</b>  ·  1.08892  ·  20 Nov 14:25\n🔺 <b>2nd high</b>  ·  1.08923  ·  20 Nov 15:08\n▫️ Mid low  ·  1.08723  ·  20 Nov 15:06\n📊 Hist: 1st 0.002583 | mid 0.001818 | 2nd 0.001828"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-21T00:00:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-21 03:30</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 21 Nov 03:14\n🔻 <b>1st low</b>  ·  1.06565  ·  21 Nov 03:09\n🔻 <b>2nd low</b>  ·  1.06551  ·  21 Nov 03:12\n▫️ Mid high  ·  1.06735  ·  21 Nov 03:10\n📊 Hist: 1st -0.004187 | mid -0.004183 | 2nd -0.004184"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-21T00:26:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-21 03:56</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 2 — back above zero\n⏱ Divergence → FIRE: 42m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 21 Nov 03:14\n🔻 <b>1st low</b>  ·  1.06565  ·  21 Nov 03:09\n🔻 <b>2nd low</b>  ·  1.06551  ·  21 Nov 03:12\n▫️ Mid high  ·  1.06735  ·  21 Nov 03:10\n📊 Hist: 1st -0.004187 | mid -0.004183 | 2nd -0.004184"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-21T04:08:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-21 07:38</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 21 Nov 07:17\n🔺 <b>1st high</b>  ·  1.08286  ·  21 Nov 07:04\n🔺 <b>2nd high</b>  ·  1.08347  ·  21 Nov 07:15\n▫️ Mid low  ·  1.08143  ·  21 Nov 07:12\n📊 Hist: 1st 0.003465 | mid 0.003409 | 2nd 0.003421"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-21T04:15:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-21 07:45</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 28m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 21 Nov 07:17\n🔺 <b>1st high</b>  ·  1.08286  ·  21 Nov 07:04\n🔺 <b>2nd high</b>  ·  1.08347  ·  21 Nov 07:15\n▫️ Mid low  ·  1.08143  ·  21 Nov 07:12\n📊 Hist: 1st 0.003465 | mid 0.003409 | 2nd 0.003421"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-21T08:36:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-21 12:06</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 21 Nov 11:44\n🔺 <b>1st high</b>  ·  1.07680  ·  21 Nov 11:27\n🔺 <b>2nd high</b>  ·  1.07842  ·  21 Nov 11:42\n▫️ Mid low  ·  1.07540  ·  21 Nov 11:34\n📊 Hist: 1st 0.00334 | mid 0.003258 | 2nd 0.00331"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-21T08:46:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-21 12:16</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 32m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 21 Nov 11:44\n🔺 <b>1st high</b>  ·  1.07680  ·  21 Nov 11:27\n🔺 <b>2nd high</b>  ·  1.07842  ·  21 Nov 11:42\n▫️ Mid low  ·  1.07540  ·  21 Nov 11:34\n📊 Hist: 1st 0.00334 | mid 0.003258 | 2nd 0.00331"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-22T01:06:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-22 04:36</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 22 Nov 04:13\n🔻 <b>1st low</b>  ·  1.06748  ·  22 Nov 02:05\n🔻 <b>2nd low</b>  ·  1.06675  ·  22 Nov 04:11\n▫️ Mid high  ·  1.07025  ·  22 Nov 03:37\n📊 Hist: 1st -0.003393 | mid -0.0006406 | 2nd -0.0008296"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-22T01:14:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-22 04:44</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 31m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 22 Nov 04:13\n🔻 <b>1st low</b>  ·  1.06748  ·  22 Nov 02:05\n🔻 <b>2nd low</b>  ·  1.06675  ·  22 Nov 04:11\n▫️ Mid high  ·  1.07025  ·  22 Nov 03:37\n📊 Hist: 1st -0.003393 | mid -0.0006406 | 2nd -0.0008296"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-22T09:28:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-22 12:58</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 22 Nov 12:11\n🔺 <b>1st high</b>  ·  1.08252  ·  22 Nov 10:32\n🔺 <b>2nd high</b>  ·  1.08286  ·  22 Nov 12:09\n▫️ Mid low  ·  1.08020  ·  22 Nov 12:08\n📊 Hist: 1st 0.004154 | mid 0.00102 | 2nd 0.001024"
+   },
+   {
+    "kind": "INVALID",
+    "s": -1,
+    "time": "2026-11-22T09:29:00+00:00",
+    "msg": "⚪ <b>CANCELLED · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-22 12:59</b> Tehran\n🌍 Weekend\n❌ Price broke above the 2nd high (1.08286)\nREADY was at 22 Nov 12:58\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 22 Nov 12:11\n🔺 <b>1st high</b>  ·  1.08252  ·  22 Nov 10:32\n🔺 <b>2nd high</b>  ·  1.08286  ·  22 Nov 12:09\n▫️ Mid low  ·  1.08020  ·  22 Nov 12:08\n📊 Hist: 1st 0.004154 | mid 0.00102 | 2nd 0.001024"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-23T02:10:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-23 05:40</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 23 Nov 05:27\n🔺 <b>1st high</b>  ·  1.07840  ·  23 Nov 05:13\n🔺 <b>2nd high</b>  ·  1.07876  ·  23 Nov 05:25\n▫️ Mid low  ·  1.07693  ·  23 Nov 05:21\n📊 Hist: 1st 0.002597 | mid 0.002513 | 2nd 0.002534"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-23T04:08:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-23 07:38</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 2h 11m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 23 Nov 05:27\n🔺 <b>1st high</b>  ·  1.07840  ·  23 Nov 05:13\n🔺 <b>2nd high</b>  ·  1.07876  ·  23 Nov 05:25\n▫️ Mid low  ·  1.07693  ·  23 Nov 05:21\n📊 Hist: 1st 0.002597 | mid 0.002513 | 2nd 0.002534"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-23T06:57:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-23 10:27</b> Tehran\n🌍 Tokyo\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 23 Nov 09:50\n🔺 <b>1st high</b>  ·  1.06400  ·  23 Nov 09:34\n🔺 <b>2nd high</b>  ·  1.06497  ·  23 Nov 09:48\n▫️ Mid low  ·  1.06285  ·  23 Nov 09:43\n📊 Hist: 1st 0.002847 | mid 0.002757 | 2nd 0.002793"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-23T07:13:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-23 10:43</b> Tehran\n🌍 Tokyo\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 53m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 23 Nov 09:50\n🔺 <b>1st high</b>  ·  1.06400  ·  23 Nov 09:34\n🔺 <b>2nd high</b>  ·  1.06497  ·  23 Nov 09:48\n▫️ Mid low  ·  1.06285  ·  23 Nov 09:43\n📊 Hist: 1st 0.002847 | mid 0.002757 | 2nd 0.002793"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-23T15:12:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-23 18:42</b> Tehran\n🌍 London · New York (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 23 Nov 18:31\n🔻 <b>1st low</b>  ·  1.05752  ·  23 Nov 18:04\n🔻 <b>2nd low</b>  ·  1.05710  ·  23 Nov 18:29\n▫️ Mid high  ·  1.05973  ·  23 Nov 18:18\n📊 Hist: 1st -0.00161 | mid -0.001416 | 2nd -0.001468"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-23T15:20:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-23 18:50</b> Tehran\n🌍 London · New York (overlap)\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 19m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 23 Nov 18:31\n🔻 <b>1st low</b>  ·  1.05752  ·  23 Nov 18:04\n🔻 <b>2nd low</b>  ·  1.05710  ·  23 Nov 18:29\n▫️ Mid high  ·  1.05973  ·  23 Nov 18:18\n📊 Hist: 1st -0.00161 | mid -0.001416 | 2nd -0.001468"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-24T05:20:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-24 08:50</b> Tehran\n🌍 Tokyo\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 24 Nov 08:28\n🔺 <b>1st high</b>  ·  1.07768  ·  24 Nov 08:22\n🔺 <b>2nd high</b>  ·  1.07803  ·  24 Nov 08:26\n▫️ Mid low  ·  1.07643  ·  24 Nov 08:24\n📊 Hist: 1st 0.003975 | mid 0.003958 | 2nd 0.003963"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-24T05:25:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-24 08:55</b> Tehran\n🌍 Tokyo\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 27m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 24 Nov 08:28\n🔺 <b>1st high</b>  ·  1.07768  ·  24 Nov 08:22\n🔺 <b>2nd high</b>  ·  1.07803  ·  24 Nov 08:26\n▫️ Mid low  ·  1.07643  ·  24 Nov 08:24\n📊 Hist: 1st 0.003975 | mid 0.003958 | 2nd 0.003963"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-24T11:54:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-24 15:24</b> Tehran\n🌍 London\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 24 Nov 15:02\n🔺 <b>1st high</b>  ·  1.08645  ·  24 Nov 14:58\n🔺 <b>2nd high</b>  ·  1.08656  ·  24 Nov 15:00\n▫️ Mid low  ·  1.08483  ·  24 Nov 14:59\n📊 Hist: 1st 0.005351 | mid 0.005343 | 2nd 0.005345"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-24T12:23:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-24 15:53</b> Tehran\n🌍 London\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 51m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 24 Nov 15:02\n🔺 <b>1st high</b>  ·  1.08645  ·  24 Nov 14:58\n🔺 <b>2nd high</b>  ·  1.08656  ·  24 Nov 15:00\n▫️ Mid low  ·  1.08483  ·  24 Nov 14:59\n📊 Hist: 1st 0.005351 | mid 0.005343 | 2nd 0.005345"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-24T15:52:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-24 19:22</b> Tehran\n🌍 London · New York (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 24 Nov 18:06\n🔻 <b>1st low</b>  ·  1.06741  ·  24 Nov 17:22\n🔻 <b>2nd low</b>  ·  1.06586  ·  24 Nov 18:04\n▫️ Mid high  ·  1.06829  ·  24 Nov 18:01\n📊 Hist: 1st -0.002736 | mid -0.00203 | 2nd -0.002044"
+   },
+   {
+    "kind": "INVALID",
+    "s": 1,
+    "time": "2026-11-24T15:53:00+00:00",
+    "msg": "⚪ <b>CANCELLED · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-24 19:23</b> Tehran\n🌍 London · New York (overlap)\n❌ Price broke below the 2nd low (1.06586)\nREADY was at 24 Nov 19:22\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 24 Nov 18:06\n🔻 <b>1st low</b>  ·  1.06741  ·  24 Nov 17:22\n🔻 <b>2nd low</b>  ·  1.06586  ·  24 Nov 18:04\n▫️ Mid high  ·  1.06829  ·  24 Nov 18:01\n📊 Hist: 1st -0.002736 | mid -0.00203 | 2nd -0.002044"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-24T20:20:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-24 23:50</b> Tehran\n🌍 Sydney · New York (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 24 Nov 23:19\n🔻 <b>1st low</b>  ·  1.06278  ·  24 Nov 23:09\n🔻 <b>2nd low</b>  ·  1.06184  ·  24 Nov 23:17\n▫️ Mid high  ·  1.06386  ·  24 Nov 23:14\n📊 Hist: 1st -0.003701 | mid -0.003653 | 2nd -0.00367"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-24T20:41:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-25 00:11</b> Tehran\n🌍 Sydney · New York (overlap)\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 52m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 24 Nov 23:19\n🔻 <b>1st low</b>  ·  1.06278  ·  24 Nov 23:09\n🔻 <b>2nd low</b>  ·  1.06184  ·  24 Nov 23:17\n▫️ Mid high  ·  1.06386  ·  24 Nov 23:14\n📊 Hist: 1st -0.003701 | mid -0.003653 | 2nd -0.00367"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-25T00:11:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-25 03:41</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 25 Nov 03:27\n🔺 <b>1st high</b>  ·  1.07503  ·  25 Nov 03:13\n🔺 <b>2nd high</b>  ·  1.07545  ·  25 Nov 03:25\n▫️ Mid low  ·  1.07319  ·  25 Nov 03:21\n📊 Hist: 1st 0.001602 | mid 0.00155 | 2nd 0.001573"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-25T00:23:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-25 03:53</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 26m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 25 Nov 03:27\n🔺 <b>1st high</b>  ·  1.07503  ·  25 Nov 03:13\n🔺 <b>2nd high</b>  ·  1.07545  ·  25 Nov 03:25\n▫️ Mid low  ·  1.07319  ·  25 Nov 03:21\n📊 Hist: 1st 0.001602 | mid 0.00155 | 2nd 0.001573"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-25T02:32:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-25 06:02</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 25 Nov 05:40\n🔻 <b>1st low</b>  ·  1.04583  ·  25 Nov 05:30\n🔻 <b>2nd low</b>  ·  1.04485  ·  25 Nov 05:38\n▫️ Mid high  ·  1.04701  ·  25 Nov 05:36\n📊 Hist: 1st -0.005911 | mid -0.005878 | 2nd -0.005893"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-25T04:00:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-25 07:30</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 1h 50m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 25 Nov 05:40\n🔻 <b>1st low</b>  ·  1.04583  ·  25 Nov 05:30\n🔻 <b>2nd low</b>  ·  1.04485  ·  25 Nov 05:38\n▫️ Mid high  ·  1.04701  ·  25 Nov 05:36\n📊 Hist: 1st -0.005911 | mid -0.005878 | 2nd -0.005893"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-25T13:08:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-25 16:38</b> Tehran\n🌍 London · New York (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 25 Nov 16:19\n🔻 <b>1st low</b>  ·  1.05008  ·  25 Nov 15:46\n🔻 <b>2nd low</b>  ·  1.04700  ·  25 Nov 16:17\n▫️ Mid high  ·  1.05090  ·  25 Nov 16:02\n📊 Hist: 1st -0.00318 | mid -0.002985 | 2nd -0.003103"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-25T13:12:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-25 16:42</b> Tehran\n🌍 London · New York (overlap)\n⚡ Trigger: path 2 — back above zero\n⏱ Divergence → FIRE: 23m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 25 Nov 16:19\n🔻 <b>1st low</b>  ·  1.05008  ·  25 Nov 15:46\n🔻 <b>2nd low</b>  ·  1.04700  ·  25 Nov 16:17\n▫️ Mid high  ·  1.05090  ·  25 Nov 16:02\n📊 Hist: 1st -0.00318 | mid -0.002985 | 2nd -0.003103"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-25T17:18:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-25 20:48</b> Tehran\n🌍 New York\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 25 Nov 20:32\n🔺 <b>1st high</b>  ·  1.06503  ·  25 Nov 20:20\n🔺 <b>2nd high</b>  ·  1.06602  ·  25 Nov 20:30\n▫️ Mid low  ·  1.06404  ·  25 Nov 20:29\n📊 Hist: 1st 0.004252 | mid 0.00421 | 2nd 0.004212"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-25T18:32:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-25 22:02</b> Tehran\n🌍 New York\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 1h 30m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 25 Nov 20:32\n🔺 <b>1st high</b>  ·  1.06503  ·  25 Nov 20:20\n🔺 <b>2nd high</b>  ·  1.06602  ·  25 Nov 20:30\n▫️ Mid low  ·  1.06404  ·  25 Nov 20:29\n📊 Hist: 1st 0.004252 | mid 0.00421 | 2nd 0.004212"
+   }
+  ],
+  "last_fire": {
+   "t": "2026-11-25T18:32:00+00:00",
+   "d": -1,
+   "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇪🇺🇺🇸 EURUSD</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-25 22:02</b> Tehran\n🌍 New York\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 1h 30m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 25 Nov 20:32\n🔺 <b>1st high</b>  ·  1.06503  ·  25 Nov 20:20\n🔺 <b>2nd high</b>  ·  1.06602  ·  25 Nov 20:30\n▫️ Mid low  ·  1.06404  ·  25 Nov 20:29\n📊 Hist: 1st 0.004252 | mid 0.00421 | 2nd 0.004212"
+  }
+ },
+ "USDJPY": {
+  "events": [
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-13T03:43:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-13 07:13</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 13 Nov 06:53\n🔻 <b>1st low</b>  ·  152.279  ·  13 Nov 06:33\n🔻 <b>2nd low</b>  ·  152.167  ·  13 Nov 06:51\n▫️ Mid high  ·  152.488  ·  13 Nov 06:49\n📊 Hist: 1st -0.6273 | mid -0.5815 | 2nd -0.5824"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-13T05:17:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-13 08:47</b> Tehran\n🌍 Tokyo\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 1h 54m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 13 Nov 06:53\n🔻 <b>1st low</b>  ·  152.279  ·  13 Nov 06:33\n🔻 <b>2nd low</b>  ·  152.167  ·  13 Nov 06:51\n▫️ Mid high  ·  152.488  ·  13 Nov 06:49\n📊 Hist: 1st -0.6273 | mid -0.5815 | 2nd -0.5824"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-13T09:52:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-13 13:22</b> Tehran\n🌍 London\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 13 Nov 12:57\n🔻 <b>1st low</b>  ·  152.389  ·  13 Nov 12:40\n🔻 <b>2nd low</b>  ·  152.196  ·  13 Nov 12:55\n▫️ Mid high  ·  152.600  ·  13 Nov 12:51\n📊 Hist: 1st -0.4836 | mid -0.4672 | 2nd -0.4736"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-13T11:47:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-13 15:17</b> Tehran\n🌍 London\n⚡ Trigger: path 2 — back above zero\n⏱ Divergence → FIRE: 2h 20m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 13 Nov 12:57\n🔻 <b>1st low</b>  ·  152.389  ·  13 Nov 12:40\n🔻 <b>2nd low</b>  ·  152.196  ·  13 Nov 12:55\n▫️ Mid high  ·  152.600  ·  13 Nov 12:51\n📊 Hist: 1st -0.4836 | mid -0.4672 | 2nd -0.4736"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-13T11:59:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-13 15:29</b> Tehran\n🌍 London\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 13 Nov 15:10\n🔺 <b>1st high</b>  ·  155.997  ·  13 Nov 15:02\n🔺 <b>2nd high</b>  ·  156.152  ·  13 Nov 15:08\n▫️ Mid low  ·  155.825  ·  13 Nov 15:06\n📊 Hist: 1st 0.6743 | mid 0.6706 | 2nd 0.671"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-13T12:12:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-13 15:42</b> Tehran\n🌍 London\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 32m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 13 Nov 15:10\n🔺 <b>1st high</b>  ·  155.997  ·  13 Nov 15:02\n🔺 <b>2nd high</b>  ·  156.152  ·  13 Nov 15:08\n▫️ Mid low  ·  155.825  ·  13 Nov 15:06\n📊 Hist: 1st 0.6743 | mid 0.6706 | 2nd 0.671"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-13T22:43:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-14 02:13</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 14 Nov 01:52\n🔺 <b>1st high</b>  ·  155.593  ·  14 Nov 01:39\n🔺 <b>2nd high</b>  ·  155.698  ·  14 Nov 01:50\n▫️ Mid low  ·  155.409  ·  14 Nov 01:48\n📊 Hist: 1st 0.3315 | mid 0.3193 | 2nd 0.3205"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-13T22:53:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-14 02:23</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 31m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 14 Nov 01:52\n🔺 <b>1st high</b>  ·  155.593  ·  14 Nov 01:39\n🔺 <b>2nd high</b>  ·  155.698  ·  14 Nov 01:50\n▫️ Mid low  ·  155.409  ·  14 Nov 01:48\n📊 Hist: 1st 0.3315 | mid 0.3193 | 2nd 0.3205"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-14T21:18:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-15 00:48</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 15 Nov 00:41\n🔺 <b>1st high</b>  ·  152.210  ·  15 Nov 00:22\n🔺 <b>2nd high</b>  ·  152.336  ·  15 Nov 00:39\n▫️ Mid low  ·  152.024  ·  15 Nov 00:34\n📊 Hist: 1st 0.1982 | mid 0.186 | 2nd 0.1906"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-14T21:21:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-15 00:51</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 10m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 15 Nov 00:41\n🔺 <b>1st high</b>  ·  152.210  ·  15 Nov 00:22\n🔺 <b>2nd high</b>  ·  152.336  ·  15 Nov 00:39\n▫️ Mid low  ·  152.024  ·  15 Nov 00:34\n📊 Hist: 1st 0.1982 | mid 0.186 | 2nd 0.1906"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-15T07:55:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-15 11:25</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 15 Nov 11:03\n🔻 <b>1st low</b>  ·  152.250  ·  15 Nov 10:53\n🔻 <b>2nd low</b>  ·  152.178  ·  15 Nov 11:01\n▫️ Mid high  ·  152.406  ·  15 Nov 10:59\n📊 Hist: 1st -0.3068 | mid -0.3035 | 2nd -0.3047"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-15T08:35:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-15 12:05</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 1h 2m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 15 Nov 11:03\n🔻 <b>1st low</b>  ·  152.250  ·  15 Nov 10:53\n🔻 <b>2nd low</b>  ·  152.178  ·  15 Nov 11:01\n▫️ Mid high  ·  152.406  ·  15 Nov 10:59\n📊 Hist: 1st -0.3068 | mid -0.3035 | 2nd -0.3047"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-15T12:06:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-15 15:36</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 15 Nov 15:19\n🔻 <b>1st low</b>  ·  152.710  ·  15 Nov 15:12\n🔻 <b>2nd low</b>  ·  152.673  ·  15 Nov 15:17\n▫️ Mid high  ·  152.881  ·  15 Nov 15:15\n📊 Hist: 1st -0.4234 | mid -0.4216 | 2nd -0.4225"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-15T12:27:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-15 15:57</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 2 — back above zero\n⏱ Divergence → FIRE: 38m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 15 Nov 15:19\n🔻 <b>1st low</b>  ·  152.710  ·  15 Nov 15:12\n🔻 <b>2nd low</b>  ·  152.673  ·  15 Nov 15:17\n▫️ Mid high  ·  152.881  ·  15 Nov 15:15\n📊 Hist: 1st -0.4234 | mid -0.4216 | 2nd -0.4225"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-15T20:34:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-16 00:04</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 15 Nov 23:46\n🔺 <b>1st high</b>  ·  154.653  ·  15 Nov 23:31\n🔺 <b>2nd high</b>  ·  154.747  ·  15 Nov 23:44\n▫️ Mid low  ·  154.427  ·  15 Nov 23:38\n📊 Hist: 1st 0.4607 | mid 0.4554 | 2nd 0.4597"
+   },
+   {
+    "kind": "INVALID",
+    "s": -1,
+    "time": "2026-11-15T20:45:00+00:00",
+    "msg": "⚪ <b>CANCELLED · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-16 00:15</b> Tehran\n🌍 Weekend\n❌ MACD (12,26,9) crossed above zero\nREADY was at 16 Nov 00:04\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 15 Nov 23:46\n🔺 <b>1st high</b>  ·  154.653  ·  15 Nov 23:31\n🔺 <b>2nd high</b>  ·  154.747  ·  15 Nov 23:44\n▫️ Mid low  ·  154.427  ·  15 Nov 23:38\n📊 Hist: 1st 0.4607 | mid 0.4554 | 2nd 0.4597"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-16T04:35:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-16 08:05</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 16 Nov 07:58\n🔻 <b>1st low</b>  ·  154.127  ·  16 Nov 07:43\n🔻 <b>2nd low</b>  ·  154.108  ·  16 Nov 07:56\n▫️ Mid high  ·  154.300  ·  16 Nov 07:55\n📊 Hist: 1st -0.286 | mid -0.276 | 2nd -0.2761"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-16T04:42:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-16 08:12</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 14m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 16 Nov 07:58\n🔻 <b>1st low</b>  ·  154.127  ·  16 Nov 07:43\n🔻 <b>2nd low</b>  ·  154.108  ·  16 Nov 07:56\n▫️ Mid high  ·  154.300  ·  16 Nov 07:55\n📊 Hist: 1st -0.286 | mid -0.276 | 2nd -0.2761"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-17T10:21:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-17 13:51</b> Tehran\n🌍 London\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 17 Nov 13:20\n🔻 <b>1st low</b>  ·  151.137  ·  17 Nov 13:04\n🔻 <b>2nd low</b>  ·  151.014  ·  17 Nov 13:18\n▫️ Mid high  ·  151.347  ·  17 Nov 13:17\n📊 Hist: 1st -0.6535 | mid -0.6359 | 2nd -0.6368"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-17T10:55:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-17 14:25</b> Tehran\n🌍 London\n⚡ Trigger: path 2 — back above zero\n⏱ Divergence → FIRE: 1h 5m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 17 Nov 13:20\n🔻 <b>1st low</b>  ·  151.137  ·  17 Nov 13:04\n🔻 <b>2nd low</b>  ·  151.014  ·  17 Nov 13:18\n▫️ Mid high  ·  151.347  ·  17 Nov 13:17\n📊 Hist: 1st -0.6535 | mid -0.6359 | 2nd -0.6368"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-17T18:41:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-17 22:11</b> Tehran\n🌍 New York\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 17 Nov 21:51\n🔺 <b>1st high</b>  ·  153.810  ·  17 Nov 21:43\n🔺 <b>2nd high</b>  ·  153.839  ·  17 Nov 21:49\n▫️ Mid low  ·  153.636  ·  17 Nov 21:48\n📊 Hist: 1st 0.4651 | mid 0.4586 | 2nd 0.4592"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-17T18:49:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-17 22:19</b> Tehran\n🌍 New York\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 28m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 17 Nov 21:51\n🔺 <b>1st high</b>  ·  153.810  ·  17 Nov 21:43\n🔺 <b>2nd high</b>  ·  153.839  ·  17 Nov 21:49\n▫️ Mid low  ·  153.636  ·  17 Nov 21:48\n📊 Hist: 1st 0.4651 | mid 0.4586 | 2nd 0.4592"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-18T00:49:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-18 04:19</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 18 Nov 03:48\n🔺 <b>1st high</b>  ·  154.809  ·  18 Nov 03:43\n🔺 <b>2nd high</b>  ·  154.837  ·  18 Nov 03:46\n▫️ Mid low  ·  154.624  ·  18 Nov 03:45\n📊 Hist: 1st 0.706 | mid 0.7046 | 2nd 0.7049"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-18T02:01:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-18 05:31</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 1h 43m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 18 Nov 03:48\n🔺 <b>1st high</b>  ·  154.809  ·  18 Nov 03:43\n🔺 <b>2nd high</b>  ·  154.837  ·  18 Nov 03:46\n▫️ Mid low  ·  154.624  ·  18 Nov 03:45\n📊 Hist: 1st 0.706 | mid 0.7046 | 2nd 0.7049"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-18T02:35:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-18 06:05</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 18 Nov 05:54\n🔻 <b>1st low</b>  ·  152.395  ·  18 Nov 05:44\n🔻 <b>2nd low</b>  ·  152.382  ·  18 Nov 05:52\n▫️ Mid high  ·  152.605  ·  18 Nov 05:51\n📊 Hist: 1st -0.3913 | mid -0.3828 | 2nd -0.383"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-18T02:42:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-18 06:12</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 18m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 18 Nov 05:54\n🔻 <b>1st low</b>  ·  152.395  ·  18 Nov 05:44\n🔻 <b>2nd low</b>  ·  152.382  ·  18 Nov 05:52\n▫️ Mid high  ·  152.605  ·  18 Nov 05:51\n📊 Hist: 1st -0.3913 | mid -0.3828 | 2nd -0.383"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-18T07:16:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-18 10:46</b> Tehran\n🌍 Tokyo\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 18 Nov 10:21\n🔺 <b>1st high</b>  ·  154.633  ·  18 Nov 10:15\n🔺 <b>2nd high</b>  ·  154.637  ·  18 Nov 10:19\n▫️ Mid low  ·  154.419  ·  18 Nov 10:18\n📊 Hist: 1st 0.4505 | mid 0.4474 | 2nd 0.4478"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-18T07:19:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-18 10:49</b> Tehran\n🌍 Tokyo\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 28m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 18 Nov 10:21\n🔺 <b>1st high</b>  ·  154.633  ·  18 Nov 10:15\n🔺 <b>2nd high</b>  ·  154.637  ·  18 Nov 10:19\n▫️ Mid low  ·  154.419  ·  18 Nov 10:18\n📊 Hist: 1st 0.4505 | mid 0.4474 | 2nd 0.4478"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-18T11:05:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-18 14:35</b> Tehran\n🌍 London\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 18 Nov 14:26\n🔺 <b>1st high</b>  ·  153.187  ·  18 Nov 14:15\n🔺 <b>2nd high</b>  ·  153.216  ·  18 Nov 14:24\n▫️ Mid low  ·  153.043  ·  18 Nov 14:21\n📊 Hist: 1st 0.1476 | mid 0.1432 | 2nd 0.1453"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-18T11:12:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-18 14:42</b> Tehran\n🌍 London\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 16m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 18 Nov 14:26\n🔺 <b>1st high</b>  ·  153.187  ·  18 Nov 14:15\n🔺 <b>2nd high</b>  ·  153.216  ·  18 Nov 14:24\n▫️ Mid low  ·  153.043  ·  18 Nov 14:21\n📊 Hist: 1st 0.1476 | mid 0.1432 | 2nd 0.1453"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-18T15:42:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-18 19:12</b> Tehran\n🌍 London · New York (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 18 Nov 18:43\n🔻 <b>1st low</b>  ·  150.856  ·  18 Nov 18:24\n🔻 <b>2nd low</b>  ·  150.638  ·  18 Nov 18:41\n▫️ Mid high  ·  151.045  ·  18 Nov 18:40\n📊 Hist: 1st -0.6723 | mid -0.6295 | 2nd -0.6299"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-18T17:03:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-18 20:33</b> Tehran\n🌍 New York\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 1h 50m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 18 Nov 18:43\n🔻 <b>1st low</b>  ·  150.856  ·  18 Nov 18:24\n🔻 <b>2nd low</b>  ·  150.638  ·  18 Nov 18:41\n▫️ Mid high  ·  151.045  ·  18 Nov 18:40\n📊 Hist: 1st -0.6723 | mid -0.6295 | 2nd -0.6299"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-18T23:47:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-19 03:17</b> Tehran\n🌍 Sydney\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 19 Nov 02:50\n🔺 <b>1st high</b>  ·  153.228  ·  19 Nov 02:40\n🔺 <b>2nd high</b>  ·  153.262  ·  19 Nov 02:48\n▫️ Mid low  ·  152.988  ·  19 Nov 02:45\n📊 Hist: 1st 0.6248 | mid 0.6192 | 2nd 0.6205"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-18T23:53:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-19 03:23</b> Tehran\n🌍 Sydney\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 33m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 19 Nov 02:50\n🔺 <b>1st high</b>  ·  153.228  ·  19 Nov 02:40\n🔺 <b>2nd high</b>  ·  153.262  ·  19 Nov 02:48\n▫️ Mid low  ·  152.988  ·  19 Nov 02:45\n📊 Hist: 1st 0.6248 | mid 0.6192 | 2nd 0.6205"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-19T02:10:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-19 05:40</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 19 Nov 05:29\n🔻 <b>1st low</b>  ·  151.017  ·  19 Nov 04:52\n🔻 <b>2nd low</b>  ·  150.656  ·  19 Nov 05:27\n▫️ Mid high  ·  151.140  ·  19 Nov 05:14\n📊 Hist: 1st -0.3446 | mid -0.2999 | 2nd -0.325"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-19T02:40:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-19 06:10</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 41m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 19 Nov 05:29\n🔻 <b>1st low</b>  ·  151.017  ·  19 Nov 04:52\n🔻 <b>2nd low</b>  ·  150.656  ·  19 Nov 05:27\n▫️ Mid high  ·  151.140  ·  19 Nov 05:14\n📊 Hist: 1st -0.3446 | mid -0.2999 | 2nd -0.325"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-19T10:34:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-19 14:04</b> Tehran\n🌍 London\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 19 Nov 13:53\n🔺 <b>1st high</b>  ·  153.261  ·  19 Nov 13:38\n🔺 <b>2nd high</b>  ·  153.343  ·  19 Nov 13:51\n▫️ Mid low  ·  153.067  ·  19 Nov 13:46\n📊 Hist: 1st 0.2882 | mid 0.2777 | 2nd 0.2808"
+   },
+   {
+    "kind": "INVALID",
+    "s": -1,
+    "time": "2026-11-19T10:37:00+00:00",
+    "msg": "⚪ <b>CANCELLED · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-19 14:07</b> Tehran\n🌍 London\n❌ MACD (12,26,9) crossed above zero\nREADY was at 19 Nov 14:04\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 19 Nov 13:53\n🔺 <b>1st high</b>  ·  153.261  ·  19 Nov 13:38\n🔺 <b>2nd high</b>  ·  153.343  ·  19 Nov 13:51\n▫️ Mid low  ·  153.067  ·  19 Nov 13:46\n📊 Hist: 1st 0.2882 | mid 0.2777 | 2nd 0.2808"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-19T14:35:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-19 18:05</b> Tehran\n🌍 London · New York (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 19 Nov 17:46\n🔻 <b>1st low</b>  ·  151.046  ·  19 Nov 17:39\n🔻 <b>2nd low</b>  ·  150.990  ·  19 Nov 17:44\n▫️ Mid high  ·  151.150  ·  19 Nov 17:43\n📊 Hist: 1st -0.6274 | mid -0.6238 | 2nd -0.6242"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-19T15:57:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-19 19:27</b> Tehran\n🌍 London · New York (overlap)\n⚡ Trigger: path 2 — back above zero\n⏱ Divergence → FIRE: 1h 41m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 19 Nov 17:46\n🔻 <b>1st low</b>  ·  151.046  ·  19 Nov 17:39\n🔻 <b>2nd low</b>  ·  150.990  ·  19 Nov 17:44\n▫️ Mid high  ·  151.150  ·  19 Nov 17:43\n📊 Hist: 1st -0.6274 | mid -0.6238 | 2nd -0.6242"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-19T16:50:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-19 20:20</b> Tehran\n🌍 London · New York (overlap)\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 19 Nov 19:43\n🔺 <b>1st high</b>  ·  153.962  ·  19 Nov 19:33\n🔺 <b>2nd high</b>  ·  153.999  ·  19 Nov 19:41\n▫️ Mid low  ·  153.766  ·  19 Nov 19:39\n📊 Hist: 1st 0.4955 | mid 0.487 | 2nd 0.4872"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-19T17:12:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-19 20:42</b> Tehran\n🌍 New York\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 59m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 19 Nov 19:43\n🔺 <b>1st high</b>  ·  153.962  ·  19 Nov 19:33\n🔺 <b>2nd high</b>  ·  153.999  ·  19 Nov 19:41\n▫️ Mid low  ·  153.766  ·  19 Nov 19:39\n📊 Hist: 1st 0.4955 | mid 0.487 | 2nd 0.4872"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-20T03:06:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-20 06:36</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 20 Nov 05:52\n🔻 <b>1st low</b>  ·  151.939  ·  20 Nov 03:53\n🔻 <b>2nd low</b>  ·  151.937  ·  20 Nov 05:50\n▫️ Mid high  ·  152.167  ·  20 Nov 05:42\n📊 Hist: 1st -0.6337 | mid -0.1121 | 2nd -0.1144"
+   },
+   {
+    "kind": "INVALID",
+    "s": 1,
+    "time": "2026-11-20T03:12:00+00:00",
+    "msg": "⚪ <b>CANCELLED · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-20 06:42</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n❌ Price broke below the 2nd low (151.937)\nREADY was at 20 Nov 06:36\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 20 Nov 05:52\n🔻 <b>1st low</b>  ·  151.939  ·  20 Nov 03:53\n🔻 <b>2nd low</b>  ·  151.937  ·  20 Nov 05:50\n▫️ Mid high  ·  152.167  ·  20 Nov 05:42\n📊 Hist: 1st -0.6337 | mid -0.1121 | 2nd -0.1144"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-20T09:22:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-20 12:52</b> Tehran\n🌍 London\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 20 Nov 12:41\n🔺 <b>1st high</b>  ·  152.395  ·  20 Nov 12:24\n🔺 <b>2nd high</b>  ·  152.403  ·  20 Nov 12:39\n▫️ Mid low  ·  152.192  ·  20 Nov 12:38\n📊 Hist: 1st 0.2712 | mid 0.2535 | 2nd 0.254"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-20T09:32:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-20 13:02</b> Tehran\n🌍 London\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 21m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 20 Nov 12:41\n🔺 <b>1st high</b>  ·  152.395  ·  20 Nov 12:24\n🔺 <b>2nd high</b>  ·  152.403  ·  20 Nov 12:39\n▫️ Mid low  ·  152.192  ·  20 Nov 12:38\n📊 Hist: 1st 0.2712 | mid 0.2535 | 2nd 0.254"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-21T00:52:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-21 04:22</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 21 Nov 04:14\n🔻 <b>1st low</b>  ·  154.341  ·  21 Nov 03:15\n🔻 <b>2nd low</b>  ·  154.288  ·  21 Nov 04:12\n▫️ Mid high  ·  154.591  ·  21 Nov 04:09\n📊 Hist: 1st -0.275 | mid -0.1355 | 2nd -0.137"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-21T01:11:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-21 04:41</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 27m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 21 Nov 04:14\n🔻 <b>1st low</b>  ·  154.341  ·  21 Nov 03:15\n🔻 <b>2nd low</b>  ·  154.288  ·  21 Nov 04:12\n▫️ Mid high  ·  154.591  ·  21 Nov 04:09\n📊 Hist: 1st -0.275 | mid -0.1355 | 2nd -0.137"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-21T10:24:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-21 13:54</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 21 Nov 12:57\n🔺 <b>1st high</b>  ·  158.805  ·  21 Nov 11:29\n🔺 <b>2nd high</b>  ·  159.074  ·  21 Nov 12:55\n▫️ Mid low  ·  158.578  ·  21 Nov 12:49\n📊 Hist: 1st 0.6269 | mid 0.2461 | 2nd 0.2534"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-21T10:47:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>  ⭐ <b>STRONG</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-21 14:17</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 1h 20m\n📈 M5 divergence confirmed: 21 Nov 08:20\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 21 Nov 12:57\n🔺 <b>1st high</b>  ·  158.805  ·  21 Nov 11:29\n🔺 <b>2nd high</b>  ·  159.074  ·  21 Nov 12:55\n▫️ Mid low  ·  158.578  ·  21 Nov 12:49\n📊 Hist: 1st 0.6269 | mid 0.2461 | 2nd 0.2534"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-22T03:16:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-22 06:46</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 22 Nov 06:31\n🔺 <b>1st high</b>  ·  159.480  ·  22 Nov 06:13\n🔺 <b>2nd high</b>  ·  159.771  ·  22 Nov 06:29\n▫️ Mid low  ·  159.271  ·  22 Nov 06:22\n📊 Hist: 1st 0.6726 | mid 0.6569 | 2nd 0.6661"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-22T04:53:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-22 08:23</b> Tehran\n🌍 Weekend\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 1h 52m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 22 Nov 06:31\n🔺 <b>1st high</b>  ·  159.480  ·  22 Nov 06:13\n🔺 <b>2nd high</b>  ·  159.771  ·  22 Nov 06:29\n▫️ Mid low  ·  159.271  ·  22 Nov 06:22\n📊 Hist: 1st 0.6726 | mid 0.6569 | 2nd 0.6661"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-22T09:52:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-22 13:22</b> Tehran\n🌍 Weekend\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 22 Nov 12:34\n🔺 <b>1st high</b>  ·  157.656  ·  22 Nov 10:22\n🔺 <b>2nd high</b>  ·  157.738  ·  22 Nov 12:32\n▫️ Mid low  ·  156.977  ·  22 Nov 11:57\n📊 Hist: 1st 0.3002 | mid 0.001576 | 2nd 0.127"
+   },
+   {
+    "kind": "INVALID",
+    "s": -1,
+    "time": "2026-11-22T09:53:00+00:00",
+    "msg": "⚪ <b>CANCELLED · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-22 13:23</b> Tehran\n🌍 Weekend\n❌ Price broke above the 2nd high (157.738)\nREADY was at 22 Nov 13:22\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 22 Nov 12:34\n🔺 <b>1st high</b>  ·  157.656  ·  22 Nov 10:22\n🔺 <b>2nd high</b>  ·  157.738  ·  22 Nov 12:32\n▫️ Mid low  ·  156.977  ·  22 Nov 11:57\n📊 Hist: 1st 0.3002 | mid 0.001576 | 2nd 0.127"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-22T22:26:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-23 01:56</b> Tehran\n🌍 Sydney\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 23 Nov 01:24\n🔻 <b>1st low</b>  ·  156.651  ·  23 Nov 01:18\n🔻 <b>2nd low</b>  ·  156.514  ·  23 Nov 01:22\n▫️ Mid high  ·  156.787  ·  23 Nov 01:21\n📊 Hist: 1st -0.7247 | mid -0.7237 | 2nd -0.7241"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-22T22:36:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-23 02:06</b> Tehran\n🌍 Sydney\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 42m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 23 Nov 01:24\n🔻 <b>1st low</b>  ·  156.651  ·  23 Nov 01:18\n🔻 <b>2nd low</b>  ·  156.514  ·  23 Nov 01:22\n▫️ Mid high  ·  156.787  ·  23 Nov 01:21\n📊 Hist: 1st -0.7247 | mid -0.7237 | 2nd -0.7241"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-23T04:20:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-23 07:50</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 23 Nov 07:31\n🔻 <b>1st low</b>  ·  156.112  ·  23 Nov 07:26\n🔻 <b>2nd low</b>  ·  156.094  ·  23 Nov 07:29\n▫️ Mid high  ·  156.311  ·  23 Nov 07:28\n📊 Hist: 1st -0.6862 | mid -0.6838 | 2nd -0.6842"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-23T04:35:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-23 08:05</b> Tehran\n🌍 Sydney · Tokyo (overlap)\n⚡ Trigger: path 2 — back above zero\n⏱ Divergence → FIRE: 34m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 23 Nov 07:31\n🔻 <b>1st low</b>  ·  156.112  ·  23 Nov 07:26\n🔻 <b>2nd low</b>  ·  156.094  ·  23 Nov 07:29\n▫️ Mid high  ·  156.311  ·  23 Nov 07:28\n📊 Hist: 1st -0.6862 | mid -0.6838 | 2nd -0.6842"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-23T10:47:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-23 14:17</b> Tehran\n🌍 London\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 23 Nov 13:45\n🔻 <b>1st low</b>  ·  155.312  ·  23 Nov 13:40\n🔻 <b>2nd low</b>  ·  155.263  ·  23 Nov 13:43\n▫️ Mid high  ·  155.446  ·  23 Nov 13:41\n📊 Hist: 1st -0.6627 | mid -0.662 | 2nd -0.6625"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-23T12:24:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-23 15:54</b> Tehran\n🌍 London\n⚡ Trigger: path 2 — back above zero\n⏱ Divergence → FIRE: 2h 9m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 23 Nov 13:45\n🔻 <b>1st low</b>  ·  155.312  ·  23 Nov 13:40\n🔻 <b>2nd low</b>  ·  155.263  ·  23 Nov 13:43\n▫️ Mid high  ·  155.446  ·  23 Nov 13:41\n📊 Hist: 1st -0.6627 | mid -0.662 | 2nd -0.6625"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-23T12:42:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-23 16:12</b> Tehran\n🌍 London\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 23 Nov 15:57\n🔺 <b>1st high</b>  ·  158.773  ·  23 Nov 15:50\n🔺 <b>2nd high</b>  ·  158.857  ·  23 Nov 15:55\n▫️ Mid low  ·  158.627  ·  23 Nov 15:53\n📊 Hist: 1st 0.647 | mid 0.642 | 2nd 0.6431"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-23T13:55:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-23 17:25</b> Tehran\n🌍 London · New York (overlap)\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 1h 28m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 23 Nov 15:57\n🔺 <b>1st high</b>  ·  158.773  ·  23 Nov 15:50\n🔺 <b>2nd high</b>  ·  158.857  ·  23 Nov 15:55\n▫️ Mid low  ·  158.627  ·  23 Nov 15:53\n📊 Hist: 1st 0.647 | mid 0.642 | 2nd 0.6431"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-23T17:02:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-23 20:32</b> Tehran\n🌍 New York\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 23 Nov 20:23\n🔻 <b>1st low</b>  ·  156.236  ·  23 Nov 20:10\n🔻 <b>2nd low</b>  ·  156.159  ·  23 Nov 20:21\n▫️ Mid high  ·  156.386  ·  23 Nov 20:18\n📊 Hist: 1st -0.254 | mid -0.2478 | 2nd -0.2494"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-23T19:02:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-23 22:32</b> Tehran\n🌍 New York\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 2h 9m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 23 Nov 20:23\n🔻 <b>1st low</b>  ·  156.236  ·  23 Nov 20:10\n🔻 <b>2nd low</b>  ·  156.159  ·  23 Nov 20:21\n▫️ Mid high  ·  156.386  ·  23 Nov 20:18\n📊 Hist: 1st -0.254 | mid -0.2478 | 2nd -0.2494"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-24T05:32:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-24 09:02</b> Tehran\n🌍 Tokyo\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 24 Nov 08:32\n🔺 <b>1st high</b>  ·  159.404  ·  24 Nov 08:16\n🔺 <b>2nd high</b>  ·  159.535  ·  24 Nov 08:30\n▫️ Mid low  ·  159.154  ·  24 Nov 08:24\n📊 Hist: 1st 0.4222 | mid 0.4154 | 2nd 0.4215"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-24T05:40:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-24 09:10</b> Tehran\n🌍 Tokyo\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 38m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 24 Nov 08:32\n🔺 <b>1st high</b>  ·  159.404  ·  24 Nov 08:16\n🔺 <b>2nd high</b>  ·  159.535  ·  24 Nov 08:30\n▫️ Mid low  ·  159.154  ·  24 Nov 08:24\n📊 Hist: 1st 0.4222 | mid 0.4154 | 2nd 0.4215"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-24T16:05:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-24 19:35</b> Tehran\n🌍 London · New York (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 24 Nov 18:23\n🔻 <b>1st low</b>  ·  156.243  ·  24 Nov 16:51\n🔻 <b>2nd low</b>  ·  156.049  ·  24 Nov 18:21\n▫️ Mid high  ·  156.334  ·  24 Nov 18:19\n📊 Hist: 1st -0.508 | mid -0.1722 | 2nd -0.1742"
+   },
+   {
+    "kind": "INVALID",
+    "s": 1,
+    "time": "2026-11-24T16:06:00+00:00",
+    "msg": "⚪ <b>CANCELLED · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-24 19:36</b> Tehran\n🌍 London · New York (overlap)\n❌ Price broke below the 2nd low (156.049)\nREADY was at 24 Nov 19:35\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 24 Nov 18:23\n🔻 <b>1st low</b>  ·  156.243  ·  24 Nov 16:51\n🔻 <b>2nd low</b>  ·  156.049  ·  24 Nov 18:21\n▫️ Mid high  ·  156.334  ·  24 Nov 18:19\n📊 Hist: 1st -0.508 | mid -0.1722 | 2nd -0.1742"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-24T20:21:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-24 23:51</b> Tehran\n🌍 Sydney · New York (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 24 Nov 23:29\n🔻 <b>1st low</b>  ·  154.469  ·  24 Nov 23:24\n🔻 <b>2nd low</b>  ·  154.443  ·  24 Nov 23:27\n▫️ Mid high  ·  154.691  ·  24 Nov 23:26\n📊 Hist: 1st -0.7066 | mid -0.706 | 2nd -0.7061"
+   },
+   {
+    "kind": "FIRE",
+    "s": 1,
+    "time": "2026-11-24T20:24:00+00:00",
+    "msg": "🔥 <b>FIRE · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-24 23:54</b> Tehran\n🌍 Sydney · New York (overlap)\n⚡ Trigger: path 1 — first trough confirmed\n⏱ Divergence → FIRE: 25m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 24 Nov 23:29\n🔻 <b>1st low</b>  ·  154.469  ·  24 Nov 23:24\n🔻 <b>2nd low</b>  ·  154.443  ·  24 Nov 23:27\n▫️ Mid high  ·  154.691  ·  24 Nov 23:26\n📊 Hist: 1st -0.7066 | mid -0.706 | 2nd -0.7061"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-25T06:48:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-25 10:18</b> Tehran\n🌍 Tokyo\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 25 Nov 10:06\n🔺 <b>1st high</b>  ·  156.605  ·  25 Nov 07:36\n🔺 <b>2nd high</b>  ·  156.773  ·  25 Nov 10:04\n▫️ Mid low  ·  156.213  ·  25 Nov 09:44\n📊 Hist: 1st 0.621 | mid 0.05364 | 2nd 0.1112"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-25T07:08:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-25 10:38</b> Tehran\n🌍 Tokyo\n⚡ Trigger: path 1 — first peak confirmed\n⏱ Divergence → FIRE: 32m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 25 Nov 10:06\n🔺 <b>1st high</b>  ·  156.605  ·  25 Nov 07:36\n🔺 <b>2nd high</b>  ·  156.773  ·  25 Nov 10:04\n▫️ Mid low  ·  156.213  ·  25 Nov 09:44\n📊 Hist: 1st 0.621 | mid 0.05364 | 2nd 0.1112"
+   },
+   {
+    "kind": "READY",
+    "s": -1,
+    "time": "2026-11-25T10:55:00+00:00",
+    "msg": "🔴 <b>READY · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-25 14:25</b> Tehran\n🌍 London\n✅ MACD (12,26,9) below zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 25 Nov 14:10\n🔺 <b>1st high</b>  ·  157.890  ·  25 Nov 14:01\n🔺 <b>2nd high</b>  ·  158.038  ·  25 Nov 14:08\n▫️ Mid low  ·  157.828  ·  25 Nov 14:07\n📊 Hist: 1st 0.5959 | mid 0.5935 | 2nd 0.5938"
+   },
+   {
+    "kind": "FIRE",
+    "s": -1,
+    "time": "2026-11-25T12:36:00+00:00",
+    "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-25 16:06</b> Tehran\n🌍 London\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 1h 56m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 25 Nov 14:10\n🔺 <b>1st high</b>  ·  157.890  ·  25 Nov 14:01\n🔺 <b>2nd high</b>  ·  158.038  ·  25 Nov 14:08\n▫️ Mid low  ·  157.828  ·  25 Nov 14:07\n📊 Hist: 1st 0.5959 | mid 0.5935 | 2nd 0.5938"
+   },
+   {
+    "kind": "READY",
+    "s": 1,
+    "time": "2026-11-25T14:11:00+00:00",
+    "msg": "🟢 <b>READY · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-25 17:41</b> Tehran\n🌍 London · New York (overlap)\n✅ MACD (12,26,9) above zero for 3 bars\n👀 Now watching MACD (3,6,2) for the FIRE\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 25 Nov 17:31\n🔻 <b>1st low</b>  ·  154.597  ·  25 Nov 15:59\n🔻 <b>2nd low</b>  ·  154.532  ·  25 Nov 17:29\n▫️ Mid high  ·  154.800  ·  25 Nov 17:22\n📊 Hist: 1st -0.5547 | mid -0.1482 | 2nd -0.1501"
+   },
+   {
+    "kind": "INVALID",
+    "s": 1,
+    "time": "2026-11-25T14:14:00+00:00",
+    "msg": "⚪ <b>CANCELLED · BULLISH📈</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-25 17:44</b> Tehran\n🌍 London · New York (overlap)\n❌ MACD (12,26,9) crossed below zero\nREADY was at 25 Nov 17:41\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 25 Nov 17:31\n🔻 <b>1st low</b>  ·  154.597  ·  25 Nov 15:59\n🔻 <b>2nd low</b>  ·  154.532  ·  25 Nov 17:29\n▫️ Mid high  ·  154.800  ·  25 Nov 17:22\n📊 Hist: 1st -0.5547 | mid -0.1482 | 2nd -0.1501"
+   }
+  ],
+  "last_fire": {
+   "t": "2026-11-25T12:36:00+00:00",
+   "d": -1,
+   "msg": "🔥 <b>FIRE · BEARISH📉</b>\n<b>🇺🇸🇯🇵 USDJPY</b>  ·  M1\n━━━━━━━━━━━━━━━━\n🕒 <b>2026-11-25 16:06</b> Tehran\n🌍 London\n⚡ Trigger: path 2 — back below zero\n⏱ Divergence → FIRE: 1h 56m\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n📐 <b>Divergence · MACD (48,104,36)</b>\nConfirmed: 25 Nov 14:10\n🔺 <b>1st high</b>  ·  157.890  ·  25 Nov 14:01\n🔺 <b>2nd high</b>  ·  158.038  ·  25 Nov 14:08\n▫️ Mid low  ·  157.828  ·  25 Nov 14:07\n📊 Hist: 1st 0.5959 | mid 0.5935 | 2nd 0.5938"
+  }
+ }
+}
