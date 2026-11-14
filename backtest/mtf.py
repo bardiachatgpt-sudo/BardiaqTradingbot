@@ -75,7 +75,7 @@ def macd_peek(m, close):
     return f - s
 
 
-def run(sym, start, end, warm_days=150, zero_rule="trend", mode="swing"):
+def run(sym, start, end, warm_days=150, zero_rule="trend", mode="swing", rr=2.0, stop_at="m1"):
     df = data.candles(sym, pd.Timestamp(start) - pd.Timedelta(days=warm_days), end)
     t_from = pd.Timestamp(start, tz="UTC")
 
@@ -110,8 +110,24 @@ def run(sym, start, end, warm_days=150, zero_rule="trend", mode="swing"):
             trades.append(tr)
         open_tr.clear()
 
-    def enter(kind, t, price):
-        open_tr.append({"kind": kind, "s": bias, "entry_t": t, "entry": price, "mae": 0.0})
+    def enter(kind, t, price, stop=None):
+        tr = {"kind": kind, "s": bias, "entry_t": t, "entry": price, "mae": 0.0}
+        if stop is not None:
+            risk = bias * (price - stop)
+            if risk <= 0:
+                return
+            tr.update(stop=stop, target=price + bias * rr * risk, risk=risk)
+        open_tr.append(tr)
+
+    def fire_stop(evs):
+        """حد ضرر = پشت قله/کف دوم واگرایی M1 همان FIRE."""
+        for e in evs:
+            if e["kind"] == "FIRE" and e["s"] == bias:
+                m1 = e["detail"]["second"][1]
+                if stop_at == "zone":              # پشت مستطیل دیلی (اگر دورتر از قله/کف M1 باشد)
+                    return max(m1, zone[1]) if bias < 0 else min(m1, zone[0])
+                return m1
+        return None
 
     ts_all = df.index
     o_, h_, l_, c_ = (df[k].to_numpy() for k in ("Open", "High", "Low", "Close"))
@@ -195,6 +211,19 @@ def run(sym, start, end, warm_days=150, zero_rule="trend", mode="swing"):
         if not live or bias == 0:
             continue
 
+        # خروج (mode=rr): حد ضرر / حد سود. اگر هر دو در یک کندل لمس شوند، بدبینانه حد ضرر.
+        if mode == "rr" and open_tr:
+            for tr in list(open_tr):
+                s = tr["s"]
+                hit_sl = (l <= tr["stop"]) if s > 0 else (h >= tr["stop"])
+                hit_tp = (h >= tr["target"]) if s > 0 else (l <= tr["target"])
+                if hit_sl or hit_tp:
+                    px = tr["stop"] if hit_sl else tr["target"]
+                    tr.update(exit_t=t, exit=px, why="stop" if hit_sl else f"target {rr:g}R",
+                              pnl=s * (px - tr["entry"]))
+                    trades.append(tr)
+                    open_tr.remove(tr)
+
         # خروج (mode=swing): واگرایی خلاف جهت روی (48,104,36) M1
         if mode == "swing" and open_tr and -bias in new_div:
             close_all(t, c, "M1 4x opposite divergence")
@@ -208,12 +237,12 @@ def run(sym, start, end, warm_days=150, zero_rule="trend", mode="swing"):
             in_zone = (max(x for x, _ in recent) >= zone[0]) if bias < 0 else (min(y for _, y in recent) <= zone[1])
             fire = any(e["kind"] == "FIRE" and e["s"] == bias for e in evs)
             if armed and in_zone and fire:
-                enter("ENTRY-1 (H1 div + M1 FIRE)", t, c)
+                enter("ENTRY-1 (H1 div + M1 FIRE)", t, c, fire_stop(evs) if mode == "rr" else None)
                 entry1_done = True
 
         # ورود دوباره (mode=swing): بعد از خروج، FIRE هم‌جهت بعدی روی M1، تا وقتی جهت دیلی عوض نشده
-        elif mode == "swing" and not open_tr and any(e["kind"] == "FIRE" and e["s"] == bias for e in evs):
-            enter("RE-ENTRY (M1 FIRE)", t, c)
+        elif mode in ("swing", "rr") and not open_tr and any(e["kind"] == "FIRE" and e["s"] == bias for e in evs):
+            enter("RE-ENTRY (M1 FIRE)", t, c, fire_stop(evs) if mode == "rr" else None)
 
         # ورودهای بعدی (mode=v0)
         if mode == "v0" and m5_peak == bias and len(h4_hist) == 2:
@@ -235,10 +264,14 @@ def main():
     ap.add_argument("--warm", type=int, default=150, help="روزهای گرم‌کردن اندیکاتورها قبل از --from")
     ap.add_argument("--zero", default="trend", choices=["trend", "strict", "none"],
                     help="شرط صفر برای سقف/کف (3,6,2) دیلی")
-    ap.add_argument("--mode", default="swing", choices=["swing", "v0"],
-                    help="swing: خروج با واگرایی مخالف M1 و ورود دوباره؛ v0: نگه داشتن تا برگشت دیلی + ADDها")
+    ap.add_argument("--mode", default="rr", choices=["rr", "swing", "v0"],
+                    help="rr: حد ضرر پشت قله/کف دوم واگرایی M1 و حد سود rr برابر؛ "
+                         "swing: خروج با واگرایی مخالف M1؛ v0: نگه داشتن تا برگشت دیلی + ADDها")
+    ap.add_argument("--rr", type=float, default=2.0, help="نسبت حد سود به حد ضرر (mode=rr)")
+    ap.add_argument("--stop", default="m1", choices=["m1", "zone"],
+                    help="حد ضرر: m1 = پشت قله/کف دوم واگرایی M1؛ zone = پشت مستطیل دیلی")
     a = ap.parse_args()
-    trades, log = run(a.symbol, a.start, a.end, a.warm, a.zero, a.mode)
+    trades, log = run(a.symbol, a.start, a.end, a.warm, a.zero, a.mode, a.rr, a.stop)
     teh = "Asia/Tehran"
     print(f"{a.symbol}  {a.start} → {a.end}\n")
     print("Daily direction changes (UTC):")
@@ -252,6 +285,10 @@ def main():
     if trades:
         pnl = np.array([t["pnl"] for t in trades])
         print(f"\nTotal P&L: {pnl.sum():+.2f} $/oz   wins {int((pnl > 0).sum())}/{len(pnl)}")
+        rs = [t["pnl"] / t["risk"] for t in trades if t.get("risk")]
+        if rs:
+            print(f"In R: total {sum(rs):+.2f}R over {len(rs)} trades, avg {np.mean(rs):+.2f}R per trade,"
+                  f" avg risk {np.mean([t['risk'] for t in trades if t.get('risk')]):.2f} $/oz")
 
 
 if __name__ == "__main__":
