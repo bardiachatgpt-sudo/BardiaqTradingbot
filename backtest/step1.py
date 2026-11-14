@@ -44,17 +44,17 @@ def daily_calls(m1):
                 pm = done["l"] if s > 0 else -done["h"]
                 pk = done["h"] if s > 0 else -done["l"]
                 if m5_div[s].update(s * hv, pm, pk, ts, m5_n > 300):
-                    sigs.append(s)
+                    sigs.append((s, "M5"))
         eng.on_bar(ts, o, h, l, c)
         for s in (1, -1):
             d = eng.det1[s].detail
             if d is not None and d is not seen[s]:
                 seen[s] = d
-                sigs.append(s)
+                sigs.append((s, "M1"))
         if not sigs or len(d_h) < 20:
             continue
         run = macd_peek(d362, c)
-        for s in set(sigs):
+        for s, src in set(sigs):
             k = 1 if s * run < 0 else 0          # میله‌ی امروز در سمت «آماده‌باش»
             for v in reversed(d_h):
                 if s * v >= 0:
@@ -62,13 +62,13 @@ def daily_calls(m1):
                 k += 1
             if k and s * run >= 0:               # امروز به سمت دیگر صفر رفته: شمارش قطع است
                 k = 0
-            out.append((ts + pd.Timedelta(minutes=1), s, k))
-    return pd.DataFrame(out, columns=["t", "s", "armed_bars"])
+            out.append((ts + pd.Timedelta(minutes=1), s, k, src))
+    return pd.DataFrame(out, columns=["t", "s", "armed_bars", "src"])
 
 
-def daily_bias(calls, n, index):
-    """جهت روی index داده‌شده (زمان تصمیم). n = حداقل میله‌ی آماده‌باش."""
-    ev = calls[calls["armed_bars"] >= n]
+def daily_bias(calls, n, index, src=("M1", "M5")):
+    """جهت روی index داده‌شده (زمان تصمیم). n = حداقل میله‌ی آماده‌باش. src = منبع واگرایی."""
+    ev = calls[(calls["armed_bars"] >= n) & calls["src"].isin(src)]
     ev = ev[ev["s"] != ev["s"].shift(1)]        # فقط تغییر جهت
     if ev.empty:
         return np.zeros(len(index))
